@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Featherless } from "@lobehub/icons";
+import { Stars } from "@/components/hud";
 import { PROVIDER_NOTE } from "@/lib/providers";
 
 /**
@@ -38,10 +39,61 @@ export function ArenaLegend() {
           </span>
         </Chip>
       </div>
+
+      {/* Glyph key — what the arena's visual encodings MEAN, so a judge can read
+          the run without a voiceover. The stars especially: they're a calibrated
+          reputation score the hiring policy actually weighs, not decoration. */}
+      <div className="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 font-mono text-[9.5px] text-fg-faint">
+        <KeyItem label="reputation (track record)">
+          <Stars value={0.82} size={9} />
+        </KeyItem>
+        <KeyItem label="cross-owner agent">
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-full"
+            style={{
+              background: "var(--ax-gold)",
+              boxShadow: "0 0 5px -1px rgba(255,194,51,0.8)",
+            }}
+          />
+        </KeyItem>
+        <KeyItem label="working / verifying">
+          <span
+            className="inline-block h-3 w-3 rounded-full"
+            style={{
+              border: "2px solid var(--ax-emerald-glow)",
+              boxShadow: "0 0 5px -1px var(--ax-emerald-glow)",
+            }}
+          />
+        </KeyItem>
+        <KeyItem label="paid · withheld ($0)">
+          <span className="font-bold">
+            <span style={{ color: "var(--ax-emerald-glow)" }}>+$</span>
+            <span className="px-0.5 text-fg-faint">·</span>
+            <span style={{ color: "var(--ax-red)" }}>$0</span>
+          </span>
+        </KeyItem>
+      </div>
+
       <p className="max-w-[560px] font-mono text-[9.5px] leading-relaxed text-fg-faint">
         {PROVIDER_NOTE}
       </p>
     </div>
+  );
+}
+
+/** One glyph + its meaning, for the visual key row. */
+function KeyItem({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className="inline-flex items-center">{children}</span>
+      <span>{label}</span>
+    </span>
   );
 }
 

@@ -85,10 +85,13 @@ export function ArenaNode({
     : vm.collabDone
       ? "done"
       : "work";
-  // SVG geometry: stroke sits just outside the disc rim. r is in the ring's own
-  // viewBox (0..diameter); stroke width scales gently with node size.
-  const ringStroke = Math.max(2, Math.round(diameter * 0.05));
-  const ringR = diameter / 2 - ringStroke / 2;
+  // SVG geometry: a BOLD ring that sits clearly OUTSIDE the disc rim (its own
+  // viewBox is larger than the disc) so it reads as a distinct "loading" ring,
+  // not the disc border. Thicker stroke + a glow (applied in CSS) make the work
+  // phase unmistakably active.
+  const ringStroke = Math.max(3, Math.round(diameter * 0.07));
+  const ringSize = Math.round(diameter * 1.18);
+  const ringR = ringSize / 2 - ringStroke / 2;
   const ringCirc = 2 * Math.PI * ringR;
   // A flagged drift signal reads as a failure (this agent cheated) — same danger
   // accent as fabrication/withheld. Clean (non-flagged) drifts render NO badge.
@@ -198,18 +201,31 @@ export function ArenaNode({
                 ? styles.progressDone
                 : styles.progressWork
           } pointer-events-none absolute left-1/2 top-1/2`}
-          width={diameter}
-          height={diameter}
-          viewBox={`0 0 ${diameter} ${diameter}`}
+          width={ringSize}
+          height={ringSize}
+          viewBox={`0 0 ${ringSize} ${ringSize}`}
           style={{
             // Center over the disc and rotate so the arc starts at 12 o'clock.
             transform: "translate(-50%, -50%) rotate(-90deg)",
             ["--ring-circ" as string]: ringCirc,
+            // Glow so the ring pops off the dark court — reads as "alive/working".
+            filter: "drop-shadow(0 0 3px var(--ax-emerald-glow))",
           }}
         >
+          {/* Faint full track so the un-filled remainder is visible (reads as a
+              progress ring, not a lone arc). */}
           <circle
-            cx={diameter / 2}
-            cy={diameter / 2}
+            cx={ringSize / 2}
+            cy={ringSize / 2}
+            r={ringR}
+            fill="none"
+            stroke="var(--ax-emerald-glow)"
+            strokeWidth={ringStroke}
+            opacity={0.16}
+          />
+          <circle
+            cx={ringSize / 2}
+            cy={ringSize / 2}
             r={ringR}
             fill="none"
             stroke="var(--ax-emerald-glow)"
