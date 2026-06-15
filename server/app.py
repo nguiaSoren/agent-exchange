@@ -320,14 +320,17 @@ class _SeededFabricator:
         return [self._finding]
 
 
-def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, model: str):
+def _make_framework_auditor(
+    framework: str, name: str, area: str, prompt: str, model: str, featherless_model: str
+):
     """Build the `Specialist`-protocol auditor for a slot's assigned framework.
 
-    Returns the framework worker for ``"langgraph"`` / ``"crewai"`` (defaulting to its
-    own provider env: AI/ML API via ``AIMLAPI_MODEL`` for LangGraph, Featherless via
-    ``FEATHERLESS_MODEL`` for CrewAI). Returns ``None`` (so the caller falls back to the
-    native `SpecialistWorker`) for ``"native"`` OR when the framework's deps/keys are
-    missing at runtime — a missing optional framework must never crash the live run.
+    Returns the framework worker for ``"langgraph"`` / ``"crewai"`` (LangGraph on AI/ML
+    API via ``AIMLAPI_MODEL``; CrewAI on Featherless via the per-slot ``featherless_model``
+    — passed in so the two CrewAI slots can run DISTINCT Featherless models). Returns
+    ``None`` (so the caller falls back to the native `SpecialistWorker`) for ``"native"``
+    OR when the framework's deps/keys are missing at runtime — a missing optional
+    framework must never crash the live run.
     """
     if framework == "langgraph":
         try:
@@ -348,7 +351,9 @@ def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, m
         try:
             import crewai  # noqa: F401 — eager probe (the worker imports it lazily)
             from agent_exchange.workers.crewai_specialist import CrewAISpecialist
-            return CrewAISpecialist(name, area, prompt)
+            # Pass the per-slot model so the two CrewAI slots run DISTINCT Featherless
+            # models (the second open-weight worker isn't a duplicate of the first).
+            return CrewAISpecialist(name, area, prompt, model=featherless_model)
         except Exception as exc:  # missing crewai dep or FEATHERLESS key
             print(f"[live] crewai unavailable for {name!r}; "
                   f"falling back to native: {exc}", file=sys.stderr)
@@ -378,7 +383,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     from agent_exchange.core import make_backend
     from agent_exchange.market.hiring_types import Hire
     from agent_exchange.payments.x402_gate import make_x402_gate
-    from agent_exchange.workers.job_types import framework_for
+    from agent_exchange.workers.job_types import featherless_tier, framework_for
     from agent_exchange.workers.reporter import ReporterWorker
     from agent_exchange.workers.specialist import SPECIALISTS, SpecialistWorker
 
@@ -388,7 +393,13 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     # reporter, AND the verifier (= the moat brain on AI/ML API). The framework
     # workers bind their own providers (LangGraph→AI/ML API, CrewAI→Featherless).
     model = os.getenv("AIMLAPI_MODEL", "anthropic/claude-haiku-4.5")
+    # TWO distinct Featherless models so the open-weight side shows model variety
+    # (sponsor: Featherless). Both ids verified callable on the live key (L6); the
+    # primary is Qwen, the secondary Mistral-Small. Per-slot resolution below.
     featherless_model = os.getenv("FEATHERLESS_MODEL", "Qwen/Qwen2.5-72B-Instruct")
+    featherless_model_2 = os.getenv(
+        "FEATHERLESS_MODEL_2", "mistralai/Mistral-Small-24B-Instruct-2501"
+    )
     verifier_model = os.getenv("AIMLAPI_VERIFIER_MODEL", "gpt-4.1")
     spec_meta = {name: (area, prompt) for name, area, prompt in SPECIALISTS}
     keys = specialist_band_keys()
@@ -412,6 +423,9 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     bids: list[dict] = []
     hires: list[Hire] = []
     payout: dict[str, str] = {}
+    # The model each slot ACTUALLY ran (Featherless model for the open-weight slots,
+    # the AI/ML model otherwise) — so drift telemetry reports an honest declared model.
+    slot_models: dict[str, str] = {}
     payout_fallback = _env("SELLER_PAYTO_ADDRESS")
     recruit_messages: list[dict] = []
 
@@ -434,14 +448,25 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         # any native fallback so the UI badge stays correct even when the framework
         # dep is absent. crewai → Featherless, langgraph/native → AI/ML API.
         gateway = _gateway_for(framework)
-        auditor = _make_framework_auditor(framework, name, area, prompt, model)
+        # The Featherless model THIS CrewAI slot runs: primary (Qwen) for the first
+        # open-weight slot, secondary (Mistral-Small) for the second — so the two
+        # Featherless workers are genuinely different models.
+        slot_featherless_model = (
+            featherless_model_2
+            if featherless_tier(kind, name) == "secondary"
+            else featherless_model
+        )
+        slot_models[name] = slot_featherless_model if gateway == "Featherless" else model
+        auditor = _make_framework_auditor(
+            framework, name, area, prompt, model, slot_featherless_model
+        )
         if auditor is None:
             # Framework dep absent (e.g. the slim Render image ships no crewai/langgraph):
             # run this slot NATIVELY on the SAME provider the framework would have used,
             # so we genuinely exercise that provider and the badge stays honest — CrewAI's
             # slot really calls Featherless (open-weight Qwen), LangGraph's AI/ML API.
             backend = (
-                make_backend("featherless", featherless_model)
+                make_backend("featherless", slot_featherless_model)
                 if gateway == "Featherless"
                 else make_backend("aimlapi", model)
             )
@@ -561,7 +586,10 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     from agent_exchange.anomaly.telemetry import JsonTelemetryStore
 
     drift_store = JsonTelemetryStore(os.path.join(_ROOT, "data", "telemetry", "telemetry.json"))
-    drift_models = {h.worker: model for h in hires}
+    # Each worker's drift baseline keys off the model it actually ran (Featherless
+    # for the open-weight slots) — falling back to the AI/ML model for any slot not
+    # captured above (e.g. the seeded probe, added after this loop).
+    drift_models = {h.worker: slot_models.get(h.worker, model) for h in hires}
     drift_bids_atomic = {h.worker: h.price_atomic for h in hires}
 
     return RunContext(

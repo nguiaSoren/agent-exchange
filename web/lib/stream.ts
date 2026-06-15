@@ -56,6 +56,30 @@ const KNOWN_EVENT_TYPES: ReadonlySet<string> = new Set<ExchangeEventType>([
   "error",
 ]);
 
+// ── Live stage-event normalization (server vocabulary → UI vocabulary) ──────
+// The live `/api/run` SSE stream emits the BACKEND stage vocabulary
+// (`{name:"collaborate", status:"start"}`) — see server/app.py. The UI, the
+// demo (mockRun) and the recorded replays all speak the canonical UI vocabulary
+// (`{name:"Work", status:"active"}`); `runState.STAGE_ORDER` + `activeStage` +
+// `nodeStatus` key off it. Without this map a TRUE live run never reads as
+// "active", so the long Work phase shows no thinking spinner — the arena looks
+// FROZEN while agents are actually working. Mirror server/replay_recorder.py's
+// `_normalize` (spec §2) so the live path matches the demo + replays exactly.
+// Idempotent: an already-canonical name/status passes through unchanged.
+const STAGE_NAME_MAP: Record<string, string> = {
+  discover: "Discover",
+  bid: "Bid",
+  hire: "Hire",
+  collaborate: "Work",
+  verify: "Verify",
+  settle: "Settle",
+  done: "Done",
+};
+const STAGE_STATUS_MAP: Record<string, string> = {
+  start: "active",
+  end: "done",
+};
+
 /** Coerce a raw `{event, data}` SSE frame into a typed ExchangeEvent (or null). */
 export function parseFrame(
   eventName: string,
@@ -68,6 +92,16 @@ export function parseFrame(
     data = JSON.parse(rawData);
   } catch {
     return null;
+  }
+  // Normalize the backend stage vocabulary to the canonical UI schema so the
+  // live run animates identically to the demo/replay (see map above).
+  if (type === "stage" && data && typeof data === "object") {
+    const d = data as { name?: string; status?: string };
+    data = {
+      ...d,
+      name: STAGE_NAME_MAP[d.name ?? ""] ?? d.name,
+      status: STAGE_STATUS_MAP[d.status ?? ""] ?? d.status,
+    };
   }
   // The union is validated structurally downstream; we trust the named-event
   // contract here and cast to the corresponding member.

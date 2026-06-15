@@ -64,7 +64,7 @@
             "name": "Term & Survival Auditor",
             "owner": "owner-1",
             "cross_owner": false,
-            "framework": "native"
+            "framework": "crewai"
           },
           {
             "id": "carveout-bot",
@@ -131,7 +131,7 @@
         "relevance": 0.72,
         "reputation": 0.5,
         "n_jobs": 0,
-        "framework": "native"
+        "framework": "crewai"
       }
     },
     {

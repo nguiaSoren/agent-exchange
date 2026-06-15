@@ -84,9 +84,34 @@ JOB_TYPES: dict[str, JobType] = {
 #: path (`server/app.py`, which builds the matching framework worker) and the SIM
 #: path (`server/sim.py`, which only LABELS the slot). Keep them in lock-step.
 FRAMEWORK_BY_SPECIALTY: dict[str, dict[str, str]] = {
-    "contract-audit": {"ip": "langgraph", "liability": "crewai"},
-    "nda-review": {"confidentiality_scope": "langgraph", "permitted_use": "crewai"},
+    # TWO CrewAI (-> Featherless) slots per kind so the open-weight side of the
+    # market showcases TWO distinct Featherless models (sponsor: Featherless), not
+    # one. The pair runs DIFFERENT Featherless models (see FEATHERLESS_TIER below).
+    "contract-audit": {"ip": "langgraph", "liability": "crewai", "termination": "crewai"},
+    "nda-review": {
+        "confidentiality_scope": "langgraph",
+        "permitted_use": "crewai",
+        "term_survival": "crewai",
+    },
 }
+
+#: Which Featherless model TIER each CrewAI slot runs, so the two open-weight
+#: workers showcase DISTINCT Featherless models. The "primary"/"secondary"
+#: indirection keeps the concrete ids env-driven (the server resolves them to
+#: ``FEATHERLESS_MODEL`` / ``FEATHERLESS_MODEL_2``) — never hardcoded here (L8).
+FEATHERLESS_TIER: dict[str, dict[str, str]] = {
+    "contract-audit": {"liability": "primary", "termination": "secondary"},
+    "nda-review": {"permitted_use": "primary", "term_survival": "secondary"},
+}
+
+
+def featherless_tier(kind: str, specialty: str) -> str:
+    """The Featherless model tier (``"primary"`` | ``"secondary"``) for a CrewAI slot.
+
+    Default-safe: any unmapped (kind, specialty) returns ``"primary"`` so a lone or
+    unrecognised Featherless slot still resolves to the configured primary model.
+    """
+    return FEATHERLESS_TIER.get(kind, {}).get(specialty, "primary")
 
 
 def framework_for(kind: str, specialty: str) -> str:

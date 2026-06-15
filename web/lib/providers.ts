@@ -102,13 +102,16 @@ export const PROVIDERS: ProviderRecord[] = [
     brand: Anthropic,
   },
   {
+    // CrewAI framework brain, open-weight on Featherless — the SECOND Featherless
+    // model (distinct from liability's Qwen) so the open-weight side shows model
+    // variety. Matches the live secondary CrewAI slot (FEATHERLESS_MODEL_2).
     key: "termination",
     handle: "@clause-clerk",
     label: "Clause Clerk",
-    model: "Mistral-Large",
+    model: "Mistral-Small-24B-Instruct-2501",
     provider: "Mistral",
     providerLabel: "Mistral",
-    gateway: "AI/ML API",
+    gateway: "Featherless",
     brand: Mistral,
   },
   {
@@ -201,13 +204,15 @@ const SIM_NDA_RECORDS: ProviderRecord[] = [
     brand: Qwen,
   },
   {
+    // The NDA secondary CrewAI/Featherless slot — distinct from permitted_use's
+    // Qwen, mirroring contract-audit's two-Featherless-model pairing.
     key: "term_survival",
     handle: "term-bot",
     label: "Term & Survival Auditor",
-    model: "Mistral-Large",
+    model: "Mistral-Small-24B-Instruct-2501",
     provider: "Mistral",
     providerLabel: "Mistral",
-    gateway: "AI/ML API",
+    gateway: "Featherless",
     brand: Mistral,
   },
   {

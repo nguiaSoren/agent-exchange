@@ -235,7 +235,9 @@ export function Dashboard() {
       // scroll it FULLY into view (bottom corners + legend) after the relayout
       // paints. Two rAFs so the collapsed layout has settled first.
       requestAnimationFrame(() =>
-        requestAnimationFrame(() => scrollIntoFullView(arenaRef.current)),
+        requestAnimationFrame(() =>
+          scrollIntoFullView(arenaRef.current, { align: "top" }),
+        ),
       );
 
       const req: RunRequest = {

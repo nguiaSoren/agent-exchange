@@ -2,9 +2,10 @@
 
 Covers:
   * the framework-map module (`workers.job_types`): the exact assignment per the
-    locked contract (ip=langgraph, liability=crewai for contract-audit;
-    confidentiality_scope=langgraph, permitted_use=crewai for nda-review), and
-    `framework_for` returning ``"native"`` for unmapped specialties + unknown kinds;
+    locked contract — TWO CrewAI/Featherless slots per kind (ip=langgraph,
+    liability+termination=crewai for contract-audit; confidentiality_scope=langgraph,
+    permitted_use+term_survival=crewai for nda-review), and `framework_for` returning
+    ``"native"`` for unmapped specialties + unknown kinds;
   * the sim scenario's pool + bids carry the correct ``framework`` per the map for
     BOTH kinds (incl. the cross-owner slot -> native);
   * the sim event generator emits ``pool``/``bid`` payloads with the ``framework``
@@ -27,19 +28,20 @@ from agent_exchange.workers.job_types import FRAMEWORK_BY_SPECIALTY, framework_f
 
 def test_framework_map_exact_assignment():
     assert FRAMEWORK_BY_SPECIALTY["contract-audit"] == {
-        "ip": "langgraph", "liability": "crewai"}
+        "ip": "langgraph", "liability": "crewai", "termination": "crewai"}
     assert FRAMEWORK_BY_SPECIALTY["nda-review"] == {
-        "confidentiality_scope": "langgraph", "permitted_use": "crewai"}
+        "confidentiality_scope": "langgraph", "permitted_use": "crewai",
+        "term_survival": "crewai"}
 
 
 @pytest.mark.parametrize("kind, specialty, expected", [
     ("contract-audit", "ip", "langgraph"),
     ("contract-audit", "liability", "crewai"),
-    ("contract-audit", "termination", "native"),
+    ("contract-audit", "termination", "crewai"),   # 2nd Featherless slot
     ("contract-audit", "tax", "native"),          # cross-owner -> native
     ("nda-review", "confidentiality_scope", "langgraph"),
     ("nda-review", "permitted_use", "crewai"),
-    ("nda-review", "term_survival", "native"),
+    ("nda-review", "term_survival", "crewai"),     # 2nd Featherless slot
     ("nda-review", "carve_outs", "native"),        # cross-owner -> native
 ])
 def test_framework_for_mapped(kind, specialty, expected):
@@ -55,12 +57,12 @@ def test_framework_for_unmapped_defaults_native():
 
 _EXPECTED = {
     "contract-audit": {
-        "liability": "crewai", "ip": "langgraph", "termination": "native",
+        "liability": "crewai", "ip": "langgraph", "termination": "crewai",
         "tax": "native",
     },
     "nda-review": {
         "confidentiality_scope": "langgraph", "permitted_use": "crewai",
-        "term_survival": "native", "carve_outs": "native",
+        "term_survival": "crewai", "carve_outs": "native",
     },
 }
 

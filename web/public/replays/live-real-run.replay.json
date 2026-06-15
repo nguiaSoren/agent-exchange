@@ -69,8 +69,8 @@
             "name": "Termination Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "native",
-            "gateway": "AI/ML API",
+            "framework": "crewai",
+            "gateway": "Featherless",
             "worker": "termination"
           },
           {
@@ -173,8 +173,8 @@
         "relevance": 0.85,
         "reputation": 0.5,
         "n_jobs": 0,
-        "framework": "native",
-        "gateway": "AI/ML API"
+        "framework": "crewai",
+        "gateway": "Featherless"
       }
     },
     {
@@ -1268,7 +1268,7 @@
         "worker": "termination",
         "flagged": false,
         "severity": "info",
-        "model": "anthropic/claude-haiku-4.5",
+        "model": "mistralai/Mistral-Small-24B-Instruct-2501",
         "baseline_label": "(n=3 task)",
         "model_switch": false,
         "price_mismatch": false,

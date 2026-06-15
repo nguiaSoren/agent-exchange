@@ -64,7 +64,7 @@
             "name": "Termination Auditor",
             "owner": "owner-1",
             "cross_owner": false,
-            "framework": "native"
+            "framework": "crewai"
           },
           {
             "id": "tax-bot",
@@ -131,7 +131,7 @@
         "relevance": 0.74,
         "reputation": 0.5,
         "n_jobs": 0,
-        "framework": "native"
+        "framework": "crewai"
       }
     },
     {

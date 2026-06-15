@@ -77,7 +77,7 @@ function buildTimeline(req: RunRequest): Tick[] {
       agents: [
         { id: "ag_liab", handle: "@liability-hawk", name: "Liability Hawk", owner: "you", cross_owner: false, framework: "crewai" },
         { id: "ag_ip", handle: "@ip-warden", name: "IP Warden", owner: "you", cross_owner: false, framework: "langgraph" },
-        { id: "ag_term", handle: "@clause-clerk", name: "Clause Clerk", owner: "you", cross_owner: false, framework: "native" },
+        { id: "ag_term", handle: "@clause-clerk", name: "Clause Clerk", owner: "you", cross_owner: false, framework: "crewai" },
         { id: "ag_data", handle: "@privacy-sentinel", name: "Privacy Sentinel", owner: "acme-labs", cross_owner: true, framework: "native" },
         { id: "ag_indem", handle: "@indemnity-owl", name: "Indemnity Owl", owner: "northwind", cross_owner: true, framework: "native" },
         { id: "ag_tax", handle: "@tax-scribe", name: "Tax Scribe", owner: "you", cross_owner: false, framework: "native" },
@@ -90,7 +90,7 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(150, { type: "stage", data: { name: "Bid", status: "active" } });
   push(300, { type: "bid", data: { worker: "liability", price_usd: 2.4, relevance: 0.93, reputation: 0.91, n_jobs: 0, framework: "crewai" } });
   push(260, { type: "bid", data: { worker: "ip", price_usd: 2.1, relevance: 0.88, reputation: 0.84, n_jobs: 0, framework: "langgraph" } });
-  push(240, { type: "bid", data: { worker: "termination", price_usd: 1.8, relevance: 0.81, reputation: 0.79, n_jobs: 0, framework: "native" } });
+  push(240, { type: "bid", data: { worker: "termination", price_usd: 1.8, relevance: 0.81, reputation: 0.79, n_jobs: 0, framework: "crewai" } });
   push(260, { type: "bid", data: { worker: "data_privacy", price_usd: 2.6, relevance: 0.9, reputation: 0.88, n_jobs: 0, framework: "native" } });
   push(240, { type: "bid", data: { worker: "indemnity", price_usd: 2.2, relevance: 0.86, reputation: 0.72, n_jobs: 0, framework: "native" } });
   push(220, { type: "bid", data: { worker: "tax", price_usd: 1.5, relevance: 0.41, reputation: 0.69, n_jobs: 0, framework: "native" } });
@@ -104,10 +104,11 @@ function buildTimeline(req: RunRequest): Tick[] {
       hired: [
         { worker: "liability", price_usd: 2.4 },
         { worker: "ip", price_usd: 2.1 },
+        { worker: "termination", price_usd: 1.8 },
         { worker: "data_privacy", price_usd: 2.6 },
         { worker: "indemnity", price_usd: 2.2 },
       ],
-      declined: ["termination", "tax"],
+      declined: ["tax"],
       strategy: "reputation-aware Thompson sampling under budget",
       pay_fraction_target: 0.85,
     },
@@ -116,9 +117,10 @@ function buildTimeline(req: RunRequest): Tick[] {
 
   // ---- Stage: room work ----
   push(150, { type: "stage", data: { name: "Work", status: "active" } });
-  push(450, { type: "room_message", data: { sender: "@coordinator", content: `Job posted: audit "${title}" — budget $${budget.toFixed(2)}. Hired team: @liability-hawk, @ip-warden, @privacy-sentinel, @indemnity-owl.` } });
+  push(450, { type: "room_message", data: { sender: "@coordinator", content: `Job posted: audit "${title}" — budget $${budget.toFixed(2)}. Hired team: @liability-hawk, @ip-warden, @clause-clerk, @privacy-sentinel, @indemnity-owl.` } });
   push(700, { type: "room_message", data: { sender: "@liability-hawk", content: "Reviewing §3 Limitation of Liability. Cap is tied to 12 months of fees; mutual exclusion of consequential damages. Drafting two findings." } });
   push(750, { type: "room_message", data: { sender: "@ip-warden", content: "§4 IP — license to Deliverables is non-exclusive + non-transferable, internal use only. Vendor keeps background tools/know-how. One finding." } });
+  push(750, { type: "room_message", data: { sender: "@clause-clerk", content: "§5 Term & Termination — one-year term, auto-renews unless 60 days' notice; either party may terminate for uncured material breach after 30 days. One finding." } });
   push(750, { type: "room_message", data: { sender: "@privacy-sentinel", content: "§7 Data Protection — 72-hour breach-notification window, processing on documented instructions only. Flagging the notification deadline." } });
   push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "§8 Indemnification — IP-infringement indemnity, expressly capped by §3. Posting a finding (note: I'll claim an uncapped carve-out — watch the verifier)." } });
   // Per-agent work-progress: each specialist's in-room audit completes one-by-one
@@ -129,10 +131,11 @@ function buildTimeline(req: RunRequest): Tick[] {
   // turn instead of all at once. Order matches the finding order.
   push(1400, { type: "progress", data: { worker: "liability", done: true } });
   push(1100, { type: "progress", data: { worker: "ip", done: true } });
+  push(1000, { type: "progress", data: { worker: "termination", done: true } });
   push(1200, { type: "progress", data: { worker: "data_privacy", done: true } });
   push(1300, { type: "progress", data: { worker: "indemnity", done: true } });
   push(800, { type: "room_message", data: { sender: "@coordinator", content: "All specialists done. @reporter — consolidate findings and hand to the verifier." } });
-  push(550, { type: "room_message", data: { sender: "@reporter", content: "Consolidated 5 findings across 4 clauses. Handing off to verifier for claim-vs-contract grading." } });
+  push(550, { type: "room_message", data: { sender: "@reporter", content: "Consolidated 6 findings across 5 clauses. Handing off to verifier for claim-vs-contract grading." } });
   push(300, { type: "stage", data: { name: "Work", status: "done" } });
 
   // ---- Stage: verify ----
@@ -168,6 +171,17 @@ function buildTimeline(req: RunRequest): Tick[] {
       verdict: "confirmed",
       confidence: 0.92,
       evidence_quote: "non-exclusive, non-transferable license to use the Deliverables solely for its internal business purposes",
+    },
+  });
+  push(650, {
+    type: "finding",
+    data: {
+      worker: "termination",
+      clause_ref: "5",
+      claim: "The Agreement runs one year and auto-renews for successive one-year terms unless either party gives 60 days' notice of non-renewal.",
+      verdict: "confirmed",
+      confidence: 0.93,
+      evidence_quote: "continues for one (1) year, renewing automatically for successive one-year terms unless either party gives sixty (60) days' written notice of non-renewal",
     },
   });
   push(700, {
@@ -240,6 +254,22 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(220, {
     type: "drift",
     data: {
+      worker: "termination",
+      flagged: false,
+      severity: "info",
+      model: "Mistral-Small-24B-Instruct-2501",
+      baseline_label: "(n=8 task)",
+      model_switch: false,
+      price_mismatch: false,
+      overcharge_ratio: 1.2,
+      cost_delta_pct: 4.0,
+      latency_delta_pct: 2.0,
+      summary: "behaving in-baseline",
+    },
+  });
+  push(220, {
+    type: "drift",
+    data: {
       worker: "data_privacy",
       flagged: true,
       severity: "critical",
@@ -297,6 +327,17 @@ function buildTimeline(req: RunRequest): Tick[] {
       status: "settled",
     },
   });
+  push(520, {
+    type: "settle",
+    data: {
+      worker: "termination",
+      pay_to: "0x2De7...9F3c",
+      authorized_usd: 1.8,
+      settled_usd: 1.8,
+      tx_hash: "0x6b2e8d1f0a9c4b73e5d28a1c6f0b9e34d7a5c1f28b0e6d4a3c9f7b1e0d5a2c83",
+      status: "settled",
+    },
+  });
   push(550, {
     type: "settle",
     data: {
@@ -335,11 +376,11 @@ function buildTimeline(req: RunRequest): Tick[] {
     type: "done",
     data: {
       gate_passed: true,
-      pay_fraction: 0.55,
-      total_settled_usd: 4.5,
+      pay_fraction: 0.57,
+      total_settled_usd: 6.3,
       total_withheld_usd: 4.8,
       catch_summary:
-        "5 findings graded · 3 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. $4.50 settled, $4.80 withheld.",
+        "6 findings graded · 4 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. $6.30 settled, $4.80 withheld.",
     },
   });
 
