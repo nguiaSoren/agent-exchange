@@ -1,25 +1,25 @@
 {
   "schema": "agent-exchange.replay/v1",
-  "job_id": "live-contract-audit-20260615T1018",
+  "job_id": "live-contract-audit-20260615T1037",
   "kind": "contract-audit",
   "mode": "live",
   "title": "Acme MSA \u2014 clause audit",
   "budget_usd": 0.2,
-  "recorded_at": "2026-06-15T10:18:10Z",
+  "recorded_at": "2026-06-15T10:37:00Z",
   "seed": 1,
   "totals": {
     "gate_passed": false,
     "pay_fraction": 0.0,
     "total_settled_usd": 0.0,
     "total_withheld_usd": 0.1998,
-    "catch_summary": "1 fabricated claim(s) caught and withheld (36 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
+    "catch_summary": "1 fabricated claim(s) caught and withheld (40 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
     "seeded_probe_caught": true
   },
   "tx_links": [],
   "events": [
     {
       "seq": 0,
-      "t_offset_ms": 0.1,
+      "t_offset_ms": 0.0,
       "type": "document",
       "data": {
         "kind": "contract-audit",
@@ -30,7 +30,7 @@
     },
     {
       "seq": 1,
-      "t_offset_ms": 0.1,
+      "t_offset_ms": 0.0,
       "type": "stage",
       "data": {
         "name": "Discover",
@@ -39,7 +39,7 @@
     },
     {
       "seq": 2,
-      "t_offset_ms": 6639.9,
+      "t_offset_ms": 8306.9,
       "type": "pool",
       "data": {
         "agents": [
@@ -49,7 +49,8 @@
             "name": "Liability Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "crewai"
+            "framework": "crewai",
+            "worker": "liability"
           },
           {
             "id": "cf00e9b7-7982-43a7-810e-f64ac942e3c0",
@@ -57,7 +58,8 @@
             "name": "IP Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "langgraph"
+            "framework": "langgraph",
+            "worker": "ip"
           },
           {
             "id": "0f2cbb55-7332-4723-af03-ef62ab9f4006",
@@ -65,7 +67,8 @@
             "name": "Termination Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "native"
+            "framework": "native",
+            "worker": "termination"
           },
           {
             "id": "87cb97d3-5597-459d-8817-4367e186963c",
@@ -73,7 +76,8 @@
             "name": "tax-clause-bot",
             "owner": "babidibuu19",
             "cross_owner": true,
-            "framework": "native"
+            "framework": "native",
+            "worker": "tax"
           },
           {
             "id": "e1c4302d-6e90-461a-a26a-964d3ec1b1a4",
@@ -81,7 +85,8 @@
             "name": "Data-Privacy Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "native"
+            "framework": "native",
+            "worker": "data_privacy"
           },
           {
             "id": "42d3d244-aa27-43cd-9fe4-70bbfb497947",
@@ -89,7 +94,8 @@
             "name": "Indemnity Auditor",
             "owner": "self",
             "cross_owner": false,
-            "framework": "native"
+            "framework": "native",
+            "worker": "indemnity"
           },
           {
             "id": "seeded-probe",
@@ -98,14 +104,15 @@
             "owner": "system",
             "cross_owner": false,
             "framework": "native",
-            "seeded": true
+            "seeded": true,
+            "worker": "seeded-probe"
           }
         ]
       }
     },
     {
       "seq": 3,
-      "t_offset_ms": 6639.9,
+      "t_offset_ms": 8306.9,
       "type": "stage",
       "data": {
         "name": "Discover",
@@ -114,7 +121,7 @@
     },
     {
       "seq": 4,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 8306.9,
       "type": "stage",
       "data": {
         "name": "Bid",
@@ -123,7 +130,7 @@
     },
     {
       "seq": 5,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 8306.9,
       "type": "bid",
       "data": {
         "worker": "liability",
@@ -136,7 +143,7 @@
     },
     {
       "seq": 6,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 8607.1,
       "type": "bid",
       "data": {
         "worker": "ip",
@@ -149,7 +156,7 @@
     },
     {
       "seq": 7,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 8907.9,
       "type": "bid",
       "data": {
         "worker": "termination",
@@ -162,7 +169,7 @@
     },
     {
       "seq": 8,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 9209.1,
       "type": "bid",
       "data": {
         "worker": "tax",
@@ -175,7 +182,7 @@
     },
     {
       "seq": 9,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 9510.2,
       "type": "bid",
       "data": {
         "worker": "data_privacy",
@@ -188,7 +195,7 @@
     },
     {
       "seq": 10,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 9811.3,
       "type": "bid",
       "data": {
         "worker": "indemnity",
@@ -201,7 +208,7 @@
     },
     {
       "seq": 11,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 10112.3,
       "type": "bid",
       "data": {
         "worker": "seeded-probe",
@@ -215,7 +222,7 @@
     },
     {
       "seq": 12,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 10413.5,
       "type": "stage",
       "data": {
         "name": "Bid",
@@ -224,7 +231,7 @@
     },
     {
       "seq": 13,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 10413.5,
       "type": "stage",
       "data": {
         "name": "Hire",
@@ -233,7 +240,7 @@
     },
     {
       "seq": 14,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 10413.6,
       "type": "hire",
       "data": {
         "hired": [
@@ -273,7 +280,7 @@
     },
     {
       "seq": 15,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 10413.6,
       "type": "room_message",
       "data": {
         "sender": "market",
@@ -282,7 +289,7 @@
     },
     {
       "seq": 16,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 11014.0,
       "type": "stage",
       "data": {
         "name": "Hire",
@@ -291,7 +298,7 @@
     },
     {
       "seq": 17,
-      "t_offset_ms": 6640.0,
+      "t_offset_ms": 11014.0,
       "type": "stage",
       "data": {
         "name": "Work",
@@ -300,7 +307,7 @@
     },
     {
       "seq": 18,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 72723.0,
       "type": "stage",
       "data": {
         "name": "Work",
@@ -309,7 +316,7 @@
     },
     {
       "seq": 19,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 72723.0,
       "type": "stage",
       "data": {
         "name": "Verify",
@@ -318,7 +325,7 @@
     },
     {
       "seq": 20,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 72723.1,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
@@ -332,7 +339,7 @@
     },
     {
       "seq": 21,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 73024.1,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
@@ -346,7 +353,7 @@
     },
     {
       "seq": 22,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 73325.3,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
@@ -360,7 +367,7 @@
     },
     {
       "seq": 23,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 73626.5,
       "type": "finding",
       "data": {
         "worker": "indemnity",
@@ -374,7 +381,7 @@
     },
     {
       "seq": 24,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 73927.7,
       "type": "finding",
       "data": {
         "worker": "indemnity",
@@ -388,7 +395,7 @@
     },
     {
       "seq": 25,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 74228.5,
       "type": "finding",
       "data": {
         "worker": "ip",
@@ -402,7 +409,7 @@
     },
     {
       "seq": 26,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 74529.7,
       "type": "finding",
       "data": {
         "worker": "ip",
@@ -416,12 +423,12 @@
     },
     {
       "seq": 27,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 74830.9,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "2",
-        "claim": "The Agreement does not address Vendor's obligation to assist Client in perfecting title to assigned foreground IP, such as through execution of documents or cooperation in prosecution.",
+        "claim": "The Agreement does not explicitly address Vendor's obligation to assist Client in perfecting title to assigned foreground IP or executing documents necessary to perfect assignment.",
         "verdict": "confirmed",
         "confidence": 0.5,
         "evidence_quote": null,
@@ -430,12 +437,12 @@
     },
     {
       "seq": 28,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 75132.1,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "6",
-        "claim": "Vendor indemnifies Client against third-party claims that deliverables infringe IP rights, but the Agreement does not define the scope of 'IP rights' or specify whether this covers patent, copyright, trademark, trade secret, or other forms of intellectual property.",
+        "claim": "Vendor indemnifies Client against third-party claims that deliverables infringe IP rights, but the Agreement does not define the scope of infringement indemnification (e.g., whether it covers infringement of third-party patents, copyrights, or trade secrets, or only claims arising from Vendor's breach).",
         "verdict": "confirmed",
         "confidence": 1.0,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
@@ -444,12 +451,12 @@
     },
     {
       "seq": 29,
-      "t_offset_ms": 44365.4,
+      "t_offset_ms": 75433.3,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "6",
-        "claim": "The indemnification obligation in Clause 6 is not subject to the liability cap in Clause 1, creating unbounded exposure for Vendor on IP infringement claims.",
+        "claim": "The indemnification obligation in Clause 6 is not subject to the liability cap in Clause 1, creating potentially unbounded exposure for Vendor on IP infringement claims.",
         "verdict": "confirmed",
         "confidence": 1.0,
         "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
@@ -458,35 +465,77 @@
     },
     {
       "seq": 30,
-      "t_offset_ms": 44365.5,
+      "t_offset_ms": 75734.5,
       "type": "finding",
       "data": {
         "worker": "ip",
-        "clause_ref": "2",
-        "claim": "The Agreement does not address moral rights, waiver thereof, or Vendor's residual knowledge or retained ideas from performance of services.",
+        "clause_ref": "7",
+        "claim": "Vendor warrants services will be performed in a professional and workmanlike manner, but the Agreement contains no express warranty of non-infringement regarding the deliverables or background IP licensed to Client.",
         "verdict": "confirmed",
-        "confidence": 0.5,
-        "evidence_quote": null,
+        "confidence": 1.0,
+        "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
         "seeded": false
       }
     },
     {
       "seq": 31,
-      "t_offset_ms": 44365.5,
+      "t_offset_ms": 76035.7,
       "type": "finding",
       "data": {
-        "worker": "ip",
-        "clause_ref": "2",
-        "claim": "The Agreement does not address ownership or licensing of third-party or open-source IP incorporated into deliverables.",
+        "worker": "liability",
+        "clause_ref": "1",
+        "claim": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim.",
         "verdict": "confirmed",
-        "confidence": 0.5,
-        "evidence_quote": null,
+        "confidence": 1.0,
+        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim.",
         "seeded": false
       }
     },
     {
       "seq": 32,
-      "t_offset_ms": 44365.5,
+      "t_offset_ms": 76336.8,
+      "type": "finding",
+      "data": {
+        "worker": "liability",
+        "clause_ref": "1",
+        "claim": "The liability cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 33,
+      "t_offset_ms": 76638.0,
+      "type": "finding",
+      "data": {
+        "worker": "liability",
+        "clause_ref": "6",
+        "claim": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 34,
+      "t_offset_ms": 76939.2,
+      "type": "finding",
+      "data": {
+        "worker": "liability",
+        "clause_ref": "7",
+        "claim": "Vendor warrants the services will be performed in a professional and workmanlike manner, but EXCEPT AS STATED, THE SERVICES ARE PROVIDED 'AS IS'.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 35,
+      "t_offset_ms": 77240.4,
       "type": "finding",
       "data": {
         "worker": "seeded-probe",
@@ -499,8 +548,8 @@
       }
     },
     {
-      "seq": 33,
-      "t_offset_ms": 44365.5,
+      "seq": 36,
+      "t_offset_ms": 77541.5,
       "type": "finding",
       "data": {
         "worker": "tax",
@@ -513,8 +562,8 @@
       }
     },
     {
-      "seq": 34,
-      "t_offset_ms": 44365.5,
+      "seq": 37,
+      "t_offset_ms": 77842.7,
       "type": "finding",
       "data": {
         "worker": "tax",
@@ -527,8 +576,8 @@
       }
     },
     {
-      "seq": 35,
-      "t_offset_ms": 44365.5,
+      "seq": 38,
+      "t_offset_ms": 78143.9,
       "type": "finding",
       "data": {
         "worker": "tax",
@@ -541,8 +590,8 @@
       }
     },
     {
-      "seq": 36,
-      "t_offset_ms": 44365.5,
+      "seq": 39,
+      "t_offset_ms": 78445.1,
       "type": "finding",
       "data": {
         "worker": "termination",
@@ -555,8 +604,8 @@
       }
     },
     {
-      "seq": 37,
-      "t_offset_ms": 44365.5,
+      "seq": 40,
+      "t_offset_ms": 78746.3,
       "type": "finding",
       "data": {
         "worker": "termination",
@@ -569,13 +618,13 @@
       }
     },
     {
-      "seq": 38,
-      "t_offset_ms": 44365.5,
+      "seq": 41,
+      "t_offset_ms": 79047.3,
       "type": "finding",
       "data": {
         "worker": "termination",
         "clause_ref": "4",
-        "claim": "The Agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal",
+        "claim": "The agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal",
         "verdict": "confirmed",
         "confidence": 1.0,
         "evidence_quote": "auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
@@ -583,339 +632,281 @@
       }
     },
     {
-      "seq": 39,
-      "t_offset_ms": 44365.5,
+      "seq": 42,
+      "t_offset_ms": 79348.5,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "6",
-        "claim": "The indemnification obligation for IP infringement claims is not subject to the liability cap, creating unbounded exposure for Vendor on IP infringement claims.",
+        "claim": "The indemnification obligation for IP infringement is not subject to the liability cap, creating potentially unbounded exposure for Vendor on IP infringement claims.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.95,
         "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
         "seeded": false
       }
     },
     {
-      "seq": 40,
-      "t_offset_ms": 44365.5,
+      "seq": 43,
+      "t_offset_ms": 79649.7,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "1",
         "claim": "The liability cap does not apply to indemnification obligations, effectively making indemnification uncapped.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.98,
         "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
         "seeded": false
       }
     },
     {
-      "seq": 41,
-      "t_offset_ms": 44365.5,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "2",
-        "claim": "The Agreement does not address ownership or licensing of third-party or open-source IP incorporated into deliverables.",
-        "verdict": "confirmed",
-        "confidence": 0.5,
-        "evidence_quote": null,
-        "seeded": false
-      }
-    },
-    {
-      "seq": 42,
-      "t_offset_ms": 44365.5,
+      "seq": 44,
+      "t_offset_ms": 79950.9,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
         "claim": "Vendor retains pre-existing background IP and grants Client only a non-exclusive license to use it, without specification of territory, duration, sublicensability, or field of use.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.98,
         "evidence_quote": "Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
         "seeded": false
       }
     },
     {
-      "seq": 43,
-      "t_offset_ms": 44365.5,
+      "seq": 45,
+      "t_offset_ms": 80252.0,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
-        "claim": "The Agreement does not address Vendor's obligation to assist Client in perfecting title to assigned foreground IP, such as through execution of documents or cooperation in prosecution.",
+        "claim": "The Agreement does not explicitly address Vendor's obligation to assist Client in perfecting title to assigned foreground IP or executing documents necessary to perfect assignment.",
         "verdict": "confirmed",
-        "confidence": 0.5,
+        "confidence": 0.475,
         "evidence_quote": null,
         "seeded": false
       }
     },
     {
-      "seq": 44,
-      "t_offset_ms": 44365.5,
+      "seq": 46,
+      "t_offset_ms": 80553.1,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "6",
-        "claim": "The Agreement does not define the scope of 'IP rights' covered by indemnification or specify which forms of intellectual property are included.",
+        "claim": "The Agreement does not define the scope of infringement indemnification, such as whether it covers infringement of third-party patents, copyrights, or trade secrets, or only claims arising from Vendor's breach.",
         "verdict": "confirmed",
-        "confidence": 0.5,
+        "confidence": 0.475,
         "evidence_quote": null,
         "seeded": false
       }
     },
     {
-      "seq": 45,
-      "t_offset_ms": 44365.5,
+      "seq": 47,
+      "t_offset_ms": 80854.3,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "7",
+        "claim": "Vendor warrants services will be performed in a professional and workmanlike manner, but there is no express warranty of non-infringement regarding the deliverables or background IP licensed to Client.",
+        "verdict": "confirmed",
+        "confidence": 0.98,
+        "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 48,
+      "t_offset_ms": 81155.5,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
         "claim": "Each party shall protect the other's Confidential Information for 3 years after disclosure.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure.",
         "seeded": false
       }
     },
     {
-      "seq": 46,
-      "t_offset_ms": 44365.5,
+      "seq": 49,
+      "t_offset_ms": 81456.7,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
         "claim": "Vendor shall notify Client of any security breach within 72 hours.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 47,
-      "t_offset_ms": 44365.5,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "3",
-        "claim": "Client bears all sales, use, and VAT/GST taxes.",
-        "verdict": "confirmed",
-        "confidence": 1.0,
-        "evidence_quote": "Client bears all sales, use, and VAT/GST.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 48,
-      "t_offset_ms": 44365.5,
+      "seq": 50,
+      "t_offset_ms": 81757.9,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "4",
-        "claim": "The Agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "claim": "The agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
         "seeded": false
       }
     },
     {
-      "seq": 49,
-      "t_offset_ms": 44365.5,
+      "seq": 51,
+      "t_offset_ms": 82059.0,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "1",
+        "claim": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 52,
+      "t_offset_ms": 82360.2,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "7",
+        "claim": "Except as stated, the services are provided 'as is'.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 53,
+      "t_offset_ms": 82661.4,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
         "claim": "Vendor may not use Client data to train models.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Vendor may not use Client data to train models.",
         "seeded": false
       }
     },
     {
-      "seq": 50,
-      "t_offset_ms": 44365.5,
+      "seq": 54,
+      "t_offset_ms": 82962.0,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
         "claim": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation, with no retention of rights by Vendor in the work product itself.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.98,
         "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation.",
         "seeded": false
       }
     },
     {
-      "seq": 51,
-      "t_offset_ms": 44365.5,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "2",
-        "claim": "The Agreement does not address moral rights, waiver thereof, or Vendor's residual knowledge or retained ideas from performance of services.",
-        "verdict": "confirmed",
-        "confidence": 0.5,
-        "evidence_quote": null,
-        "seeded": false
-      }
-    },
-    {
-      "seq": 52,
-      "t_offset_ms": 44365.5,
+      "seq": 55,
+      "t_offset_ms": 83263.0,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "3",
         "claim": "Fees are stated exclusive of tax.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Fees are stated exclusive of tax.",
         "seeded": false
       }
     },
     {
-      "seq": 53,
-      "t_offset_ms": 44365.5,
+      "seq": 56,
+      "t_offset_ms": 83564.1,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "3",
+        "claim": "Client bears all sales, use, and VAT/GST taxes.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "Client bears all sales, use, and VAT/GST.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 57,
+      "t_offset_ms": 83865.1,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "3",
         "claim": "Each party is responsible for its own income and franchise taxes.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Each party is responsible for its own income and franchise taxes.",
         "seeded": false
       }
     },
     {
-      "seq": 54,
-      "t_offset_ms": 44365.5,
+      "seq": 58,
+      "t_offset_ms": 84166.2,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "4",
         "claim": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period.",
         "seeded": false
       }
     },
     {
-      "seq": 55,
-      "t_offset_ms": 44365.5,
+      "seq": 59,
+      "t_offset_ms": 84467.3,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "4",
         "claim": "The initial term is 12 months.",
         "verdict": "confirmed",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": "The initial term is 12 months",
         "seeded": false
       }
     },
     {
-      "seq": 56,
-      "t_offset_ms": 44427.3,
+      "seq": 60,
+      "t_offset_ms": 84829.6,
       "type": "drift",
       "data": {
         "worker": "liability",
         "flagged": true,
         "severity": "warn",
         "model": "gpt-4.1-mini",
-        "baseline_label": "(n=4 task)",
+        "baseline_label": "(n=5 task)",
         "model_switch": false,
         "price_mismatch": true,
         "overcharge_ratio": 261.792,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
         "summary": "price/model mismatch at 261.8x markup"
-      }
-    },
-    {
-      "seq": 57,
-      "t_offset_ms": 44427.4,
-      "type": "drift",
-      "data": {
-        "worker": "ip",
-        "flagged": false,
-        "severity": "info",
-        "model": "gpt-4.1-mini",
-        "baseline_label": "(no baseline)",
-        "model_switch": false,
-        "price_mismatch": false,
-        "overcharge_ratio": null,
-        "cost_delta_pct": null,
-        "latency_delta_pct": null,
-        "summary": "no baseline yet \u2014 no baseline"
-      }
-    },
-    {
-      "seq": 58,
-      "t_offset_ms": 44427.4,
-      "type": "drift",
-      "data": {
-        "worker": "termination",
-        "flagged": false,
-        "severity": "info",
-        "model": "gpt-4.1-mini",
-        "baseline_label": "(no baseline)",
-        "model_switch": false,
-        "price_mismatch": false,
-        "overcharge_ratio": null,
-        "cost_delta_pct": null,
-        "latency_delta_pct": null,
-        "summary": "no baseline yet \u2014 no baseline"
-      }
-    },
-    {
-      "seq": 59,
-      "t_offset_ms": 44427.4,
-      "type": "drift",
-      "data": {
-        "worker": "tax",
-        "flagged": true,
-        "severity": "warn",
-        "model": "gpt-4.1-mini",
-        "baseline_label": "(n=4 task)",
-        "model_switch": false,
-        "price_mismatch": true,
-        "overcharge_ratio": 261.792,
-        "cost_delta_pct": null,
-        "latency_delta_pct": null,
-        "summary": "price/model mismatch at 261.8x markup"
-      }
-    },
-    {
-      "seq": 60,
-      "t_offset_ms": 44427.4,
-      "type": "drift",
-      "data": {
-        "worker": "data_privacy",
-        "flagged": false,
-        "severity": "info",
-        "model": "gpt-4.1-mini",
-        "baseline_label": "(no baseline)",
-        "model_switch": false,
-        "price_mismatch": false,
-        "overcharge_ratio": null,
-        "cost_delta_pct": null,
-        "latency_delta_pct": null,
-        "summary": "no baseline yet \u2014 no baseline"
       }
     },
     {
       "seq": 61,
-      "t_offset_ms": 44427.4,
+      "t_offset_ms": 84829.7,
       "type": "drift",
       "data": {
-        "worker": "indemnity",
+        "worker": "ip",
         "flagged": false,
         "severity": "info",
         "model": "gpt-4.1-mini",
@@ -930,14 +921,86 @@
     },
     {
       "seq": 62,
-      "t_offset_ms": 44427.4,
+      "t_offset_ms": 84829.7,
+      "type": "drift",
+      "data": {
+        "worker": "termination",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1-mini",
+        "baseline_label": "(no baseline)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": null,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "no baseline yet \u2014 no baseline"
+      }
+    },
+    {
+      "seq": 63,
+      "t_offset_ms": 84829.7,
+      "type": "drift",
+      "data": {
+        "worker": "tax",
+        "flagged": true,
+        "severity": "warn",
+        "model": "gpt-4.1-mini",
+        "baseline_label": "(n=5 task)",
+        "model_switch": false,
+        "price_mismatch": true,
+        "overcharge_ratio": 261.792,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "price/model mismatch at 261.8x markup"
+      }
+    },
+    {
+      "seq": 64,
+      "t_offset_ms": 84829.7,
+      "type": "drift",
+      "data": {
+        "worker": "data_privacy",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1-mini",
+        "baseline_label": "(no baseline)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": null,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "no baseline yet \u2014 no baseline"
+      }
+    },
+    {
+      "seq": 65,
+      "t_offset_ms": 84829.7,
+      "type": "drift",
+      "data": {
+        "worker": "indemnity",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1-mini",
+        "baseline_label": "(no baseline)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": null,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "no baseline yet \u2014 no baseline"
+      }
+    },
+    {
+      "seq": 66,
+      "t_offset_ms": 84829.7,
       "type": "drift",
       "data": {
         "worker": "seeded-probe",
         "flagged": false,
         "severity": "info",
         "model": "gpt-4.1-mini",
-        "baseline_label": "(n=4 task)",
+        "baseline_label": "(n=5 task)",
         "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": 0.0,
@@ -947,8 +1010,8 @@
       }
     },
     {
-      "seq": 63,
-      "t_offset_ms": 44427.4,
+      "seq": 67,
+      "t_offset_ms": 84829.7,
       "type": "stage",
       "data": {
         "name": "Verify",
@@ -956,8 +1019,8 @@
       }
     },
     {
-      "seq": 64,
-      "t_offset_ms": 44427.4,
+      "seq": 68,
+      "t_offset_ms": 84829.7,
       "type": "stage",
       "data": {
         "name": "Settle",
@@ -965,8 +1028,8 @@
       }
     },
     {
-      "seq": 65,
-      "t_offset_ms": 48889.3,
+      "seq": 69,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "liability",
@@ -978,8 +1041,8 @@
       }
     },
     {
-      "seq": 66,
-      "t_offset_ms": 48889.3,
+      "seq": 70,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "ip",
@@ -991,8 +1054,8 @@
       }
     },
     {
-      "seq": 67,
-      "t_offset_ms": 48889.3,
+      "seq": 71,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "termination",
@@ -1004,8 +1067,8 @@
       }
     },
     {
-      "seq": 68,
-      "t_offset_ms": 48889.3,
+      "seq": 72,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "tax",
@@ -1017,8 +1080,8 @@
       }
     },
     {
-      "seq": 69,
-      "t_offset_ms": 48889.3,
+      "seq": 73,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "data_privacy",
@@ -1030,8 +1093,8 @@
       }
     },
     {
-      "seq": 70,
-      "t_offset_ms": 48889.3,
+      "seq": 74,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "indemnity",
@@ -1043,8 +1106,8 @@
       }
     },
     {
-      "seq": 71,
-      "t_offset_ms": 48889.3,
+      "seq": 75,
+      "t_offset_ms": 88546.2,
       "type": "settle",
       "data": {
         "worker": "seeded-probe",
@@ -1056,8 +1119,8 @@
       }
     },
     {
-      "seq": 72,
-      "t_offset_ms": 48889.3,
+      "seq": 76,
+      "t_offset_ms": 88546.2,
       "type": "stage",
       "data": {
         "name": "Settle",
@@ -1065,18 +1128,18 @@
       }
     },
     {
-      "seq": 73,
-      "t_offset_ms": 48896.6,
+      "seq": 77,
+      "t_offset_ms": 88557.7,
       "type": "receipt",
       "data": {
         "signer": "0x9C87fc961D2E84d374F1502C97a1C8B1C6C7D0f6",
-        "signature": "0xa8b18e690088a9f354d6837ee07251b8a3b87ebdbf475e6fa8f109a0d281f196571b98683374a9f0e6baf7ec07b0b5de3068d43ed98b70e36b6be60ecc129cd81c",
-        "deliverable_hash": "0xbff5736eff0a00f2aaa7aece1982eb2ccffbd532a2e182b8bdab594e23e9aae1"
+        "signature": "0xef4d593e6868d90b69ecc8aac21d55a5059d59bfd5e0fd0ef3149cd4445f5e0778e67c8e9ee2ddf108cfef5bd8165bbe400d475e348f005ef6a4445415dfd9f51b",
+        "deliverable_hash": "0x8f665800e0e2b5d47bac4c8e07c03503f9d7b43541673c26a0e6507109d4ec87"
       }
     },
     {
-      "seq": 74,
-      "t_offset_ms": 48896.6,
+      "seq": 78,
+      "t_offset_ms": 88557.7,
       "type": "stage",
       "data": {
         "name": "Done",
@@ -1084,21 +1147,21 @@
       }
     },
     {
-      "seq": 75,
-      "t_offset_ms": 48896.6,
+      "seq": 79,
+      "t_offset_ms": 88557.7,
       "type": "done",
       "data": {
         "gate_passed": false,
         "pay_fraction": 0.0,
         "total_settled_usd": 0.0,
         "total_withheld_usd": 0.1998,
-        "catch_summary": "1 fabricated claim(s) caught and withheld (36 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
+        "catch_summary": "1 fabricated claim(s) caught and withheld (40 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
         "seeded_probe_caught": true
       }
     },
     {
-      "seq": 76,
-      "t_offset_ms": 48896.6,
+      "seq": 80,
+      "t_offset_ms": 88557.8,
       "type": "stage",
       "data": {
         "name": "Done",

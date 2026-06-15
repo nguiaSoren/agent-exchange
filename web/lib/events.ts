@@ -41,6 +41,13 @@ export interface PoolAgent {
   cross_owner: boolean;
   /** The agent framework this agent runs on (native | langgraph | crewai). */
   framework: Framework;
+  /**
+   * The specialty key (e.g. "liability") — present on LIVE pool agents whose
+   * Band handle (e.g. "you/liability-auditor") differs from the bid's `worker`.
+   * The arena keys + resolves the provider by this when set, so a live node
+   * matches its bid/finding/settlement events and gets the right logo.
+   */
+  worker?: string;
 }
 
 export interface PoolEvent {

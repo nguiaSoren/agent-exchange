@@ -29,6 +29,7 @@ The SSE event schema the frontend depends on is documented inline at `run_job`.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import sys
@@ -437,7 +438,13 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         owner_label = owner_label_for(xowner_handle) if is_cross else "self"
         pool.append({"id": ident["id"], "handle": ident.get("handle", ""),
                      "name": ident.get("name", name), "owner": owner_label,
-                     "cross_owner": is_cross, "framework": framework})
+                     "cross_owner": is_cross, "framework": framework,
+                     # The specialty key — so the UI keys this node the SAME way as its
+                     # bid/finding/settlement events (which carry `worker`) and resolves
+                     # the right provider logo. Without it, live handles (e.g.
+                     # `you/liability-auditor`) key by handle ≠ the bid's `worker` →
+                     # detached nodes (no bid/verdict/coin animation) + a fallback logo.
+                     "worker": name})
         # A live bid: a modest fixed asking price (the on-network bidding auction is its
         # own spike; here we hire the keyed specialists directly so the demo always runs).
         price_usd = round(budget_usd / max(1, len(keys)), 4)
@@ -482,7 +489,8 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     )
     pool.append({"id": SEEDED_PROBE_ID, "handle": SEEDED_PROBE_ID,
                  "name": "Seeded Probe (verifier test)", "owner": "system",
-                 "cross_owner": False, "framework": "native", "seeded": True})
+                 "cross_owner": False, "framework": "native", "seeded": True,
+                 "worker": SEEDED_PROBE_ID})
     bids.append({"worker": SEEDED_PROBE_ID, "price_usd": 0.0, "relevance": 0.0,
                  "reputation": 0.0, "n_jobs": 0, "framework": "native", "seeded": True})
     hires.append(Hire(worker=SEEDED_PROBE_ID, price_atomic=0, value=0.0, relevance=0.0))
@@ -609,6 +617,11 @@ async def run_job(
       * ``error``        {message} — on any failure (graceful; the stream then ends)
     """
     mode = _resolve_mode(requested_mode)
+    # Live runs produce events in stage-bursts; pace each item out so the arena
+    # animates (staggered bids, verdicts landing one-by-one, room chatter) like
+    # the cinematic instead of snapping. Sim-over-/api/run stays instant (0) so
+    # tests + the rare sim-via-API path aren't slowed.
+    pace = 0.3 if mode == "live" else 0.0
     document = (document or "").strip() or _sample_document(kind)
     budget_usd = budget_usd or _DEFAULT_BUDGET_USD
     ctx: RunContext | None = None
@@ -631,6 +644,7 @@ async def run_job(
         yield "stage", {"name": "bid", "status": "start"}
         for b in ctx.bids:
             yield "bid", b
+            await asyncio.sleep(pace)
         yield "stage", {"name": "bid", "status": "end"}
 
         # 3. HIRE — the team selected under budget (here: the bidders that fit).
@@ -649,6 +663,7 @@ async def run_job(
         # join. Empty on the sim path (the sim marks cross_owner in its pool directly).
         for rm in ctx.recruit_messages:
             yield "room_message", rm
+            await asyncio.sleep(pace * 2)  # let the cross-owner join land
         yield "stage", {"name": "hire", "status": "end"}
 
         # 4. COLLABORATE — the in-room team audit (the real `collaborate_in_room`).
@@ -660,6 +675,7 @@ async def run_job(
         for msg in await _safe_transcript(ctx.market_band, ctx.work_room_id):
             sender = msg.get("sender_name") or msg.get("sender_id") or "?"
             yield "room_message", {"sender": sender, "content": msg.get("content") or ""}
+            await asyncio.sleep(pace * 1.5)  # readable "agents talking" cadence
         yield "stage", {"name": "collaborate", "status": "end"}
 
         # 5. VERIFY — surface each graded finding (specialists + reporter claims).
@@ -677,6 +693,7 @@ async def run_job(
                 # genuine worker — it is the verifier test, caught on purpose.
                 "seeded": af.finding.worker == SEEDED_PROBE_ID,
             }
+            await asyncio.sleep(pace)  # verdicts land one-by-one (the catch reads)
 
         # 5b. DRIFT — the SECOND cheat-signal, independent of the verifier: did
         # any worker quietly swap its declared model for a cheaper one while

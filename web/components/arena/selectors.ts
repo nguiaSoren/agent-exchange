@@ -77,10 +77,17 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
     return vm;
   };
 
-  // Framework folds from BOTH the pool (handle-keyed) and bids (worker-keyed);
-  // they carry the same value, but the pool covers nodes that never bid and bids
-  // cover live runs whose pool entry was missed. Default stays "native".
-  for (const a of state.pool) ensure(keyForRef(a.handle)).framework = a.framework;
+  // Framework folds from BOTH the pool and bids (same value); the pool covers
+  // nodes that never bid. Key by the specialty `worker` when present (live), else
+  // the handle (sim) — matching how buildNodes keys the node. Default stays "native".
+  // Also build a handle→nodeKey map so room-message senders (which arrive as Band
+  // handles, e.g. "you/liability-auditor") resolve to the same node as the bids.
+  const handleToKey = new Map<string, string>();
+  for (const a of state.pool) {
+    const nodeKey = keyForRef(a.worker || a.handle);
+    ensure(nodeKey).framework = a.framework;
+    if (a.handle) handleToKey.set(keyForRef(a.handle), nodeKey);
+  }
 
   for (const bid of state.bids) {
     const vm = ensure(keyForRef(bid.worker));
@@ -113,9 +120,11 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
 
   for (const s of state.settlements) ensure(keyForRef(s.worker)).settlement = s;
 
-  // Latest line per node (room senders are handles; resolve to the node key).
+  // Latest line per node (room senders are handles; resolve to the node key —
+  // via the pool's handle→key map first so LIVE handles land on the right node).
   for (const line of state.room) {
-    const key = keyForRef(line.sender);
+    const senderKey = keyForRef(line.sender);
+    const key = handleToKey.get(senderKey) ?? senderKey;
     if (!map.has(key)) continue; // skip coordinator/reporter (non-node senders)
     map.get(key)!.lastLine = line;
   }

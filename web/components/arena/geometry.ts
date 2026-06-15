@@ -124,9 +124,14 @@ export function edgePoints(
 export function buildNodes(state: RunState): ArenaNode[] {
   if (state.pool.length > 0) {
     return state.pool.map((a: PoolAgent) => {
-      const provider = resolveProvider(a.handle);
+      // Resolve by the specialty `worker` when present (LIVE agents, whose Band
+      // handle differs from the bid's worker key) so the node key + the provider
+      // logo match the bid/finding/settlement events; otherwise by handle (sim,
+      // which aliases its handles).
+      const ref = a.worker || a.handle;
+      const provider = resolveProvider(ref);
       return {
-        key: provider.key || normalizeKey(a.handle),
+        key: provider.key || normalizeKey(ref),
         handle: a.handle,
         label: a.name || provider.label,
         owner: a.owner ?? null,
