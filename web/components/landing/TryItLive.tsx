@@ -80,9 +80,9 @@ export function TryItLive() {
       typeof window !== "undefined"
         ? window.document.getElementById("arena-stage")
         : null;
-    // Pin the arena's TOP so the job/model + assembling ring stay in frame — the
-    // run begins at the top, so bottom-aligning would scroll past what matters.
-    scrollIntoFullView(arena, { align: "top" });
+    // Land on the arena's BOTTOM so the sponsor legend ("…routing via Band +
+    // AI/ML API + Featherless") stays in frame; the ring fills upward from there.
+    scrollIntoFullView(arena, { align: "bottom" });
   }, [kind, text]);
 
   const charCount = text.length;

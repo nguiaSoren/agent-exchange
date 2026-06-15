@@ -116,6 +116,53 @@ export function edgePoints(
 }
 
 /**
+ * A gently-bowed arc BETWEEN two ring nodes, trimmed to each node's rim — the
+ * path an agent→agent @mention hand-off particle travels. Returns an SVG path
+ * string (a quadratic curve) usable directly as a CSS `offset-path`.
+ *
+ * The arc bows perpendicular to the chord (a consistent side) so a message
+ * visibly *routes across the room* rather than firing a straight laser through
+ * the central verifier — reinforcing "agents talking to each other," not "agents
+ * reporting to the core."
+ */
+export function nodeToNodeArc(
+  layout: ArenaLayout,
+  a: NodePoint,
+  b: NodePoint,
+): { path: string; length: number } {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const dist = Math.hypot(dx, dy) || 1;
+  const ux = dx / dist;
+  const uy = dy / dist;
+  // Trim each end to the node rim so the particle starts/ends at the disc edge.
+  const x1 = a.x + ux * layout.nodeR;
+  const y1 = a.y + uy * layout.nodeR;
+  const x2 = b.x - ux * layout.nodeR;
+  const y2 = b.y - uy * layout.nodeR;
+  // Control point: the chord midpoint pushed along the chord's perpendicular so
+  // the arc bows to one side (≈22% of the chord length). We choose the perpendicular
+  // that points AWAY from the core (outward), so the message arcs around the room's
+  // edge and never crosses the central verifier — even for near-opposite nodes.
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const bow = Math.hypot(x2 - x1, y2 - y1) * 0.22;
+  let px = -uy; // a unit perpendicular to the chord
+  let py = ux;
+  // Flip to whichever perpendicular points outward from the core (cx,cy).
+  if (px * (mx - layout.cx) + py * (my - layout.cy) < 0) {
+    px = -px;
+    py = -py;
+  }
+  const ctrlX = mx + px * bow;
+  const ctrlY = my + py * bow;
+  return {
+    path: `M ${x1} ${y1} Q ${ctrlX} ${ctrlY} ${x2} ${y2}`,
+    length: Math.hypot(x2 - x1, y2 - y1),
+  };
+}
+
+/**
  * Build the ordered node roster from current run state. Uses the pool once it
  * has arrived (covering live/unknown agents), otherwise the known provider
  * roster so the ring is populated the instant a run starts. Every node carries

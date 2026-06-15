@@ -28,6 +28,25 @@ import { DetailDrawer, type ArenaSelection } from "./DetailDrawer";
 /** Senders that are orchestration roles, not ring nodes. */
 const NON_NODE_SENDERS = new Set(["@coordinator", "@reporter", "coordinator", "reporter"]);
 
+/**
+ * The first @mention in a room line that resolves to ANOTHER ring node — i.e. an
+ * agent→agent hand-off target. Returns its node key, or null when the line names
+ * no other ring agent (a plain status line). Drives the node→node arc particle.
+ */
+function mentionTargetKey(
+  content: string,
+  senderKey: string,
+  vms: Map<string, unknown>,
+): string | null {
+  const mentions = content.match(/@[\w./-]+/g);
+  if (!mentions) return null;
+  for (const m of mentions) {
+    const k = keyForRef(m);
+    if (k && k !== senderKey && vms.has(k)) return k;
+  }
+  return null;
+}
+
 function reducedMotion(): boolean {
   return (
     typeof window !== "undefined" &&
@@ -176,11 +195,15 @@ export function Arena({
   // ── particle queue (capped) ───────────────────────────────────────
   const [particles, setParticles] = useState<EdgeParticle[]>([]);
   const seqRef = useRef(0);
-  const pushParticle = (key: string, kind: EdgeParticle["kind"]) => {
+  const pushParticle = (
+    key: string,
+    kind: EdgeParticle["kind"],
+    to?: string,
+  ) => {
     if (reducedMotion()) return; // reduced-motion: no flying particles
     const seq = ++seqRef.current;
     setParticles((prev) => {
-      const next = [...prev, { key, kind, seq }];
+      const next = [...prev, { key, kind, to, seq }];
       return next.length > 10 ? next.slice(next.length - 10) : next; // cap concurrency
     });
     // Self-expire so the array doesn't grow unbounded.
@@ -237,7 +260,12 @@ export function Arena({
     if (!vms.has(key)) return; // sender not a ring node
     setSpeakingKey(key);
     setBubble({ key, text: line.content });
-    pushParticle(key, "message");
+    // If the line @mentions another ring agent, fly a hand-off particle
+    // sender→target (a routed message in the room). A plain status line gets the
+    // speaking pulse + bubble only — no particle to the core, so the Work phase
+    // reads as a conversation, not spokes into the verifier.
+    const target = mentionTargetKey(line.content, key, vms);
+    if (target) pushParticle(key, "message", target);
     const t1 = window.setTimeout(() => setSpeakingKey((k) => (k === key ? null : k)), 1600);
     const t2 = window.setTimeout(() => setBubble((b) => (b?.key === key ? null : b)), 2600);
     timers.current.push(t1, t2);

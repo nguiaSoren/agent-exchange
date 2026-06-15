@@ -121,8 +121,16 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(700, { type: "room_message", data: { sender: "@liability-hawk", content: "Reviewing §3 Limitation of Liability. Cap is tied to 12 months of fees; mutual exclusion of consequential damages. Drafting two findings." } });
   push(750, { type: "room_message", data: { sender: "@ip-warden", content: "§4 IP — license to Deliverables is non-exclusive + non-transferable, internal use only. Vendor keeps background tools/know-how. One finding." } });
   push(750, { type: "room_message", data: { sender: "@clause-clerk", content: "§5 Term & Termination — one-year term, auto-renews unless 60 days' notice; either party may terminate for uncured material breach after 30 days. One finding." } });
+  // Agent→agent hand-off (a routed @mention in the room): @ip-warden checks how
+  // §5 termination interacts with its §4 license finding; @clause-clerk answers.
+  push(700, { type: "room_message", data: { sender: "@ip-warden", content: "@clause-clerk does the §5 termination clause revoke the §4 Deliverables license?" } });
+  push(750, { type: "room_message", data: { sender: "@clause-clerk", content: "@ip-warden yes — on termination the internal-use license ends. I'll note that in my §5 finding." } });
   push(750, { type: "room_message", data: { sender: "@privacy-sentinel", content: "§7 Data Protection — 72-hour breach-notification window, processing on documented instructions only. Flagging the notification deadline." } });
-  push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "§8 Indemnification — IP-infringement indemnity, expressly capped by §3. Posting a finding (note: I'll claim an uncapped carve-out — watch the verifier)." } });
+  push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "§8 Indemnification — IP-infringement indemnity, expressly tied to §3. Drafting my finding." } });
+  // The disagreement the verifier later resolves — @liability-hawk reads §8 as
+  // capped by §3; @indemnity-owl (the seeded liar) hands back an uncapped claim.
+  push(750, { type: "room_message", data: { sender: "@liability-hawk", content: "@indemnity-owl §8 is 'subject to the limitation of liability in §3' — that caps your indemnity." } });
+  push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "@liability-hawk noted — but I'll file it as an uncapped IP carve-out. Let the verifier rule." } });
   // Per-agent work-progress: each specialist's in-room audit completes one-by-one
   // during the Work dwell, mirroring the LIVE `progress {worker, done:true}`
   // ordering (progress during work → findings during verify). The staggered

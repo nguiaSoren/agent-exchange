@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import type { ArenaLayout, ArenaNode, NodePoint } from "./geometry";
-import { edgePoints } from "./geometry";
+import { edgePoints, nodeToNodeArc } from "./geometry";
 import type { NodeVM, NodeStatus } from "./selectors";
 import styles from "./arena.module.css";
 
@@ -29,9 +29,15 @@ function reducedMotion(): boolean {
 }
 
 export interface EdgeParticle {
-  /** Node key the particle belongs to. */
+  /** Node key the particle belongs to (the SENDER for a message hand-off). */
   key: string;
   kind: "bid" | "message" | "coin";
+  /**
+   * For a `message` particle that is an agent→agent @mention hand-off: the
+   * TARGET node key. When set, the particle arcs node→node (a routed message in
+   * the room) instead of flying node→core. Ignored for bid/coin.
+   */
+  to?: string;
   /** Monotonic id so re-adding the same kind re-triggers the animation. */
   seq: number;
 }
@@ -71,6 +77,13 @@ export function ArenaEdges({
     for (const ed of edges) m.set(ed.key, ed);
     return m;
   }, [edges]);
+  // Node key → its on-canvas point, so an agent→agent message can arc directly
+  // from the sender node to the @mentioned target node.
+  const pointByKey = useMemo(() => {
+    const m = new Map<string, NodePoint>();
+    nodes.forEach((node, i) => m.set(node.key, points[i]));
+    return m;
+  }, [nodes, points]);
 
   return (
     <svg
@@ -141,21 +154,43 @@ export function ArenaEdges({
             </g>
           );
         }
+        // A `message` particle with a target is an agent→agent @mention hand-off:
+        // it ARCS node→node (a routed message crossing the room). Otherwise the
+        // particle flies node→core along the straight edge (bids; legacy messages).
+        const isHandoff = p.kind === "message" && p.to != null;
+        let offsetPath = `path("${ed.fwd}")`;
+        if (isHandoff) {
+          const from = pointByKey.get(p.key);
+          const target = pointByKey.get(p.to as string);
+          if (!from || !target) return null;
+          offsetPath = `path("${nodeToNodeArc(layout, from, target).path}")`;
+        }
         // Gold bid particle; bright mint (#2BFF9A) message particle — both pop
         // on the dark court.
         const color = p.kind === "bid" ? "#ffc233" : "#2bff9a";
         return (
           <g
-            key={`${p.kind}-${p.key}-${p.seq}`}
+            key={`${p.kind}-${p.key}-${p.to ?? "core"}-${p.seq}`}
             className={styles.travel}
             style={
               {
-                offsetPath: `path("${ed.fwd}")`,
-                ["--dur" as string]: p.kind === "bid" ? "760ms" : "820ms",
+                offsetPath,
+                ["--dur" as string]: p.kind === "bid" ? "760ms" : isHandoff ? "920ms" : "820ms",
               } as React.CSSProperties
             }
           >
-            <circle r={p.kind === "bid" ? 4 : 3.2} fill={color} opacity={muted ? 0.3 : undefined} />
+            <circle r={p.kind === "bid" ? 4 : 3.4} fill={color} opacity={muted ? 0.3 : undefined} />
+            {/* Hand-off particles carry a faint mint halo so a routed @mention
+                reads as a distinct "message in flight," not a bid. */}
+            {isHandoff && (
+              <circle
+                r={6}
+                fill="none"
+                stroke={color}
+                strokeWidth={0.8}
+                strokeOpacity={muted ? 0.2 : 0.5}
+              />
+            )}
           </g>
         );
       })}

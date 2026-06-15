@@ -524,12 +524,29 @@ export function ArenaNode({
           className={`${styles.bubble} pointer-events-none absolute z-30 max-w-[180px] rounded-lg border border-hud-neutral bg-surface px-2.5 py-1.5 font-mono text-[9.5px] leading-snug text-fg-muted shadow-glow-emerald`}
           style={bubbleStyle(point, diameter)}
         >
-          {bubble}
+          {renderMentions(bubble)}
         </div>
       )}
 
       {hover && <NodeHoverCard node={node} vm={vm} side={openSide} />}
     </div>
+  );
+}
+
+/**
+ * Render a floating-bubble line with @mentions tinted emerald — the same
+ * "deterministic @mention routing" cue the WorkRoom transcript shows as chips,
+ * kept lighter here (just colour) so it stays legible in the small bubble.
+ */
+function renderMentions(content: string) {
+  return content.split(/(@[\w./-]+)/g).map((p, i) =>
+    p.startsWith("@") ? (
+      <span key={i} className="font-medium text-emerald-glow">
+        {p}
+      </span>
+    ) : (
+      <span key={i}>{p}</span>
+    ),
   );
 }
 

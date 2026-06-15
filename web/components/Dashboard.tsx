@@ -8,6 +8,7 @@ import { runJob, fetchSample, warmBackend, API_BASE } from "@/lib/stream";
 import { localSample, mockRun } from "@/lib/mockRun";
 import { scrollIntoFullView } from "@/lib/scroll";
 import { JobCard } from "./JobCard";
+import { WorkRoom } from "./WorkRoom";
 import { Eyebrow, GlitchText, NeonButton, LiveDot, Exchange, Narrator } from "@/components/hud";
 import { IntroOverlay } from "./IntroOverlay";
 import { BeatCaption } from "./BeatCaption";
@@ -49,6 +50,18 @@ const FALLBACK_COPY: Record<string, string> = {
 };
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+/** A human title for the job core, derived from the posted document: the sample's
+ *  own title when it's the prefilled sample, else the first non-empty line
+ *  (trimmed), else a generic per-kind label. Lets the core render the job the
+ *  instant Run is pressed instead of lingering on "Awaiting a posted job". */
+function deriveJobTitle(kind: JobKind, doc: string): string {
+  const sample = localSample(kind);
+  if (doc.trim() === sample.document_text.trim()) return sample.title;
+  const firstLine = doc.split("\n").map((s) => s.trim()).find(Boolean) ?? "";
+  if (firstLine) return firstLine.length > 64 ? `${firstLine.slice(0, 63)}…` : firstLine;
+  return kind === "nda-review" ? "Your NDA" : "Your contract";
+}
 
 type Action =
   | { kind: "reset" }
@@ -156,6 +169,12 @@ export function Dashboard() {
   const narratorOn = state.running || state.finished;
   const consoleOpen = !narratorOn;
 
+  // The active stage name (live "Work" is the normalized name) — used to lift the
+  // Band-room transcript while the team is actually collaborating.
+  const activeStageName =
+    state.stages.find((s) => s.status === "active")?.name ?? null;
+  const workActive = activeStageName === "Work";
+
   // Play the LAST RECORDED real Band-room run through the SAME arena reducer.
   // Triggered when a live run is busy/capped/unavailable or fails on cold start.
   // Reuses the canonical replay schema (web/public/replays/live-real-run.replay.json,
@@ -231,12 +250,31 @@ export function Dashboard() {
       setLiveStarting(!isDemo);
       dispatch({ kind: "start" });
 
+      // Optimistic job render: we ALREADY hold the document the user posted, so
+      // paint it into the core NOW instead of sitting on "Awaiting a posted job"
+      // while the stream (or a Render cold start) catches up. The real `document`
+      // event — live or mock — overwrites this with identical data when it lands.
+      if (runDoc.trim()) {
+        dispatch({
+          kind: "event",
+          ev: {
+            type: "document",
+            data: {
+              kind: runKind,
+              title: deriveJobTitle(runKind, runDoc),
+              document_text: runDoc,
+              budget_usd: budget,
+            },
+          },
+        });
+      }
+
       // The console collapses on this render and the arena takes the stage —
       // scroll it FULLY into view (bottom corners + legend) after the relayout
       // paints. Two rAFs so the collapsed layout has settled first.
       requestAnimationFrame(() =>
         requestAnimationFrame(() =>
-          scrollIntoFullView(arenaRef.current, { align: "top" }),
+          scrollIntoFullView(arenaRef.current, { align: "bottom" }),
         ),
       );
 
@@ -550,8 +588,15 @@ export function Dashboard() {
             </NeonButton>
           )}
         </div>
+        {/* One Band-room stage: the agent RING and the live shared TRANSCRIPT
+            sit side-by-side on the same dark court, so the run reads as agents
+            conversing in one room (Band's #1 primitive) — not just spokes into
+            the verifier. Stacks on small screens. The room lifts during Work. */}
         <div className="ax-court px-3 py-6 sm:px-6 sm:py-8">
-          <Arena state={state} demoMode={demoMode} />
+          <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)]">
+            <Arena state={state} demoMode={demoMode} />
+            <WorkRoom room={state.room} workActive={workActive} />
+          </div>
         </div>
       </section>
 

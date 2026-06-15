@@ -19,7 +19,7 @@
  */
 export function scrollIntoFullView(
   el: HTMLElement | null,
-  { margin = 24, align }: { margin?: number; align?: "top" } = {},
+  { margin = 24, align }: { margin?: number; align?: "top" | "bottom" } = {},
 ): void {
   if (!el || typeof window === "undefined") return;
   const reduce =
@@ -35,6 +35,12 @@ export function scrollIntoFullView(
     // Pin the top: a run begins at the top of the stage (the job + assembling
     // ring), so keep that in frame rather than scrolling past it to the bottom.
     targetTop = window.scrollY + rect.top - margin;
+  } else if (align === "bottom") {
+    // Pin the bottom: the section ends with the sponsor legend ("…routing via
+    // Band + AI/ML API + Featherless"). Landing on the bottom keeps that line in
+    // frame (a touch further down than top-align) — the run-start framing the
+    // judge sees. The ring fills upward from there.
+    targetTop = window.scrollY + rect.bottom - vh + margin;
   } else if (rect.height <= vh - margin * 2) {
     // Fits: centre so the top AND bottom corners are visible.
     targetTop = window.scrollY + rect.top - (vh - rect.height) / 2;
