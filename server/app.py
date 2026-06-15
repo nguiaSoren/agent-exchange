@@ -41,11 +41,16 @@ from typing import Any
 from dotenv import load_dotenv
 
 # Make `agent_exchange` importable when the server is launched from the repo root.
+# Also put this `server/` dir on the path so the sibling modules (`sim`,
+# `demo_budget`) resolve as bare imports no matter the launch CWD — e.g. Render's
+# `uvicorn server.app:app` from the repo root, where `server/` is NOT auto-added.
 
-_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.dirname(_HERE)
 _SRC = os.path.join(_ROOT, "src")
-if _SRC not in sys.path:
-    sys.path.insert(0, _SRC)
+for _p in (_SRC, _HERE):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 
 load_dotenv(os.path.join(_ROOT, ".env"))
 
