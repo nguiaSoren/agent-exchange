@@ -102,6 +102,17 @@ export function ArenaNode({
   // (folded onto vm.gateway); otherwise fall back to the illustrative record.
   const gateway = vm.gateway ?? node.provider.gateway;
 
+  // Whether THIS node shows a gateway chip — the framework routing pill (non-
+  // native, keyed off the illustrative provider gateway) or the native gateway
+  // chip (keyed off the effective gateway). Both chips ALREADY print the model
+  // name, so when one shows we must NOT also print the standalone model-name line
+  // below (that line is the fallback for nodes with no chip — else it duplicates).
+  const gatewayChipShown =
+    vm.framework === "native"
+      ? gateway === "AI/ML API" || gateway === "Featherless"
+      : node.provider.gateway === "AI/ML API" ||
+        node.provider.gateway === "Featherless";
+
   // Open the hover card toward the canvas center (where there's room): a node
   // on the LEFT half opens RIGHT, a node on the RIGHT half opens LEFT.
   const openSide: "left" | "right" = point.x < cx ? "right" : "left";
@@ -407,9 +418,7 @@ export function ArenaNode({
             logo (AI/ML API / Featherless) COEXIST, connected by an arrow that
             reads "this model, routed through this partner, via the X framework."
             Reuses the node chip vocab; bordered/labelled by the framework accent. */}
-        {vm.framework !== "native" &&
-          (node.provider.gateway === "AI/ML API" ||
-            node.provider.gateway === "Featherless") && (
+        {vm.framework !== "native" && gatewayChipShown && (
             <span
               title={`${FRAMEWORKS[vm.framework].label} agent — runs ${node.provider.model} routed through ${node.provider.gateway}, collaborating via Band`}
               className="flex items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-0.5"
@@ -441,8 +450,7 @@ export function ArenaNode({
             caption flags the assignment as illustrative. Non-native nodes show
             the gateway in their routing pill above, so they're excluded here (no
             double-render). Reads "claude-haiku · [AI/ML API mark]". */}
-        {vm.framework === "native" &&
-          (gateway === "AI/ML API" || gateway === "Featherless") && (
+        {vm.framework === "native" && gatewayChipShown && (
           <span
             title={`${node.provider.model} routed through ${gateway}, collaborating via Band`}
             className="flex items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-0.5"
@@ -468,7 +476,9 @@ export function ArenaNode({
           </span>
         ) : vm.bid && !vm.settlement ? (
           <Stars value={vm.bid.reputation} size={9} />
-        ) : !vm.settlement ? (
+        ) : !vm.settlement && !gatewayChipShown ? (
+          // Standalone model name — ONLY when no gateway chip is shown above
+          // (the chip already prints the model; else this duplicates it).
           <span className="font-mono text-[8.5px] text-fg-faint">
             {node.provider.model}
           </span>
