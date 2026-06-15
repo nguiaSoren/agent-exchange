@@ -69,6 +69,27 @@ export function ArenaNode({
   const dim = status === "declined";
   const hired = ["hired", "working", "judged", "paid", "withheld"].includes(status);
   const worst = vm.worstVerdict;
+
+  // ── Filling progress ring ─────────────────────────────────────────────
+  // Shows HOW FAR each agent is through its work, resolving one-by-one:
+  //  • working               → crawl asymptotically toward ~85% (keyframe)
+  //  • working + collabDone   → advance to ~90% (in-room audit landed)
+  //  • resolved (verdict in)  → snap to 100% (a quick complete), then fade
+  // `resolved` = a finding/settlement has landed, i.e. status left "working".
+  const resolved = ["judged", "paid", "withheld"].includes(status);
+  // Render the ring for the whole work→resolve arc. We keep it mounted briefly
+  // after resolve so the snap-to-100% reads before it fades.
+  const showRing = status === "working" || resolved;
+  const ringPhase: "work" | "done" | "resolve" = resolved
+    ? "resolve"
+    : vm.collabDone
+      ? "done"
+      : "work";
+  // SVG geometry: stroke sits just outside the disc rim. r is in the ring's own
+  // viewBox (0..diameter); stroke width scales gently with node size.
+  const ringStroke = Math.max(2, Math.round(diameter * 0.05));
+  const ringR = diameter / 2 - ringStroke / 2;
+  const ringCirc = 2 * Math.PI * ringR;
   // A flagged drift signal reads as a failure (this agent cheated) — same danger
   // accent as fabrication/withheld. Clean (non-flagged) drifts render NO badge.
   const driftFlagged = vm.drift?.flagged === true;
@@ -159,6 +180,46 @@ export function ArenaNode({
             style={{ width: diameter, height: diameter, border: "1.5px solid var(--ax-emerald-glow)" }}
           />
         </>
+      )}
+
+      {/* Filling progress ring — the headline "how far" cue. An SVG arc whose
+          stroke-dashoffset advances: a CSS keyframe crawls it asymptotically to
+          ~85% while working, a class swap transitions it to ~90% on collabDone,
+          and to 100% (a quick complete) on resolve, after which the wrapper
+          fades. Compositor-friendly (stroke-dashoffset/opacity). Reduced-motion
+          shows a static partial arc (see .progressRing rules). */}
+      {showRing && (
+        <svg
+          aria-hidden
+          className={`${styles.progressRing} ${
+            ringPhase === "resolve"
+              ? styles.progressResolve
+              : ringPhase === "done"
+                ? styles.progressDone
+                : styles.progressWork
+          } pointer-events-none absolute left-1/2 top-1/2`}
+          width={diameter}
+          height={diameter}
+          viewBox={`0 0 ${diameter} ${diameter}`}
+          style={{
+            // Center over the disc and rotate so the arc starts at 12 o'clock.
+            transform: "translate(-50%, -50%) rotate(-90deg)",
+            ["--ring-circ" as string]: ringCirc,
+          }}
+        >
+          <circle
+            cx={diameter / 2}
+            cy={diameter / 2}
+            r={ringR}
+            fill="none"
+            stroke="var(--ax-emerald-glow)"
+            strokeWidth={ringStroke}
+            strokeLinecap="round"
+            strokeDasharray={ringCirc}
+            // Initial offset = empty ring; CSS drives it from here.
+            strokeDashoffset={ringCirc}
+          />
+        </svg>
       )}
 
       {/* The disc — click affordance: lifts + gains a soft ring on hover/focus.

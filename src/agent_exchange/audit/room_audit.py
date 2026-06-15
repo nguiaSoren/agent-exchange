@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from collections.abc import Awaitable, Callable
 
 from ..verify.verifier import Verifier
 from ..workers.finding import Finding
@@ -86,12 +87,32 @@ async def _best_effort_post(
         _log.warning("in-room %s post failed (continuing): %s", what, exc, exc_info=True)
 
 
+async def _signal_complete(
+    on_member_complete: Callable[[str], Awaitable[None]] | None, specialty: str
+) -> None:
+    """Fire the per-member completion callback, containing any failure.
+
+    Progress is purely informational (it drives the live UI's per-agent "done" beat), so a
+    raising callback must never abort the member's round or lose its findings. Failures are
+    logged at WARNING and swallowed.
+    """
+    if on_member_complete is None:
+        return
+    try:
+        await on_member_complete(specialty)
+    except Exception as exc:  # noqa: BLE001 — progress is additive; never break the round.
+        _log.warning(
+            "on_member_complete(%r) failed (continuing): %s", specialty, exc, exc_info=True
+        )
+
+
 async def _member_round(
     member: CollaborationMember,
     contract: str,
     room_id: str,
     sem: asyncio.Semaphore,
     reporter_mention: dict,
+    on_member_complete: Callable[[str], Awaitable[None]] | None = None,
 ) -> list[Finding]:
     """Run one member's audit under the concurrency gate and post its findings as itself.
 
@@ -99,6 +120,10 @@ async def _member_round(
     aborts the round. The findings post is best-effort and @mentions the reporter (Band
     requires every message to mention at least one participant; the findings are headed to
     the reporter for synthesis anyway).
+
+    The instant this member's ``findings()`` resolves — whether it returned findings or
+    raised (still "completed") — ``on_member_complete(member.specialty)`` fires (if given),
+    so the live stream can surface real per-agent progress as each member actually finishes.
     """
     async with sem:
         try:
@@ -110,7 +135,9 @@ async def _member_round(
                 exc,
                 exc_info=True,
             )
+            await _signal_complete(on_member_complete, member.specialty)
             return []
+        await _signal_complete(on_member_complete, member.specialty)
         if member.post_to_room:
             await _best_effort_post(
                 member.band,
@@ -130,6 +157,7 @@ async def collaborate_in_room(
     verifier: Verifier,
     *,
     max_concurrency: int = 6,
+    on_member_complete: Callable[[str], Awaitable[None]] | None = None,
 ) -> RoomAuditResult:
     """Run an in-room collaborative audit: parallel specialists → reporter → verify both.
 
@@ -169,6 +197,13 @@ async def collaborate_in_room(
         per claim, in order.
     max_concurrency:
         Upper bound on concurrently-running member audits (caps provider fan-out).
+    on_member_complete:
+        Optional async callback fired with ``member.specialty`` the moment that member's
+        in-room audit (its ``findings()``) resolves — whether it returned findings or raised
+        (still "completed"). Fires once per member, concurrently, as each really finishes, so
+        a live caller can stream per-agent progress while this coroutine is still running. A
+        raising callback is contained (logged, swallowed) and never aborts the round. When
+        ``None`` (the default) behaviour and the return value are unchanged.
 
     Returns
     -------
@@ -203,7 +238,14 @@ async def collaborate_in_room(
     indexed = list(enumerate(team))
     results = await asyncio.gather(
         *(
-            _member_round(member, contract, work_room_id, sem, reporter_member.mention)
+            _member_round(
+                member,
+                contract,
+                work_room_id,
+                sem,
+                reporter_member.mention,
+                on_member_complete,
+            )
             for _, member in indexed
         )
     )

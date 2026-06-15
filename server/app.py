@@ -625,6 +625,14 @@ async def run_job(
       * ``hire``         {hired:[{worker,price_usd}], declined:[worker], strategy,
                           pay_fraction_target}
       * ``room_message`` {sender, content} — the collaboration transcript
+      * ``progress``     {worker, done:true} — LIVE only; emitted once per posting team
+                          member the moment its in-room audit (its ``findings()``)
+                          completes during the collaborate phase, so the UI shows each
+                          agent finishing progressively (real per-agent progress)
+                          instead of all sitting uniformly until verdicts burst at the
+                          end. ``worker`` is the specialty key (the same key the
+                          pool/bid carry). The sim path does NOT emit ``progress`` (its
+                          collaborate is instant/canned).
       * ``finding``      {worker, clause_ref, claim, verdict, confidence, evidence_quote}
       * ``drift``        {worker, flagged, severity, model, baseline_label,
                           model_switch, price_mismatch, overcharge_ratio,
@@ -710,9 +718,44 @@ async def run_job(
                     "content": f"Reviewing the contract for {m.area}…",
                 }
                 await asyncio.sleep(pace)
-        result = await collaborate_in_room(
-            ctx.work_room_id, document, ctx.team, ctx.reporter, ctx.verifier
-        )
+        if mode == "live":
+            # LIVE: stream per-agent completion AS EACH specialist's in-room audit
+            # finishes. `collaborate_in_room` fires `on_member_complete(specialty)` the
+            # moment a member's `findings()` resolves; we funnel those through a queue
+            # and drain it WHILE the collaborate task runs, emitting a `progress` event
+            # per member. The `task.done()` loop + final drain guarantee termination
+            # (never deadlock); `await task` at the end re-raises any failure into the
+            # existing error handling, so a collaborate/progress fault still ends the
+            # stream cleanly.
+            queue: asyncio.Queue[str] = asyncio.Queue()
+
+            async def _on_done(specialty: str) -> None:
+                await queue.put(specialty)
+
+            task = asyncio.create_task(
+                collaborate_in_room(
+                    ctx.work_room_id,
+                    document,
+                    ctx.team,
+                    ctx.reporter,
+                    ctx.verifier,
+                    on_member_complete=_on_done,
+                )
+            )
+            while not task.done():
+                try:
+                    worker = await asyncio.wait_for(queue.get(), timeout=0.25)
+                    yield "progress", {"worker": worker, "done": True}
+                except asyncio.TimeoutError:
+                    pass
+            while not queue.empty():
+                yield "progress", {"worker": queue.get_nowait(), "done": True}
+            result = await task  # propagate result + any exception
+        else:
+            # SIM: collaborate is instant/canned — no progress to stream.
+            result = await collaborate_in_room(
+                ctx.work_room_id, document, ctx.team, ctx.reporter, ctx.verifier
+            )
         # The room transcript: who posted what (best-effort; market may not see it live).
         for msg in await _safe_transcript(ctx.market_band, ctx.work_room_id):
             sender = msg.get("sender_name") or msg.get("sender_id") or "?"

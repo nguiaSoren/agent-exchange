@@ -93,6 +93,18 @@ export interface RoomMessageEvent {
   content: string;
 }
 
+/**
+ * Per-agent work-progress signal. Emitted (LIVE) once per agent the moment its
+ * in-room audit completes during the collaborate phase — `done=true`. Drives the
+ * arena's filling progress ring: the ring crawls asymptotically while the agent
+ * works, advances when this lands, then snaps to 100% when the verdict (finding)
+ * arrives. So agents visibly finish one-by-one instead of all at once.
+ */
+export interface ProgressEvent {
+  worker: string;
+  done: boolean;
+}
+
 /** One graded finding: a claim checked against the document text. */
 export interface FindingEvent {
   worker: string;
@@ -171,6 +183,7 @@ export type ExchangeEvent =
   | { type: "bid"; data: BidEvent }
   | { type: "hire"; data: HireEvent }
   | { type: "room_message"; data: RoomMessageEvent }
+  | { type: "progress"; data: ProgressEvent }
   | { type: "finding"; data: FindingEvent }
   | { type: "drift"; data: DriftEvent }
   | { type: "settle"; data: SettleEvent }

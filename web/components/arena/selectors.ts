@@ -40,6 +40,8 @@ export interface NodeVM {
   worstVerdict: Verdict | null;
   /** Latest behavioral-drift signal for this node (latest wins), or null. */
   drift: DriftEvent | null;
+  /** True once a `progress {worker, done:true}` arrived (in-room audit complete). */
+  collabDone: boolean;
   /** The agent framework this node runs on (from pool/bid; default "native"). */
   framework: Framework;
   /** The provider this node ACTUALLY routes through (LIVE pool/bid only; else undefined). */
@@ -57,6 +59,7 @@ const EMPTY_VM: NodeVM = {
   findings: [],
   worstVerdict: null,
   drift: null,
+  collabDone: false,
   framework: "native",
   gateway: undefined,
   settlement: null,
@@ -123,6 +126,10 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
 
   // Latest drift signal per node wins (one event per worker, but be defensive).
   for (const d of state.drifts) ensure(keyForRef(d.worker)).drift = d;
+
+  // Per-worker collaborate-completion (progress {done:true}). Keyed the same way
+  // as bids/findings so the ring resolves on the node that actually finished.
+  for (const w of state.collabDone) ensure(keyForRef(w)).collabDone = true;
 
   for (const s of state.settlements) ensure(keyForRef(s.worker)).settlement = s;
 

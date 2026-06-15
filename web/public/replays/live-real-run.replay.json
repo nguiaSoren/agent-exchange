@@ -1,18 +1,18 @@
 {
   "schema": "agent-exchange.replay/v1",
-  "job_id": "live-contract-audit-20260615T1054",
+  "job_id": "live-contract-audit-20260615T1142",
   "kind": "contract-audit",
   "mode": "live",
   "title": "Acme MSA \u2014 clause audit",
   "budget_usd": 0.2,
-  "recorded_at": "2026-06-15T10:54:23Z",
+  "recorded_at": "2026-06-15T11:42:06Z",
   "seed": 1,
   "totals": {
     "gate_passed": false,
     "pay_fraction": 0.0,
     "total_settled_usd": 0.0,
     "total_withheld_usd": 0.1998,
-    "catch_summary": "1 fabricated claim(s) caught and withheld (52 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
+    "catch_summary": "2 fabricated claim(s) caught and withheld (55 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
     "seeded_probe_caught": true
   },
   "tx_links": [],
@@ -39,7 +39,7 @@
     },
     {
       "seq": 2,
-      "t_offset_ms": 8558.2,
+      "t_offset_ms": 9856.0,
       "type": "pool",
       "data": {
         "agents": [
@@ -119,7 +119,7 @@
     },
     {
       "seq": 3,
-      "t_offset_ms": 8558.2,
+      "t_offset_ms": 9856.0,
       "type": "stage",
       "data": {
         "name": "Discover",
@@ -128,7 +128,7 @@
     },
     {
       "seq": 4,
-      "t_offset_ms": 8558.2,
+      "t_offset_ms": 9856.0,
       "type": "stage",
       "data": {
         "name": "Bid",
@@ -137,7 +137,7 @@
     },
     {
       "seq": 5,
-      "t_offset_ms": 8558.2,
+      "t_offset_ms": 9856.0,
       "type": "bid",
       "data": {
         "worker": "liability",
@@ -151,7 +151,7 @@
     },
     {
       "seq": 6,
-      "t_offset_ms": 8859.4,
+      "t_offset_ms": 10157.1,
       "type": "bid",
       "data": {
         "worker": "ip",
@@ -165,7 +165,7 @@
     },
     {
       "seq": 7,
-      "t_offset_ms": 9160.6,
+      "t_offset_ms": 10458.0,
       "type": "bid",
       "data": {
         "worker": "termination",
@@ -179,7 +179,7 @@
     },
     {
       "seq": 8,
-      "t_offset_ms": 9461.8,
+      "t_offset_ms": 10758.9,
       "type": "bid",
       "data": {
         "worker": "tax",
@@ -193,7 +193,7 @@
     },
     {
       "seq": 9,
-      "t_offset_ms": 9763.0,
+      "t_offset_ms": 11060.1,
       "type": "bid",
       "data": {
         "worker": "data_privacy",
@@ -207,7 +207,7 @@
     },
     {
       "seq": 10,
-      "t_offset_ms": 10064.2,
+      "t_offset_ms": 11361.2,
       "type": "bid",
       "data": {
         "worker": "indemnity",
@@ -221,7 +221,7 @@
     },
     {
       "seq": 11,
-      "t_offset_ms": 10365.3,
+      "t_offset_ms": 11661.6,
       "type": "bid",
       "data": {
         "worker": "seeded-probe",
@@ -236,7 +236,7 @@
     },
     {
       "seq": 12,
-      "t_offset_ms": 10666.4,
+      "t_offset_ms": 11962.8,
       "type": "stage",
       "data": {
         "name": "Bid",
@@ -245,7 +245,7 @@
     },
     {
       "seq": 13,
-      "t_offset_ms": 10666.4,
+      "t_offset_ms": 11962.8,
       "type": "stage",
       "data": {
         "name": "Hire",
@@ -254,7 +254,7 @@
     },
     {
       "seq": 14,
-      "t_offset_ms": 10666.4,
+      "t_offset_ms": 11962.9,
       "type": "hire",
       "data": {
         "hired": [
@@ -294,7 +294,7 @@
     },
     {
       "seq": 15,
-      "t_offset_ms": 10666.4,
+      "t_offset_ms": 11962.9,
       "type": "room_message",
       "data": {
         "sender": "market",
@@ -303,7 +303,7 @@
     },
     {
       "seq": 16,
-      "t_offset_ms": 11267.6,
+      "t_offset_ms": 12563.4,
       "type": "stage",
       "data": {
         "name": "Hire",
@@ -312,7 +312,7 @@
     },
     {
       "seq": 17,
-      "t_offset_ms": 11267.6,
+      "t_offset_ms": 12563.4,
       "type": "stage",
       "data": {
         "name": "Work",
@@ -321,7 +321,7 @@
     },
     {
       "seq": 18,
-      "t_offset_ms": 11267.6,
+      "t_offset_ms": 12563.4,
       "type": "room_message",
       "data": {
         "sender": "liability",
@@ -330,7 +330,7 @@
     },
     {
       "seq": 19,
-      "t_offset_ms": 11568.8,
+      "t_offset_ms": 12864.6,
       "type": "room_message",
       "data": {
         "sender": "ip",
@@ -339,7 +339,7 @@
     },
     {
       "seq": 20,
-      "t_offset_ms": 11870.0,
+      "t_offset_ms": 13165.7,
       "type": "room_message",
       "data": {
         "sender": "termination",
@@ -348,7 +348,7 @@
     },
     {
       "seq": 21,
-      "t_offset_ms": 12171.2,
+      "t_offset_ms": 13467.1,
       "type": "room_message",
       "data": {
         "sender": "tax",
@@ -357,7 +357,7 @@
     },
     {
       "seq": 22,
-      "t_offset_ms": 12475.7,
+      "t_offset_ms": 13767.4,
       "type": "room_message",
       "data": {
         "sender": "data_privacy",
@@ -366,7 +366,7 @@
     },
     {
       "seq": 23,
-      "t_offset_ms": 12776.9,
+      "t_offset_ms": 14068.2,
       "type": "room_message",
       "data": {
         "sender": "indemnity",
@@ -375,7 +375,70 @@
     },
     {
       "seq": 24,
-      "t_offset_ms": 94411.8,
+      "t_offset_ms": 18092.8,
+      "type": "progress",
+      "data": {
+        "worker": "termination",
+        "done": true
+      }
+    },
+    {
+      "seq": 25,
+      "t_offset_ms": 18312.1,
+      "type": "progress",
+      "data": {
+        "worker": "tax",
+        "done": true
+      }
+    },
+    {
+      "seq": 26,
+      "t_offset_ms": 18334.3,
+      "type": "progress",
+      "data": {
+        "worker": "seeded-probe",
+        "done": true
+      }
+    },
+    {
+      "seq": 27,
+      "t_offset_ms": 19851.1,
+      "type": "progress",
+      "data": {
+        "worker": "indemnity",
+        "done": true
+      }
+    },
+    {
+      "seq": 28,
+      "t_offset_ms": 20140.6,
+      "type": "progress",
+      "data": {
+        "worker": "ip",
+        "done": true
+      }
+    },
+    {
+      "seq": 29,
+      "t_offset_ms": 20714.9,
+      "type": "progress",
+      "data": {
+        "worker": "data_privacy",
+        "done": true
+      }
+    },
+    {
+      "seq": 30,
+      "t_offset_ms": 44338.8,
+      "type": "progress",
+      "data": {
+        "worker": "liability",
+        "done": true
+      }
+    },
+    {
+      "seq": 31,
+      "t_offset_ms": 88006.4,
       "type": "stage",
       "data": {
         "name": "Work",
@@ -383,8 +446,8 @@
       }
     },
     {
-      "seq": 25,
-      "t_offset_ms": 94411.9,
+      "seq": 32,
+      "t_offset_ms": 88006.4,
       "type": "stage",
       "data": {
         "name": "Verify",
@@ -392,125 +455,125 @@
       }
     },
     {
-      "seq": 26,
-      "t_offset_ms": 94411.9,
+      "seq": 33,
+      "t_offset_ms": 88006.4,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
         "claim": "Clause 5 prohibits Vendor from using Client data to train models, but does not restrict Vendor's use of Client data for any other purpose, including aggregation, analysis, or incorporation into Vendor's own products or services.",
         "verdict": "partial",
-        "confidence": 0.76,
+        "confidence": 0.73,
         "evidence_quote": "Vendor may not use Client data to train models.",
         "seeded": false
       }
     },
     {
-      "seq": 27,
-      "t_offset_ms": 94713.1,
+      "seq": 34,
+      "t_offset_ms": 88307.2,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
         "claim": "Clause 5 defines Confidential Information protection duration as 3 years after disclosure, which is shorter than typical commercial standards and may be insufficient for sensitive or long-lived data.",
         "verdict": "partial",
-        "confidence": 0.68,
+        "confidence": 0.79,
         "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure.",
         "seeded": false
       }
     },
     {
-      "seq": 28,
-      "t_offset_ms": 95014.3,
+      "seq": 35,
+      "t_offset_ms": 88608.1,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
         "claim": "Clause 5 requires Vendor to notify Client of security breaches within 72 hours, but does not define what constitutes a 'security breach' or specify the content, format, or recipient of the notification.",
         "verdict": "confirmed",
-        "confidence": 0.97,
+        "confidence": 0.99,
         "evidence_quote": "Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 29,
-      "t_offset_ms": 95315.5,
+      "seq": 36,
+      "t_offset_ms": 88909.3,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
-        "claim": "Clause 5 does not address data ownership, Client's right to access, retrieve, or delete its data upon termination, or Vendor's obligation to return or delete Client data after the Agreement ends.",
+        "claim": "Clause 5 does not address Client's rights to access, delete, return, or port its data upon termination of the Agreement.",
         "verdict": "confirmed",
-        "confidence": 0.95,
+        "confidence": 0.96,
         "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 30,
-      "t_offset_ms": 95616.6,
+      "seq": 37,
+      "t_offset_ms": 89210.5,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
         "claim": "Clause 5 does not specify technical or organisational security safeguards (e.g., encryption, access controls, audit rights) that Vendor must implement to protect Client data.",
         "verdict": "confirmed",
-        "confidence": 0.96,
-        "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 31,
-      "t_offset_ms": 95917.9,
-      "type": "finding",
-      "data": {
-        "worker": "data_privacy",
-        "clause_ref": "5",
-        "claim": "Clause 5 does not address compliance with data protection laws (e.g., GDPR, CCPA) or require Vendor to act as a data processor, enter into Data Processing Agreements, or respect data subject rights.",
-        "verdict": "confirmed",
-        "confidence": 0.95,
+        "confidence": 0.97,
         "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 32,
-      "t_offset_ms": 96219.1,
+      "seq": 38,
+      "t_offset_ms": 89511.6,
       "type": "finding",
       "data": {
         "worker": "data_privacy",
         "clause_ref": "5",
-        "claim": "Clause 5 does not restrict Vendor's right to disclose Client data to sub-processors, third parties, or affiliates, or require Vendor to obtain Client's prior consent for such disclosures.",
+        "claim": "Clause 5 does not address Vendor's use of sub-processors or third parties to process Client data, or require Client consent for such use.",
         "verdict": "confirmed",
-        "confidence": 0.94,
+        "confidence": 0.97,
         "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 33,
-      "t_offset_ms": 96519.7,
+      "seq": 39,
+      "t_offset_ms": 89812.7,
+      "type": "finding",
+      "data": {
+        "worker": "data_privacy",
+        "clause_ref": "5",
+        "claim": "Clause 5 does not address compliance with privacy laws such as GDPR, CCPA, or other data protection regulations, or specify which party is the data controller and which is the processor.",
+        "verdict": "confirmed",
+        "confidence": 0.97,
+        "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 40,
+      "t_offset_ms": 90113.8,
       "type": "finding",
       "data": {
         "worker": "indemnity",
         "clause_ref": "6",
-        "claim": "Clause 6 indemnifies Client against third-party IP infringement claims but does not specify whether the indemnity covers only third-party claims or also first-party losses incurred by Client.",
+        "claim": "Indemnification obligation is limited to third-party claims of IP infringement in deliverables only; does not cover other categories of third-party claims (e.g., bodily injury, property damage, data breach, breach of contract, violations of law).",
         "verdict": "confirmed",
-        "confidence": 0.92,
+        "confidence": 0.9,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
         "seeded": false
       }
     },
     {
-      "seq": 34,
-      "t_offset_ms": 96820.3,
+      "seq": 41,
+      "t_offset_ms": 90415.0,
       "type": "finding",
       "data": {
         "worker": "indemnity",
         "clause_ref": "6",
-        "claim": "Clause 6 does not define the procedure for notice, control of defense, or consent-to-settle requirements in connection with the indemnification obligation.",
+        "claim": "Indemnification scope includes defense costs and settlements but does not explicitly address whether it covers first-party losses or only third-party claims.",
         "verdict": "confirmed",
         "confidence": 0.93,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
@@ -518,27 +581,13 @@
       }
     },
     {
-      "seq": 35,
-      "t_offset_ms": 97121.5,
-      "type": "finding",
-      "data": {
-        "worker": "indemnity",
-        "clause_ref": "1, 6",
-        "claim": "Clause 1 states the liability cap does not apply to indemnification obligations, meaning Vendor's indemnification obligation under Clause 6 is uncapped.",
-        "verdict": "confirmed",
-        "confidence": 0.98,
-        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.\n\n6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 36,
-      "t_offset_ms": 97422.6,
+      "seq": 42,
+      "t_offset_ms": 90716.2,
       "type": "finding",
       "data": {
         "worker": "indemnity",
         "clause_ref": "6",
-        "claim": "Clause 6 does not contain carve-outs or exceptions limiting Vendor's indemnity obligation to claims arising from Vendor's own acts, omissions, or modifications, or excluding claims caused by Client's use of deliverables outside the scope authorized.",
+        "claim": "Indemnification clause contains no carve-outs or exceptions for claims arising from Client's own modifications, use, or negligence.",
         "verdict": "confirmed",
         "confidence": 0.9,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
@@ -546,22 +595,50 @@
       }
     },
     {
-      "seq": 37,
-      "t_offset_ms": 97723.8,
+      "seq": 43,
+      "t_offset_ms": 91017.3,
       "type": "finding",
       "data": {
         "worker": "indemnity",
         "clause_ref": "6",
-        "claim": "The indemnification obligation in Clause 6 runs one-way from Vendor to Client only; Client assumes no reciprocal indemnification obligation to Vendor.",
+        "claim": "Indemnification obligation is expressly excluded from the liability cap in Section 1, meaning Vendor's indemnification exposure is uncapped.",
         "verdict": "confirmed",
         "confidence": 0.99,
+        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 44,
+      "t_offset_ms": 91318.5,
+      "type": "finding",
+      "data": {
+        "worker": "indemnity",
+        "clause_ref": "6",
+        "claim": "Indemnification clause does not specify procedures for notice, control of defense, or Client consent to settlement.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 45,
+      "t_offset_ms": 91619.6,
+      "type": "finding",
+      "data": {
+        "worker": "indemnity",
+        "clause_ref": "6",
+        "claim": "Indemnification runs one-way from Vendor to Client only; Client has no reciprocal indemnification obligation to Vendor.",
+        "verdict": "confirmed",
+        "confidence": 0.96,
         "evidence_quote": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
         "seeded": false
       }
     },
     {
-      "seq": 38,
-      "t_offset_ms": 98025.0,
+      "seq": 46,
+      "t_offset_ms": 91920.1,
       "type": "finding",
       "data": {
         "worker": "ip",
@@ -569,69 +646,83 @@
         "claim": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation, with no retention of rights by Vendor in the work product itself.",
         "verdict": "confirmed",
         "confidence": 0.98,
-        "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP",
+        "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation.",
         "seeded": false
       }
     },
     {
-      "seq": 39,
-      "t_offset_ms": 98325.3,
+      "seq": 47,
+      "t_offset_ms": 92220.6,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "2",
         "claim": "Vendor retains pre-existing background IP and grants Client only a non-exclusive license to use it, without specification of territory, duration, sublicensability, or field of use.",
         "verdict": "confirmed",
-        "confidence": 0.97,
+        "confidence": 0.94,
         "evidence_quote": "Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
         "seeded": false
       }
     },
     {
-      "seq": 40,
-      "t_offset_ms": 98625.7,
+      "seq": 48,
+      "t_offset_ms": 92520.9,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "2",
-        "claim": "The Agreement does not address Vendor's obligation to assist Client in perfecting title to assigned IP or executing documents necessary to perfect assignment.",
+        "claim": "The Agreement does not explicitly address Vendor's obligation to assist Client in perfecting title to assigned foreground IP or executing documents necessary to perfect assignment.",
         "verdict": "confirmed",
-        "confidence": 0.95,
-        "evidence_quote": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation.",
+        "confidence": 0.96,
+        "evidence_quote": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
         "seeded": false
       }
     },
     {
-      "seq": 41,
-      "t_offset_ms": 98926.9,
+      "seq": 49,
+      "t_offset_ms": 92822.1,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "6",
         "claim": "Vendor indemnifies Client against third-party claims that deliverables infringe IP rights, but the Agreement does not define the scope of infringement indemnification (e.g., whether it covers infringement of third-party patents, copyrights, or trade secrets, or only claims arising from Vendor's breach).",
-        "verdict": "confirmed",
-        "confidence": 0.9,
+        "verdict": "partial",
+        "confidence": 0.78,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
         "seeded": false
       }
     },
     {
-      "seq": 42,
-      "t_offset_ms": 99228.1,
+      "seq": 50,
+      "t_offset_ms": 93122.8,
+      "type": "finding",
+      "data": {
+        "worker": "ip",
+        "clause_ref": "6",
+        "claim": "The indemnification obligation in Clause 6 is not subject to the liability cap in Clause 1, creating potentially unbounded exposure for Vendor on IP infringement claims.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 51,
+      "t_offset_ms": 93423.9,
       "type": "finding",
       "data": {
         "worker": "ip",
         "clause_ref": "7",
-        "claim": "Vendor warrants services will be performed in a professional and workmanlike manner, but the Agreement contains an 'AS IS' disclaimer that may disclaim all other warranties, including any implied warranty of non-infringement of third-party IP rights.",
-        "verdict": "partial",
-        "confidence": 0.74,
+        "claim": "Vendor warrants services will be performed in a professional and workmanlike manner, but the Agreement contains no express warranty of non-infringement of third-party IP rights in the deliverables or background IP licensed to Client.",
+        "verdict": "confirmed",
+        "confidence": 0.94,
         "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
         "seeded": false
       }
     },
     {
-      "seq": 43,
-      "t_offset_ms": 99529.3,
+      "seq": 52,
+      "t_offset_ms": 93725.0,
       "type": "finding",
       "data": {
         "worker": "liability",
@@ -644,8 +735,8 @@
       }
     },
     {
-      "seq": 44,
-      "t_offset_ms": 99830.6,
+      "seq": 53,
+      "t_offset_ms": 94026.1,
       "type": "finding",
       "data": {
         "worker": "liability",
@@ -658,8 +749,22 @@
       }
     },
     {
-      "seq": 45,
-      "t_offset_ms": 100131.8,
+      "seq": 54,
+      "t_offset_ms": 94327.3,
+      "type": "finding",
+      "data": {
+        "worker": "liability",
+        "clause_ref": "6",
+        "claim": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 55,
+      "t_offset_ms": 94628.5,
       "type": "finding",
       "data": {
         "worker": "liability",
@@ -672,64 +777,22 @@
       }
     },
     {
-      "seq": 46,
-      "t_offset_ms": 100433.0,
-      "type": "finding",
-      "data": {
-        "worker": "liability",
-        "clause_ref": "",
-        "claim": "There are no explicit exclusions or disclaimers of consequential, indirect, incidental, special, punitive, lost profits, or lost data damages.",
-        "verdict": "confirmed",
-        "confidence": 0.96,
-        "evidence_quote": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 47,
-      "t_offset_ms": 100734.2,
-      "type": "finding",
-      "data": {
-        "worker": "liability",
-        "clause_ref": "",
-        "claim": "There are no explicit carve-outs from the liability cap other than breaches of confidentiality and indemnification obligations.",
-        "verdict": "confirmed",
-        "confidence": 0.97,
-        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 48,
-      "t_offset_ms": 101035.4,
-      "type": "finding",
-      "data": {
-        "worker": "liability",
-        "clause_ref": "",
-        "claim": "There are no explicit uncapped or unlimited liability provisions.",
-        "verdict": "confirmed",
-        "confidence": 0.96,
-        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 49,
-      "t_offset_ms": 101336.6,
+      "seq": 56,
+      "t_offset_ms": 94929.7,
       "type": "finding",
       "data": {
         "worker": "seeded-probe",
         "clause_ref": "12",
         "claim": "Clause 12 grants the Vendor an uncapped indemnity from the Client in perpetuity, with no limitation of liability and no right of termination for the Client.",
         "verdict": "unsupported",
-        "confidence": 1.0,
+        "confidence": 0.99,
         "evidence_quote": null,
         "seeded": true
       }
     },
     {
-      "seq": 50,
-      "t_offset_ms": 101637.8,
+      "seq": 57,
+      "t_offset_ms": 95230.8,
       "type": "finding",
       "data": {
         "worker": "tax",
@@ -742,36 +805,36 @@
       }
     },
     {
-      "seq": 51,
-      "t_offset_ms": 101939.0,
+      "seq": 58,
+      "t_offset_ms": 95532.0,
       "type": "finding",
       "data": {
         "worker": "tax",
         "clause_ref": "3",
-        "claim": "Clause 3 assigns to each party responsibility for 'its own income and franchise taxes' but does not specify whether payments are subject to withholding or require gross-up if withholding is applied.",
+        "claim": "Clause 3 provides that 'Each party is responsible for its own income and franchise taxes', allocating each party's income tax liability to itself with no gross-up obligation stated.",
         "verdict": "confirmed",
-        "confidence": 0.96,
+        "confidence": 0.99,
         "evidence_quote": "Each party is responsible for its own income and franchise taxes.",
         "seeded": false
       }
     },
     {
-      "seq": 52,
-      "t_offset_ms": 102240.1,
+      "seq": 59,
+      "t_offset_ms": 95832.9,
       "type": "finding",
       "data": {
         "worker": "termination",
         "clause_ref": "4",
         "claim": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period, meaning the breaching party has 30 days to cure before termination becomes effective.",
-        "verdict": "confirmed",
-        "confidence": 0.97,
+        "verdict": "partial",
+        "confidence": 0.86,
         "evidence_quote": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period.",
         "seeded": false
       }
     },
     {
-      "seq": 53,
-      "t_offset_ms": 102541.2,
+      "seq": 60,
+      "t_offset_ms": 96134.1,
       "type": "finding",
       "data": {
         "worker": "termination",
@@ -784,167 +847,139 @@
       }
     },
     {
-      "seq": 54,
-      "t_offset_ms": 102842.4,
+      "seq": 61,
+      "t_offset_ms": 96434.8,
       "type": "finding",
       "data": {
         "worker": "termination",
         "clause_ref": "4",
-        "claim": "The initial term is 12 months.",
+        "claim": "The initial term is 12 months with no explicit statement of the consequences of termination, survival of obligations, or wind-down procedures.",
         "verdict": "confirmed",
-        "confidence": 0.99,
-        "evidence_quote": "The initial term is 12 months",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 55,
-      "t_offset_ms": 103143.7,
-      "type": "finding",
-      "data": {
-        "worker": "termination",
-        "clause_ref": "4",
-        "claim": "Clause 4 does not specify the effects of termination, including survival of obligations, wind-down procedures, transition assistance, return or deletion of materials, or any termination fees or penalties.",
-        "verdict": "confirmed",
-        "confidence": 0.97,
+        "confidence": 0.95,
         "evidence_quote": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
         "seeded": false
       }
     },
     {
-      "seq": 56,
-      "t_offset_ms": 103444.9,
+      "seq": 62,
+      "t_offset_ms": 96736.0,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
-        "claim": "Clause 5 does not restrict Vendor's use of Client data for any purpose other than model training, including aggregation, analysis, incorporation into Vendor's own products, or disclosure to third parties, sub-processors, or affiliates without Client consent.",
+        "claim": "Clause 5 does not address compliance with privacy laws such as GDPR, CCPA, or other data protection regulations, or specify which party is the data controller and which is the processor.",
         "verdict": "confirmed",
-        "confidence": 0.86,
-        "evidence_quote": "Vendor may not use Client data to train models.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 57,
-      "t_offset_ms": 103746.1,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "5",
-        "claim": "Clause 5 does not address data ownership, Client's right to access, retrieve, or delete its data, or Vendor's obligation to return or delete Client data upon termination.",
-        "verdict": "confirmed",
-        "confidence": 0.96,
+        "confidence": 0.95,
         "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
-      "seq": 58,
-      "t_offset_ms": 104047.3,
+      "seq": 63,
+      "t_offset_ms": 97037.1,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
         "claim": "Clause 5 does not specify technical or organisational security safeguards (e.g., encryption, access controls, audit rights) that Vendor must implement to protect Client data.",
         "verdict": "confirmed",
-        "confidence": 0.98,
+        "confidence": 0.95,
         "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 59,
-      "t_offset_ms": 104347.6,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "5",
-        "claim": "Clause 5 does not address compliance with data protection laws (e.g., GDPR, CCPA), does not require Vendor to act as a data processor, enter into Data Processing Agreements, or respect data subject rights.",
-        "verdict": "confirmed",
-        "confidence": 0.96,
-        "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 60,
-      "t_offset_ms": 104648.8,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "1, 6",
-        "claim": "Clause 1 exempts indemnification obligations from the liability cap, meaning Vendor's indemnification obligation under Clause 6 is uncapped and unlimited.",
-        "verdict": "confirmed",
-        "confidence": 0.94,
-        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 61,
-      "t_offset_ms": 104950.1,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "6",
-        "claim": "Clause 6 does not contain carve-outs or exceptions limiting Vendor's indemnity obligation to claims arising from Vendor's own acts, omissions, or modifications, or excluding claims caused by Client's use of deliverables outside the scope authorized.",
-        "verdict": "confirmed",
-        "confidence": 0.92,
-        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 62,
-      "t_offset_ms": 105251.3,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "7",
-        "claim": "Clause 7 contains an 'AS IS' disclaimer that may disclaim all warranties other than professional and workmanlike performance, including any implied warranty of non-infringement of third-party IP rights.",
-        "verdict": "partial",
-        "confidence": 0.7,
-        "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 63,
-      "t_offset_ms": 105552.3,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "5",
-        "claim": "Clause 5 requires Vendor to notify Client of security breaches within 72 hours but does not define what constitutes a 'security breach' or specify the content, format, or recipient of the notification.",
-        "verdict": "confirmed",
-        "confidence": 0.98,
-        "evidence_quote": "Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
       "seq": 64,
-      "t_offset_ms": 105853.5,
+      "t_offset_ms": 97338.1,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "5",
-        "claim": "Clause 5 defines Confidential Information protection duration as 3 years after disclosure, which is shorter than typical commercial standards and may be insufficient for sensitive or long-lived data.",
-        "verdict": "partial",
-        "confidence": 0.64,
-        "evidence_quote": "Each party shall protect the other's Confidential Information for 3 years after disclosure.",
+        "claim": "Clause 5 does not address Vendor's use of sub-processors or third parties to process Client data, or require Client consent for such use.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
         "seeded": false
       }
     },
     {
       "seq": 65,
-      "t_offset_ms": 106154.6,
+      "t_offset_ms": 97639.3,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "5",
+        "claim": "Clause 5 does not address Client's rights to access, delete, return, or port its data upon termination of the Agreement.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 66,
+      "t_offset_ms": 97939.5,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "5",
+        "claim": "Clause 5 prohibits Vendor from using Client data to train models, but does not restrict Vendor's use of Client data for any other purpose, including aggregation, analysis, or incorporation into Vendor's own products or services.",
+        "verdict": "partial",
+        "confidence": 0.78,
+        "evidence_quote": "Vendor may not use Client data to train models.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 67,
+      "t_offset_ms": 98240.7,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "1, 6",
+        "claim": "Indemnification obligation in Clause 6 is expressly excluded from the liability cap in Section 1, meaning Vendor's indemnification exposure for IP infringement claims is uncapped.",
+        "verdict": "confirmed",
+        "confidence": 0.96,
+        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 68,
+      "t_offset_ms": 98541.8,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "5",
+        "claim": "Clause 5 defines Confidential Information protection duration as 3 years after disclosure, which is shorter than typical commercial standards and may be insufficient for sensitive or long-lived data.",
+        "verdict": "unsupported",
+        "confidence": 0.4,
+        "evidence_quote": null,
+        "seeded": false
+      }
+    },
+    {
+      "seq": 69,
+      "t_offset_ms": 98843.0,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "5",
+        "claim": "Clause 5 requires Vendor to notify Client of security breaches within 72 hours, but does not define what constitutes a 'security breach' or specify the content, format, or recipient of the notification.",
+        "verdict": "confirmed",
+        "confidence": 0.96,
+        "evidence_quote": "Vendor shall notify Client of any security breach within 72 hours.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 70,
+      "t_offset_ms": 99143.8,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "6",
-        "claim": "Clause 6 does not define the procedure for notice, control of defense, or consent-to-settle requirements in connection with the indemnification obligation.",
+        "claim": "Indemnification obligation is limited to third-party claims of IP infringement in deliverables only; does not cover other categories of third-party claims (e.g., bodily injury, property damage, data breach, breach of contract, violations of law).",
         "verdict": "confirmed",
         "confidence": 0.96,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
@@ -952,106 +987,92 @@
       }
     },
     {
-      "seq": 66,
-      "t_offset_ms": 106455.7,
+      "seq": 71,
+      "t_offset_ms": 99444.2,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "6",
-        "claim": "Clause 6 does not define the scope of infringement indemnification (e.g., whether it covers infringement of third-party patents, copyrights, or trade secrets, or only claims arising from Vendor's breach).",
-        "verdict": "partial",
-        "confidence": 0.78,
-        "evidence_quote": "third-party claims that the deliverables infringe IP rights",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 67,
-      "t_offset_ms": 106756.9,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "6",
-        "claim": "Clause 6 indemnifies Client against third-party IP infringement claims but does not specify whether the indemnity covers only third-party claims or also first-party losses incurred by Client.",
+        "claim": "Indemnification clause contains no carve-outs or exceptions for claims arising from Client's own modifications, use, or negligence.",
         "verdict": "confirmed",
-        "confidence": 0.93,
+        "confidence": 0.9,
         "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
         "seeded": false
       }
     },
     {
-      "seq": 68,
-      "t_offset_ms": 107058.1,
+      "seq": 72,
+      "t_offset_ms": 99745.4,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "6",
+        "claim": "Indemnification clause does not specify procedures for notice, control of defense, or Client consent to settlement.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 73,
+      "t_offset_ms": 100046.5,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
         "claim": "Vendor retains pre-existing background IP and grants Client only a non-exclusive license to use it, without specification of territory, duration, sublicensability, or field of use.",
         "verdict": "confirmed",
-        "confidence": 0.97,
+        "confidence": 0.93,
         "evidence_quote": "Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
         "seeded": false
       }
     },
     {
-      "seq": 69,
-      "t_offset_ms": 107359.3,
+      "seq": 74,
+      "t_offset_ms": 100347.7,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
-        "claim": "The Agreement does not address Vendor's obligation to assist Client in perfecting title to assigned IP or executing documents necessary to perfect assignment.",
+        "claim": "The Agreement does not explicitly address Vendor's obligation to assist Client in perfecting title to assigned foreground IP or executing documents necessary to perfect assignment.",
         "verdict": "confirmed",
-        "confidence": 0.95,
+        "confidence": 0.9,
         "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation.",
         "seeded": false
       }
     },
     {
-      "seq": 70,
-      "t_offset_ms": 107660.4,
+      "seq": 75,
+      "t_offset_ms": 100648.9,
       "type": "finding",
       "data": {
         "worker": "reporter",
-        "clause_ref": "4",
-        "claim": "Clause 4 does not specify the effects of termination, including survival of obligations, wind-down procedures, transition assistance, return or deletion of materials, or any termination fees or penalties.",
+        "clause_ref": "6",
+        "claim": "Vendor indemnifies Client against third-party claims that deliverables infringe IP rights, but the Agreement does not define the scope of infringement indemnification (e.g., whether it covers infringement of third-party patents, copyrights, or trade secrets, or only claims arising from Vendor's breach).",
         "verdict": "confirmed",
-        "confidence": 0.97,
-        "evidence_quote": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "confidence": 0.9,
+        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
         "seeded": false
       }
     },
     {
-      "seq": 71,
-      "t_offset_ms": 107961.6,
+      "seq": 76,
+      "t_offset_ms": 100950.1,
       "type": "finding",
       "data": {
         "worker": "reporter",
-        "clause_ref": "4",
-        "claim": "The Agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "clause_ref": "7",
+        "claim": "Vendor warrants services will be performed in a professional and workmanlike manner, but the Agreement contains no express warranty of non-infringement of third-party IP rights in the deliverables or background IP licensed to Client.",
         "verdict": "confirmed",
-        "confidence": 0.99,
-        "evidence_quote": "The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "confidence": 0.9,
+        "evidence_quote": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
         "seeded": false
       }
     },
     {
-      "seq": 72,
-      "t_offset_ms": 108262.7,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "3",
-        "claim": "Clause 3 states 'Fees are stated exclusive of tax' and 'Client bears all sales, use, and VAT/GST', placing the entire transaction tax burden on Client.",
-        "verdict": "partial",
-        "confidence": 0.87,
-        "evidence_quote": "Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 73,
-      "t_offset_ms": 108563.9,
+      "seq": 77,
+      "t_offset_ms": 101251.3,
       "type": "finding",
       "data": {
         "worker": "reporter",
@@ -1064,190 +1085,274 @@
       }
     },
     {
-      "seq": 74,
-      "t_offset_ms": 108865.1,
-      "type": "finding",
-      "data": {
-        "worker": "reporter",
-        "clause_ref": "6",
-        "claim": "The indemnification obligation in Clause 6 runs one-way from Vendor to Client only; Client assumes no reciprocal indemnification obligation to Vendor.",
-        "verdict": "confirmed",
-        "confidence": 0.98,
-        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
-        "seeded": false
-      }
-    },
-    {
-      "seq": 75,
-      "t_offset_ms": 109166.3,
+      "seq": 78,
+      "t_offset_ms": 101552.4,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "3",
-        "claim": "Clause 3 assigns to each party responsibility for 'its own income and franchise taxes' but does not specify whether payments are subject to withholding or require gross-up if withholding is applied.",
+        "claim": "Clause 3 states 'Fees are stated exclusive of tax' and 'Client bears all sales, use, and VAT/GST', placing the entire transaction tax burden on Client.",
         "verdict": "confirmed",
-        "confidence": 0.94,
-        "evidence_quote": "Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes.",
+        "confidence": 0.98,
+        "evidence_quote": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST.",
         "seeded": false
       }
     },
     {
-      "seq": 76,
-      "t_offset_ms": 109467.4,
+      "seq": 79,
+      "t_offset_ms": 101853.6,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "4",
+        "claim": "The Agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 80,
+      "t_offset_ms": 102154.8,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "6",
+        "claim": "Indemnification runs one-way from Vendor to Client only; Client has no reciprocal indemnification obligation to Vendor.",
+        "verdict": "confirmed",
+        "confidence": 0.96,
+        "evidence_quote": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 81,
+      "t_offset_ms": 102456.1,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "7",
+        "claim": "Vendor warrants the services will be performed in a professional and workmanlike manner, but EXCEPT AS STATED, THE SERVICES ARE PROVIDED 'AS IS'.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 82,
+      "t_offset_ms": 102757.3,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "2",
         "claim": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation, with no retention of rights by Vendor in the work product itself.",
-        "verdict": "partial",
-        "confidence": 0.86,
-        "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation.",
+        "verdict": "confirmed",
+        "confidence": 0.97,
+        "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
         "seeded": false
       }
     },
     {
-      "seq": 77,
-      "t_offset_ms": 109768.6,
+      "seq": 83,
+      "t_offset_ms": 103058.4,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "6",
+        "claim": "Indemnification scope includes defense costs and settlements but does not explicitly address whether it covers first-party losses or only third-party claims.",
+        "verdict": "confirmed",
+        "confidence": 0.93,
+        "evidence_quote": "Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 84,
+      "t_offset_ms": 103358.7,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "1",
+        "claim": "The liability cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "verdict": "confirmed",
+        "confidence": 0.99,
+        "evidence_quote": "This cap does not apply to breaches of confidentiality or indemnification obligations.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 85,
+      "t_offset_ms": 103659.9,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "3",
+        "claim": "Clause 3 provides that 'Each party is responsible for its own income and franchise taxes', allocating each party's income tax liability to itself with no gross-up obligation stated.",
+        "verdict": "confirmed",
+        "confidence": 0.98,
+        "evidence_quote": "Each party is responsible for its own income and franchise taxes.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 86,
+      "t_offset_ms": 103961.0,
       "type": "finding",
       "data": {
         "worker": "reporter",
         "clause_ref": "4",
         "claim": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period, meaning the breaching party has 30 days to cure before termination becomes effective.",
         "verdict": "confirmed",
-        "confidence": 0.97,
+        "confidence": 0.9,
         "evidence_quote": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period.",
         "seeded": false
       }
     },
     {
-      "seq": 78,
-      "t_offset_ms": 110088.3,
+      "seq": 87,
+      "t_offset_ms": 104261.3,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "4",
+        "claim": "The initial term is 12 months with no explicit statement of the consequences of termination, survival of obligations, or wind-down procedures.",
+        "verdict": "confirmed",
+        "confidence": 0.92,
+        "evidence_quote": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+        "seeded": false
+      }
+    },
+    {
+      "seq": 88,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "liability",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=6 task)",
-        "model_switch": true,
+        "baseline_label": "(n=7 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 79,
-      "t_offset_ms": 110088.3,
+      "seq": 89,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "ip",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=2 task)",
-        "model_switch": true,
+        "baseline_label": "(n=3 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 80,
-      "t_offset_ms": 110088.3,
+      "seq": 90,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "termination",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=2 task)",
-        "model_switch": true,
+        "baseline_label": "(n=3 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 81,
-      "t_offset_ms": 110088.3,
+      "seq": 91,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "tax",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=6 task)",
-        "model_switch": true,
+        "baseline_label": "(n=7 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 82,
-      "t_offset_ms": 110088.3,
+      "seq": 92,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "data_privacy",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=2 task)",
-        "model_switch": true,
+        "baseline_label": "(n=3 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 83,
-      "t_offset_ms": 110088.3,
+      "seq": 93,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "indemnity",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=2 task)",
-        "model_switch": true,
+        "baseline_label": "(n=3 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 84,
-      "t_offset_ms": 110088.3,
+      "seq": 94,
+      "t_offset_ms": 104577.2,
       "type": "drift",
       "data": {
         "worker": "seeded-probe",
-        "flagged": true,
-        "severity": "warn",
+        "flagged": false,
+        "severity": "info",
         "model": "anthropic/claude-haiku-4.5",
-        "baseline_label": "(n=6 task)",
-        "model_switch": true,
+        "baseline_label": "(n=7 task)",
+        "model_switch": false,
         "price_mismatch": false,
         "overcharge_ratio": null,
         "cost_delta_pct": null,
         "latency_delta_pct": null,
-        "summary": "model swap: gpt-4.1-mini -> anthropic/claude-haiku-4.5"
+        "summary": "behaving in-baseline"
       }
     },
     {
-      "seq": 85,
-      "t_offset_ms": 110088.3,
+      "seq": 95,
+      "t_offset_ms": 104577.2,
       "type": "stage",
       "data": {
         "name": "Verify",
@@ -1255,8 +1360,8 @@
       }
     },
     {
-      "seq": 86,
-      "t_offset_ms": 110088.3,
+      "seq": 96,
+      "t_offset_ms": 104577.2,
       "type": "stage",
       "data": {
         "name": "Settle",
@@ -1264,8 +1369,8 @@
       }
     },
     {
-      "seq": 87,
-      "t_offset_ms": 114937.7,
+      "seq": 97,
+      "t_offset_ms": 110905.4,
       "type": "settle",
       "data": {
         "worker": "liability",
@@ -1277,8 +1382,8 @@
       }
     },
     {
-      "seq": 88,
-      "t_offset_ms": 114937.7,
+      "seq": 98,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "ip",
@@ -1290,8 +1395,8 @@
       }
     },
     {
-      "seq": 89,
-      "t_offset_ms": 114937.8,
+      "seq": 99,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "termination",
@@ -1303,8 +1408,8 @@
       }
     },
     {
-      "seq": 90,
-      "t_offset_ms": 114937.8,
+      "seq": 100,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "tax",
@@ -1316,8 +1421,8 @@
       }
     },
     {
-      "seq": 91,
-      "t_offset_ms": 114937.8,
+      "seq": 101,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "data_privacy",
@@ -1329,8 +1434,8 @@
       }
     },
     {
-      "seq": 92,
-      "t_offset_ms": 114937.8,
+      "seq": 102,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "indemnity",
@@ -1342,8 +1447,8 @@
       }
     },
     {
-      "seq": 93,
-      "t_offset_ms": 114937.8,
+      "seq": 103,
+      "t_offset_ms": 110905.5,
       "type": "settle",
       "data": {
         "worker": "seeded-probe",
@@ -1355,8 +1460,8 @@
       }
     },
     {
-      "seq": 94,
-      "t_offset_ms": 114937.8,
+      "seq": 104,
+      "t_offset_ms": 110905.5,
       "type": "stage",
       "data": {
         "name": "Settle",
@@ -1364,18 +1469,18 @@
       }
     },
     {
-      "seq": 95,
-      "t_offset_ms": 114950.6,
+      "seq": 105,
+      "t_offset_ms": 110912.9,
       "type": "receipt",
       "data": {
         "signer": "0x9C87fc961D2E84d374F1502C97a1C8B1C6C7D0f6",
-        "signature": "0x9ccba7e31e114ce721d35cf66bd90926355c06d2f07af649bd9d34b1f6a6d396296da05a3c99b7a763c6ec77198c211207be620a3214f2b4063985a5a6443de51b",
-        "deliverable_hash": "0x88612d2b77e68b1046154a26c1097aa20f4b4d8f309289b18f90c560a8341caf"
+        "signature": "0x3b4bfb8366644298552fdcaa25204f5bf10482e1a13c91ac15d85b29effc32a854cd1a134b2090c79534e2988cf1f6a9de59f5acf261d7a15bf55baf7a3560da1c",
+        "deliverable_hash": "0x7bf7aa8080457b0b5ed257e2389f88cb29fe6be5b02106e760dbafc27ac79d4c"
       }
     },
     {
-      "seq": 96,
-      "t_offset_ms": 114950.6,
+      "seq": 106,
+      "t_offset_ms": 110912.9,
       "type": "stage",
       "data": {
         "name": "Done",
@@ -1383,21 +1488,21 @@
       }
     },
     {
-      "seq": 97,
-      "t_offset_ms": 114950.6,
+      "seq": 107,
+      "t_offset_ms": 110912.9,
       "type": "done",
       "data": {
         "gate_passed": false,
         "pay_fraction": 0.0,
         "total_settled_usd": 0.0,
         "total_withheld_usd": 0.1998,
-        "catch_summary": "1 fabricated claim(s) caught and withheld (52 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
+        "catch_summary": "2 fabricated claim(s) caught and withheld (55 claims graded) (incl. the seeded verifier-test probe \u2014 caught on purpose)",
         "seeded_probe_caught": true
       }
     },
     {
-      "seq": 98,
-      "t_offset_ms": 114950.6,
+      "seq": 108,
+      "t_offset_ms": 110912.9,
       "type": "stage",
       "data": {
         "name": "Done",

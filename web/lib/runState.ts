@@ -35,6 +35,8 @@ export interface RunState {
   hire: HireEvent | null;
   hiredWorkers: Set<string>;
   room: RoomLine[];
+  /** Raw `worker` ids that have emitted `progress {done:true}` (collaborate done). */
+  collabDone: Set<string>;
   findings: FindingEvent[];
   drifts: DriftEvent[];
   settlements: SettleEvent[];
@@ -67,6 +69,7 @@ export function initialState(): RunState {
     hire: null,
     hiredWorkers: new Set(),
     room: [],
+    collabDone: new Set(),
     findings: [],
     drifts: [],
     settlements: [],
@@ -97,6 +100,14 @@ export function applyEvent(prev: RunState, ev: ExchangeEvent): RunState {
     case "room_message": {
       const line: RoomLine = { ...(ev.data as RoomMessageEvent), id: prev._roomSeq };
       return { ...prev, room: [...prev.room, line], _roomSeq: prev._roomSeq + 1 };
+    }
+    case "progress": {
+      // Track per-worker collaborate-completion. Only `done:true` advances the
+      // ring; a defensive `done:false` is a no-op (keeps any prior completion).
+      if (!ev.data.done) return prev;
+      const collabDone = new Set(prev.collabDone);
+      collabDone.add(ev.data.worker);
+      return { ...prev, collabDone };
     }
     case "finding":
       return { ...prev, findings: [...prev.findings, ev.data as FindingEvent] };

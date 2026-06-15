@@ -372,6 +372,88 @@ def test_raising_auditor_is_contained_round_still_verifies():
     )
 
 
+# ── progress callback: fires once per member with the right specialty ──
+
+
+def test_on_member_complete_fires_once_per_member():
+    world, room_id, team, reporter_member, verifier = _build_world()
+
+    seen: list[str] = []
+
+    async def _on_done(specialty: str) -> None:
+        seen.append(specialty)
+
+    asyncio.run(
+        collaborate_in_room(
+            room_id,
+            CONTRACT,
+            team,
+            reporter_member,
+            verifier,
+            on_member_complete=_on_done,
+        )
+    )
+
+    # One callback per member, with the exact specialty keys (order-independent).
+    assert sorted(seen) == ["indemnity", "liability"]
+    assert len(seen) == len(team)
+
+
+def test_on_member_complete_fires_for_a_raising_member_too():
+    # A member whose auditor RAISES still "completed" — the callback must fire for it,
+    # so the live UI can mark every agent done even when one failed internally.
+    logging.getLogger("agent_exchange.audit.room_audit").setLevel(logging.ERROR)
+    world = BandWorld()
+    market = FakeBandClient("market", "market", "Market", world)
+
+    good = CollaborationMember(
+        specialty="liability",
+        area="liability caps",
+        band=FakeBandClient("liability-bot", "liability-bot", "Liability Bot", world),
+        auditor=_StubAuditor(
+            [Finding(worker="liability", clause_ref="1", claim=TRUE_CLAIM, severity="high")]
+        ),
+    )
+    broken = CollaborationMember(
+        specialty="indemnity",
+        area="indemnification",
+        band=FakeBandClient("indemnity-bot", "indemnity-bot", "Indemnity Bot", world),
+        auditor=_RaisingAuditor(),
+    )
+    reporter_band = FakeBandClient("reporter-bot", "reporter-bot", "Reporter Bot", world)
+    reporter_member = ReporterMember(
+        band=reporter_band,
+        reporter=_StubReporter(REPORT),
+        mention={"id": "reporter-bot", "handle": "reporter-bot", "name": "Reporter Bot"},
+    )
+
+    room_id = asyncio.run(market.create_room("Audit work room"))
+    asyncio.run(market.add_participant(room_id, good.band.agent_id))
+    asyncio.run(market.add_participant(room_id, broken.band.agent_id))
+    asyncio.run(market.add_participant(room_id, reporter_band.agent_id))
+
+    verifier = Verifier(_KeyedVerifierBackend())
+    seen: list[str] = []
+
+    async def _on_done(specialty: str) -> None:
+        seen.append(specialty)
+
+    asyncio.run(
+        collaborate_in_room(
+            room_id, CONTRACT, [good, broken], reporter_member, verifier,
+            on_member_complete=_on_done,
+        )
+    )
+    assert sorted(seen) == ["indemnity", "liability"]
+
+
+def test_on_member_complete_none_preserves_behavior():
+    # The default (None) path must be unchanged — full result, both layers graded.
+    _world, _room_id, result = _collaborate()
+    assert isinstance(result, RoomAuditResult)
+    assert len(result.all_audited) == 4
+
+
 def _run_all():
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     for fn in fns:

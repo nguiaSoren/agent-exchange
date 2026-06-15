@@ -244,6 +244,86 @@ async def _seeded_fabricator_caught_and_gate_fails():
     assert settlement.total_settled_atomic == 0
 
 
+# ---------------------------------------------------------------------------
+# LIVE collaborate phase streams per-agent `progress` events
+# ---------------------------------------------------------------------------
+
+
+def test_live_run_emits_progress_events_during_collaborate(monkeypatch):
+    """The LIVE branch must emit one `progress` {worker, done:true} per member as each
+    member's in-room audit completes (driven by on_member_complete), and never deadlock."""
+    import asyncio
+
+    # Build the live context from the offline sim world (real team/reporter/verifier
+    # against fakes) so the whole live lifecycle runs networkless.
+    async def _fake_live_ctx(kind, document, budget_usd):
+        return await server_app._build_sim_context(kind, document)
+
+    monkeypatch.setattr(server_app, "_build_live_context", _fake_live_ctx)
+
+    # Wrap the real collaborate so we KNOW the callback fires for the members we
+    # name (independent of how many specialists the sim seeds): fire two completions
+    # explicitly, then delegate to the real function (which also fires per member).
+    real_collaborate = server_app.collaborate_in_room
+
+    async def _wrapped(work_room_id, contract, team, reporter, verifier, *,
+                       on_member_complete=None, **kw):
+        if on_member_complete is not None:
+            await on_member_complete("liability")
+            await on_member_complete("termination")
+        return await real_collaborate(
+            work_room_id, contract, team, reporter, verifier,
+            on_member_complete=on_member_complete, **kw,
+        )
+
+    monkeypatch.setattr(server_app, "collaborate_in_room", _wrapped)
+
+    async def _collect():
+        out = []
+        async for ev, data in server_app.run_job(
+            "contract-audit", document="", budget_usd=0.20, requested_mode="live"
+        ):
+            out.append((ev, data))
+        return out
+
+    loop = asyncio.new_event_loop()
+    try:
+        events = loop.run_until_complete(_collect())
+    finally:
+        loop.close()
+
+    progress = [d for n, d in events if n == "progress"]
+    # At least the two we forced; every progress event has the documented shape.
+    assert len(progress) >= 2
+    for p in progress:
+        assert p["done"] is True
+        assert isinstance(p["worker"], str) and p["worker"]
+    workers = {p["worker"] for p in progress}
+    assert {"liability", "termination"} <= workers
+    # The stream still completed cleanly through to `done` (no deadlock).
+    assert any(n == "done" for n, _ in events)
+
+
+def test_sim_run_emits_no_progress_events():
+    """The SIM path's collaborate is instant/canned — it must NOT stream `progress`."""
+    import asyncio
+
+    async def _collect():
+        out = []
+        async for ev, data in server_app.run_job(
+            "contract-audit", document="", budget_usd=0.20, requested_mode="sim"
+        ):
+            out.append((ev, data))
+        return out
+
+    loop = asyncio.new_event_loop()
+    try:
+        events = loop.run_until_complete(_collect())
+    finally:
+        loop.close()
+    assert not [n for n, _ in events if n == "progress"]
+
+
 class _NoopReporter:
     """A reporter that adds no claims (so only the seeded finding is graded)."""
 

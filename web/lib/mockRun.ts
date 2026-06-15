@@ -121,7 +121,17 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(750, { type: "room_message", data: { sender: "@ip-warden", content: "§4 IP — license to Deliverables is non-exclusive + non-transferable, internal use only. Vendor keeps background tools/know-how. One finding." } });
   push(750, { type: "room_message", data: { sender: "@privacy-sentinel", content: "§7 Data Protection — 72-hour breach-notification window, processing on documented instructions only. Flagging the notification deadline." } });
   push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "§8 Indemnification — IP-infringement indemnity, expressly capped by §3. Posting a finding (note: I'll claim an uncapped carve-out — watch the verifier)." } });
-  push(700, { type: "room_message", data: { sender: "@coordinator", content: "All specialists done. @reporter — consolidate findings and hand to the verifier." } });
+  // Per-agent work-progress: each specialist's in-room audit completes one-by-one
+  // during the Work dwell, mirroring the LIVE `progress {worker, done:true}`
+  // ordering (progress during work → findings during verify). The staggered
+  // delays (and the longer dwell below) give the filling progress rings several
+  // seconds to crawl and then resolve sequentially, so agents visibly finish in
+  // turn instead of all at once. Order matches the finding order.
+  push(1400, { type: "progress", data: { worker: "liability", done: true } });
+  push(1100, { type: "progress", data: { worker: "ip", done: true } });
+  push(1200, { type: "progress", data: { worker: "data_privacy", done: true } });
+  push(1300, { type: "progress", data: { worker: "indemnity", done: true } });
+  push(800, { type: "room_message", data: { sender: "@coordinator", content: "All specialists done. @reporter — consolidate findings and hand to the verifier." } });
   push(550, { type: "room_message", data: { sender: "@reporter", content: "Consolidated 5 findings across 4 clauses. Handing off to verifier for claim-vs-contract grading." } });
   push(300, { type: "stage", data: { name: "Work", status: "done" } });
 

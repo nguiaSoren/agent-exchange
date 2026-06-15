@@ -180,6 +180,80 @@
   }
 }
 
+/* ── Filling progress ring ────────────────────────────────────────────
+   An SVG arc around a WORKING node that shows how far the agent is. The
+   <circle> stroke-dashoffset is animated: large offset = empty, 0 = full.
+   `--ring-circ` (the circumference) is set inline per node size; every offset
+   is expressed as a fraction of it so the math is node-size-independent.
+
+   Phases (driven by class swaps from ArenaNode):
+     .progressWork    → keyframe crawls asymptotically toward ~85% full
+                        (fast to ~60% in the first beats, then long-tail crawl)
+     .progressDone    → collabDone landed: transition to ~90% full
+     .progressResolve → verdict landed: snap to 100% (quick), then the ring fades
+   Compositor-only (stroke-dashoffset + opacity). */
+.progressRing {
+  /* The wrapper just positions/rotates; the circle owns the fill animation. */
+  opacity: 1;
+}
+.progressWork circle {
+  animation: ax-ring-fill 26s var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    forwards;
+}
+/* Asymptotic fill: empty (1.0) → ~60% by 2.5s → crawls toward ~85% and holds.
+   The offset is (1 - fill) × circumference. fill: 0 → .60 → .78 → .85. */
+@keyframes ax-ring-fill {
+  0% {
+    stroke-dashoffset: var(--ring-circ);
+  }
+  10% {
+    stroke-dashoffset: calc(var(--ring-circ) * 0.4); /* ~60% fast */
+  }
+  45% {
+    stroke-dashoffset: calc(var(--ring-circ) * 0.22); /* ~78% slowing */
+  }
+  100% {
+    stroke-dashoffset: calc(var(--ring-circ) * 0.15); /* ~85% crawl-and-hold */
+  }
+}
+/* collabDone: smoothly advance to ~90% from wherever the crawl was. */
+.progressDone circle {
+  stroke-dashoffset: calc(var(--ring-circ) * 0.1);
+  transition: stroke-dashoffset 600ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+/* Resolve: snap to 100% (quick complete), then the whole ring fades out. */
+.progressResolve circle {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 280ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.progressResolve {
+  animation: ax-ring-fade 520ms 360ms ease-out forwards;
+}
+@keyframes ax-ring-fade {
+  to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No crawl/fade: show a static ~partial arc so the ring still reads as
+     "in progress" without motion; resolved snaps to a full, non-fading ring. */
+  .progressWork circle,
+  .progressDone circle {
+    animation: none !important;
+    transition: none !important;
+    stroke-dashoffset: calc(var(--ring-circ) * 0.35) !important; /* ~65% static */
+  }
+  .progressResolve circle {
+    animation: none !important;
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .progressResolve {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* A2 — Verdict stamp pop: anticipation (overshoot 1.5) → settle under (.9) →
    small rebound (1.06) → rest (1). Lengthened to 480ms for a punchier feel. */
 .stamp {
