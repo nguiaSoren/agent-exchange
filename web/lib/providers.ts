@@ -25,7 +25,6 @@ import type { Framework } from "@/lib/events";
 import {
   Anthropic,
   DeepSeek,
-  Featherless,
   Gemini,
   Meta,
   Mistral,
@@ -145,19 +144,22 @@ export const PROVIDERS: ProviderRecord[] = [
 ];
 
 /**
- * Fallback record for an unknown agent. Uses a neutral mark (Featherless's
- * generic gateway logo stands in as a vendor-agnostic badge) routed through the
- * AI/ML API multi-model gateway, which is the backend's default router.
+ * Fallback record for an unknown agent (e.g. the seeded probe). Must be COHERENT:
+ * Featherless and AI/ML API are *alternative* gateways, so the brand can't be the
+ * Featherless logo while routing through AI/ML API — that reads as two gateways at
+ * once. Instead this mirrors the backend's real default — Claude (claude-haiku-4.5)
+ * served through the AI/ML API multi-model gateway (see AIMLAPI_MODEL) — so the
+ * disc brand and the gateway chip agree on a single router.
  */
 export const FALLBACK_PROVIDER: ProviderRecord = {
   key: "",
   handle: "",
   label: "Agent",
-  model: "auto",
-  provider: "Featherless",
-  providerLabel: "Multi-model",
+  model: "claude-haiku-4.5",
+  provider: "Anthropic",
+  providerLabel: "Claude",
   gateway: "AI/ML API",
-  brand: Featherless,
+  brand: Anthropic,
 };
 
 function normalize(input: string): string {
