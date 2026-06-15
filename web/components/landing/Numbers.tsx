@@ -1,8 +1,8 @@
 "use client";
 
+import { SectionIntro } from "./SectionIntro";
 import {
   HudPanel,
-  Eyebrow,
   CountUp,
   SegmentBar,
   Stars,
@@ -41,12 +41,7 @@ export function Numbers() {
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
       <div className="ax-fade-up mb-12 max-w-2xl">
-        <Eyebrow live tone="emerald" className="mb-4">
-          Measured · not claimed
-        </Eyebrow>
-        <h2 className="font-display text-[28px] font-bold leading-tight tracking-tight text-fg sm:text-[36px]">
-          The numbers
-        </h2>
+        <SectionIntro label="Measured · not claimed">The numbers</SectionIntro>
         <p className="mt-4 font-mono text-[13px] leading-[1.8] text-fg-muted">
           Every figure below traces to a real evaluation or an on-chain
           settlement. No rounding away the sample size.

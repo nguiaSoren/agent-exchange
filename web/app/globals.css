@@ -38,7 +38,7 @@
 
 :root {
   /* ── Fonts (wired in app/layout.tsx via next/font) ───────────────── */
-  --font-display: var(--font-orbitron), "Orbitron", ui-sans-serif, system-ui,
+  --font-display: var(--font-archivo), "Archivo", ui-sans-serif, system-ui,
     sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, "SF Mono",
     Menlo, monospace;

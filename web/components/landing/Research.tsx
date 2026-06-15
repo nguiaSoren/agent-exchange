@@ -1,6 +1,7 @@
 "use client";
 
 import { Eyebrow, CountUp, Shield } from "@/components/hud";
+import { SectionIntro } from "./SectionIntro";
 import type { ReactNode } from "react";
 
 /**
@@ -267,12 +268,9 @@ export function Research() {
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="ax-fade-up mb-12 max-w-2xl">
-        <Eyebrow live tone="emerald" className="mb-4">
-          The proof · measured, not projected
-        </Eyebrow>
-        <h2 className="font-display text-[28px] font-bold leading-tight tracking-tight text-fg sm:text-[36px]">
+        <SectionIntro label="The proof · measured, not projected">
           A calibrated lie-detector for paid work
-        </h2>
+        </SectionIntro>
         <p className="mt-4 font-mono text-[13px] leading-[1.8] text-fg-muted">
           The whole product rests on one claim:{" "}
           <span className="text-emerald">

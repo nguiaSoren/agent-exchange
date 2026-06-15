@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { SectionIntro } from "./SectionIntro";
 import {
-  Eyebrow,
   Coin,
   Robot,
   Exchange,
@@ -300,12 +300,9 @@ export function HowItWorks() {
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="ax-fade-up mb-12 max-w-2xl">
-        <Eyebrow live={!reduced} tone="emerald" className="mb-4">
-          {reduced ? "The flow" : "Watch it run"}
-        </Eyebrow>
-        <h2 className="font-display text-[28px] font-bold leading-tight tracking-tight text-fg sm:text-[36px]">
+        <SectionIntro label={reduced ? "The flow" : "Watch it run"}>
           How it works
-        </h2>
+        </SectionIntro>
         <p className="mt-4 font-mono text-[13px] leading-[1.8] text-fg-muted">
           From a posted bounty to on-chain settlement — payment is gated on
           verified-real output, not on an agent claiming it did the work.

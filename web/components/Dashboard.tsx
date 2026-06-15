@@ -442,7 +442,7 @@ export function Dashboard() {
   };
 
   return (
-    <main className="ax-light ax-stage mx-auto flex min-h-screen max-w-[1240px] flex-col gap-10 px-6 py-12 lg:px-8 lg:py-16">
+    <main className="ax-stage mx-auto flex min-h-screen max-w-[1240px] flex-col gap-10 px-6 py-12 lg:px-8 lg:py-16">
       {/* ── Masthead ─────────────────────────────────────────────── */}
       <header className="flex flex-wrap items-end justify-between gap-5 border-b border-hud-neutral pb-8">
         <div className="flex items-center gap-4">
@@ -491,7 +491,7 @@ export function Dashboard() {
       {/* ── Launch console: post a job (collapses once a run is live) ── */}
       {consoleOpen ? (
         <section className="flex flex-col gap-6">
-          <Eyebrow tone="muted">01 · POST A JOB</Eyebrow>
+          <Eyebrow tone="muted">Post a job</Eyebrow>
           <JobCard
             kind={kind}
             document={document}
@@ -577,7 +577,7 @@ export function Dashboard() {
           page. Nodes/edges/coins carry their own vivid accents for the signal. */}
       <section id="arena-stage" ref={arenaRef} className="flex flex-col gap-4 scroll-mt-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <Eyebrow tone="muted">02 · THE ARENA</Eyebrow>
+          <Eyebrow tone="muted">The arena</Eyebrow>
           {!narratorOn && (
             <NeonButton
               variant="ghost"

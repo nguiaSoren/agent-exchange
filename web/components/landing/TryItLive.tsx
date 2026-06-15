@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Eyebrow, LiveDot, NeonButton, Shield } from "@/components/hud";
+import { LiveDot, NeonButton, Shield } from "@/components/hud";
+import { SectionIntro } from "./SectionIntro";
 import { scrollIntoFullView } from "@/lib/scroll";
 import type { JobKind } from "@/lib/events";
 
@@ -94,12 +95,9 @@ export function TryItLive() {
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="ax-fade-up mb-12 max-w-2xl">
-        <Eyebrow live tone="emerald" className="mb-4">
-          Run it live in a real Band room
-        </Eyebrow>
-        <h2 className="font-display text-[28px] font-bold leading-tight tracking-tight text-fg sm:text-[36px]">
+        <SectionIntro label="Run it live in a real Band room">
           Pick a contract. Watch real agents prove the work.
-        </h2>
+        </SectionIntro>
         <p className="mt-4 font-mono text-[13px] leading-[1.8] text-fg-muted">
           Pick a contract or write your own. Real agents — across owners — get
           discovered, recruited into a live Band room, collaborate, and the

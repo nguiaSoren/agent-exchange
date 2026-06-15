@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Orbitron, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-/* Display / HUD headings + big numbers. */
-const orbitron = Orbitron({
+/* Display / HUD headings + big numbers. Archivo — an industrial technical
+   grotesk that reads "instrument panel / financial readout" (credible, engineered)
+   rather than Orbitron's rounded arcade sci-fi. */
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["700", "900"],
-  variable: "--font-orbitron",
+  weight: ["500", "600", "700", "800", "900"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -30,11 +32,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${orbitron.variable} ${jetbrains.variable}`}>
-      {/* The whole site is light now: keep the whisper grid + the faint emerald
-          top-spotlight for depth, but drop the dark-only CRT scanlines + corner
-          vignette (they only read on near-black). */}
-      <body className="ax-light ax-grid ax-spotlight min-h-screen font-mono antialiased">
+    <html lang="en" className={`${archivo.variable} ${jetbrains.variable}`}>
+      {/* Operator-terminal: the whole site runs the dark neon HUD now — the agent
+          arena is no longer an embedded "court" on a light page, it's the native
+          world. The grid + emerald top-spotlight + CRT scanlines + corner vignette
+          give the near-black field depth and a live mission-control texture. */}
+      <body className="ax-grid ax-spotlight ax-scanlines ax-vignette min-h-screen font-mono antialiased">
         <div className="ax-stage">{children}</div>
       </body>
     </html>

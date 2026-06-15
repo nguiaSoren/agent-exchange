@@ -103,7 +103,7 @@ export function ReplayDashboard() {
     ctl.state.stages.find((s) => s.status === "active")?.name === "Work";
 
   return (
-    <main className="ax-light ax-stage mx-auto flex min-h-screen max-w-[1240px] flex-col gap-10 px-6 py-12 lg:px-8 lg:py-16">
+    <main className="ax-stage mx-auto flex min-h-screen max-w-[1240px] flex-col gap-10 px-6 py-12 lg:px-8 lg:py-16">
       {/* ── Masthead ───────────────────────────────────────────────────── */}
       <header className="flex flex-wrap items-end justify-between gap-5 border-b border-hud-neutral pb-8">
         <div className="flex items-center gap-4">
@@ -181,7 +181,7 @@ export function ReplayDashboard() {
       {/* ── Loader (when not yet loaded) ─────────────────────────────── */}
       {!loaded && (
         <section className="flex flex-col gap-6">
-          <Eyebrow tone="muted">01 · LOAD A REPLAY</Eyebrow>
+          <Eyebrow tone="muted">Load a replay</Eyebrow>
 
           {/* Drop zone */}
           <div
@@ -338,7 +338,7 @@ export function ReplayDashboard() {
 
       {/* ── The arena section — mirrors Dashboard's "02 · THE ARENA" exactly ── */}
       <section ref={arenaRef} className="flex flex-col gap-4 scroll-mt-6">
-        <Eyebrow tone="muted">02 · THE ARENA</Eyebrow>
+        <Eyebrow tone="muted">The arena</Eyebrow>
         {/* Ring + live Band-room transcript side-by-side, same as the live demo,
             so a replay reads as agents conversing in one room too. */}
         <div className="ax-court px-3 py-6 sm:px-6 sm:py-8">

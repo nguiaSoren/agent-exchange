@@ -485,10 +485,10 @@ export function Arena({
       <ArenaLegend />
 
       {/* Click-through detail drawer (peek = hover card, click = full drawer).
-          The whole surface is light now; the drawer is a fixed overlay (tokens
-          cascade by DOM ancestry, not visual position), so we keep `.ax-light`
-          explicit here to guarantee it renders light regardless of ancestor. */}
-      <div className="ax-light">
+          The whole site is the dark neon HUD now and this subtree already sits
+          inside `.ax-court`, so the drawer inherits the dark tokens — no theme
+          scope needed. */}
+      <div>
         <DetailDrawer
           selection={selection}
           state={state}
