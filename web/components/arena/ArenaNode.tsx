@@ -113,6 +113,18 @@ export function ArenaNode({
       : node.provider.gateway === "AI/ML API" ||
         node.provider.gateway === "Featherless";
 
+  // Display handle: LIVE agents carry their real Band handle ("owner/agent", e.g.
+  // "nguiasoren/liability-auditor"), which is verbose. For your OWN agents drop the
+  // redundant owner prefix → "@liability-auditor". For a CROSS-OWNER agent KEEP the
+  // "owner/agent" form ("babidibuu19/tax-clause-bot") — that different owner name is
+  // the whole cross-org proof. Demo handles ("@liability-hawk") pass through unchanged.
+  const handleLabel = node.crossOwner
+    ? node.handle
+    : (() => {
+        const tail = node.handle.split("/").pop() || node.handle;
+        return tail.startsWith("@") ? tail : `@${tail}`;
+      })();
+
   // Open the hover card toward the canvas center (where there's room): a node
   // on the LEFT half opens RIGHT, a node on the RIGHT half opens LEFT.
   const openSide: "left" | "right" = point.x < cx ? "right" : "left";
@@ -410,7 +422,7 @@ export function ArenaNode({
         style={{ top: diameter / 2 + 6, opacity: dim ? 0.5 : 1 }}
       >
         <span className="whitespace-nowrap font-mono text-[10px] font-medium text-fg">
-          {node.handle}
+          {handleLabel}
         </span>
         {/* Routing pill — only on NON-native agents. Shows the framework AND the
             full routing relationship as logos: framework label · [model brand] →
