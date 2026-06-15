@@ -10,9 +10,19 @@ export function Topbar() {
     <header className="sticky top-0 z-50 border-b border-hud-neutral bg-canvas/95">
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
         {/* Wordmark + live */}
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="font-display text-[13px] font-bold uppercase tracking-[0.18em] text-fg sm:text-[15px]">
-            The Agent Exchange
+        <div className="flex min-w-0 items-center gap-2.5">
+          {/* Instrument mark — a small emerald block that reads as a logotype tick. */}
+          <span
+            aria-hidden
+            className="inline-block h-3.5 w-3.5 shrink-0 rounded-[3px]"
+            style={{
+              background:
+                "linear-gradient(150deg, var(--ax-emerald-glow), var(--ax-emerald))",
+              boxShadow: "0 0 12px -2px var(--ax-emerald)",
+            }}
+          />
+          <span className="font-display text-[14px] font-black uppercase tracking-[0.1em] text-fg sm:text-[16px]">
+            Agent&nbsp;Exchange
           </span>
           <span className="hidden items-center gap-1.5 rounded-md border border-hud bg-emerald-dim px-2 py-0.5 sm:inline-flex">
             <LiveDot tone="emerald" size={7} />

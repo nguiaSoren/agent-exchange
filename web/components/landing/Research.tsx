@@ -64,9 +64,9 @@ function Metric({
 }) {
   const valueColor =
     tone === "emerald"
-      ? "text-emerald"
+      ? "text-emerald ax-num-glow"
       : tone === "gold"
-        ? "text-gold"
+        ? "text-gold ax-num-glow-gold"
         : "text-fg";
   return (
     <div className="flex flex-col gap-2 border-t border-hud-neutral pt-4">
@@ -156,6 +156,7 @@ function ReliabilityCurve() {
             fill="var(--ax-emerald-dim)"
             stroke="var(--ax-emerald)"
             strokeWidth={1.5}
+            style={{ filter: "drop-shadow(0 0 4px var(--ax-emerald))" }}
           />
         ))}
 
@@ -169,6 +170,7 @@ function ReliabilityCurve() {
             fill="var(--ax-gold-dim)"
             stroke="var(--ax-gold)"
             strokeWidth={1.5}
+            style={{ filter: "drop-shadow(0 0 4px var(--ax-gold))" }}
           />
         ))}
 
@@ -182,7 +184,7 @@ function ReliabilityCurve() {
               className="tnum"
               fontFamily="var(--font-mono, monospace)"
               fontSize="9"
-              fill="var(--ax-fg-faint)"
+              fill="var(--ax-fg-muted)"
             >
               {g.toFixed(2)}
             </text>
@@ -193,7 +195,7 @@ function ReliabilityCurve() {
               className="tnum"
               fontFamily="var(--font-mono, monospace)"
               fontSize="9"
-              fill="var(--ax-fg-faint)"
+              fill="var(--ax-fg-muted)"
             >
               {g.toFixed(2)}
             </text>

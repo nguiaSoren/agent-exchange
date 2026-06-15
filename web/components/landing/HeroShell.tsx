@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Eyebrow, LiveDot } from "@/components/hud";
+import { LiveDot } from "@/components/hud";
 
 /**
  * HeroShell — the shared chrome for a landing "hero shot" section.
@@ -29,10 +29,19 @@ const TONE: Record<NonNullable<HeroMetric["tone"]>, string> = {
   fg: "text-fg",
 };
 
+const TONE_GLOW: Record<NonNullable<HeroMetric["tone"]>, string> = {
+  emerald: "ax-num-glow",
+  danger: "ax-num-glow-red",
+  gold: "ax-num-glow-gold",
+  fg: "",
+};
+
 function MetricCallout({ value, label, tone = "fg" }: HeroMetric) {
   return (
-    <div className="flex flex-col gap-1 rounded-lg border border-hud-neutral bg-surface px-4 py-3">
-      <span className={`font-display text-[26px] font-black leading-none tabular-nums ${TONE[tone]}`}>
+    <div className="flex flex-col gap-1 rounded-lg border border-hud bg-surface-2 px-4 py-3">
+      <span
+        className={`font-display text-[26px] font-black leading-none tabular-nums ${TONE[tone]} ${TONE_GLOW[tone]}`}
+      >
         {value}
       </span>
       <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">
@@ -43,7 +52,6 @@ function MetricCallout({ value, label, tone = "fg" }: HeroMetric) {
 }
 
 export function HeroShell({
-  index,
   badge,
   badgeTone = "emerald",
   eyebrow,
@@ -74,7 +82,13 @@ export function HeroShell({
   const copy = (
     <div className="flex flex-col items-start">
       <div className="mb-5 flex flex-wrap items-center gap-2.5">
-        <Eyebrow tone="muted">{index} · {eyebrow}</Eyebrow>
+        <span className="inline-flex items-center gap-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-fg-muted">
+          <span
+            className="inline-block h-px w-6"
+            style={{ background: "var(--ax-emerald)", boxShadow: "0 0 8px -1px var(--ax-emerald)" }}
+          />
+          {eyebrow}
+        </span>
         <span className="inline-flex items-center gap-2 rounded-full border border-hud-neutral bg-surface px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-fg-muted">
           <LiveDot tone={badgeTone === "danger" ? "red" : badgeTone} size={6} />
           {badge}

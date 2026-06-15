@@ -66,7 +66,7 @@ export function Numbers() {
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex min-w-0 flex-col justify-center">
-              <span className="tnum font-display text-[52px] font-black leading-none text-emerald sm:text-[64px]">
+              <span className="ax-num-glow tnum font-display text-[52px] font-black leading-none text-emerald sm:text-[64px]">
                 <CountUp value={100} suffix="%" />
               </span>
               <span className="tnum mt-2 font-mono text-[12px] text-fg-muted">
