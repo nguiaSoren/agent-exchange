@@ -624,6 +624,38 @@ def _now_ms() -> int:
     return int(datetime.now(timezone.utc).timestamp() * 1000)
 
 
+def _member_findings_message(findings: list) -> str:
+    """A granular in-room line summarizing a member's REAL findings (the claims it
+    actually produced this round) — so the live transcript shows WHAT each agent
+    wrote, not just a generic 'reviewing…' beat. No findings → a clean line."""
+    if not findings:
+        return "Audited my section — no risk clauses to flag."
+
+    def _one(f: Any) -> str:
+        ref = (getattr(f, "clause_ref", "") or "").strip()
+        claim = " ".join((getattr(f, "claim", "") or "").split())
+        if len(claim) > 110:
+            claim = claim[:109].rstrip() + "…"
+        return f"§{ref} {claim}" if ref else claim
+
+    head = [_one(f) for f in findings[:2]]
+    extra = f" (+{len(findings) - 2} more)" if len(findings) > 2 else ""
+    return " · ".join(head) + extra
+
+
+def _member_done_events(worker: str, findings: list) -> list[tuple[str, dict]]:
+    """Events emitted the instant a member's in-room audit completes: its per-agent
+    progress tick, plus a granular room line with its REAL findings — EXCEPT for the
+    seeded probe, which never posts to the room (its fabricated claim is the hidden
+    verifier test, surfaced only later as a graded finding)."""
+    events: list[tuple[str, dict]] = [("progress", {"worker": worker, "done": True})]
+    if worker != SEEDED_PROBE_ID:
+        events.append(
+            ("room_message", {"sender": worker, "content": _member_findings_message(findings)})
+        )
+    return events
+
+
 def _drift_summary(report: Any) -> str:
     """A short human string describing one worker's drift report (for the UI).
 
@@ -771,10 +803,10 @@ async def run_job(
             # (never deadlock); `await task` at the end re-raises any failure into the
             # existing error handling, so a collaborate/progress fault still ends the
             # stream cleanly.
-            queue: asyncio.Queue[str] = asyncio.Queue()
+            queue: asyncio.Queue[tuple[str, list]] = asyncio.Queue()
 
-            async def _on_done(specialty: str) -> None:
-                await queue.put(specialty)
+            async def _on_done(specialty: str, findings: list) -> None:
+                await queue.put((specialty, findings))
 
             task = asyncio.create_task(
                 collaborate_in_room(
@@ -788,12 +820,15 @@ async def run_job(
             )
             while not task.done():
                 try:
-                    worker = await asyncio.wait_for(queue.get(), timeout=0.25)
-                    yield "progress", {"worker": worker, "done": True}
+                    worker, findings = await asyncio.wait_for(queue.get(), timeout=0.25)
+                    for ev in _member_done_events(worker, findings):
+                        yield ev
                 except asyncio.TimeoutError:
                     pass
             while not queue.empty():
-                yield "progress", {"worker": queue.get_nowait(), "done": True}
+                worker, findings = queue.get_nowait()
+                for ev in _member_done_events(worker, findings):
+                    yield ev
             result = await task  # propagate result + any exception
         else:
             # SIM: collaborate is instant/canned — no progress to stream.

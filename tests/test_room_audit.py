@@ -379,9 +379,11 @@ def test_on_member_complete_fires_once_per_member():
     world, room_id, team, reporter_member, verifier = _build_world()
 
     seen: list[str] = []
+    found: dict[str, list] = {}
 
-    async def _on_done(specialty: str) -> None:
+    async def _on_done(specialty: str, findings: list) -> None:
         seen.append(specialty)
+        found[specialty] = findings
 
     asyncio.run(
         collaborate_in_room(
@@ -397,6 +399,10 @@ def test_on_member_complete_fires_once_per_member():
     # One callback per member, with the exact specialty keys (order-independent).
     assert sorted(seen) == ["indemnity", "liability"]
     assert len(seen) == len(team)
+    # The callback now carries each member's REAL findings (so a live caller can post
+    # them into the room): a member that produced findings hands back a non-empty list.
+    assert isinstance(found["liability"], list)
+    assert all(getattr(f, "claim", None) for f in found["liability"])
 
 
 def test_on_member_complete_fires_for_a_raising_member_too():
@@ -435,7 +441,7 @@ def test_on_member_complete_fires_for_a_raising_member_too():
     verifier = Verifier(_KeyedVerifierBackend())
     seen: list[str] = []
 
-    async def _on_done(specialty: str) -> None:
+    async def _on_done(specialty: str, findings: list) -> None:
         seen.append(specialty)
 
     asyncio.run(

@@ -437,6 +437,55 @@
       }
     },
     {
+      "type": "room_message",
+      "data": {
+        "sender": "liability",
+        "content": "\u00a71 Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (1\u2026 \u00b7 \u00a71 The liability cap does not apply to breaches of confidentiality or indemnification obligations. (+2 more)"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "ip",
+        "content": "\u00a72 All work product, deliverables, and foreground IP created under this Agreement are assigned to Client u\u2026 \u00b7 \u00a72 Vendor retains pre-existing background IP and grants Client only a non-exclusive license to use it, wit\u2026 (+4 more)"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "termination",
+        "content": "\u00a74 Either party may terminate for cause on 30 days' written notice with a 30-day cure period, meaning the\u2026 \u00b7 \u00a74 The Agreement auto-renews for successive 12-month terms unless either party gives 30 days' notice of no\u2026 (+1 more)"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "tax",
+        "content": "\u00a73 Clause 3 states 'Fees are stated exclusive of tax' and 'Client bears all sales, use, and VAT/GST', plac\u2026 \u00b7 \u00a73 Clause 3 provides that 'Each party is responsible for its own income and franchise taxes', allocating e\u2026"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "data_privacy",
+        "content": "\u00a75 Clause 5 prohibits Vendor from using Client data to train models, but does not restrict Vendor's use of\u2026 \u00b7 \u00a75 Clause 5 defines Confidential Information protection duration as 3 years after disclosure, which is sho\u2026 (+5 more)"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "indemnity",
+        "content": "\u00a76 Indemnification obligation is limited to third-party claims of IP infringement in deliverables only; do\u2026 \u00b7 \u00a76 Indemnification scope includes defense costs and settlements but does not explicitly address whether it\u2026 (+4 more)"
+      }
+    },
+    {
+      "type": "room_message",
+      "data": {
+        "sender": "reporter",
+        "content": "Consolidated 28 findings across the team \u2192 handing the graded set to the verifier."
+      }
+    },
+    {
       "seq": 31,
       "t_offset_ms": 88006.4,
       "type": "stage",

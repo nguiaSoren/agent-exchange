@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useReplay } from "@/lib/useReplay";
 import { scrollIntoFullView } from "@/lib/scroll";
+import { WorkRoom } from "@/components/WorkRoom";
 import {
   Eyebrow,
   GlitchText,
@@ -96,6 +97,10 @@ export function ReplayDashboard() {
   const loaded = ctl.status === "loaded";
   const scrubberMax = Math.max(0, ctl.total - 1);
   const scrubberValue = Math.max(0, ctl.cursor);
+
+  // Lift the Band-room transcript while the Work stage is the active beat.
+  const workActive =
+    ctl.state.stages.find((s) => s.status === "active")?.name === "Work";
 
   return (
     <main className="ax-light ax-stage mx-auto flex min-h-screen max-w-[1240px] flex-col gap-10 px-6 py-12 lg:px-8 lg:py-16">
@@ -334,8 +339,13 @@ export function ReplayDashboard() {
       {/* ── The arena section — mirrors Dashboard's "02 · THE ARENA" exactly ── */}
       <section ref={arenaRef} className="flex flex-col gap-4 scroll-mt-6">
         <Eyebrow tone="muted">02 · THE ARENA</Eyebrow>
+        {/* Ring + live Band-room transcript side-by-side, same as the live demo,
+            so a replay reads as agents conversing in one room too. */}
         <div className="ax-court px-3 py-6 sm:px-6 sm:py-8">
-          <Arena state={ctl.state} idleHint="Press ▶ to play the recorded run" />
+          <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)]">
+            <Arena state={ctl.state} idleHint="Press ▶ to play the recorded run" />
+            <WorkRoom room={ctl.state.room} workActive={workActive} />
+          </div>
         </div>
       </section>
 

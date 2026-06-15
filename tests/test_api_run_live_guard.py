@@ -269,8 +269,8 @@ def test_live_run_emits_progress_events_during_collaborate(monkeypatch):
     async def _wrapped(work_room_id, contract, team, reporter, verifier, *,
                        on_member_complete=None, **kw):
         if on_member_complete is not None:
-            await on_member_complete("liability")
-            await on_member_complete("termination")
+            await on_member_complete("liability", [])
+            await on_member_complete("termination", [])
         return await real_collaborate(
             work_room_id, contract, team, reporter, verifier,
             on_member_complete=on_member_complete, **kw,
@@ -300,6 +300,11 @@ def test_live_run_emits_progress_events_during_collaborate(monkeypatch):
         assert isinstance(p["worker"], str) and p["worker"]
     workers = {p["worker"] for p in progress}
     assert {"liability", "termination"} <= workers
+    # As each member completes, the live path also streams a room line with WHAT that
+    # agent wrote (granular), not just the generic "reviewing…" beat — so a worker that
+    # completed appears as a room_message sender during the run.
+    room_senders = {d.get("sender") for n, d in events if n == "room_message"}
+    assert "liability" in room_senders
     # The stream still completed cleanly through to `done` (no deadlock).
     assert any(n == "done" for n, _ in events)
 
