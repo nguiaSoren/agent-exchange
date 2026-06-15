@@ -1,0 +1,449 @@
+/* ====================================================================
+   HERO SHOT 02 — CROSS-OWNER RECRUITMENT (bespoke handshake scene).
+
+   Scoped CSS module; touches NO globals.css and NO arena.module.css. Reuses the
+   arena's motion vocabulary (--ax-ease-out / --ax-ease-out-2) and disc/pip
+   styling so the scene reads as the same universe. All motion is compositor-
+   only (opacity + transform). The animated state is gated behind .scenePlay so
+   keyframes only run when the section scrolls into view; .sceneJoined /
+   .sceneReduced render the final "joined the pool" rest state. Every keyframe is
+   neutralized under prefers-reduced-motion at the bottom.
+
+   BEAT TIMELINE (from .scenePlay, ms):
+     beat 1  contact-request dot travels L→R   ~200 → 1100
+     beat 2  ✓ approved stamp pops, dim lifts  ~1200 → 1900
+     beat 3  guest crosses boundary + lights   ~2000 → 2900
+   ==================================================================== */
+
+.scene {
+  position: relative;
+  z-index: 1; /* above the .ax-court grid texture (::before is z-index 0) */
+  display: grid;
+  /* home | boundary | guest, the guest column a touch wider for its status. */
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  min-height: 184px;
+  column-gap: 0;
+}
+
+/* ── Side captions (mono labels, like ROGUE's section eyebrows) ─────── */
+.sideLabel {
+  position: absolute;
+  top: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--ax-fg-faint-rgb));
+}
+.sideLabelLeft {
+  left: 2px;
+}
+.sideLabelRight {
+  right: 2px;
+  color: var(--ax-gold);
+}
+
+/* ── The owner boundary — a dashed vertical seam in the middle column. ── */
+.boundary {
+  grid-column: 2;
+  position: relative;
+  justify-self: center;
+  width: 0;
+  height: 130px;
+  border-left: 1px dashed rgb(var(--ax-border-neutral-rgb) / 0.32);
+}
+.boundaryLabel {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--ax-fg-faint-rgb));
+}
+
+/* ── Agent slots (a disc + handle + sub-label, stacked) ─────────────── */
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding-top: 18px;
+}
+.slotHome {
+  grid-column: 1;
+}
+.slotGuest {
+  grid-column: 3;
+}
+
+.handle {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgb(var(--ax-fg-rgb));
+  white-space: nowrap;
+}
+.subHandle {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: rgb(var(--ax-fg-faint-rgb));
+  white-space: nowrap;
+}
+
+/* ── The disc — mirrors ArenaNode's surface disc + provider logo. ───── */
+.disc {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--ax-border-neutral-rgb) / 0.14);
+  background: rgb(var(--ax-surface-2-rgb) / 0.96);
+  box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* Home disc: a quiet emerald-rim member of the pool. */
+.discHome {
+  border-color: var(--ax-emerald);
+  box-shadow: var(--ax-glow-emerald);
+}
+
+/* The gold cross-owner pip — mirrors ArenaNode's marker exactly. */
+.pip {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--ax-canvas);
+  background: var(--ax-gold);
+  box-shadow: 0 0 6px -1px rgba(255, 194, 51, 0.8);
+}
+
+/* ── The cross-owner guest node — starts dimmed/outside, gets approved,
+      then crosses the boundary and lights emerald ("joined the pool"). ── */
+.guestNode {
+  position: relative;
+}
+.discGuest {
+  /* Default (idle / pre-play): dimmed gold-rim outsider, nudged outward. */
+  opacity: 0.42;
+  border-color: rgb(var(--ax-gold-ink) / 0.5);
+  transform: translateX(14px);
+}
+
+/* The ✓ approved stamp on the guest node — hidden until beat 2. */
+.stamp {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  white-space: nowrap;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  border: 1px solid var(--ax-emerald);
+  background: rgb(var(--ax-canvas-rgb));
+  color: var(--ax-emerald-glow);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 10px -2px var(--ax-emerald-glow);
+}
+
+/* Status line under the guest: pending → joined the pool. Both occupy the
+   same grid cell so the swap doesn't shift layout. */
+.statusLine {
+  position: relative;
+  display: inline-grid;
+  min-height: 12px;
+}
+.statusPending,
+.statusJoined {
+  grid-area: 1 / 1;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+}
+.statusPending {
+  color: var(--ax-gold);
+  opacity: 1;
+}
+.statusJoined {
+  color: var(--ax-emerald-glow);
+  opacity: 0;
+  font-weight: 700;
+}
+
+/* ── The contact-request track (spans the boundary), beat 1. ────────── */
+.requestTrack {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  position: relative;
+  justify-self: center;
+  align-self: center;
+  width: 78%;
+  height: 0;
+  pointer-events: none;
+}
+.requestLabel {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ax-gold);
+}
+.requestDot {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--ax-gold);
+  box-shadow: 0 0 10px -1px var(--ax-gold);
+  opacity: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PLAY STATE — the three staged beats fire only under .scenePlay.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* beat 1 — the request dot streaks L→R across the boundary; its label fades in. */
+.scenePlay .requestDot {
+  animation: hr-request 900ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    200ms both;
+}
+.scenePlay .requestLabel {
+  animation: hr-label 900ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 200ms
+    both;
+}
+@keyframes hr-request {
+  0% {
+    left: 0;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  12% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+@keyframes hr-label {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  18%,
+  82% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* beat 2 — the ✓ approved stamp pops (anticipation → settle → rebound), and the
+   guest's dim lifts to a confirmed, full-opacity gold-rim node. */
+.scenePlay .stamp {
+  animation: hr-stamp 480ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    1200ms both;
+}
+@keyframes hr-stamp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6) rotate(-6deg);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12) rotate(-6deg);
+  }
+  78% {
+    transform: translate(-50%, -50%) scale(0.96) rotate(-6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(-6deg);
+  }
+}
+
+/* The guest disc lifts its dim at beat 2, then crosses the boundary + flips to
+   an emerald-lit pool member at beat 3. One keyframe spans both beats so the
+   border/glow/opacity/position all interpolate smoothly. */
+.scenePlay .discGuest {
+  animation: hr-guest 1700ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 1200ms
+    forwards;
+}
+@keyframes hr-guest {
+  /* 1200ms: still the dimmed outsider. */
+  0% {
+    opacity: 0.42;
+    border-color: rgb(var(--ax-gold-ink) / 0.5);
+    box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.7);
+    transform: translateX(14px) scale(1);
+  }
+  /* ~1900ms (beat 2 done): approved — full opacity, gold rim. */
+  41% {
+    opacity: 1;
+    border-color: var(--ax-gold);
+    box-shadow: var(--ax-glow-gold);
+    transform: translateX(14px) scale(1);
+  }
+  /* ~2300ms: pushes off, crossing the boundary toward your side. */
+  62% {
+    opacity: 1;
+    border-color: var(--ax-gold);
+    box-shadow: var(--ax-glow-gold);
+    transform: translateX(-22px) scale(1.06);
+  }
+  /* ~2900ms (beat 3 done): slotted in, lit emerald like a pool member. */
+  100% {
+    opacity: 1;
+    border-color: var(--ax-emerald);
+    box-shadow: var(--ax-glow-emerald);
+    transform: translateX(-6px) scale(1);
+  }
+}
+
+/* beat 3 — the gold pip stays (it's still cross-owner), but the pip gives a soft
+   confirming pulse as the node joins. */
+.scenePlay .pip {
+  animation: hr-pip 620ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 2000ms
+    both;
+}
+@keyframes hr-pip {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* beat 3 — the status line swaps pending → joined the pool. */
+.scenePlay .statusPending {
+  animation: hr-fade-out 360ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    2150ms both;
+}
+.scenePlay .statusJoined {
+  animation: hr-fade-in 460ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    2300ms both;
+}
+@keyframes hr-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+@keyframes hr-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   REST STATE — .sceneJoined (after the animation settles, or reduced-motion).
+   The guest holds the lit-emerald, joined-the-pool end-state with no motion.
+   ════════════════════════════════════════════════════════════════════ */
+.sceneJoined .discGuest {
+  opacity: 1;
+  border-color: var(--ax-emerald);
+  box-shadow: var(--ax-glow-emerald);
+  transform: translateX(-6px);
+}
+.sceneJoined .stamp {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(-6deg);
+}
+.sceneJoined .statusPending {
+  opacity: 0;
+}
+.sceneJoined .statusJoined {
+  opacity: 1;
+}
+/* In the rest state the request pulse is spent — keep the label visible as a
+   quiet caption of what happened. */
+.sceneJoined .requestLabel {
+  opacity: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   REDUCED MOTION — neutralize every keyframe; the joined end-state (driven by
+   .sceneReduced → which also carries .sceneJoined rules via the component) is
+   shown statically with all labels. No motion, full legibility.
+   ════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .requestDot,
+  .requestLabel,
+  .stamp,
+  .discGuest,
+  .pip,
+  .statusPending,
+  .statusJoined {
+    animation: none !important;
+  }
+  /* Snap the guest to its joined end-state regardless of phase class. */
+  .sceneReduced .discGuest {
+    opacity: 1;
+    border-color: var(--ax-emerald);
+    box-shadow: var(--ax-glow-emerald);
+    transform: translateX(-6px);
+  }
+  .sceneReduced .stamp {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(-6deg);
+  }
+  .sceneReduced .requestLabel {
+    opacity: 1;
+  }
+  .sceneReduced .statusPending {
+    opacity: 0;
+  }
+  .sceneReduced .statusJoined {
+    opacity: 1;
+  }
+  /* The request dot carries no static meaning — hide it (the stamp + status
+     carry the payoff). */
+  .sceneReduced .requestDot {
+    opacity: 0;
+  }
+}

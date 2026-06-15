@@ -1,0 +1,68 @@
+# ─── PRIVATE — never commit to the public repo ───────────────────────
+# Wallets / keys / secrets
+.env
+.env.*
+!.env.example
+WALLETS.md
+*.pem
+*.key
+*.keystore
+*.mnemonic
+seedphrase*
+mnemonic*
+wallet.json
+
+# Internal-only docs (moat / process — keep out of the public slice repo).
+# Defensive: these live in the private workspace, but ignore them if ever copied in.
+BUILD_LESSONS.md
+VISION.md
+OPEN_VS_PRIVATE.md
+DAY-BY-DAY*.md
+Prompt*.md
+PROMPT*.md
+MEMORY.md
+# Keep the strategy/process narrative OUT of the published repo — the internal
+# README + agent instructions reveal the sponsor-targeting playbook to rivals.
+# (A clean, neutral public README is written separately for the submission.)
+README.md
+CLAUDE.md
+glossary.md
+BAND_CASE_STUDY.md
+
+# Internal tooling — not part of the minimal submission (labels.json stays as
+# calibration evidence; the labeling UI does not).
+label_calibration.html
+
+# ─── Node / web build (web/ has its own .gitignore; these are defensive) ──
+node_modules/
+.next/
+.vercel/
+out/
+
+# ─── Python ──────────────────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# ─── Runtime state / traces / logs (regenerated per run) ─────────────
+data/traces/*.jsonl
+data/reputation.json
+/tmp/agentexch_*.log
+*.log
+*_cost_log.csv
+
+# ─── OS / editor ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

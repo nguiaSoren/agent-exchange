@@ -1,0 +1,126 @@
+{
+  "version": "calib_v1",
+  "created": "2026-06-12T10:48:36.164Z",
+  "labels": [
+    {
+      "id": "c01",
+      "claim": "Liability is capped at the fees paid in the prior 12 months.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c02",
+      "claim": "Liability is capped at $1,000,000.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c03",
+      "claim": "Liability is capped at the fees paid in the prior 12 months.",
+      "label": "partial"
+    },
+    {
+      "id": "c04",
+      "claim": "Vendor disclaims liability for all damages.",
+      "label": "partial"
+    },
+    {
+      "id": "c05",
+      "claim": "Either party can terminate immediately for any breach.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c06",
+      "claim": "A party may terminate for an uncured material breach after 30 days' notice.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c07",
+      "claim": "The contract auto-renews unless cancelled 30 days before the term ends.",
+      "label": "partial"
+    },
+    {
+      "id": "c08",
+      "claim": "The agreement does not auto-renew.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c09",
+      "claim": "Publicly available information is not confidential.",
+      "label": "partial"
+    },
+    {
+      "id": "c10",
+      "claim": "Invoices are due in 30 days and late interest is 18% per year.",
+      "label": "partial"
+    },
+    {
+      "id": "c11",
+      "claim": "Late payments accrue 1.5% interest per year.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c12",
+      "claim": "Disputes are resolved by arbitration in Delaware.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c13",
+      "claim": "There is a 90-day warranty on the Services.",
+      "label": "partial"
+    },
+    {
+      "id": "c14",
+      "claim": "Vendor provides a lifetime warranty on the Services.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c15",
+      "claim": "Implied warranties are disclaimed.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c16",
+      "claim": "Vendor may use Customer Data to train its AI models.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c17",
+      "claim": "Vendor's right to use Customer Data is limited to providing the Services.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c18",
+      "claim": "A pandemic qualifies as a force majeure event under this clause.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c19",
+      "claim": "All fees are non-refundable.",
+      "label": "partial"
+    },
+    {
+      "id": "c20",
+      "claim": "Verbal amendments are not valid.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c21",
+      "claim": "Vendor is SOC 2 certified.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c22",
+      "claim": "The liability cap applies to all claims, including confidentiality breaches.",
+      "label": "unsupported"
+    },
+    {
+      "id": "c23",
+      "claim": "The liability cap has exceptions for confidentiality and indemnification.",
+      "label": "confirmed"
+    },
+    {
+      "id": "c24",
+      "claim": "Support is available 24/7.",
+      "label": "unsupported"
+    }
+  ]
+}

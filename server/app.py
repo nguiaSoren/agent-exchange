@@ -1,0 +1,729 @@
+"""Agent Exchange — a LIVE streaming API for the demo UI.
+
+A FastAPI app that, on request, RUNS a real marketplace job and STREAMS its lifecycle as
+Server-Sent Events so a frontend can animate it live:
+
+    discover -> bid -> hire -> collaborate (in-room audit) -> verify -> settle -> receipt
+
+It reuses the marketplace primitives wholesale (the same code the test suite + live
+spikes drive) and only adds the HTTP + streaming skin:
+
+  * `agent_exchange.audit.collaborate_in_room` — the in-room team audit (parallel
+    specialists -> reporter -> verify both layers against the document);
+  * `agent_exchange.payments.settle_job` + receipts — the x402 verify->settle gate and
+    the EIP-191 signed receipt that binds verified work to payment;
+  * `agent_exchange.workers.job_types` — the per-kind specialist roster + document label;
+  * `agent_exchange.band.http_client` / `core.make_backend` / `payments.make_x402_gate` —
+    the live transports, wired from env exactly as the spikes do.
+
+Two run modes (chosen per request, defaulting safe):
+
+  * ``"live"`` — real Band clients + a real model provider + the real x402 gate. Selected
+    only when ALL the required keys are present; otherwise we transparently fall back to
+    sim (never crash, never spend without keys).
+  * ``"sim"`` — a deterministic offline run (`FakeBandClient` + a mock verifier backend +
+    an in-memory gate), no network and no spend. The default.
+
+The SSE event schema the frontend depends on is documented inline at `run_job`.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+from collections.abc import AsyncIterator
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from typing import Any
+
+from dotenv import load_dotenv
+
+# Make `agent_exchange` importable when the server is launched from the repo root.
+
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_SRC = os.path.join(_ROOT, "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+
+load_dotenv(os.path.join(_ROOT, ".env"))
+
+from fastapi import FastAPI  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.responses import JSONResponse, StreamingResponse  # noqa: E402
+from pydantic import BaseModel, Field  # noqa: E402
+
+from agent_exchange.audit.room_audit import collaborate_in_room  # noqa: E402
+from agent_exchange.audit.room_audit_types import (  # noqa: E402
+    CollaborationMember,
+    ReporterMember,
+)
+from agent_exchange.metrics import usdc  # noqa: E402
+from agent_exchange.payments.receipts import (  # noqa: E402
+    build_receipt,
+    deliverable_hash,
+    make_receipt_signer,
+)
+from agent_exchange.payments.settlement import settle_job  # noqa: E402
+from agent_exchange.verify.schema import LENIENT, Verdict  # noqa: E402
+from agent_exchange.verify.verifier import Verifier  # noqa: E402
+from agent_exchange.workers.job_types import document_label_for  # noqa: E402
+
+from sim import SIM_SIGNER_KEY, KeyedVerifierBackend, SimGate, build_sim_scenario  # noqa: E402
+
+# ---------------------------------------------------------------------------
+# Sample documents (UI prefill) — kept here so /api/jobs/sample needs no provider.
+# ---------------------------------------------------------------------------
+
+# A compact MSA for the contract-audit job (matches the clauses the sim findings cite).
+SAMPLE_MSA = """\
+MASTER SERVICES AGREEMENT
+
+1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees \
+paid by Client in the twelve (12) months preceding the claim. This cap does not apply \
+to breaches of confidentiality or indemnification obligations.
+
+2. Intellectual Property. All work product, deliverables, and foreground IP created \
+under this Agreement are assigned to Client upon creation. Vendor retains its \
+pre-existing background IP and grants Client a non-exclusive license to use it.
+
+3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. \
+Each party is responsible for its own income and franchise taxes.
+
+4. Termination. Either party may terminate for cause on 30 days' written notice with a \
+30-day cure period. The initial term is 12 months and auto-renews for successive \
+12-month terms unless either party gives 30 days' notice of non-renewal.
+
+5. Confidentiality & Data. Each party shall protect the other's Confidential \
+Information for 3 years after disclosure. Vendor may not use Client data to train \
+models. Vendor shall notify Client of any security breach within 72 hours.
+
+6. Indemnification. Vendor shall indemnify Client against third-party claims that the \
+deliverables infringe IP rights, including defense costs and settlements.
+
+7. Warranties. Vendor warrants the services will be performed in a professional and \
+workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED "AS IS".
+
+8. Governing Law. This Agreement is governed by the laws of the State of Delaware.
+"""
+
+# Default authorized budget per job kind (USDC). Small — the live path moves real coin.
+_DEFAULT_BUDGET_USD = 0.20
+
+# Job-level latency stamped on every worker's drift telemetry row. The in-room
+# audit runs the team together, so there is no per-worker wall clock; this is a
+# documented coarse approximation (see anomaly/run_drift.py). Latency drift is a
+# job-level, not a per-worker, signal here.
+_DRIFT_LATENCY_MS = 5000
+
+_SAMPLE_TITLES = {
+    "contract-audit": "Acme MSA — clause audit",
+    "nda-review": "Mutual NDA — review",
+}
+
+
+def _sample_document(kind: str) -> str:
+    """The prefill document for a job kind (MSA for contract, SAMPLE_NDA for nda)."""
+    if kind == "nda-review":
+        from agent_exchange.workers.nda_specialists import SAMPLE_NDA
+
+        return SAMPLE_NDA
+    return SAMPLE_MSA
+
+
+# ---------------------------------------------------------------------------
+# Live-vs-sim selection
+# ---------------------------------------------------------------------------
+
+
+def _env(name: str) -> str:
+    return (os.getenv(name) or "").strip()
+
+
+def _live_keys_present() -> bool:
+    """True only when EVERY key a real run needs is set.
+
+    A live run needs: a model provider (`OPENAI_API_KEY`), at least one specialist Band
+    key plus a market identity (so the in-room audit can run on the real network), and a
+    funded buyer key + payout address for the x402 settlement. Missing ANY of these ->
+    we fall back to sim (never spend without keys).
+    """
+    from agent_exchange.band.http_client import specialist_band_keys
+
+    has_model = bool(_env("OPENAI_API_KEY"))
+    has_specialists = bool(specialist_band_keys())
+    has_market = bool(_env("BAND_MARKET_KEY") or _env("BAND_AGENT_A_KEY"))
+    has_buyer = bool(_env("EVM_PRIVATE_KEY"))
+    has_payout = bool(_env("SELLER_PAYTO_ADDRESS"))
+    return has_model and has_specialists and has_market and has_buyer and has_payout
+
+
+def _resolve_mode(requested: str) -> str:
+    """Map the requested mode to the one we'll actually run.
+
+    ``"live"`` is honoured only if all live keys are present; otherwise it degrades to
+    ``"sim"``. Anything else (including ``"sim"`` and unknown values) runs sim.
+    """
+    if requested == "live" and _live_keys_present():
+        return "live"
+    return "sim"
+
+
+# ---------------------------------------------------------------------------
+# A run context — the constructed pieces the lifecycle emitter drives, built by
+# either the sim or the live assembler. Keeps the SSE emission code shared.
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class RunContext:
+    mode: str
+    kind: str
+    document_label: str
+    market_band: Any
+    work_room_id: str
+    pool: list[dict]                         # [{id,handle,name,owner,cross_owner}]
+    team: list[CollaborationMember]
+    reporter: ReporterMember
+    verifier: Verifier
+    hires: list[Any]                         # list[Hire]
+    payout_addresses: dict[str, str]
+    gate: Any
+    signer_key: str
+    bids: list[dict]                         # [{worker,price_usd,relevance,reputation,n_jobs}]
+    # --- drift detection (the second cheat-signal: model substitution) ---
+    drift_store: Any                         # JsonTelemetryStore | None
+    drift_models: dict[str, str]             # worker -> model run on THIS job
+    drift_bids_atomic: dict[str, int]        # worker -> accepted bid (USDC atomic)
+    drift_now_ms: int                        # injected "now" (sim: fixed; live: wall)
+    closeables: list[Any] = field(default_factory=list)  # http clients to aclose()
+
+
+async def _build_sim_context(kind: str, document: str) -> RunContext:
+    """Assemble the offline run world (FakeBand + mock verifier + in-memory gate)."""
+    scenario = build_sim_scenario(kind, document)
+    await scenario.setup_room()
+    verifier = Verifier(KeyedVerifierBackend(scenario.grades), ablation_gate=True)
+    return RunContext(
+        mode="sim",
+        kind=kind,
+        document_label=document_label_for(kind),
+        market_band=scenario.market_band,
+        work_room_id=scenario.work_room_id,
+        pool=scenario.pool,
+        team=scenario.team,
+        reporter=scenario.reporter,
+        verifier=verifier,
+        hires=scenario.hires,
+        payout_addresses=scenario.payout_addresses,
+        gate=SimGate(),
+        signer_key=SIM_SIGNER_KEY,
+        bids=scenario.bids,
+        drift_store=scenario.drift_store,
+        drift_models=scenario.drift_models,
+        drift_bids_atomic=scenario.drift_bids_atomic,
+        drift_now_ms=scenario.drift_now_ms,
+    )
+
+
+def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, model: str):
+    """Build the `Specialist`-protocol auditor for a slot's assigned framework.
+
+    Returns the framework worker for ``"langgraph"`` / ``"crewai"`` (defaulting to its
+    own provider env: AI/ML API via ``AIMLAPI_MODEL`` for LangGraph, Featherless via
+    ``FEATHERLESS_MODEL`` for CrewAI). Returns ``None`` (so the caller falls back to the
+    native `SpecialistWorker`) for ``"native"`` OR when the framework's deps/keys are
+    missing at runtime — a missing optional framework must never crash the live run.
+    """
+    if framework == "langgraph":
+        try:
+            from agent_exchange.workers.langgraph_specialist import LangGraphSpecialist
+            return LangGraphSpecialist(name, area, prompt)
+        except Exception as exc:  # missing langchain/langgraph deps or AIMLAPI key
+            print(f"[live] langgraph unavailable for {name!r}; "
+                  f"falling back to native: {exc}", file=sys.stderr)
+            return None
+    if framework == "crewai":
+        try:
+            from agent_exchange.workers.crewai_specialist import CrewAISpecialist
+            return CrewAISpecialist(name, area, prompt)
+        except Exception as exc:  # missing crewai dep or FEATHERLESS key
+            print(f"[live] crewai unavailable for {name!r}; "
+                  f"falling back to native: {exc}", file=sys.stderr)
+            return None
+    return None
+
+
+async def _build_live_context(kind: str, document: str, budget_usd: float) -> RunContext:
+    """Assemble the live run world from env, exactly as the spikes wire it.
+
+    Builds: a team of `CollaborationMember`s (one per specialist Band key), a reporter,
+    the work room (created + populated by the market identity), a real `Verifier`, the
+    hires + payout addresses, and a real x402 gate. Closeable HTTP clients are tracked so
+    the caller can release them after the run.
+    """
+    from agent_exchange.band.http_client import make_http_band_client, specialist_band_keys
+    from agent_exchange.core import make_backend
+    from agent_exchange.market.hiring_types import Hire
+    from agent_exchange.payments.x402_gate import make_x402_gate
+    from agent_exchange.workers.job_types import framework_for
+    from agent_exchange.workers.reporter import ReporterWorker
+    from agent_exchange.workers.specialist import SPECIALISTS, SpecialistWorker
+
+    model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+    verifier_model = os.getenv("OPENAI_VERIFIER_MODEL", "gpt-4.1")
+    spec_meta = {name: (area, prompt) for name, area, prompt in SPECIALISTS}
+    keys = specialist_band_keys()
+
+    closeables: list[Any] = []
+    team: list[CollaborationMember] = []
+    pool: list[dict] = []
+    bids: list[dict] = []
+    hires: list[Hire] = []
+    payout: dict[str, str] = {}
+    payout_fallback = _env("SELLER_PAYTO_ADDRESS")
+
+    for name, key in keys.items():
+        meta = spec_meta.get(name)
+        if meta is None:
+            continue
+        area, prompt = meta
+        band = make_http_band_client(key)
+        closeables.append(band)
+        ident = await band.me()
+        # Cross-framework: the `ip`/`confidentiality_scope` slot RUNS a real LangGraph
+        # agent (-> AI/ML API) and `liability`/`permitted_use` a real CrewAI agent
+        # (-> Featherless); every other slot stays native. All three satisfy the same
+        # `Specialist` protocol and join the SAME Band room identically. Fail-soft: a
+        # missing framework dep/key falls back to the native worker for that slot so a
+        # live run never crashes on an absent optional framework.
+        framework = framework_for(kind, name)
+        auditor = _make_framework_auditor(framework, name, area, prompt, model)
+        if auditor is None:
+            framework, auditor = "native", SpecialistWorker(
+                name=name, area=area, system_prompt=prompt,
+                backend=make_backend("openai", model))
+        team.append(
+            CollaborationMember(specialty=name, area=area, band=band, auditor=auditor)
+        )
+        pool.append({"id": ident["id"], "handle": ident.get("handle", ""),
+                     "name": ident.get("name", name), "owner": "self",
+                     "cross_owner": False, "framework": framework})
+        # A live bid: a modest fixed asking price (the on-network bidding auction is its
+        # own spike; here we hire the keyed specialists directly so the demo always runs).
+        price_usd = round(budget_usd / max(1, len(keys)), 4)
+        bids.append({"worker": name, "price_usd": price_usd, "relevance": 0.85,
+                     "reputation": 0.5, "n_jobs": 0, "framework": framework})
+        hires.append(Hire(worker=name, price_atomic=usdc(price_usd), value=0.85, relevance=0.85))
+        payout[name] = _env(f"PAYOUT_{name.upper()}_ADDRESS") or payout_fallback
+
+    # The reporter (its own Band identity, falling back to the market key).
+    reporter_key = _env("BAND_REPORTER_KEY") or _env("BAND_MARKET_KEY") or _env("BAND_AGENT_A_KEY")
+    reporter_band = make_http_band_client(reporter_key)
+    closeables.append(reporter_band)
+    reporter_me = await reporter_band.me()
+    reporter = ReporterMember(
+        band=reporter_band,
+        reporter=ReporterWorker(make_backend("openai", model)),
+        mention={"id": reporter_me.get("id"), "handle": reporter_me.get("handle") or "",
+                 "name": reporter_me.get("name") or "reporter"},
+    )
+
+    # The market creates + populates the work room.
+    market_key = _env("BAND_MARKET_KEY") or _env("BAND_AGENT_A_KEY") or next(iter(keys.values()))
+    market = make_http_band_client(market_key)
+    closeables.append(market)
+    work_room_id = await market.create_room(f"{kind} — work room")
+    for m in team:
+        ident = await m.band.me()
+        await market.add_participant(work_room_id, ident["id"])
+    await market.add_participant(work_room_id, reporter_me["id"])
+
+    # Ablation gate ON for the demo: hardens the verifier (verbatim-quote +
+    # ablation routing + escalate-on-absent) — it only penalizes/escalates,
+    # never auto-withholds, so it can't regress false-withhold-0%.
+    verifier = Verifier(make_backend("openai", verifier_model),
+                        document_label=document_label_for(kind), ablation_gate=True)
+    gate = make_x402_gate(
+        _env("EVM_PRIVATE_KEY"),
+        facilitator_url=os.getenv("X402_FACILITATOR_URL", "https://x402.org/facilitator"),
+        network=os.getenv("X402_NETWORK", "eip155:84532"),
+        asset_address=os.getenv("X402_USDC_ADDRESS",
+                                "0x036CbD53842c5426634e7929541eC2318f3dCF7e"),
+    )
+    await gate.ensure_permit2_approval()
+
+    # Drift telemetry: every live specialist ran the same configured worker model;
+    # the accepted bid per worker is the hire price. The store persists under
+    # data/ so a worker's history accumulates across live runs (the baseline a
+    # FUTURE run's drift check compares against). The first few live runs will
+    # have a NO_BASELINE drift report (nothing to compare against yet) — honest.
+    from agent_exchange.anomaly.telemetry import JsonTelemetryStore
+
+    drift_store = JsonTelemetryStore(os.path.join(_ROOT, "data", "telemetry", "telemetry.json"))
+    drift_models = {h.worker: model for h in hires}
+    drift_bids_atomic = {h.worker: h.price_atomic for h in hires}
+
+    return RunContext(
+        mode="live", kind=kind, document_label=document_label_for(kind),
+        market_band=market, work_room_id=work_room_id, pool=pool, team=team,
+        reporter=reporter, verifier=verifier, hires=hires, payout_addresses=payout,
+        gate=gate, signer_key=_env("EVM_PRIVATE_KEY"), bids=bids,
+        drift_store=drift_store, drift_models=drift_models,
+        drift_bids_atomic=drift_bids_atomic, drift_now_ms=_now_ms(),
+        closeables=closeables,
+    )
+
+
+# ---------------------------------------------------------------------------
+# The lifecycle emitter — drives the real functions, yields (event, data) pairs
+# ---------------------------------------------------------------------------
+
+_VERDICT_LABEL = {
+    Verdict.CONFIRMED: "confirmed",
+    Verdict.PARTIAL: "partial",
+    Verdict.UNSUPPORTED: "unsupported",
+}
+
+
+def _usd(atomic: int) -> float:
+    """Atomic USDC (6dp) -> human dollars for display."""
+    return round(atomic / 1_000_000, 6)
+
+
+def _now_ms() -> int:
+    """Wall-clock now in epoch milliseconds (the telemetry window-ordering key)."""
+    return int(datetime.now(timezone.utc).timestamp() * 1000)
+
+
+def _drift_summary(report: Any) -> str:
+    """A short human string describing one worker's drift report (for the UI).
+
+    Prefers the model-substitution tell (the demo's headline catch); falls back
+    to a cost/latency note, else the in-baseline / no-baseline state.
+    """
+    if report.suppressed_reason:
+        return f"no baseline yet — {report.suppressed_reason}"
+    ms = report.model_substitution
+    if ms is not None and ms.flagged:
+        if ms.model_switch and ms.price_mismatch and ms.implied_overcharge_ratio:
+            prior = ms.baseline_models[0] if ms.baseline_models else "?"
+            return (f"model swap: {prior} -> {ms.current_model} "
+                    f"at {round(ms.implied_overcharge_ratio, 1)}x markup")
+        if ms.model_switch:
+            prior = ms.baseline_models[0] if ms.baseline_models else "?"
+            return f"model swap: {prior} -> {ms.current_model}"
+        if ms.price_mismatch and ms.implied_overcharge_ratio:
+            return f"price/model mismatch at {round(ms.implied_overcharge_ratio, 1)}x markup"
+    if report.cost is not None:
+        return f"cost up {round(report.cost.delta_pct * 100, 1)}% vs baseline"
+    if report.latency is not None:
+        return f"latency up {round(report.latency.delta_pct * 100, 1)}% vs baseline"
+    return "behaving in-baseline"
+
+
+async def run_job(
+    kind: str, document: str, budget_usd: float, requested_mode: str
+) -> AsyncIterator[tuple[str, dict]]:
+    """Run one marketplace job and yield its lifecycle as ``(event_name, data)`` pairs.
+
+    The SSE event contract the frontend depends on (each ``data`` is the JSON payload):
+
+      * ``stage``        {name, status}  name in discover|bid|hire|collaborate|verify|
+                                          settle|done, status in start|end
+      * ``document``     {kind, title, document_text, budget_usd} — sent first
+      * ``pool``         {agents:[{id,handle,name,owner,cross_owner,framework}]} —
+                          ``framework`` in native|langgraph|crewai (which agent
+                          framework runs that slot; the LIVE path RUNS it, the sim
+                          path LABELS it)
+      * ``bid``          {worker, price_usd, relevance, reputation, n_jobs, framework}
+                          — one per bid; ``framework`` as above
+      * ``hire``         {hired:[{worker,price_usd}], declined:[worker], strategy,
+                          pay_fraction_target}
+      * ``room_message`` {sender, content} — the collaboration transcript
+      * ``finding``      {worker, clause_ref, claim, verdict, confidence, evidence_quote}
+      * ``drift``        {worker, flagged, severity, model, baseline_label,
+                          model_switch, price_mismatch, overcharge_ratio,
+                          cost_delta_pct, latency_delta_pct, summary} — one per
+                          worker (flagged OR clean), emitted within the verify
+                          flow. The second cheat-signal: a worker that quietly
+                          swapped its declared model for a cheaper one while
+                          charging the higher price. ``severity`` in info|warn|
+                          critical; ``model`` is the model the worker actually
+                          ran; ``overcharge_ratio`` / ``cost_delta_pct`` /
+                          ``latency_delta_pct`` are null when not computed;
+                          floats rounded to 3 dp.
+      * ``settle``       {worker, pay_to, authorized_usd, settled_usd, tx_hash, status}
+      * ``receipt``      {signer, signature, deliverable_hash}
+      * ``done``         {gate_passed, pay_fraction, total_settled_usd,
+                          total_withheld_usd, catch_summary}
+      * ``error``        {message} — on any failure (graceful; the stream then ends)
+    """
+    mode = _resolve_mode(requested_mode)
+    document = (document or "").strip() or _sample_document(kind)
+    budget_usd = budget_usd or _DEFAULT_BUDGET_USD
+    ctx: RunContext | None = None
+    try:
+        # 0. The document the team will audit (sent first so the UI can render it).
+        title = _SAMPLE_TITLES.get(kind, kind)
+        yield "document", {"kind": kind, "title": title,
+                           "document_text": document, "budget_usd": budget_usd}
+
+        # 1. DISCOVER — build the run world (sim or live) and surface the agent pool.
+        yield "stage", {"name": "discover", "status": "start"}
+        if mode == "live":
+            ctx = await _build_live_context(kind, document, budget_usd)
+        else:
+            ctx = await _build_sim_context(kind, document)
+        yield "pool", {"agents": ctx.pool}
+        yield "stage", {"name": "discover", "status": "end"}
+
+        # 2. BID — each discovered specialist's asking price (one event per bid).
+        yield "stage", {"name": "bid", "status": "start"}
+        for b in ctx.bids:
+            yield "bid", b
+        yield "stage", {"name": "bid", "status": "end"}
+
+        # 3. HIRE — the team selected under budget (here: the bidders that fit).
+        yield "stage", {"name": "hire", "status": "start"}
+        hired_workers = {h.worker for h in ctx.hires}
+        declined = [b["worker"] for b in ctx.bids if b["worker"] not in hired_workers]
+        yield "hire", {
+            "hired": [{"worker": h.worker, "price_usd": _usd(h.price_atomic)} for h in ctx.hires],
+            "declined": declined,
+            "strategy": "coverage_within_budget",
+            "pay_fraction_target": 1.0,
+        }
+        yield "stage", {"name": "hire", "status": "end"}
+
+        # 4. COLLABORATE — the in-room team audit (the real `collaborate_in_room`).
+        yield "stage", {"name": "collaborate", "status": "start"}
+        result = await collaborate_in_room(
+            ctx.work_room_id, document, ctx.team, ctx.reporter, ctx.verifier
+        )
+        # The room transcript: who posted what (best-effort; market may not see it live).
+        for msg in await _safe_transcript(ctx.market_band, ctx.work_room_id):
+            sender = msg.get("sender_name") or msg.get("sender_id") or "?"
+            yield "room_message", {"sender": sender, "content": msg.get("content") or ""}
+        yield "stage", {"name": "collaborate", "status": "end"}
+
+        # 5. VERIFY — surface each graded finding (specialists + reporter claims).
+        yield "stage", {"name": "verify", "status": "start"}
+        for af in result.all_audited:
+            v = af.verdict
+            yield "finding", {
+                "worker": af.finding.worker,
+                "clause_ref": af.finding.clause_ref or "",
+                "claim": af.finding.claim,
+                "verdict": _VERDICT_LABEL[v.verdict],
+                "confidence": round(v.confidence, 3),
+                "evidence_quote": v.evidence_quote,
+            }
+
+        # 5b. DRIFT — the SECOND cheat-signal, independent of the verifier: did
+        # any worker quietly swap its declared model for a cheaper one while
+        # charging the higher price? Emitted within the verify flow (NO new
+        # top-level stage). Wrapped so a drift failure degrades gracefully and
+        # never breaks the lifecycle stream.
+        try:
+            async for drift_event in _emit_drift(ctx, document):
+                yield drift_event
+        except Exception:  # noqa: BLE001 — drift is additive; never break the stream.
+            pass
+        yield "stage", {"name": "verify", "status": "end"}
+
+        # 6. SETTLE — the x402 verify->settle gate, per worker (the real `settle_job`).
+        yield "stage", {"name": "settle", "status": "start"}
+        settlement = await settle_job(
+            ctx.gate, result, ctx.hires, ctx.payout_addresses, policy=LENIENT
+        )
+        for w in settlement.workers:
+            yield "settle", {
+                "worker": w.worker,
+                "pay_to": w.pay_to,
+                "authorized_usd": _usd(w.authorized_atomic),
+                "settled_usd": _usd(w.settled_atomic),
+                "tx_hash": w.tx_hash,
+                "status": w.status,
+            }
+        yield "stage", {"name": "settle", "status": "end"}
+
+        # 7. RECEIPT — the EIP-191 signed proof binding the verified work to payment.
+        signer = make_receipt_signer(ctx.signer_key)
+        receipt = build_receipt(
+            ctx.work_room_id, result, settlement,
+            timestamp=datetime.now(timezone.utc).isoformat(),
+        )
+        signed = signer.sign(receipt)
+        yield "receipt", {
+            "signer": signed.signer_address,
+            "signature": signed.signature,
+            "deliverable_hash": deliverable_hash(result),
+        }
+
+        # 8. DONE — the headline outcome.
+        n_unsupported = sum(
+            af.verdict.verdict is Verdict.UNSUPPORTED for af in result.all_audited
+        )
+        n_total = len(result.all_audited)
+        catch = (f"{n_unsupported} fabricated claim(s) caught and withheld"
+                 if n_unsupported else "no fabrication — all claims verified")
+        yield "stage", {"name": "done", "status": "start"}
+        yield "done", {
+            "gate_passed": settlement.gate_passed,
+            "pay_fraction": round(settlement.pay_fraction, 3),
+            "total_settled_usd": _usd(settlement.total_settled_atomic),
+            "total_withheld_usd": _usd(settlement.total_withheld_atomic),
+            "catch_summary": f"{catch} ({n_total} claims graded)",
+        }
+        yield "stage", {"name": "done", "status": "end"}
+
+    except Exception as exc:  # noqa: BLE001 — any failure ends the stream gracefully.
+        yield "error", {"message": f"{type(exc).__name__}: {exc}"}
+    finally:
+        if ctx is not None:
+            for c in ctx.closeables:
+                try:
+                    await c.aclose()
+                except Exception:  # noqa: BLE001 — cleanup must never mask the result.
+                    pass
+
+
+async def _emit_drift(ctx: RunContext, document: str) -> AsyncIterator[tuple[str, dict]]:
+    """Evaluate per-worker drift for this run and yield one ``drift`` event each.
+
+    Records each hired worker's current telemetry row, builds its baseline
+    (excluding this job), and evaluates drift (see
+    :func:`agent_exchange.anomaly.run_drift.evaluate_run_drift`). Emits one
+    ``drift`` event per worker — flagged or clean — so the UI can show both. A
+    missing store (no drift wiring) yields nothing.
+    """
+    if ctx.drift_store is None or not ctx.drift_models:
+        return
+
+    from agent_exchange.anomaly.run_drift import evaluate_run_drift
+
+    workers = list(ctx.drift_models.keys())
+    job_id = ctx.work_room_id or "run"
+    reports = evaluate_run_drift(
+        ctx.drift_store,
+        workers=workers,
+        models=ctx.drift_models,
+        bid_prices_atomic=ctx.drift_bids_atomic,
+        kind=ctx.kind,
+        job_id=job_id,
+        now_ms=ctx.drift_now_ms,
+        contract_text=document,
+        latency_ms=_DRIFT_LATENCY_MS,
+    )
+    for worker in workers:
+        report = reports.get(worker)
+        if report is None:
+            continue
+        ms = report.model_substitution
+        yield "drift", {
+            "worker": worker,
+            "flagged": report.flagged,
+            "severity": report.overall_severity.value,
+            "model": ctx.drift_models[worker],
+            "baseline_label": report.baseline_label,
+            "model_switch": bool(ms.model_switch) if ms else False,
+            "price_mismatch": bool(ms.price_mismatch) if ms else False,
+            "overcharge_ratio": (
+                round(ms.implied_overcharge_ratio, 3)
+                if ms and ms.implied_overcharge_ratio is not None
+                else None
+            ),
+            "cost_delta_pct": (
+                round(report.cost.delta_pct, 3) if report.cost is not None else None
+            ),
+            "latency_delta_pct": (
+                round(report.latency.delta_pct, 3) if report.latency is not None else None
+            ),
+            "summary": _drift_summary(report),
+        }
+
+
+async def _safe_transcript(band: Any, room_id: str) -> list[dict]:
+    """Read the room transcript, returning [] on any failure (best-effort).
+
+    The in-memory `FakeBandClient.get_context` only returns messages that @mention the
+    CALLING agent — but the demo wants the whole room. For the offline fake we therefore
+    read the full message log straight out of the shared world; for the live
+    `HttpBandClient` we use ``get_context`` (the real Band ``/context`` returns the shared
+    room view).
+    """
+    try:
+        world = getattr(band, "world", None)
+        if world is not None and room_id in getattr(world, "rooms", {}):
+            return [dict(m) for m in world.rooms[room_id]["messages"]]
+        return await band.get_context(room_id)
+    except Exception:  # noqa: BLE001
+        return []
+
+
+def _sse(event: str, data: dict) -> str:
+    """Format one Server-Sent Event frame (named event + JSON data line)."""
+    return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+
+# ---------------------------------------------------------------------------
+# FastAPI app + endpoints
+# ---------------------------------------------------------------------------
+
+app = FastAPI(title="Agent Exchange — live demo API", version="1.0.0")
+
+# CORS — wide-open for the demo so any frontend origin can stream from us.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+class RunRequest(BaseModel):
+    """Body for ``POST /api/run``."""
+
+    kind: str = Field(default="contract-audit")
+    document: str = Field(default="")
+    budget_usd: float = Field(default=_DEFAULT_BUDGET_USD, ge=0.0)
+    mode: str = Field(default="sim")  # "live" | "sim"; live degrades to sim if keys absent
+
+
+@app.get("/health")
+async def health() -> dict:
+    return {"ok": True}
+
+
+@app.get("/api/jobs/sample")
+async def sample(kind: str = "contract-audit") -> JSONResponse:
+    """A sample document + default budget for a job kind, to prefill the UI."""
+    doc = _sample_document(kind)
+    return JSONResponse({
+        "kind": kind,
+        "title": _SAMPLE_TITLES.get(kind, kind),
+        "document_text": doc,
+        "budget_usd": _DEFAULT_BUDGET_USD,
+        "document_label": document_label_for(kind),
+    })
+
+
+@app.post("/api/run")
+async def run(req: RunRequest) -> StreamingResponse:
+    """Run a marketplace job and stream its lifecycle as Server-Sent Events."""
+
+    async def _stream() -> AsyncIterator[str]:
+        async for event, data in run_job(req.kind, req.document, req.budget_usd, req.mode):
+            yield _sse(event, data)
+
+    return StreamingResponse(
+        _stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",  # disable proxy buffering so events flush live
+        },
+    )

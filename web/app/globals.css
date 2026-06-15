@@ -1,0 +1,831 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================================================================== */
+/*  NEON ARCADE HUD — foundation                                        */
+/*                                                                      */
+/*  A gamified heads-up display for "The Agent Exchange". White-led on  */
+/*  near-black, with two SPARING signature accents:                     */
+/*    emerald  — paid / real / alive / primary CTA                      */
+/*    gold     — bounty / coins / money / highlights                    */
+/*  Verdict semantics: real = emerald, FAKE = red, partial = amber.     */
+/*                                                                      */
+/*  THEMING MODEL ----------------------------------------------------- */
+/*  The semantic NEUTRAL tokens (canvas/surface/fg/border) and the      */
+/*  ACCENT INK tokens (the legible-on-background text shade of each     */
+/*  accent) are stored as SPACE-SEPARATED RGB CHANNEL triplets with a   */
+/*  `-rgb` suffix, e.g.  --ax-canvas-rgb: 7 18 14;                      */
+/*  Tailwind reads `rgb(var(--ax-canvas-rgb) / <alpha-value>)`, so      */
+/*  opacity modifiers (`bg-surface/60`, `text-fg-muted/40`) still work  */
+/*  AND a theme scope (`.ax-light`) can override the channels to flip   */
+/*  the whole surface light without touching a single utility name.     */
+/*  Each channel also has a resolved COLOR alias under the bare name    */
+/*    --ax-canvas: rgb(var(--ax-canvas-rgb));                           */
+/*  so any code consuming the var directly (e.g. inline `style`) still  */
+/*  gets a color AND re-themes (the alias derives from the channel).    */
+/*                                                                      */
+/*  The bright NEON accent fills (emerald-glow / gold / red used as     */
+/*  glows, dots, chips) stay vivid hex — same hue across themes — while */
+/*  `text-emerald` / `text-gold` resolve to the channel INK var so they */
+/*  darken to a legible shade under `.ax-light`.                        */
+/*                                                                      */
+/*  All custom utilities/keyframes are `ax-` prefixed (Agent Exchange). */
+/*  Motion is compositor-only (transform + opacity); backgrounds are    */
+/*  STATIC so backdrop-blur surfaces composite once. Reduced-motion is  */
+/*  honored at the bottom of this file.                                 */
+/* ==================================================================== */
+
+:root {
+  /* ── Fonts (wired in app/layout.tsx via next/font) ───────────────── */
+  --font-display: var(--font-orbitron), "Orbitron", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, "SF Mono",
+    Menlo, monospace;
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /*  THEME-ABLE CHANNELS  (space-separated R G B — paired with         */
+  /*  `<alpha-value>` in tailwind.config.ts; overridden by .ax-light)   */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  /* ── Canvas + lifted panel surfaces (channel + color alias) ──────── */
+  --ax-canvas-rgb: 7 18 14; /* #07120E deep green-black, page base   */
+  --ax-surface-rgb: 11 26 20; /* #0B1A14 a panel on the canvas       */
+  --ax-surface-2-rgb: 14 33 26; /* #0E211A a raised element in panel  */
+  --ax-canvas: rgb(var(--ax-canvas-rgb));
+  --ax-surface: rgb(var(--ax-surface-rgb));
+  --ax-surface-2: rgb(var(--ax-surface-2-rgb));
+
+  /* ── Text (DE-GREENED: white-led, green only as accent) ──────────── */
+  --ax-fg-rgb: 238 243 241; /* #EEF3F1 neutral near-white            */
+  --ax-fg-muted-rgb: 157 170 164; /* #9DAAA4 neutral gray, secondary */
+  --ax-fg-faint-rgb: 82 104 94; /* #52685E faintest / disabled       */
+  --ax-fg: rgb(var(--ax-fg-rgb));
+  --ax-fg-muted: rgb(var(--ax-fg-muted-rgb));
+  --ax-fg-faint: rgb(var(--ax-fg-faint-rgb));
+
+  /* ── Borders / hairlines (channels → opacity-modifiable) ─────────── */
+  --ax-border-rgb: 0 214 122; /* emerald-tinted hairline (use /0.18) */
+  --ax-border-neutral-rgb: 255 255 255; /* neutral edge (use /0.06)   */
+  --ax-border: rgb(var(--ax-border-rgb) / 0.18);
+  --ax-border-neutral: rgb(var(--ax-border-neutral-rgb) / 0.06);
+
+  /* ── ACCENT INK — the legible-on-background TEXT shade of each      */
+  /*    accent. On dark this is the bright neon; .ax-light darkens it.  */
+  --ax-emerald-ink: 0 214 122; /* #00D67A bright emerald on dark      */
+  --ax-emerald-glow-ink: 43 255 154; /* #2BFF9A brightest emerald     */
+  --ax-gold-ink: 255 194 51; /* #FFC233 bright gold on dark          */
+  --ax-gold-light-ink: 255 213 106; /* #FFD56A                       */
+  --ax-red-ink: 255 59 92; /* #FF3B5C bright red on dark            */
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /*  FIXED NEON ACCENTS  (same vivid hue across themes — glows, dots,  */
+  /*  fills, chips. NOT darkened by .ax-light.)                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  /* ── ACCENT 1 — emerald (paid / real / alive / signature) ────────── */
+  --ax-emerald: #00d67a;
+  --ax-emerald-glow: #2bff9a;
+  --ax-emerald-dim: rgba(0, 214, 122, 0.18);
+
+  /* ── ACCENT 2 — gold (bounty / coins / highlights) ───────────────── */
+  --ax-gold: #ffc233;
+  --ax-gold-light: #ffd56a;
+  --ax-gold-dim: rgba(255, 194, 51, 0.18);
+
+  /* ── Verdict / alert red (FAKE / withheld) ───────────────────────── */
+  --ax-red: #ff3b5c;
+  --ax-red-dim: rgba(255, 59, 92, 0.18);
+
+  /* ── Grid + spotlight tints (theme-overridable rgba) ─────────────── */
+  --ax-grid-line: rgba(255, 255, 255, 0.035); /* de-greened, neutral  */
+  --ax-spotlight: rgba(0, 214, 122, 0.13); /* signature emerald top   */
+  --ax-vignette: rgba(0, 0, 0, 0.55); /* corner darkening             */
+  --ax-scanline: rgba(0, 0, 0, 0.16); /* CRT scanline                 */
+
+  /* ── Motion curves ───────────────────────────────────────────────── */
+  --ax-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ax-ease-out-2: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* ── Semantic z-index scale (additive — consumers reference these; no */
+  /*    existing component z literals are migrated here)                 */
+  --ax-z-edge: 0;
+  --ax-z-node: 10;
+  --ax-z-core: 20;
+  --ax-z-node-hover: 50;
+  --ax-z-drawer: 100;
+  --ax-z-toast: 120;
+
+  /* ── Radii ───────────────────────────────────────────────────────── */
+  --ax-r-sm: 4px;
+  --ax-r-md: 8px;
+  --ax-r-lg: 12px;
+
+  /* ── Signature glow shadows ──────────────────────────────────────── */
+  --ax-glow-emerald: 0 0 0 1px var(--ax-emerald-dim),
+    0 0 24px -6px rgba(0, 214, 122, 0.45);
+  --ax-glow-gold: 0 0 0 1px var(--ax-gold-dim),
+    0 0 24px -6px rgba(255, 194, 51, 0.4);
+  --ax-glow-red: 0 0 0 1px var(--ax-red), 0 0 28px -6px rgba(255, 59, 92, 0.5);
+  /* Soft neutral card shadow — used as-is on dark, neutralized on light. */
+  --ax-shadow-card: 0 16px 32px -12px rgba(0, 0, 0, 0.7);
+
+  /* Corner HUD bracket ticks — emerald signature on dark. */
+  --ax-bracket: var(--ax-emerald);
+}
+
+/* ════════════════════════════════════════════════════════════════════ */
+/*  LIGHT THEME SCOPE — opt in by wrapping a section:                    */
+/*    <div class="ax-light bg-canvas"> … </div>                         */
+/*                                                                       */
+/*  Overrides ONLY the theme-able channels + the accent INK + grid/glow  */
+/*  rgba so the SAME token names (bg-canvas, text-fg, text-emerald, …)   */
+/*  resolve to a clean white editorial surface with legible accents.     */
+/*  The fixed neon accents (bg-emerald, dots, dim chips) keep their hue. */
+/* ════════════════════════════════════════════════════════════════════ */
+.ax-light {
+  /* Neutral surfaces — white / warm bone. Override the CHANNELS; the bare
+     color aliases (--ax-canvas: rgb(var(--ax-canvas-rgb))) re-derive here. */
+  --ax-canvas-rgb: 251 251 249; /* #FBFBF9 warm bone page base        */
+  --ax-surface-rgb: 255 255 255; /* #FFFFFF a card on the bone        */
+  --ax-surface-2-rgb: 241 243 239; /* #F1F3EF a raised element        */
+
+  /* Foreground — near-black ink on white. */
+  --ax-fg-rgb: 14 26 20; /* #0E1A14 primary ink                       */
+  --ax-fg-muted-rgb: 92 107 99; /* #5C6B63 mid gray, secondary        */
+  --ax-fg-faint-rgb: 139 151 143; /* #8B978F light gray, faint        */
+
+  /* Borders — --ax-border keeps a faint emerald tint, --ax-border-neutral a
+     near-black neutral; both read at the low alpha the utilities apply. */
+  --ax-border-rgb: 6 122 74; /* #067A4A emerald-ink tint hairline     */
+  --ax-border-neutral-rgb: 14 26 20; /* #0E1A14 neutral edge          */
+
+  /* Accent INK — deeper, legible on white (≈4.5:1). Used for TEXT via
+     text-emerald / text-gold / text-danger. Fills/chips keep bright hue. */
+  --ax-emerald-ink: 6 122 74; /* #067A4A emerald that reads on white  */
+  --ax-emerald-glow-ink: 5 102 62; /* #05663E deeper still            */
+  --ax-gold-ink: 154 107 0; /* #9A6B00 gold that reads on white       */
+  --ax-gold-light-ink: 138 96 0; /* #8A6000                          */
+  --ax-red-ink: 199 42 65; /* #C72A41 red that reads on white         */
+
+  /* Grid + ambience — neutral, faint; drop the dark vignette/scanline. */
+  --ax-grid-line: rgba(14, 26, 20, 0.04);
+  --ax-spotlight: rgba(6, 122, 74, 0.05); /* whisper of emerald       */
+  --ax-vignette: rgba(14, 26, 20, 0.04);
+  --ax-scanline: rgba(14, 26, 20, 0.025);
+
+  /* Glows → soft neutral card shadows; panels read as clean cards. Red is no
+     longer special-cased on the light page (the catch now lives on the dark
+     arena court, where its neon red glow is restored) — so all three accents
+     read as the SAME calm card shadow on the light editorial surface. */
+  --ax-glow-emerald: 0 1px 3px rgba(14, 26, 20, 0.06),
+    0 8px 24px -12px rgba(14, 26, 20, 0.12);
+  --ax-glow-gold: 0 1px 3px rgba(14, 26, 20, 0.06),
+    0 8px 24px -12px rgba(14, 26, 20, 0.12);
+  --ax-glow-red: 0 1px 3px rgba(14, 26, 20, 0.06),
+    0 8px 24px -12px rgba(14, 26, 20, 0.12);
+  --ax-shadow-card: 0 8px 24px -14px rgba(14, 26, 20, 0.18);
+
+  /* Dim chips — all three soft on the white surface. */
+  --ax-emerald-dim: rgba(0, 214, 122, 0.12);
+  --ax-gold-dim: rgba(255, 194, 51, 0.16);
+  --ax-red-dim: rgba(255, 59, 92, 0.12);
+
+  /* Corner brackets → faint emerald-ink so they read as a quiet tick, not
+     a neon glow, on the white editorial surface. */
+  --ax-bracket: rgb(var(--ax-emerald-ink) / 0.55);
+}
+
+/* ════════════════════════════════════════════════════════════════════ */
+/*  DARK COURT SCOPE — the arena's stage: a DARK inset on the LIGHT page.  */
+/*                                                                       */
+/*  The whole site runs light (`.ax-light`). The AGENT ARENA is the one    */
+/*  exception: it's a dark neon "court" — a video-player embedded in a     */
+/*  light editorial article. `.ax-court` RE-OVERRIDES every theme-able     */
+/*  channel back to the dark `:root` values, so the arena's component      */
+/*  styles (which read `--ax-*` tokens) auto-revert to the dark neon look  */
+/*  inside this box, even though the surrounding `.ax-light` page stays    */
+/*  light. The previous "light stadium" pass also deleted a separate       */
+/*  `.ax-dark` scope; its dark resets are folded directly in here.         */
+/* ════════════════════════════════════════════════════════════════════ */
+.ax-court {
+  /* ── Re-assert the dark theme channels (mirror :root) ─────────────── */
+  --ax-canvas-rgb: 7 18 14; /* #07120E deep green-black, court base    */
+  --ax-surface-rgb: 11 26 20; /* #0B1A14 disc / chip surface           */
+  --ax-surface-2-rgb: 14 33 26; /* #0E211A a raised element             */
+
+  /* Foreground — near-white ink on the dark field. */
+  --ax-fg-rgb: 238 243 241; /* #EEF3F1 neutral near-white              */
+  --ax-fg-muted-rgb: 157 170 164; /* #9DAAA4 neutral gray, secondary   */
+  --ax-fg-faint-rgb: 82 104 94; /* #52685E faintest / disabled         */
+
+  /* Borders — emerald-tinted hairline + neutral white edge (low alpha). */
+  --ax-border-rgb: 0 214 122; /* emerald-tinted hairline               */
+  --ax-border-neutral-rgb: 255 255 255; /* neutral white edge          */
+
+  /* Accent INK — the bright neon shade (legible on the dark court). */
+  --ax-emerald-ink: 0 214 122; /* #00D67A bright emerald on dark        */
+  --ax-emerald-glow-ink: 43 255 154; /* #2BFF9A brightest emerald       */
+  --ax-gold-ink: 255 194 51; /* #FFC233 bright gold on dark            */
+  --ax-gold-light-ink: 255 213 106; /* #FFD56A                         */
+  --ax-red-ink: 255 59 92; /* #FF3B5C bright red on dark              */
+
+  /* Dim chips — back to the dark-theme alphas. */
+  --ax-emerald-dim: rgba(0, 214, 122, 0.18);
+  --ax-gold-dim: rgba(255, 194, 51, 0.18);
+  --ax-red-dim: rgba(255, 59, 92, 0.18);
+
+  /* Grid + ambience — the dark-court atmospherics (grid, spotlight,
+     vignette) come from HERE, not the (now light) body. */
+  --ax-grid-line: rgba(255, 255, 255, 0.035);
+  --ax-spotlight: rgba(0, 214, 122, 0.13);
+  --ax-vignette: rgba(0, 0, 0, 0.55);
+  --ax-scanline: rgba(0, 0, 0, 0.16);
+
+  /* Glow shadows — back to the neon halos. */
+  --ax-glow-emerald: 0 0 0 1px var(--ax-emerald-dim),
+    0 0 24px -6px rgba(0, 214, 122, 0.45);
+  --ax-glow-gold: 0 0 0 1px var(--ax-gold-dim),
+    0 0 24px -6px rgba(255, 194, 51, 0.4);
+  --ax-shadow-card: 0 16px 32px -12px rgba(0, 0, 0, 0.7);
+
+  /* Corner brackets → emerald neon signature again. */
+  --ax-bracket: var(--ax-emerald);
+
+  /* The catch RED — back to the dark-theme neon `#FF3B5C` + its red glow,
+     which pops on the dark field (the `.ax-light` crimson was for white). */
+  --ax-red: #ff3b5c;
+  --ax-glow-red: 0 0 0 1px var(--ax-red), 0 0 28px -6px rgba(255, 59, 92, 0.5);
+
+  position: relative;
+  /* A dark well: the deep canvas + a signature emerald top spotlight. */
+  background:
+    radial-gradient(
+      1100px 460px at 50% -10%,
+      rgba(0, 214, 122, 0.13),
+      transparent 62%
+    ),
+    rgb(var(--ax-canvas-rgb));
+  border: 1px solid rgb(var(--ax-border-rgb) / 0.18);
+  border-radius: 20px;
+  /* Inset darkening at the rim + a deep drop shadow — a dark stadium that
+     floats off the light page, plus a faint emerald edge glow. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 0 80px -20px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(0, 214, 122, 0.06),
+    0 24px 56px -24px rgba(14, 26, 20, 0.4);
+  overflow: hidden;
+}
+/* The neon grid floor + a corner vignette so the court reads as a dark inset. */
+.ax-court::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--ax-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ax-grid-line) 1px, transparent 1px),
+    radial-gradient(130% 120% at 50% 45%, transparent 56%, var(--ax-vignette) 100%);
+  background-size:
+    48px 48px,
+    48px 48px,
+    100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--ax-canvas);
+  color: var(--ax-fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip; /* `clip` (not hidden) → no scroll container, sticky still works */
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+/* Tabular numerals for money / metrics / hashes / counters. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+/* ax-prefixed alias — prevents layout shift on dynamically changing numbers. */
+.ax-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==================================================================== */
+/*  BACKGROUND LAYERS (static — wired on <body> in layout.tsx)          */
+/* ==================================================================== */
+
+/* Static neon grid. A MOVING backdrop forces Chrome to re-blur every
+   backdrop-blur surface each frame — keep it still; it reads identically. */
+.ax-grid {
+  background-color: var(--ax-canvas);
+  background-image: linear-gradient(var(--ax-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ax-grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Radial spotlight anchored at the top — gives the page depth. Emerald on
+   dark (the signature), a whisper of emerald on light. */
+.ax-spotlight {
+  position: relative;
+}
+.ax-spotlight::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    1200px 620px at 50% -12%,
+    var(--ax-spotlight),
+    transparent 62%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Faint horizontal scanline overlay — the CRT texture. Static, tiled. */
+.ax-scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    var(--ax-scanline) 3px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* CRT vignette — darkens the corners so the HUD floats. */
+.ax-vignette::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    130% 120% at 50% 45%,
+    transparent 58%,
+    var(--ax-vignette) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep real content above the fixed background layers. */
+.ax-stage {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==================================================================== */
+/*  TERMINAL SCROLLBARS                                                  */
+/* ==================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 214, 122, 0.18);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 214, 122, 0.42);
+}
+.ax-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 214, 122, 0.22) transparent;
+}
+
+/* ==================================================================== */
+/*  ENTRANCE MOTION (transform + opacity only)                          */
+/* ==================================================================== */
+@keyframes ax-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ax-fade-up {
+  animation: ax-fade-up 360ms var(--ax-ease-out) both;
+}
+
+@keyframes ax-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+/* Staggered list entrance — set --index (0,1,2…) on each child. */
+.ax-stagger {
+  opacity: 0;
+  animation: ax-enter 320ms var(--ax-ease-out) forwards;
+  animation-delay: calc(var(--index, 0) * 45ms);
+}
+
+/* ==================================================================== */
+/*  PRESS AFFORDANCE                                                     */
+/* ==================================================================== */
+.ax-press {
+  transition: transform 150ms var(--ax-ease-out),
+    background-color 150ms ease, border-color 150ms ease, box-shadow 200ms ease,
+    color 150ms ease;
+}
+.ax-press:active {
+  transform: scale(0.97);
+}
+
+/* ==================================================================== */
+/*  OPACITY PULSE (compositor-only — never box-shadow)                  */
+/* ==================================================================== */
+@keyframes ax-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55; /* raised from 0.42 — softer on LiveDot, no flicker */
+  }
+}
+.ax-pulse {
+  animation: ax-pulse 2s ease-in-out infinite;
+}
+/* Slightly quicker, punchier breath for "active stage" dots. */
+@keyframes ax-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.42; /* intentionally deeper trough — stays punchy */
+  }
+}
+.ax-breathe {
+  animation: ax-breathe 1.5s ease-in-out infinite;
+}
+
+/* ==================================================================== */
+/*  NEON CARD HOVER (glow border + lift)                                */
+/* ==================================================================== */
+.ax-card {
+  transition: transform 0.25s var(--ax-ease-out), border-color 0.3s ease,
+    box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.ax-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ax-emerald);
+  box-shadow: var(--ax-glow-emerald), var(--ax-shadow-card);
+}
+/* Gold variant — bounty / coin surfaces. */
+.ax-card-gold:hover {
+  border-color: var(--ax-gold);
+  box-shadow: var(--ax-glow-gold), var(--ax-shadow-card);
+}
+/* Red variant — the FAKE / withheld dramatic moment. */
+.ax-card-red {
+  border-color: var(--ax-red-dim);
+}
+.ax-card-red:hover {
+  transform: translateY(-2px);
+  border-color: var(--ax-red);
+  box-shadow: var(--ax-glow-red), var(--ax-shadow-card);
+}
+
+/* ==================================================================== */
+/*  GLITCH-ON-HOVER (chromatic emerald/red offset for display text)     */
+/* ==================================================================== */
+@keyframes ax-glitch {
+  0%,
+  100% {
+    text-shadow: none;
+    transform: translate(0, 0);
+  }
+  20% {
+    text-shadow: -2px 0 var(--ax-red), 2px 0 var(--ax-emerald-glow);
+    transform: translate(1px, -1px);
+  }
+  40% {
+    text-shadow: 2px 0 var(--ax-red), -2px 0 var(--ax-emerald-glow);
+    transform: translate(-1px, 1px);
+  }
+  60% {
+    text-shadow: -1px 0 var(--ax-red), 1px 0 var(--ax-emerald-glow);
+    transform: translate(0, 0);
+  }
+  80% {
+    text-shadow: none;
+  }
+}
+.ax-glitch:hover {
+  animation: ax-glitch 0.42s steps(2, end);
+}
+/* A continuously unsettled glitch — reserve for the FAKE verdict moment. */
+.ax-glitch-live {
+  animation: ax-glitch 2.6s steps(2, end) infinite;
+}
+
+/* ==================================================================== */
+/*  COUNT-UP (CSS counter — ticking numbers; driven by <CountUp/>)      */
+/* ==================================================================== */
+@property --ax-count {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes ax-count-up {
+  from {
+    --ax-count: 0;
+  }
+  to {
+    --ax-count: var(--ax-count-target);
+  }
+}
+.ax-count-up {
+  counter-reset: ax-count var(--ax-count);
+  animation: ax-count-up 1.1s var(--ax-ease-out) forwards;
+}
+.ax-count-up::after {
+  content: counter(ax-count);
+}
+
+/* ==================================================================== */
+/*  SEGMENT / BAR FILL                                                   */
+/* ==================================================================== */
+/* Smooth horizontal fill — animate width once on mount (set --ax-fill-to). */
+@keyframes ax-bar-fill {
+  from {
+    width: var(--ax-fill-from, 0%);
+  }
+  to {
+    width: var(--ax-fill-to, 0%);
+  }
+}
+.ax-bar-fill {
+  animation: ax-bar-fill 0.7s var(--ax-ease-out) forwards;
+}
+/* Segmented-cell pop for the ▰▰▰▱ bar (staggered via --index). */
+@keyframes ax-seg-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.ax-seg-pop {
+  animation: ax-seg-pop 0.28s var(--ax-ease-out) backwards;
+  animation-delay: calc(var(--index, 0) * 45ms);
+}
+
+/* ==================================================================== */
+/*  SCANLINE SWEEP (a bright bar sweeps across a high-attention card)    */
+/* ==================================================================== */
+@keyframes ax-scan {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+.ax-scanline {
+  position: relative;
+  overflow: hidden;
+}
+.ax-scanline::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(43, 255, 154, 0.18),
+    transparent
+  );
+  animation: ax-scan 3.2s linear infinite;
+  pointer-events: none;
+}
+
+/* ==================================================================== */
+/*  COIN FLIGHT (gold coin travels source → target on settlement)       */
+/* ==================================================================== */
+@keyframes ax-coin-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.85);
+  }
+  16% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ax-coin-x, 120px), var(--ax-coin-y, 0px))
+      scale(0.7);
+  }
+}
+.ax-coin-flight {
+  animation: ax-coin-flight 0.9s var(--ax-ease-out-2) forwards;
+}
+
+/* ==================================================================== */
+/*  BLINKING TERMINAL CARET                                              */
+/* ==================================================================== */
+@keyframes ax-caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+.ax-caret::after {
+  content: "▮";
+  display: inline-block;
+  margin-left: 3px;
+  color: var(--ax-emerald);
+  animation: ax-caret-blink 1s steps(1) infinite;
+}
+.ax-caret-blink {
+  animation: ax-caret-blink 1s steps(1) infinite;
+}
+
+/* ==================================================================== */
+/*  MARQUEE (horizontal strip — duplicate content 2× for a seamless loop)*/
+/* ==================================================================== */
+@keyframes ax-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ax-marquee {
+  animation: ax-marquee 36s linear infinite;
+}
+.ax-marquee-pause:hover .ax-marquee {
+  animation-play-state: paused;
+}
+
+/* ==================================================================== */
+/*  CORNER BRACKETS (HUD frame ticks — applied by HudPanel)             */
+/* ==================================================================== */
+.ax-brackets::before,
+.ax-brackets::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--ax-bracket);
+  pointer-events: none;
+  opacity: 0.7;
+}
+.ax-brackets::before {
+  top: 6px;
+  left: 6px;
+  border-top: 1.5px solid;
+  border-left: 1.5px solid;
+}
+.ax-brackets::after {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 1.5px solid;
+  border-right: 1.5px solid;
+}
+
+/* ==================================================================== */
+/*  RANGE SLIDER (emerald thumb on a hairline track)                    */
+/* ==================================================================== */
+.ax-range {
+  background: rgb(var(--ax-border-neutral-rgb) / 0.12);
+}
+.ax-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--ax-emerald);
+  cursor: pointer;
+  border: 2px solid var(--ax-canvas);
+  box-shadow: 0 0 10px -1px rgba(0, 214, 122, 0.7);
+  transition: transform 150ms var(--ax-ease-out);
+}
+.ax-range::-webkit-slider-thumb:active {
+  transform: scale(0.9);
+}
+.ax-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--ax-emerald);
+  cursor: pointer;
+  border: 2px solid var(--ax-canvas);
+  box-shadow: 0 0 10px -1px rgba(0, 214, 122, 0.7);
+}
+
+/* ==================================================================== */
+/*  SEMANTIC VERDICT CLASSES                                             */
+/*  Each sets text + border + a dim wash; pair with .ax-card-* on hover. */
+/* ==================================================================== */
+/* Verdict text uses the accent-INK channel so it stays legible across
+   themes (bright neon on dark, deeper ink on .ax-light). */
+.ax-verdict-real {
+  color: rgb(var(--ax-emerald-glow-ink));
+  border-color: var(--ax-emerald);
+  background-color: var(--ax-emerald-dim);
+}
+.ax-verdict-fake {
+  color: rgb(var(--ax-red-ink));
+  border-color: var(--ax-red);
+  background-color: var(--ax-red-dim);
+}
+.ax-verdict-partial {
+  color: rgb(var(--ax-gold-ink));
+  border-color: var(--ax-gold);
+  background-color: var(--ax-gold-dim);
+}
+
+/* ==================================================================== */
+/*  REDUCED MOTION — kill infinite loops; keep one-shot entrances + the  */
+/*  static frame of everything else.                                     */
+/* ==================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ax-pulse,
+  .ax-breathe, /* covers both ax-pulse and ax-breathe keyframes */
+  .ax-scanline::after,
+  .ax-glitch-live,
+  .ax-caret::after,
+  .ax-caret-blink,
+  .ax-marquee,
+  [class*="ax-marquee"] {
+    animation: none !important;
+  }
+  .ax-glitch:hover {
+    animation: none !important;
+  }
+  /* Collapse count-up to its final value rather than ticking. */
+  .ax-count-up {
+    animation: none !important;
+    counter-reset: ax-count var(--ax-count-target);
+  }
+  /* One-shot entrances should resolve instantly, not animate. */
+  .ax-fade-up,
+  .ax-stagger,
+  .ax-seg-pop,
+  .ax-bar-fill,
+  .ax-coin-flight {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* ==================================================================== */
+/*  BACKDROP-FILTER GUARD                                                */
+/*  A moving backdrop re-blurs every backdrop-blur element each frame    */
+/*  (Chrome jank). The grid is static, but as a belt-and-braces guard we */
+/*  neutralize backdrop-filter — over near-black the frost is invisible  */
+/*  and surfaces keep their translucent background.                      */
+/* ==================================================================== */
+[class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}

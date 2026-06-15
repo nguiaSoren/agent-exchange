@@ -1,0 +1,86 @@
+{
+  "n_total": 22,
+  "n_fabricated": 10,
+  "n_genuine": 12,
+  "tp": 10,
+  "fp": 0,
+  "tn": 12,
+  "fn": 0,
+  "catch_rate": 1.0,
+  "false_withhold_rate": 0.0,
+  "precision": 1.0,
+  "ece": 0.00454545454545463,
+  "threshold": 0.9,
+  "reliability": [
+    {
+      "lo": 0.0,
+      "hi": 0.1,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.1,
+      "hi": 0.2,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.2,
+      "hi": 0.3,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.3,
+      "hi": 0.4,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.4,
+      "hi": 0.5,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.5,
+      "hi": 0.6,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.6,
+      "hi": 0.7,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.7,
+      "hi": 0.8,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.8,
+      "hi": 0.9,
+      "count": 0,
+      "mean_confidence": 0.0,
+      "accuracy": 0.0
+    },
+    {
+      "lo": 0.9,
+      "hi": 1.0,
+      "count": 22,
+      "mean_confidence": 0.9954545454545454,
+      "accuracy": 1.0
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Server deps for the Agent Exchange live demo API (server/app.py).
+#
+# Install into the project venv:  .venv/bin/pip install -r server/requirements.txt
+#
+# The marketplace package itself (agent_exchange) and its deps (httpx, tenacity,
+# python-dotenv, eth-account, and — for live x402 — the x402/web3 extras) come from the
+# repo's own pyproject.toml; these are ONLY the HTTP/streaming skin this server adds.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# Run it (you start the server yourself; the build process never does):
+#   .venv/bin/uvicorn server.app:app --host 0.0.0.0 --port 8000
+# from the repo root, so `agent_exchange` (added to sys.path by app.py) resolves.

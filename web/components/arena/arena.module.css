@@ -1,0 +1,348 @@
+/* ====================================================================
+   ARENA — local keyframes (scoped CSS module; no globals.css touch).
+   Compositor-only: transform + opacity. Every infinite/looping anim is
+   killed under prefers-reduced-motion at the bottom; one-shot entrances
+   collapse to their end state.
+   ==================================================================== */
+
+/* Node entrance: fade + scale into the ring, staggered via --i. */
+.nodeEnter {
+  animation: ax-node-enter 420ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    backwards;
+  animation-delay: calc(var(--i, 0) * 42ms); /* A1: tightened from 55ms → 42ms */
+}
+@keyframes ax-node-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Node exit: dropped-from-the-ring agents fade + shrink out, staggered via
+   --exit-i so a filtered roster leaves one-by-one (reads as sequential
+   selection on camera), not all at once. */
+.nodeExit {
+  animation: ax-node-exit 400ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    forwards;
+  animation-delay: calc(var(--exit-i, 0) * 70ms); /* A1: tightened from 170ms → 70ms */
+}
+@keyframes ax-node-exit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+/* Core entrance. */
+.coreEnter {
+  animation: ax-core-enter 520ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    both;
+}
+@keyframes ax-core-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Edge stroke draw-in (set stroke-dasharray = pathLen via inline style). */
+.edgeDraw {
+  animation: ax-edge-draw 560ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    forwards;
+}
+@keyframes ax-edge-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* A particle/coin that travels an SVG edge via offset-path (set inline). */
+.travel {
+  animation: ax-travel var(--dur, 900ms) var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    forwards;
+  animation-delay: var(--delay, 0ms);
+  offset-rotate: 0deg;
+  opacity: 0;
+}
+@keyframes ax-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* A5 — Coin particle with a landing pop at the destination.
+   Same travel path but ends with a scale-up (1.4) that reads as a satisfying
+   "land" moment before the coin fades. Use .travelCoin on coin elements
+   instead of .travel. */
+.travelCoin {
+  animation: ax-travel-coin var(--dur, 900ms) var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    forwards;
+  animation-delay: var(--delay, 0ms);
+  offset-rotate: 0deg;
+  opacity: 0;
+}
+@keyframes ax-travel-coin {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+    transform: scale(1);
+  }
+  12% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  86% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+    transform: scale(1.4); /* A5: landing pop */
+  }
+}
+
+/* A soft expanding ring used for "speaking" / "judged" pulses on a node. */
+.ping {
+  animation: ax-ping 1400ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    infinite;
+}
+@keyframes ax-ping {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: translate(-50%, -50%) scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* A2 — Verdict stamp pop: anticipation (overshoot 1.5) → settle under (.9) →
+   small rebound (1.06) → rest (1). Lengthened to 480ms for a punchier feel. */
+.stamp {
+  animation: ax-stamp 480ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+    both;
+}
+@keyframes ax-stamp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5) rotate(-8deg);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.9) rotate(-8deg);
+  }
+  78% {
+    transform: translate(-50%, -50%) scale(1.06) rotate(-8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(-8deg);
+  }
+}
+
+/* Transient floating speech bubble near a node. */
+.bubble {
+  animation: ax-bubble 360ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    both;
+}
+@keyframes ax-bubble {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover card entrance. */
+.card {
+  animation: ax-arena-card 180ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    both;
+}
+@keyframes ax-arena-card {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* A3 — The dramatic FAKE-caught shake (one-shot, the red moment).
+   Strengthened to ±3px (was ±2px). */
+.fakeShake {
+  animation: ax-fake-shake 520ms steps(2, end) 1;
+}
+@keyframes ax-fake-shake {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  20% {
+    transform: translate(calc(-50% - 3px), calc(-50% + 1px));
+  }
+  40% {
+    transform: translate(calc(-50% + 3px), calc(-50% - 1px));
+  }
+  60% {
+    transform: translate(calc(-50% - 1px), -50%);
+  }
+  80% {
+    transform: translate(calc(-50% + 1px), -50%);
+  }
+}
+
+/* A3 — Red flash overlay for the FAKE-caught moment.
+   Apply to an absolutely-positioned full-disc red layer sibling.
+   The element itself is responsible for background-color: red (or similar). */
+.fakeFlash {
+  animation: ax-fake-flash 300ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 1;
+}
+@keyframes ax-fake-flash {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* A4 — Dimmed helper: fades non-focal nodes/edges to 34% opacity with a
+   smooth transition. Pair with a "focused" state to direct attention. */
+.dimmed {
+  opacity: 0.34;
+  transition: opacity 260ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+/* Slow conic sweep behind the core (its "verifier is alive" tell). */
+.coreSweep {
+  animation: ax-core-spin 8s linear infinite;
+}
+@keyframes ax-core-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A6 — One-shot emerald ring pulse for a node that just received payment
+   (a coin landed). Like .ping but single-shot and emerald-tinted. Apply to
+   an absolutely-positioned ring span centered with translate(-50%,-50%). */
+.paidRing {
+  animation: ax-paid-ring 620ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 1;
+}
+@keyframes ax-paid-ring {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.65);
+  }
+}
+
+/* A6 — Settlement chip pop when a payment lands on the node. */
+.chipPop {
+  animation: ax-chip-pop 420ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1)) 1;
+}
+@keyframes ax-chip-pop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* A6 — Staged entrance for the terminal GATE PASSED / FAILED payoff card. */
+.summaryEnter {
+  animation: ax-summary-enter 520ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    backwards;
+}
+@keyframes ax-summary-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ping,
+  .coreSweep {
+    animation: none !important;
+  }
+  .nodeEnter,
+  .coreEnter,
+  .edgeDraw,
+  .stamp,
+  .bubble,
+  .card,
+  .fakeShake,
+  .fakeFlash,
+  .chipPop,
+  .summaryEnter {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+  }
+  /* Travel particles don't animate position under reduced motion — they're
+     hidden entirely (the verdict stamp + coin landing carry the meaning). */
+  .travel,
+  .travelCoin {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  /* paidRing: kill animation and ensure no leftover ring is visible. */
+  .paidRing {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  /* Dimmed: skip the transition, snap to end state instantly. */
+  .dimmed {
+    transition: none !important;
+  }
+}

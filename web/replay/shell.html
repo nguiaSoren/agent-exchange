@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Exchange — Job Replay</title>
+
+<!-- @@STYLES@@ -->
+
+  <style>
+    /* ── Page-level reset & background ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #0d0f14;
+      color: #e2e8f0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Shell layout ───────────────────────────────────────────────────── */
+    #rv-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Site header ────────────────────────────────────────────────────── */
+    #rv-site-header {
+      background: #12161f;
+      border-bottom: 1px solid #1e2533;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    #rv-site-header .rv-ctl-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7c8cf8;
+    }
+
+    #rv-site-header .rv-ctl-tagline {
+      font-size: 12px;
+      color: #4a5568;
+    }
+
+    /* ── Content area ───────────────────────────────────────────────────── */
+    #rv-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Drop zone ──────────────────────────────────────────────────────── */
+    #rv-drop {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 340px;
+      margin: 40px auto;
+      width: min(600px, 90vw);
+      border: 2px dashed #2d3748;
+      border-radius: 12px;
+      background: #12161f;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+
+    #rv-drop:hover,
+    #rv-drop.rv-ctl-drop--hover {
+      border-color: #7c8cf8;
+      background: #161b27;
+    }
+
+    .rv-ctl-drop-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .rv-ctl-drop-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #a0aec0;
+      margin-bottom: 6px;
+    }
+
+    .rv-ctl-drop-hint {
+      font-size: 12px;
+      color: #4a5568;
+    }
+
+    /* ── Transport controls bar ─────────────────────────────────────────── */
+    #rv-controls {
+      background: #12161f;
+      border-top: 1px solid #1e2533;
+      padding: 10px 16px;
+      flex-shrink: 0;
+      position: sticky;
+      bottom: 0;
+      z-index: 50;
+    }
+
+    .rv-ctl-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Buttons ────────────────────────────────────────────────────────── */
+    .rv-ctl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border: 1px solid #2d3748;
+      border-radius: 6px;
+      background: #1a202c;
+      color: #e2e8f0;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.12s, border-color 0.12s;
+      line-height: 1.4;
+    }
+
+    .rv-ctl-btn:hover {
+      background: #2d3748;
+      border-color: #4a5568;
+    }
+
+    .rv-ctl-btn:active {
+      background: #374151;
+    }
+
+    .rv-ctl-btn--primary {
+      background: #3730a3;
+      border-color: #4338ca;
+      color: #e0e7ff;
+      font-weight: 600;
+    }
+
+    .rv-ctl-btn--primary:hover {
+      background: #4338ca;
+      border-color: #6366f1;
+    }
+
+    .rv-ctl-btn--speed {
+      min-width: 42px;
+      justify-content: center;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rv-ctl-btn--catch {
+      background: #7f1d1d;
+      border-color: #b91c1c;
+      color: #fee2e2;
+      font-weight: 600;
+    }
+
+    .rv-ctl-btn--catch:hover {
+      background: #991b1b;
+      border-color: #ef4444;
+    }
+
+    /* ── Scrubber ───────────────────────────────────────────────────────── */
+    .rv-ctl-scrubber {
+      flex: 1;
+      min-width: 80px;
+      max-width: 340px;
+      height: 4px;
+      cursor: pointer;
+      accent-color: #6366f1;
+    }
+
+    /* ── Step readout ───────────────────────────────────────────────────── */
+    .rv-ctl-readout {
+      font-size: 11px;
+      color: #4a5568;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      margin-left: 4px;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────── */
+    #rv-footer {
+      background: #0d0f14;
+      border-top: 1px solid #1a202c;
+      padding: 8px 20px;
+      font-size: 11px;
+      color: #2d3748;
+      text-align: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="rv-shell">
+
+  <header id="rv-site-header">
+    <span class="rv-ctl-logo">Agent Exchange</span>
+    <span class="rv-ctl-tagline">Job Replay Visualizer — step through a recorded agent run</span>
+  </header>
+
+  <div id="rv-content">
+
+    <!-- Drag-drop / file-picker zone; shown when no data loaded -->
+    <div id="rv-drop">
+      <div class="rv-ctl-drop-icon">&#128196;</div>
+      <div class="rv-ctl-drop-title">Drop a replay file here</div>
+      <div class="rv-ctl-drop-hint">or click to pick a .json replay file</div>
+    </div>
+
+    <!-- VIEW mounts here -->
+    <div id="rv-app"></div>
+
+  </div><!-- #rv-content -->
+
+  <!-- Transport controls -->
+  <div id="rv-controls"></div>
+
+  <footer id="rv-footer">Agent Exchange &mdash; on-chain agent marketplace &mdash; Job Replay</footer>
+
+</div><!-- #rv-shell -->
+
+<!-- Inline data slot; BUILD replaces null with a replay object -->
+<script id="rv-data" type="application/json">null</script>
+
+<!-- @@REDUCER@@ -->
+<!-- @@VIEW@@ -->
+<!-- @@PLAYER@@ -->
+
+</body>
+</html>

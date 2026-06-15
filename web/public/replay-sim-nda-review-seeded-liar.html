@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Exchange — Job Replay</title>
+
+<style>
+/* ============================================================
+   REPLAY VIEWER — Panel Styles
+   Namespace: rv-*  (rv-ctl-* is reserved for player.js)
+   Dark, high-contrast, screen-recording-friendly.
+   No external fonts or CDN — system font stack only.
+   ============================================================ */
+
+/* ── Reset / base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── App shell ────────────────────────────────────────────── */
+.rv-app {
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
+  background: #0a0c0f;
+  color: #c8d8d0;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* ── Colour tokens ────────────────────────────────────────── */
+:root {
+  --rv-bg:           #0a0c0f;
+  --rv-surface:      #111418;
+  --rv-surface-2:    #181d22;
+  --rv-border:       rgba(255,255,255,0.07);
+  --rv-border-mid:   rgba(255,255,255,0.12);
+  --rv-fg:           #e2ede8;
+  --rv-fg-muted:     #8fa89c;
+  --rv-fg-faint:     #4a5a54;
+  --rv-emerald:      #00d67a;
+  --rv-emerald-glow: #2bff9a;
+  --rv-emerald-dim:  rgba(0,214,122,0.10);
+  --rv-gold:         #ffc233;
+  --rv-gold-dim:     rgba(255,194,51,0.13);
+  --rv-red:          #ff3b5c;
+  --rv-red-dim:      rgba(255,59,92,0.12);
+  --rv-red-border:   rgba(255,59,92,0.45);
+}
+
+/* ── Layout: single column with max-width ─────────────────── */
+.rv-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Eyebrow label ────────────────────────────────────────── */
+.rv-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+}
+.rv-eyebrow--emerald { color: var(--rv-emerald); }
+.rv-eyebrow--gold    { color: var(--rv-gold); }
+.rv-eyebrow--red     { color: var(--rv-red); }
+
+/* ── Panel card ───────────────────────────────────────────── */
+.rv-panel {
+  background: var(--rv-surface);
+  border: 1px solid var(--rv-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rv-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rv-border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.rv-panel-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rv-fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-panel-body {
+  padding: 20px;
+}
+
+/* ── ① HEADER ─────────────────────────────────────────────── */
+.rv-header {
+  background: var(--rv-surface);
+  border-bottom: 1px solid var(--rv-border);
+  padding: 20px 24px 18px;
+}
+
+.rv-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.rv-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rv-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--rv-border-mid);
+  background: var(--rv-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.rv-header-title {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--rv-fg);
+  line-height: 1.1;
+}
+
+.rv-header-subtitle {
+  font-size: 12px;
+  color: var(--rv-fg-muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.rv-header-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.rv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.rv-badge--sim {
+  background: var(--rv-gold-dim);
+  color: var(--rv-gold);
+  border-color: rgba(255,194,51,0.35);
+}
+
+.rv-badge--live {
+  background: var(--rv-emerald-dim);
+  color: var(--rv-emerald-glow);
+  border-color: rgba(0,214,122,0.35);
+}
+
+.rv-badge--kind {
+  background: var(--rv-surface-2);
+  color: var(--rv-fg-muted);
+  border-color: var(--rv-border-mid);
+}
+
+.rv-header-budget {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rv-gold);
+}
+
+/* ── ② STAGE BAR ──────────────────────────────────────────── */
+.rv-stagebar {
+  /* reuses rv-panel styles */
+}
+
+.rv-stagebar-inner {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0;
+}
+
+.rv-stage-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.rv-stage-node {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--rv-border);
+  background: var(--rv-surface-2);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.rv-stage-node--active {
+  border-color: var(--rv-emerald);
+  background: var(--rv-emerald-dim);
+  box-shadow: 0 0 14px -4px rgba(0,214,122,0.5);
+}
+
+.rv-stage-node--done {
+  border-color: var(--rv-border-mid);
+  background: var(--rv-surface-2);
+}
+
+.rv-stage-node--error {
+  border-color: var(--rv-red);
+  background: var(--rv-red-dim);
+}
+
+.rv-stage-node--pending {
+  border-color: var(--rv-border);
+  background: var(--rv-surface-2);
+}
+
+.rv-stage-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.rv-stage-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.rv-stage-dot--active  { background: var(--rv-emerald); box-shadow: 0 0 6px rgba(0,214,122,0.8); animation: rv-pulse 1.2s ease-in-out infinite; }
+.rv-stage-dot--pending { background: var(--rv-fg-faint); opacity: 0.4; }
+
+@keyframes rv-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.rv-stage-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rv-stage-label--active  { color: var(--rv-emerald-glow); }
+.rv-stage-label--done    { color: var(--rv-fg-muted); }
+.rv-stage-label--error   { color: var(--rv-red); }
+.rv-stage-label--pending { color: var(--rv-fg-faint); }
+
+.rv-stage-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--rv-border-mid);
+  min-width: 10px;
+  margin: 0 4px;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rv-stage-connector-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--rv-emerald);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ── ③ BID FEED ───────────────────────────────────────────── */
+.rv-bidfeed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  padding: 20px;
+}
+
+.rv-bid-card {
+  background: var(--rv-surface-2);
+  border: 1px solid rgba(0,214,122,0.15);
+  border-radius: 10px;
+  padding: 14px;
+  transition: border-color 0.2s;
+}
+
+.rv-bid-card--hired {
+  border-color: var(--rv-emerald);
+  box-shadow: 0 0 0 1px var(--rv-emerald), 0 0 18px -6px var(--rv-emerald);
+}
+
+.rv-bid-card--declined {
+  opacity: 0.45;
+  border-color: var(--rv-border);
+}
+
+.rv-bid-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rv-bid-worker-name {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rv-fg);
+}
+
+.rv-bid-worker-handle {
+  font-size: 10px;
+  color: var(--rv-fg-faint);
+  margin-top: 2px;
+}
+
+.rv-bid-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--rv-gold);
+  white-space: nowrap;
+}
+
+.rv-badge--hired {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0,214,122,0.18);
+  color: var(--rv-emerald-glow);
+  border: 1px solid var(--rv-emerald);
+  margin-top: 3px;
+}
+
+.rv-badge--declined {
+  display: inline-flex;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--rv-surface);
+  color: var(--rv-fg-faint);
+  border: 1px solid var(--rv-border-mid);
+  margin-top: 3px;
+}
+
+.rv-badge--cross-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255,194,51,0.14);
+  color: var(--rv-gold);
+  border: 1px solid rgba(255,194,51,0.4);
+  margin-top: 6px;
+}
+
+/* Stars */
+.rv-stars {
+  display: flex;
+  gap: 2px;
+  margin: 8px 0 4px;
+}
+
+.rv-star {
+  font-size: 12px;
+  line-height: 1;
+}
+.rv-star--full  { color: var(--rv-gold); }
+.rv-star--empty { color: var(--rv-fg-faint); opacity: 0.4; }
+
+/* Relevance / confidence bar */
+.rv-bar-row {
+  margin-top: 8px;
+}
+
+.rv-bar-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+  margin-bottom: 4px;
+}
+
+.rv-bar-track {
+  height: 4px;
+  background: var(--rv-surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.rv-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.rv-bar-fill--emerald { background: var(--rv-emerald); }
+.rv-bar-fill--gold    { background: var(--rv-gold); }
+.rv-bar-fill--red     { background: var(--rv-red); }
+
+.rv-hire-policy {
+  padding: 12px 20px 14px;
+  border-top: 1px solid var(--rv-border);
+  font-size: 11px;
+  color: var(--rv-fg-muted);
+  line-height: 1.6;
+}
+
+.rv-hire-policy-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rv-emerald);
+  margin-bottom: 4px;
+}
+
+/* ── ④ WORK ROOM ──────────────────────────────────────────── */
+.rv-workroom-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.rv-room-line {
+  display: flex;
+  gap: 10px;
+}
+
+.rv-room-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.rv-room-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.rv-room-sender-row {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-bottom: 5px;
+}
+
+.rv-room-sender {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rv-fg-muted);
+}
+
+.rv-room-system-badge {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+  border: 1px solid var(--rv-border-mid);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.rv-room-bubble {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--rv-fg-muted);
+  border-radius: 0 8px 8px 8px;
+  border: 1px solid var(--rv-border);
+  padding: 10px 14px;
+  background: var(--rv-surface-2);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.rv-room-bubble--system {
+  border-color: rgba(0,214,122,0.2);
+  background: rgba(0,214,122,0.05);
+}
+
+.rv-room-mention {
+  color: var(--rv-emerald-glow);
+  font-weight: 600;
+}
+
+.rv-empty {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 11px;
+  color: var(--rv-fg-faint);
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* ── ⑤ FINDINGS / VERIFY ─────────────────────────────────── */
+.rv-findings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.rv-finding-card {
+  background: var(--rv-surface-2);
+  border: 1px solid var(--rv-border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.rv-finding-card--confirmed {
+  border-color: rgba(0,214,122,0.2);
+}
+
+.rv-finding-card--partial {
+  border-color: rgba(255,194,51,0.3);
+}
+
+.rv-finding-card--unsupported {
+  border-color: var(--rv-red);
+  box-shadow: 0 0 0 1px rgba(255,59,92,0.35), 0 0 24px -6px rgba(255,59,92,0.4);
+  background: rgba(255,59,92,0.05);
+}
+
+.rv-finding-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.rv-verdict-tile {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.rv-verdict-tile--confirmed {
+  background: rgba(0,214,122,0.18);
+  color: var(--rv-emerald-glow);
+  box-shadow: inset 0 0 0 1px rgba(0,214,122,0.4);
+}
+
+.rv-verdict-tile--partial {
+  background: rgba(255,194,51,0.18);
+  color: var(--rv-gold);
+  box-shadow: inset 0 0 0 1px rgba(255,194,51,0.4);
+}
+
+.rv-verdict-tile--unsupported {
+  background: rgba(255,59,92,0.2);
+  color: var(--rv-red);
+  box-shadow: inset 0 0 0 1px rgba(255,59,92,0.5);
+}
+
+.rv-finding-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rv-finding-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.rv-verdict-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.rv-verdict-label--confirmed  { color: var(--rv-emerald-glow); }
+.rv-verdict-label--partial    { color: var(--rv-gold); }
+.rv-verdict-label--unsupported { color: var(--rv-red); }
+
+/* The UNSUPPORTED catch badge — must be unmistakable */
+.rv-fabricated-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(255,59,92,0.22);
+  color: var(--rv-red);
+  border: 1px solid var(--rv-red);
+  box-shadow: 0 0 8px -2px rgba(255,59,92,0.5);
+}
+
+.rv-clause-ref {
+  display: inline-flex;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--rv-fg-muted);
+  background: var(--rv-surface);
+  border: 1px solid var(--rv-border-mid);
+}
+
+.rv-conf-badge {
+  margin-left: auto;
+  font-size: 9px;
+  color: var(--rv-fg-faint);
+  white-space: nowrap;
+}
+
+.rv-finding-claim {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--rv-fg);
+  margin-bottom: 6px;
+}
+
+.rv-finding-worker {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+  margin-bottom: 10px;
+}
+
+.rv-evidence-quote {
+  margin-top: 10px;
+  padding: 8px 0 8px 12px;
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--rv-fg-muted);
+  border-left: 2px solid;
+}
+.rv-evidence-quote--confirmed  { border-color: rgba(0,214,122,0.4); }
+.rv-evidence-quote--partial    { border-color: rgba(255,194,51,0.4); }
+
+/* Verdict tally row */
+.rv-verdict-tally {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.rv-tally-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rv-tally-chip--confirmed {
+  background: rgba(0,214,122,0.15);
+  color: var(--rv-emerald-glow);
+  box-shadow: inset 0 0 0 1px rgba(0,214,122,0.35);
+}
+.rv-tally-chip--partial {
+  background: rgba(255,194,51,0.15);
+  color: var(--rv-gold);
+  box-shadow: inset 0 0 0 1px rgba(255,194,51,0.35);
+}
+.rv-tally-chip--unsupported {
+  background: rgba(255,59,92,0.18);
+  color: var(--rv-red);
+  box-shadow: inset 0 0 0 1px rgba(255,59,92,0.45);
+}
+
+/* ── ⑥ SETTLE BAR ─────────────────────────────────────────── */
+.rv-settle-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 20px;
+}
+
+.rv-settle-card {
+  background: var(--rv-surface-2);
+  border-radius: 10px;
+  border: 1px solid var(--rv-border);
+  padding: 16px;
+  min-width: 220px;
+  flex: 1;
+}
+
+.rv-settle-card--paid {
+  border-color: rgba(0,214,122,0.35);
+}
+
+.rv-settle-card--withheld {
+  border-color: var(--rv-red);
+  box-shadow: 0 0 0 1px rgba(255,59,92,0.3);
+  background: rgba(255,59,92,0.04);
+}
+
+.rv-settle-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.rv-settle-worker {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rv-fg);
+  text-transform: capitalize;
+}
+
+.rv-settle-amount-paid {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--rv-emerald-glow);
+  text-shadow: 0 0 10px rgba(0,214,122,0.4);
+}
+
+.rv-settle-withheld-label {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: rgba(255,59,92,0.2);
+  color: var(--rv-red);
+  border: 1px solid var(--rv-red);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rv-settle-sub {
+  font-size: 10px;
+  color: var(--rv-fg-faint);
+  margin-bottom: 10px;
+}
+
+.rv-settle-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.rv-settle-status-text--paid     { color: var(--rv-fg-muted); }
+.rv-settle-status-text--withheld { color: var(--rv-red); }
+
+.rv-tx-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--rv-fg-muted);
+  border: 1px solid var(--rv-border-mid);
+  background: var(--rv-surface);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.rv-tx-link:hover {
+  color: var(--rv-emerald-glow);
+  border-color: var(--rv-emerald);
+}
+
+.rv-no-tx {
+  font-size: 10px;
+  color: var(--rv-fg-faint);
+}
+
+.rv-settle-totals {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rv-totals-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rv-totals-chip--settled {
+  background: rgba(0,214,122,0.15);
+  color: var(--rv-emerald-glow);
+  box-shadow: inset 0 0 0 1px rgba(0,214,122,0.4);
+}
+.rv-totals-chip--withheld {
+  background: rgba(255,59,92,0.15);
+  color: var(--rv-red);
+  box-shadow: inset 0 0 0 1px rgba(255,59,92,0.4);
+}
+
+/* ── ⑦ RECEIPT ────────────────────────────────────────────── */
+.rv-receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  padding: 20px;
+}
+
+.rv-receipt-field {
+  background: var(--rv-surface-2);
+  border: 1px solid var(--rv-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.rv-receipt-field-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+  margin-bottom: 6px;
+}
+
+.rv-receipt-field-value {
+  font-size: 11px;
+  color: var(--rv-fg-muted);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.rv-receipt-field-value--mono {
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", "Consolas", monospace;
+  font-size: 10.5px;
+}
+
+/* ── ⑧ HERO BANNER ────────────────────────────────────────── */
+.rv-hero {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+.rv-hero--pass {
+  border-color: rgba(0,214,122,0.4);
+  background: linear-gradient(135deg, rgba(0,214,122,0.08) 0%, rgba(0,214,122,0.03) 100%);
+}
+
+.rv-hero--fail {
+  border-color: rgba(255,59,92,0.5);
+  background: linear-gradient(135deg, rgba(255,59,92,0.10) 0%, rgba(255,59,92,0.03) 100%);
+}
+
+.rv-hero-inner {
+  padding: 32px 28px;
+}
+
+.rv-hero-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-hero-eyebrow--fail { color: var(--rv-red); }
+.rv-hero-eyebrow--pass { color: var(--rv-emerald-glow); }
+
+.rv-hero-headline {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  color: var(--rv-fg);
+  margin-bottom: 10px;
+}
+
+.rv-hero-headline-amount {
+  display: block;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.rv-hero-headline-amount--fail { color: var(--rv-red); text-shadow: 0 0 30px rgba(255,59,92,0.4); }
+.rv-hero-headline-amount--pass { color: var(--rv-emerald-glow); text-shadow: 0 0 30px rgba(0,214,122,0.4); }
+
+.rv-hero-summary {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--rv-fg-muted);
+  max-width: 600px;
+  margin: 14px 0 0;
+}
+
+.rv-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rv-border);
+}
+
+.rv-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rv-hero-stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rv-fg-faint);
+}
+
+.rv-hero-stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.rv-hero-stat-value--settled  { color: var(--rv-emerald-glow); }
+.rv-hero-stat-value--withheld { color: var(--rv-red); }
+.rv-hero-stat-value--neutral  { color: var(--rv-fg-muted); }
+
+/* Scrollbar */
+.rv-workroom-messages::-webkit-scrollbar,
+.rv-bidfeed-grid::-webkit-scrollbar,
+.rv-findings-list::-webkit-scrollbar,
+.rv-settle-cards::-webkit-scrollbar,
+.rv-stagebar-inner::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.rv-workroom-messages::-webkit-scrollbar-thumb,
+.rv-bidfeed-grid::-webkit-scrollbar-thumb,
+.rv-findings-list::-webkit-scrollbar-thumb,
+.rv-settle-cards::-webkit-scrollbar-thumb,
+.rv-stagebar-inner::-webkit-scrollbar-thumb {
+  background: var(--rv-border-mid);
+  border-radius: 4px;
+}
+
+</style>
+
+  <style>
+    /* ── Page-level reset & background ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #0d0f14;
+      color: #e2e8f0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Shell layout ───────────────────────────────────────────────────── */
+    #rv-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Site header ────────────────────────────────────────────────────── */
+    #rv-site-header {
+      background: #12161f;
+      border-bottom: 1px solid #1e2533;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    #rv-site-header .rv-ctl-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7c8cf8;
+    }
+
+    #rv-site-header .rv-ctl-tagline {
+      font-size: 12px;
+      color: #4a5568;
+    }
+
+    /* ── Content area ───────────────────────────────────────────────────── */
+    #rv-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Drop zone ──────────────────────────────────────────────────────── */
+    #rv-drop {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 340px;
+      margin: 40px auto;
+      width: min(600px, 90vw);
+      border: 2px dashed #2d3748;
+      border-radius: 12px;
+      background: #12161f;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+
+    #rv-drop:hover,
+    #rv-drop.rv-ctl-drop--hover {
+      border-color: #7c8cf8;
+      background: #161b27;
+    }
+
+    .rv-ctl-drop-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .rv-ctl-drop-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #a0aec0;
+      margin-bottom: 6px;
+    }
+
+    .rv-ctl-drop-hint {
+      font-size: 12px;
+      color: #4a5568;
+    }
+
+    /* ── Transport controls bar ─────────────────────────────────────────── */
+    #rv-controls {
+      background: #12161f;
+      border-top: 1px solid #1e2533;
+      padding: 10px 16px;
+      flex-shrink: 0;
+      position: sticky;
+      bottom: 0;
+      z-index: 50;
+    }
+
+    .rv-ctl-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Buttons ────────────────────────────────────────────────────────── */
+    .rv-ctl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border: 1px solid #2d3748;
+      border-radius: 6px;
+      background: #1a202c;
+      color: #e2e8f0;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.12s, border-color 0.12s;
+      line-height: 1.4;
+    }
+
+    .rv-ctl-btn:hover {
+      background: #2d3748;
+      border-color: #4a5568;
+    }
+
+    .rv-ctl-btn:active {
+      background: #374151;
+    }
+
+    .rv-ctl-btn--primary {
+      background: #3730a3;
+      border-color: #4338ca;
+      color: #e0e7ff;
+      font-weight: 600;
+    }
+
+    .rv-ctl-btn--primary:hover {
+      background: #4338ca;
+      border-color: #6366f1;
+    }
+
+    .rv-ctl-btn--speed {
+      min-width: 42px;
+      justify-content: center;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rv-ctl-btn--catch {
+      background: #7f1d1d;
+      border-color: #b91c1c;
+      color: #fee2e2;
+      font-weight: 600;
+    }
+
+    .rv-ctl-btn--catch:hover {
+      background: #991b1b;
+      border-color: #ef4444;
+    }
+
+    /* ── Scrubber ───────────────────────────────────────────────────────── */
+    .rv-ctl-scrubber {
+      flex: 1;
+      min-width: 80px;
+      max-width: 340px;
+      height: 4px;
+      cursor: pointer;
+      accent-color: #6366f1;
+    }
+
+    /* ── Step readout ───────────────────────────────────────────────────── */
+    .rv-ctl-readout {
+      font-size: 11px;
+      color: #4a5568;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      margin-left: 4px;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────── */
+    #rv-footer {
+      background: #0d0f14;
+      border-top: 1px solid #1a202c;
+      padding: 8px 20px;
+      font-size: 11px;
+      color: #2d3748;
+      text-align: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="rv-shell">
+
+  <header id="rv-site-header">
+    <span class="rv-ctl-logo">Agent Exchange</span>
+    <span class="rv-ctl-tagline">Job Replay Visualizer — step through a recorded agent run</span>
+  </header>
+
+  <div id="rv-content">
+
+    <!-- Drag-drop / file-picker zone; shown when no data loaded -->
+    <div id="rv-drop">
+      <div class="rv-ctl-drop-icon">&#128196;</div>
+      <div class="rv-ctl-drop-title">Drop a replay file here</div>
+      <div class="rv-ctl-drop-hint">or click to pick a .json replay file</div>
+    </div>
+
+    <!-- VIEW mounts here -->
+    <div id="rv-app"></div>
+
+  </div><!-- #rv-content -->
+
+  <!-- Transport controls -->
+  <div id="rv-controls"></div>
+
+  <footer id="rv-footer">Agent Exchange &mdash; on-chain agent marketplace &mdash; Job Replay</footer>
+
+</div><!-- #rv-shell -->
+
+<!-- Inline data slot; BUILD replaces null with a replay object -->
+<script id="rv-data" type="application/json">{"schema": "agent-exchange.replay/v1", "job_id": "sim-nda-review-seeded-liar", "kind": "nda-review", "mode": "sim", "title": "Mutual NDA — review", "budget_usd": 0.2, "recorded_at": "2026-06-13T00:00:00Z", "seed": 1, "totals": {"gate_passed": false, "pay_fraction": 0.0, "total_settled_usd": 0.0, "total_withheld_usd": 0.11, "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"}, "tx_links": [], "events": [{"seq": 0, "t_offset_ms": 0.0, "type": "document", "data": {"kind": "nda-review", "title": "Mutual NDA — review", "document_text": "MUTUAL NON-DISCLOSURE AGREEMENT\n\nThis Mutual Non-Disclosure Agreement (the \"Agreement\") is entered into as of March 1,\n2025 (the \"Effective Date\") by and between Northbridge Analytics, Inc., a Delaware\ncorporation (\"Northbridge\"), and Cedar Systems Ltd. (\"Cedar\"). Northbridge and Cedar\nare each a \"Party\" and, when disclosing information, the \"Disclosing Party,\" and when\nreceiving it, the \"Receiving Party.\"\n\n1. PURPOSE. The Parties wish to explore a potential business relationship concerning\nthe integration of Cedar's data-pipeline technology with Northbridge's analytics\nplatform (the \"Purpose\"), and in connection with the Purpose may disclose to each\nother certain confidential and proprietary information.\n\n2. CONFIDENTIAL INFORMATION. \"Confidential Information\" means any non-public\ninformation disclosed by the Disclosing Party to the Receiving Party, in any form,\nthat is either marked or identified as \"confidential\" or \"proprietary\" at the time of\ndisclosure, or that a reasonable person would understand to be confidential given the\nnature of the information and the circumstances of disclosure. Information disclosed\norally or visually shall be treated as Confidential Information if identified as\nconfidential at the time of disclosure and confirmed in writing as confidential within\nthirty (30) days. Confidential Information includes the existence and terms of this\nAgreement and the fact that discussions are taking place between the Parties.\n\n3. PERMITTED USE. The Receiving Party shall use the Confidential Information solely for\nthe Purpose and for no other purpose. The Receiving Party may disclose Confidential\nInformation only to its employees, officers, directors, and professional advisors\n(collectively, \"Representatives\") who have a need to know it for the Purpose and who\nare bound by written obligations of confidentiality at least as protective as those in\nthis Agreement. The Receiving Party shall be responsible for any breach of this\nAgreement by its Representatives. The Receiving Party shall not reverse-engineer,\ndecompile, or disassemble any Confidential Information.\n\n4. TERM AND SURVIVAL. This Agreement shall commence on the Effective Date and continue\nfor two (2) years, unless earlier terminated by either Party upon thirty (30) days'\nprior written notice. The Receiving Party's obligations of confidentiality and\nnon-use under this Agreement shall survive termination or expiration and shall remain\nin effect for three (3) years from the date of disclosure of the relevant Confidential\nInformation; provided, however, that with respect to any Confidential Information that\nconstitutes a trade secret, such obligations shall continue for as long as the\ninformation remains a trade secret under applicable law.\n\n5. EXCLUSIONS. The obligations in this Agreement do not apply to information that the\nReceiving Party can demonstrate: (a) is or becomes generally available to the public\nthrough no act or omission of the Receiving Party; (b) was rightfully known to the\nReceiving Party, without restriction, before its disclosure by the Disclosing Party;\n(c) is independently developed by the Receiving Party without use of or reference to\nthe Confidential Information; or (d) is rightfully obtained by the Receiving Party from\na third party who is free to disclose it without restriction. The Receiving Party may\ndisclose Confidential Information to the extent required by law, regulation, or valid\ncourt order, provided that it gives the Disclosing Party prompt written notice (where\nlegally permitted) and reasonable cooperation, at the Disclosing Party's expense, so\nthat the Disclosing Party may seek a protective order, and discloses only the portion\nof Confidential Information legally required.\n\n6. RETURN OR DESTRUCTION. Upon the Disclosing Party's written request, or upon\ntermination or expiration of this Agreement, the Receiving Party shall promptly, and\nin any event within thirty (30) days, return or destroy all Confidential Information\nin its possession, including all copies, notes, and derivatives thereof, and shall\ncertify such destruction in writing if requested. Notwithstanding the foregoing, the\nReceiving Party may retain one (1) archival copy solely for legal and compliance\npurposes and copies created by routine automated backup systems, provided that any\nretained copies remain subject to the confidentiality obligations of this Agreement.\n\n7. NO LICENSE. All Confidential Information remains the property of the Disclosing\nParty. Nothing in this Agreement grants the Receiving Party any license or other right\nin or to the Confidential Information, or any patent, copyright, trademark, or other\nintellectual property right of the Disclosing Party, except the limited right to use\nit for the Purpose. No warranty is made as to the accuracy or completeness of any\nConfidential Information.\n\n8. GENERAL. This Agreement shall be governed by and construed in accordance with the\nlaws of the State of Delaware, without regard to its conflict-of-laws principles. This\nAgreement constitutes the entire agreement between the Parties regarding its subject\nmatter and supersedes all prior discussions. Neither Party is obligated to proceed\nwith any transaction. This Agreement may be amended only by a writing signed by both\nParties.\n", "budget_usd": 0.2}}, {"seq": 1, "t_offset_ms": 0.0, "type": "stage", "data": {"name": "Discover", "status": "active"}}, {"seq": 2, "t_offset_ms": 0.1, "type": "pool", "data": {"agents": [{"id": "confidentiality-bot", "handle": "confidentiality-bot", "name": "Confidentiality Auditor", "owner": "owner-1", "cross_owner": false}, {"id": "permitted-use-bot", "handle": "permitted-use-bot", "name": "Permitted-Use Auditor", "owner": "owner-1", "cross_owner": false}, {"id": "term-bot", "handle": "term-bot", "name": "Term & Survival Auditor", "owner": "owner-1", "cross_owner": false}, {"id": "carveout-bot", "handle": "carveout-bot", "name": "Carve-out Auditor (cross-owner)", "owner": "owner-2", "cross_owner": true}]}}, {"seq": 3, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Discover", "status": "done"}}, {"seq": 4, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Bid", "status": "active"}}, {"seq": 5, "t_offset_ms": 0.1, "type": "bid", "data": {"worker": "confidentiality_scope", "price_usd": 0.035, "relevance": 0.9, "reputation": 0.5}}, {"seq": 6, "t_offset_ms": 0.1, "type": "bid", "data": {"worker": "permitted_use", "price_usd": 0.03, "relevance": 0.84, "reputation": 0.5}}, {"seq": 7, "t_offset_ms": 0.1, "type": "bid", "data": {"worker": "term_survival", "price_usd": 0.025, "relevance": 0.72, "reputation": 0.5}}, {"seq": 8, "t_offset_ms": 0.1, "type": "bid", "data": {"worker": "carve_outs", "price_usd": 0.02, "relevance": 0.64, "reputation": 0.5}}, {"seq": 9, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Bid", "status": "done"}}, {"seq": 10, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Hire", "status": "active"}}, {"seq": 11, "t_offset_ms": 0.1, "type": "hire", "data": {"hired": [{"worker": "confidentiality_scope", "price_usd": 0.035}, {"worker": "permitted_use", "price_usd": 0.03}, {"worker": "term_survival", "price_usd": 0.025}, {"worker": "carve_outs", "price_usd": 0.02}], "declined": [], "strategy": "coverage_within_budget", "pay_fraction_target": 1.0}}, {"seq": 12, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Hire", "status": "done"}}, {"seq": 13, "t_offset_ms": 0.1, "type": "stage", "data": {"name": "Work", "status": "active"}}, {"seq": 14, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Confidentiality Auditor", "content": "[confidentiality_scope] 1 findings:\n- 1: Confidential Information is broadly defined to cover all disclosed business and technical information. (high)"}}, {"seq": 15, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Permitted-Use Auditor", "content": "[permitted_use] 1 findings:\n- 2: The receiving party may use Confidential Information solely to evaluate the proposed transaction. (high)"}}, {"seq": 16, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Term & Survival Auditor", "content": "[term_survival] 1 findings:\n- 5: Confidentiality obligations survive for a fixed period after the agreement ends. (high)"}}, {"seq": 17, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Carve-out Auditor (cross-owner)", "content": "[carve_outs] 1 findings:\n- 11: Clause 11 lets the receiving party publicly disclose the discloser's trade secrets at will. (high)"}}, {"seq": 18, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Confidentiality Auditor", "content": "@Reporter please synthesize the team's findings."}}, {"seq": 19, "t_offset_ms": 0.3, "type": "room_message", "data": {"sender": "Reporter", "content": "The NDA defines Confidential Information broadly, limits use to evaluating the transaction, and survives termination for a fixed term."}}, {"seq": 20, "t_offset_ms": 0.3, "type": "stage", "data": {"name": "Work", "status": "done"}}, {"seq": 21, "t_offset_ms": 0.3, "type": "stage", "data": {"name": "Verify", "status": "active"}}, {"seq": 22, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "carve_outs", "clause_ref": "11", "claim": "Clause 11 lets the receiving party publicly disclose the discloser's trade secrets at will.", "verdict": "unsupported", "confidence": 0.93, "evidence_quote": null}}, {"seq": 23, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "confidentiality_scope", "clause_ref": "1", "claim": "Confidential Information is broadly defined to cover all disclosed business and technical information.", "verdict": "confirmed", "confidence": 0.95, "evidence_quote": "Confidential Information means any non-public information disclosed by one party to the other."}}, {"seq": 24, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "permitted_use", "clause_ref": "2", "claim": "The receiving party may use Confidential Information solely to evaluate the proposed transaction.", "verdict": "confirmed", "confidence": 0.95, "evidence_quote": "The Receiving Party shall use the Confidential Information solely to evaluate the potential transaction."}}, {"seq": 25, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "term_survival", "clause_ref": "5", "claim": "Confidentiality obligations survive for a fixed period after the agreement ends.", "verdict": "confirmed", "confidence": 0.95, "evidence_quote": "The obligations of confidentiality shall survive termination of this Agreement."}}, {"seq": 26, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "reporter", "clause_ref": "2", "claim": "Use of Confidential Information is limited to evaluating the proposed transaction.", "verdict": "confirmed", "confidence": 0.93, "evidence_quote": "The Receiving Party shall use the Confidential Information solely to evaluate the potential transaction."}}, {"seq": 27, "t_offset_ms": 0.3, "type": "finding", "data": {"worker": "reporter", "clause_ref": "5", "claim": "Confidentiality obligations survive termination of the agreement.", "verdict": "confirmed", "confidence": 0.93, "evidence_quote": "The obligations of confidentiality shall survive termination of this Agreement."}}, {"seq": 28, "t_offset_ms": 0.3, "type": "stage", "data": {"name": "Verify", "status": "done"}}, {"seq": 29, "t_offset_ms": 0.3, "type": "stage", "data": {"name": "Settle", "status": "active"}}, {"seq": 30, "t_offset_ms": 0.3, "type": "settle", "data": {"worker": "confidentiality_scope", "pay_to": "0x00000000000000000000000000000000000051m1", "authorized_usd": 0.035, "settled_usd": 0.0, "tx_hash": null, "status": "withheld"}}, {"seq": 31, "t_offset_ms": 0.3, "type": "settle", "data": {"worker": "permitted_use", "pay_to": "0x00000000000000000000000000000000000051m1", "authorized_usd": 0.03, "settled_usd": 0.0, "tx_hash": null, "status": "withheld"}}, {"seq": 32, "t_offset_ms": 0.3, "type": "settle", "data": {"worker": "term_survival", "pay_to": "0x00000000000000000000000000000000000051m1", "authorized_usd": 0.025, "settled_usd": 0.0, "tx_hash": null, "status": "withheld"}}, {"seq": 33, "t_offset_ms": 0.3, "type": "settle", "data": {"worker": "carve_outs", "pay_to": "0x00000000000000000000000000000000000051m1", "authorized_usd": 0.02, "settled_usd": 0.0, "tx_hash": null, "status": "withheld"}}, {"seq": 34, "t_offset_ms": 0.3, "type": "stage", "data": {"name": "Settle", "status": "done"}}, {"seq": 35, "t_offset_ms": 4.1, "type": "receipt", "data": {"signer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", "signature": "0x4feb4f25c45d5944b539675dfaff52dd710eed43074f4a7e948bf2ac90da8fcf018fd2ec9cc02f885fe1f6f5ab48eed7361e627baec34b05fa258c3b7024be861c", "deliverable_hash": "0x146341a54e2757082f91f5a19055a70ec89258e962d5c80d444edff0c79b988f"}}, {"seq": 36, "t_offset_ms": 4.1, "type": "stage", "data": {"name": "Done", "status": "active"}}, {"seq": 37, "t_offset_ms": 4.1, "type": "done", "data": {"gate_passed": false, "pay_fraction": 0.0, "total_settled_usd": 0.0, "total_withheld_usd": 0.11, "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"}}, {"seq": 38, "t_offset_ms": 4.1, "type": "stage", "data": {"name": "Done", "status": "done"}}]}</script>
+
+<script>
+/**
+ * RV.reducer — vanilla JS port of web/lib/runState.ts
+ *
+ * Attaches to the global RV namespace (window.RV in a browser, globalThis.RV in Node).
+ * No import/export, no bundler, no dependencies.
+ *
+ * Exposed:
+ *   RV.initialState()              -> RunState
+ *   RV.applyEvent(state, ev)       -> RunState  (pure — returns new state)
+ *   RV.settledTotals(settlements)  -> { settled, withheld }
+ */
+(function (global) {
+  global.RV = global.RV || {};
+
+  var STAGE_ORDER = [
+    "Post",
+    "Discover",
+    "Bid",
+    "Hire",
+    "Work",
+    "Verify",
+    "Settle",
+    "Done",
+  ];
+
+  /**
+   * Mirror of initialState() in runState.ts.
+   * hiredWorkers is a Set, room is an array, _roomSeq is a number.
+   */
+  function initialState() {
+    return {
+      running: false,
+      finished: false,
+      error: null,
+      stages: STAGE_ORDER.map(function (name) {
+        return { name: name, status: "pending" };
+      }),
+      document: null,
+      pool: [],
+      bids: [],
+      hire: null,
+      hiredWorkers: new Set(),
+      room: [],
+      findings: [],
+      settlements: [],
+      receipt: null,
+      done: null,
+      _roomSeq: 0,
+    };
+  }
+
+  /**
+   * Pure upsert helper — mirrors upsertStage() in runState.ts.
+   * Returns a new array; never mutates input.
+   */
+  function upsertStage(stages, next) {
+    var idx = -1;
+    for (var i = 0; i < stages.length; i++) {
+      if (stages[i].name === next.name) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx === -1) {
+      return stages.concat([next]);
+    }
+    var copy = stages.slice();
+    copy[idx] = next;
+    return copy;
+  }
+
+  /**
+   * Pure reducer — mirror of applyEvent() in runState.ts.
+   * ev = { type, data }  (seq / t_offset_ms stripped by the player).
+   * Returns a NEW state object; never mutates prev.
+   */
+  function applyEvent(prev, ev) {
+    switch (ev.type) {
+      case "stage":
+        return Object.assign({}, prev, {
+          stages: upsertStage(prev.stages, ev.data),
+        });
+
+      case "document":
+        return Object.assign({}, prev, { document: ev.data });
+
+      case "pool":
+        return Object.assign({}, prev, { pool: ev.data.agents });
+
+      case "bid":
+        return Object.assign({}, prev, {
+          bids: prev.bids.concat([ev.data]),
+        });
+
+      case "hire": {
+        var hire = ev.data;
+        var newWorkers = new Set(
+          hire.hired.map(function (h) {
+            return h.worker;
+          })
+        );
+        return Object.assign({}, prev, {
+          hire: hire,
+          hiredWorkers: newWorkers,
+        });
+      }
+
+      case "room_message": {
+        var line = Object.assign({}, ev.data, { id: prev._roomSeq });
+        return Object.assign({}, prev, {
+          room: prev.room.concat([line]),
+          _roomSeq: prev._roomSeq + 1,
+        });
+      }
+
+      case "finding":
+        return Object.assign({}, prev, {
+          findings: prev.findings.concat([ev.data]),
+        });
+
+      case "settle":
+        return Object.assign({}, prev, {
+          settlements: prev.settlements.concat([ev.data]),
+        });
+
+      case "receipt":
+        return Object.assign({}, prev, { receipt: ev.data });
+
+      case "done":
+        return Object.assign({}, prev, {
+          done: ev.data,
+          running: false,
+          finished: true,
+        });
+
+      case "error":
+        return Object.assign({}, prev, {
+          error: ev.data.message,
+          running: false,
+        });
+
+      default:
+        return prev;
+    }
+  }
+
+  /**
+   * Port of settledTotals() in runState.ts.
+   * settlements: SettleEvent[]
+   * Returns { settled: number, withheld: number }
+   */
+  function settledTotals(settlements) {
+    var settled = 0;
+    var withheld = 0;
+    for (var i = 0; i < settlements.length; i++) {
+      var s = settlements[i];
+      settled += s.settled_usd;
+      withheld += Math.max(0, s.authorized_usd - s.settled_usd);
+    }
+    return { settled: settled, withheld: withheld };
+  }
+
+  // Attach to the global RV namespace
+  global.RV.initialState = initialState;
+  global.RV.applyEvent = applyEvent;
+  global.RV.settledTotals = settledTotals;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+/* =============================================================
+   AGENT-VIEW — view.js
+   Dependency-free vanilla JS panel renderer.
+   Attaches to window.RV.renderApp(mountEl, state, meta).
+   No import/export. No build tooling. Concatenated by BUILD.
+   ============================================================= */
+
+(function (global) {
+  'use strict';
+
+  global.RV = global.RV || {};
+
+  /* ----------------------------------------------------------
+     Tiny helpers
+  ---------------------------------------------------------- */
+
+  /** Safely set textContent on a freshly-created element. */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = String(text);
+    return e;
+  }
+
+  /** Format a USD dollar amount to 2-4 significant decimals. */
+  function usd(n) {
+    if (n === null || n === undefined) return '$0.00';
+    var num = Number(n);
+    if (num === 0) return '$0.00';
+    if (num < 0.01) return '$' + num.toFixed(4);
+    return '$' + num.toFixed(2);
+  }
+
+  /** Render stars for a reputation value 0..1 (5 stars). */
+  function starsHTML(reputation) {
+    var total = 5;
+    var filled = Math.round(reputation * total);
+    var out = '';
+    for (var i = 0; i < total; i++) {
+      if (i < filled) {
+        out += '<span class="rv-star rv-star--full" aria-hidden="true">★</span>';
+      } else {
+        out += '<span class="rv-star rv-star--empty" aria-hidden="true">★</span>';
+      }
+    }
+    return out;
+  }
+
+  /** Truncate a hex string to first8…last6. Safe for null/undefined. */
+  function truncateHex(s) {
+    if (!s) return '';
+    var str = String(s);
+    if (str.length <= 18) return str;
+    return str.slice(0, 10) + '…' + str.slice(-6);
+  }
+
+  /**
+   * Pretty-print a worker id: "liability" -> "Liability", "tax-bot" -> "Tax Bot".
+   * Avoids XSS — used only for display labels, always set via textContent.
+   */
+  function prettyWorker(w) {
+    if (!w) return '';
+    return String(w)
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  /**
+   * Render room message content: highlight @mentions.
+   * Returns an array of DOM nodes (span). Uses textContent only — no innerHTML
+   * on user-provided content.
+   */
+  function renderRoomContent(content) {
+    var parts = String(content || '').split(/(@[\w-]+)/g);
+    var nodes = [];
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (p.charAt(0) === '@') {
+        var s = el('span', 'rv-room-mention');
+        s.textContent = p;
+        nodes.push(s);
+      } else {
+        nodes.push(document.createTextNode(p));
+      }
+    }
+    return nodes;
+  }
+
+  /** Deterministic pastel-on-dark background color for avatars from a seed string. */
+  function avatarColor(seed) {
+    var palette = [
+      '#1a7a4a', '#7a3d1a', '#1a4a7a', '#5a1a7a',
+      '#7a1a4a', '#1a6a7a', '#7a6a1a', '#3a1a7a',
+    ];
+    var h = 0;
+    for (var i = 0; i < seed.length; i++) {
+      h = (h * 31 + seed.charCodeAt(i)) | 0;
+    }
+    return palette[Math.abs(h) % palette.length];
+  }
+
+  /** Initials from a name or worker id. */
+  function initials(name) {
+    var parts = String(name || '').replace(/[-_]/g, ' ').trim().split(/\s+/);
+    if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return (parts[0] || '?').slice(0, 2).toUpperCase();
+  }
+
+  /** Build a small avatar div using CSS background color + initials. */
+  function makeAvatar(seed, size) {
+    var d = el('div', 'rv-room-avatar');
+    d.style.background = avatarColor(seed);
+    d.style.width = (size || 28) + 'px';
+    d.style.height = (size || 28) + 'px';
+    d.style.fontSize = Math.floor((size || 28) * 0.38) + 'px';
+    d.textContent = initials(seed);
+    d.setAttribute('aria-hidden', 'true');
+    return d;
+  }
+
+  /** Render an inline progress bar as an HTMLElement. */
+  function makeBar(value, tone) {
+    var wrap = el('div', 'rv-bar-track');
+    var fill = el('div', 'rv-bar-fill rv-bar-fill--' + (tone || 'emerald'));
+    fill.style.width = Math.round(Math.min(1, Math.max(0, value || 0)) * 100) + '%';
+    wrap.appendChild(fill);
+    return wrap;
+  }
+
+  /* ----------------------------------------------------------
+     ① HEADER
+  ---------------------------------------------------------- */
+
+  function renderHeader(meta) {
+    var section = el('div', 'rv-header');
+    var inner = el('div', 'rv-header-inner');
+
+    // Left: icon + title
+    var logo = el('div', 'rv-header-logo');
+    var icon = el('div', 'rv-header-icon');
+    icon.textContent = '⇄';
+    logo.appendChild(icon);
+
+    var textBlock = el('div');
+    var eyebrow = el('div', 'rv-eyebrow');
+    eyebrow.textContent = 'AGENT EXCHANGE · REPLAY';
+
+    var title = el('div', 'rv-header-title');
+    title.textContent = meta.title || 'Replay';
+
+    var subtitle = el('div', 'rv-header-subtitle');
+    subtitle.textContent = 'Job: ' + (meta.job_id || '—') + ' · Recorded ' + (meta.recorded_at ? meta.recorded_at.slice(0, 10) : '—');
+
+    textBlock.appendChild(eyebrow);
+    textBlock.appendChild(title);
+    textBlock.appendChild(subtitle);
+    logo.appendChild(textBlock);
+    inner.appendChild(logo);
+
+    // Right: mode badge + kind badge + budget
+    var metaBlock = el('div', 'rv-header-meta');
+
+    var modeClass = (meta.mode === 'live') ? 'rv-badge rv-badge--live' : 'rv-badge rv-badge--sim';
+    var modeBadge = el('span', modeClass);
+    modeBadge.textContent = (meta.mode || 'sim').toUpperCase();
+
+    var kindBadge = el('span', 'rv-badge rv-badge--kind');
+    kindBadge.textContent = (meta.kind || '').replace(/-/g, ' ').toUpperCase();
+
+    var budget = el('div', 'rv-header-budget');
+    budget.textContent = 'Budget: ' + usd(meta.budget_usd);
+
+    metaBlock.appendChild(modeBadge);
+    metaBlock.appendChild(kindBadge);
+    metaBlock.appendChild(budget);
+    inner.appendChild(metaBlock);
+
+    section.appendChild(inner);
+    return section;
+  }
+
+  /* ----------------------------------------------------------
+     ② STAGE BAR
+  ---------------------------------------------------------- */
+
+  function renderStageBar(stages) {
+    var panel = el('div', 'rv-panel rv-stagebar');
+
+    var header = el('div', 'rv-panel-header');
+    var eyebrow = el('div', 'rv-eyebrow');
+    eyebrow.textContent = 'LIFECYCLE · STAGES';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '⬤  PIPELINE';
+    header.appendChild(eyebrow);
+    header.appendChild(title);
+    panel.appendChild(header);
+
+    var inner = el('div', 'rv-stagebar-inner');
+
+    (stages || []).forEach(function (s, i) {
+      var status = s.status || 'pending';
+      var item = el('div', 'rv-stage-item');
+
+      // Node
+      var node = el('div', 'rv-stage-node rv-stage-node--' + status);
+
+      // Icon
+      var icon = el('span', 'rv-stage-icon');
+      if (status === 'done') {
+        icon.textContent = '✓';
+        icon.style.color = '#2bff9a';
+        icon.style.fontWeight = '900';
+      } else if (status === 'error') {
+        icon.textContent = '✗';
+        icon.style.color = '#ff3b5c';
+        icon.style.fontWeight = '900';
+      } else if (status === 'active') {
+        var dot = el('span', 'rv-stage-dot rv-stage-dot--active');
+        icon.appendChild(dot);
+      } else {
+        var dotP = el('span', 'rv-stage-dot rv-stage-dot--pending');
+        icon.appendChild(dotP);
+      }
+      node.appendChild(icon);
+
+      // Label
+      var label = el('span', 'rv-stage-label rv-stage-label--' + status);
+      label.textContent = s.name;
+      node.appendChild(label);
+
+      item.appendChild(node);
+
+      // Connector (not after last)
+      if (i < stages.length - 1) {
+        var conn = el('div', 'rv-stage-connector');
+        var fill = el('div', 'rv-stage-connector-fill');
+        fill.style.width = (status === 'done') ? '100%' : '0%';
+        conn.appendChild(fill);
+        item.appendChild(conn);
+      }
+
+      inner.appendChild(item);
+    });
+
+    panel.appendChild(inner);
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ③ BID FEED
+  ---------------------------------------------------------- */
+
+  function renderBidFeed(pool, bids, hire, hiredWorkers) {
+    var panel = el('div', 'rv-panel');
+
+    // Header
+    var header = el('div', 'rv-panel-header');
+    var leftCol = el('div');
+    var eyebrow = el('div', 'rv-eyebrow rv-eyebrow--emerald');
+    eyebrow.textContent = 'MARKETPLACE · OPEN BIDS';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '🤖  MARKET';
+    leftCol.appendChild(eyebrow);
+    leftCol.appendChild(title);
+    header.appendChild(leftCol);
+
+    // Right: hired count + bid count
+    var rightCol = el('div', 'rv-settle-totals');
+    if (hiredWorkers && hiredWorkers.size > 0) {
+      var hiredCount = 0;
+      (bids || []).forEach(function (b) { if (hiredWorkers.has(b.worker)) hiredCount++; });
+      if (hiredCount > 0) {
+        var hchip = el('span', 'rv-tally-chip rv-tally-chip--confirmed');
+        hchip.textContent = '✓ ' + hiredCount + ' hired';
+        rightCol.appendChild(hchip);
+      }
+    }
+    var countSpan = el('span', 'rv-eyebrow');
+    countSpan.textContent = (bids ? bids.length : 0) + ' bids · ' + (pool ? pool.length : 0) + ' pool';
+    rightCol.appendChild(countSpan);
+    header.appendChild(rightCol);
+    panel.appendChild(header);
+
+    // Cards grid
+    if (!bids || bids.length === 0) {
+      var emp = el('div', 'rv-empty');
+      emp.textContent = 'Agents appear here as the pool is discovered.';
+      panel.appendChild(emp);
+    } else {
+      var declined = new Set((hire && hire.declined) ? hire.declined : []);
+      var grid = el('div', 'rv-bidfeed-grid');
+
+      bids.forEach(function (bid) {
+        var isHired = hiredWorkers && hiredWorkers.has(bid.worker);
+        var isDeclined = declined.has(bid.worker);
+
+        // Find matching pool agent
+        var poolAgent = null;
+        var wNorm = String(bid.worker || '').toLowerCase().replace(/[^a-z]/g, '');
+        if (pool) {
+          for (var pi = 0; pi < pool.length; pi++) {
+            var p = pool[pi];
+            var hay = (p.id + ' ' + p.handle + ' ' + p.name).toLowerCase().replace(/[^a-z]/g, '');
+            if (hay.indexOf(wNorm) !== -1 || wNorm.indexOf(p.id.toLowerCase().replace(/[^a-z]/g, '')) !== -1) {
+              poolAgent = p;
+              break;
+            }
+          }
+        }
+
+        var cardCls = 'rv-bid-card';
+        if (isHired) cardCls += ' rv-bid-card--hired';
+        else if (isDeclined) cardCls += ' rv-bid-card--declined';
+        var card = el('article', cardCls);
+
+        // Card header row
+        var cardHead = el('div', 'rv-bid-card-header');
+
+        var workerInfo = el('div');
+        var nameEl = el('div', 'rv-bid-worker-name');
+        nameEl.textContent = (poolAgent && poolAgent.name) ? poolAgent.name : prettyWorker(bid.worker);
+        workerInfo.appendChild(nameEl);
+
+        var handleEl = el('div', 'rv-bid-worker-handle');
+        handleEl.textContent = '@' + (bid.worker || '');
+        workerInfo.appendChild(handleEl);
+
+        if (isHired) {
+          var hBadge = el('div', 'rv-badge--hired');
+          hBadge.textContent = '✓ Hired';
+          workerInfo.appendChild(hBadge);
+        } else if (isDeclined) {
+          var dBadge = el('div', 'rv-badge--declined');
+          dBadge.textContent = 'Passed';
+          workerInfo.appendChild(dBadge);
+        }
+
+        cardHead.appendChild(workerInfo);
+
+        var priceEl = el('div', 'rv-bid-price');
+        priceEl.textContent = usd(bid.price_usd);
+        cardHead.appendChild(priceEl);
+        card.appendChild(cardHead);
+
+        // Cross-owner badge
+        if (poolAgent && poolAgent.cross_owner) {
+          var coBadge = el('div', 'rv-badge--cross-owner');
+          coBadge.textContent = '⇄ cross-owner agent';
+          card.appendChild(coBadge);
+        }
+
+        // Stars
+        var starsWrap = el('div', 'rv-stars');
+        starsWrap.innerHTML = starsHTML(bid.reputation);
+        card.appendChild(starsWrap);
+
+        // Relevance bar
+        var relRow = el('div', 'rv-bar-row');
+        var relLabel = el('div', 'rv-bar-label-row');
+        var relL = el('span');
+        relL.textContent = 'relevance';
+        var relV = el('span');
+        relV.textContent = Math.round((bid.relevance || 0) * 100) + '%';
+        relLabel.appendChild(relL);
+        relLabel.appendChild(relV);
+        relRow.appendChild(relLabel);
+        relRow.appendChild(makeBar(bid.relevance, 'emerald'));
+        card.appendChild(relRow);
+
+        grid.appendChild(card);
+      });
+
+      panel.appendChild(grid);
+    }
+
+    // Hire policy footer
+    if (hire) {
+      var footer = el('div', 'rv-hire-policy');
+      var pLabel = el('div', 'rv-hire-policy-label');
+      pLabel.textContent = 'Hiring policy';
+      footer.appendChild(pLabel);
+      var pText = el('p');
+      pText.textContent = hire.strategy + ' (target pay fraction ' + Math.round((hire.pay_fraction_target || 0) * 100) + '%)';
+      footer.appendChild(pText);
+      panel.appendChild(footer);
+    }
+
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ④ WORK ROOM
+  ---------------------------------------------------------- */
+
+  function renderWorkRoom(room) {
+    var panel = el('div', 'rv-panel');
+
+    var header = el('div', 'rv-panel-header');
+    var leftCol = el('div');
+    var eyebrow = el('div', 'rv-eyebrow');
+    eyebrow.textContent = 'COLLAB · SHARED TRANSCRIPT';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '🤖  WORK ROOM';
+    leftCol.appendChild(eyebrow);
+    leftCol.appendChild(title);
+    header.appendChild(leftCol);
+
+    var countSpan = el('span', 'rv-eyebrow');
+    countSpan.textContent = (room ? room.length : 0) + ' msg' + ((room && room.length === 1) ? '' : 's');
+    header.appendChild(countSpan);
+    panel.appendChild(header);
+
+    var messages = el('div', 'rv-workroom-messages');
+
+    if (!room || room.length === 0) {
+      var emp = el('div', 'rv-empty');
+      emp.textContent = 'The transcript streams here once the team starts working.';
+      messages.appendChild(emp);
+    } else {
+      room.forEach(function (line) {
+        var isSystem = (line.sender || '').toLowerCase().indexOf('reporter') !== -1 ||
+                       (line.sender || '').toLowerCase().indexOf('coordinator') !== -1;
+
+        var lineEl = el('div', 'rv-room-line');
+        lineEl.appendChild(makeAvatar(line.sender, 28));
+
+        var content = el('div', 'rv-room-content');
+
+        var senderRow = el('div', 'rv-room-sender-row');
+        var senderName = el('span', 'rv-room-sender');
+        senderName.textContent = line.sender;
+        senderRow.appendChild(senderName);
+        if (isSystem) {
+          var sysBadge = el('span', 'rv-room-system-badge');
+          sysBadge.textContent = 'system';
+          senderRow.appendChild(sysBadge);
+        }
+        content.appendChild(senderRow);
+
+        var bubbleCls = 'rv-room-bubble' + (isSystem ? ' rv-room-bubble--system' : '');
+        var bubble = el('div', bubbleCls);
+        // Safely render content with @mention highlighting
+        var nodes = renderRoomContent(line.content);
+        for (var ni = 0; ni < nodes.length; ni++) {
+          bubble.appendChild(nodes[ni]);
+        }
+        content.appendChild(bubble);
+        lineEl.appendChild(content);
+        messages.appendChild(lineEl);
+      });
+    }
+
+    panel.appendChild(messages);
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ⑤ FINDINGS / VERIFY
+  ---------------------------------------------------------- */
+
+  function verdictInfo(verdict) {
+    switch (verdict) {
+      case 'confirmed':
+        return { glyph: '✓', label: 'Confirmed', cls: 'confirmed', barTone: 'emerald' };
+      case 'partial':
+        return { glyph: '~', label: 'Partial', cls: 'partial', barTone: 'gold' };
+      case 'unsupported':
+        return { glyph: '✗', label: 'Unsupported', cls: 'unsupported', barTone: 'red' };
+      default:
+        return { glyph: '?', label: verdict || 'Unknown', cls: 'confirmed', barTone: 'emerald' };
+    }
+  }
+
+  function renderFindings(findings) {
+    var panel = el('div', 'rv-panel');
+
+    var header = el('div', 'rv-panel-header');
+    var leftCol = el('div');
+    var eyebrow = el('div', 'rv-eyebrow rv-eyebrow--emerald');
+    eyebrow.textContent = 'VERIFIER · CLAIM vs DOCUMENT';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '⚖  VERIFICATION';
+    leftCol.appendChild(eyebrow);
+    leftCol.appendChild(title);
+    header.appendChild(leftCol);
+
+    // Tally chips
+    if (findings && findings.length > 0) {
+      var tally = el('div', 'rv-verdict-tally');
+      var confirmed = 0, partial = 0, unsupported = 0;
+      findings.forEach(function (f) {
+        if (f.verdict === 'confirmed') confirmed++;
+        else if (f.verdict === 'partial') partial++;
+        else if (f.verdict === 'unsupported') unsupported++;
+      });
+      if (confirmed > 0) {
+        var c = el('span', 'rv-tally-chip rv-tally-chip--confirmed');
+        c.textContent = '✓ ' + confirmed;
+        tally.appendChild(c);
+      }
+      if (partial > 0) {
+        var pp = el('span', 'rv-tally-chip rv-tally-chip--partial');
+        pp.textContent = '~ ' + partial;
+        tally.appendChild(pp);
+      }
+      if (unsupported > 0) {
+        var u = el('span', 'rv-tally-chip rv-tally-chip--unsupported');
+        u.textContent = '✗ ' + unsupported;
+        tally.appendChild(u);
+      }
+      header.appendChild(tally);
+    }
+
+    panel.appendChild(header);
+
+    if (!findings || findings.length === 0) {
+      var emp = el('div', 'rv-empty');
+      emp.textContent = 'Graded findings appear here as the verifier checks each claim against the text.';
+      panel.appendChild(emp);
+      return panel;
+    }
+
+    var list = el('div', 'rv-findings-list');
+
+    findings.forEach(function (f) {
+      var info = verdictInfo(f.verdict);
+      var isFake = f.verdict === 'unsupported';
+
+      var card = el('li', 'rv-finding-card rv-finding-card--' + info.cls);
+      var row = el('div', 'rv-finding-row');
+
+      // Verdict tile
+      var tile = el('span', 'rv-verdict-tile rv-verdict-tile--' + info.cls);
+      tile.textContent = info.glyph;
+      tile.setAttribute('aria-label', info.label);
+      row.appendChild(tile);
+
+      var body = el('div', 'rv-finding-body');
+
+      // Meta row
+      var metaRow = el('div', 'rv-finding-meta-row');
+
+      var vLabel = el('span', 'rv-verdict-label rv-verdict-label--' + info.cls);
+      vLabel.textContent = info.label;
+      metaRow.appendChild(vLabel);
+
+      // FABRICATED badge — must be unmistakable
+      if (isFake) {
+        var fakeBadge = el('span', 'rv-fabricated-badge');
+        fakeBadge.textContent = '⚠ FABRICATED — caught';
+        metaRow.appendChild(fakeBadge);
+      }
+
+      if (f.clause_ref) {
+        var clauseEl = el('span', 'rv-clause-ref');
+        clauseEl.textContent = '§' + f.clause_ref;
+        metaRow.appendChild(clauseEl);
+      }
+
+      var confEl = el('span', 'rv-conf-badge');
+      confEl.textContent = Math.round((f.confidence || 0) * 100) + '% conf';
+      metaRow.appendChild(confEl);
+
+      body.appendChild(metaRow);
+
+      // Claim text (set via textContent — XSS safe)
+      var claimEl = el('p', 'rv-finding-claim');
+      claimEl.textContent = f.claim;
+      body.appendChild(claimEl);
+
+      // Worker
+      var workerEl = el('div', 'rv-finding-worker');
+      workerEl.textContent = prettyWorker(f.worker);
+      body.appendChild(workerEl);
+
+      // Confidence bar
+      var barRow = el('div', 'rv-bar-row');
+      barRow.appendChild(makeBar(f.confidence, info.barTone));
+      body.appendChild(barRow);
+
+      // Evidence quote (only for non-fake findings — fake has no quote)
+      if (f.evidence_quote) {
+        var quote = el('blockquote', 'rv-evidence-quote rv-evidence-quote--' + info.cls);
+        quote.textContent = '“' + f.evidence_quote + '”';
+        body.appendChild(quote);
+      }
+
+      row.appendChild(body);
+      card.appendChild(row);
+      list.appendChild(card);
+    });
+
+    panel.appendChild(list);
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ⑥ SETTLE BAR
+  ---------------------------------------------------------- */
+
+  function renderSettleBar(settlements, done, meta) {
+    var panel = el('div', 'rv-panel');
+
+    // Build tx_links map from meta.tx_links for fast lookup
+    var txLinkMap = {};
+    if (meta && meta.tx_links) {
+      meta.tx_links.forEach(function (tx) {
+        if (tx.worker && tx.tx_hash) {
+          txLinkMap[tx.worker] = tx.tx_hash;
+        }
+      });
+    }
+
+    // Compute totals
+    var totalSettled = 0, totalWithheld = 0;
+    (settlements || []).forEach(function (s) {
+      totalSettled += Number(s.settled_usd) || 0;
+      totalWithheld += Math.max(0, (Number(s.authorized_usd) || 0) - (Number(s.settled_usd) || 0));
+    });
+
+    // Header
+    var header = el('div', 'rv-panel-header');
+    var leftCol = el('div');
+    var eyebrow = el('div', 'rv-eyebrow rv-eyebrow--gold');
+    eyebrow.textContent = 'SETTLEMENT · USDC via x402';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '🪙  SETTLEMENT';
+    leftCol.appendChild(eyebrow);
+    leftCol.appendChild(title);
+    header.appendChild(leftCol);
+
+    if (settlements && settlements.length > 0) {
+      var totals = el('div', 'rv-settle-totals');
+      var settledChip = el('span', 'rv-totals-chip rv-totals-chip--settled');
+      settledChip.textContent = '✓ ' + usd(totalSettled);
+      totals.appendChild(settledChip);
+      var withheldChip = el('span', 'rv-totals-chip rv-totals-chip--withheld');
+      withheldChip.textContent = '✗ ' + usd(totalWithheld);
+      totals.appendChild(withheldChip);
+      header.appendChild(totals);
+    }
+
+    panel.appendChild(header);
+
+    if (!settlements || settlements.length === 0) {
+      var emp = el('div', 'rv-empty');
+      emp.textContent = 'Payments stream here once the verifier rules on each finding — verified work moves money, fabricated work settles at $0.';
+      panel.appendChild(emp);
+      return panel;
+    }
+
+    var cards = el('div', 'rv-settle-cards');
+
+    settlements.forEach(function (s) {
+      var paid = Number(s.settled_usd) > 0;
+      var fraction = (Number(s.authorized_usd) > 0) ? (Number(s.settled_usd) / Number(s.authorized_usd)) : 0;
+
+      var cardCls = 'rv-settle-card ' + (paid ? 'rv-settle-card--paid' : 'rv-settle-card--withheld');
+      var card = el('article', cardCls);
+
+      // Top row: worker name + amount
+      var topRow = el('div', 'rv-settle-card-top');
+
+      var workerName = el('div', 'rv-settle-worker');
+      workerName.textContent = prettyWorker(s.worker);
+      topRow.appendChild(workerName);
+
+      if (paid) {
+        var amtEl = el('div', 'rv-settle-amount-paid');
+        amtEl.textContent = usd(s.settled_usd);
+        topRow.appendChild(amtEl);
+      } else {
+        var withheldLabel = el('div', 'rv-settle-withheld-label');
+        withheldLabel.textContent = '$0 · WITHHELD';
+        topRow.appendChild(withheldLabel);
+      }
+      card.appendChild(topRow);
+
+      // Sub: settled / authorized
+      var sub = el('div', 'rv-settle-sub');
+      sub.textContent = usd(s.settled_usd) + ' / ' + usd(s.authorized_usd) + ' authorized';
+      card.appendChild(sub);
+
+      // Progress bar
+      var barRow = el('div', 'rv-bar-row');
+      barRow.appendChild(makeBar(paid ? fraction : 0, paid ? 'emerald' : 'red'));
+      card.appendChild(barRow);
+
+      // Status + tx link
+      var statusRow = el('div', 'rv-settle-status-row');
+
+      var statusText = el('span', 'rv-settle-status-text--' + (paid ? 'paid' : 'withheld'));
+      statusText.textContent = s.status || '';
+      statusRow.appendChild(statusText);
+
+      // tx_hash: from event data OR meta.tx_links
+      var txHash = s.tx_hash || txLinkMap[s.worker] || null;
+      if (txHash) {
+        var txLink = el('a', 'rv-tx-link');
+        txLink.href = 'https://sepolia.basescan.org/tx/' + txHash;
+        txLink.target = '_blank';
+        txLink.rel = 'noopener noreferrer';
+        txLink.textContent = 'tx ↗';
+        statusRow.appendChild(txLink);
+      } else {
+        var noTx = el('span', 'rv-no-tx');
+        noTx.textContent = 'no tx';
+        statusRow.appendChild(noTx);
+      }
+
+      card.appendChild(statusRow);
+      cards.appendChild(card);
+    });
+
+    panel.appendChild(cards);
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ⑦ RECEIPT
+  ---------------------------------------------------------- */
+
+  function renderReceipt(receipt) {
+    if (!receipt) return null;
+
+    var panel = el('div', 'rv-panel');
+
+    var header = el('div', 'rv-panel-header');
+    var eyebrow = el('div', 'rv-eyebrow');
+    eyebrow.textContent = 'CRYPTOGRAPHIC RECEIPT';
+    var title = el('div', 'rv-panel-title');
+    title.textContent = '🔏  RECEIPT';
+    header.appendChild(eyebrow);
+    header.appendChild(title);
+    panel.appendChild(header);
+
+    var grid = el('div', 'rv-receipt-grid');
+
+    var fields = [
+      { label: 'Signer', value: receipt.signer, truncate: false },
+      { label: 'Signature', value: truncateHex(receipt.signature), truncate: true },
+      { label: 'Deliverable Hash', value: truncateHex(receipt.deliverable_hash), truncate: true },
+    ];
+
+    fields.forEach(function (f) {
+      var field = el('div', 'rv-receipt-field');
+      var label = el('div', 'rv-receipt-field-label');
+      label.textContent = f.label;
+      var value = el('div', 'rv-receipt-field-value rv-receipt-field-value--mono');
+      value.textContent = f.value || '—';
+      if (f.truncate) value.title = f.value; // full value in tooltip
+      field.appendChild(label);
+      field.appendChild(value);
+      grid.appendChild(field);
+    });
+
+    panel.appendChild(grid);
+    return panel;
+  }
+
+  /* ----------------------------------------------------------
+     ⑧ HERO BANNER
+  ---------------------------------------------------------- */
+
+  function renderHero(doneState) {
+    if (!doneState) return null;
+
+    var gateOk = doneState.gate_passed;
+    var heroClass = 'rv-hero ' + (gateOk ? 'rv-hero--pass' : 'rv-hero--fail');
+    var section = el('div', heroClass);
+    var inner = el('div', 'rv-hero-inner');
+
+    // Eyebrow
+    var eyebrow = el('div', 'rv-hero-eyebrow ' + (gateOk ? 'rv-hero-eyebrow--pass' : 'rv-hero-eyebrow--fail'));
+    eyebrow.textContent = (gateOk ? '✓' : '✗') + '  ' + (gateOk ? 'GATE PASSED — WORK VERIFIED' : 'GATE FAILED — FABRICATION CAUGHT');
+    inner.appendChild(eyebrow);
+
+    // Big headline
+    var headline = el('div', 'rv-hero-headline');
+
+    var amtClass = 'rv-hero-headline-amount ' + (gateOk ? 'rv-hero-headline-amount--pass' : 'rv-hero-headline-amount--fail');
+    var amt = el('span', amtClass);
+
+    if (!gateOk && doneState.total_settled_usd === 0) {
+      amt.textContent = '$0 paid for fabricated work';
+    } else {
+      amt.textContent = usd(doneState.total_settled_usd) + ' settled';
+    }
+    headline.appendChild(amt);
+    inner.appendChild(headline);
+
+    // Summary sentence
+    if (doneState.catch_summary) {
+      var summary = el('p', 'rv-hero-summary');
+      summary.textContent = doneState.catch_summary;
+      inner.appendChild(summary);
+    }
+
+    // Stats row
+    var stats = el('div', 'rv-hero-stats');
+
+    var statDefs = [
+      { label: 'Total Settled', value: usd(doneState.total_settled_usd), cls: 'rv-hero-stat-value--settled' },
+      { label: 'Total Withheld', value: usd(doneState.total_withheld_usd), cls: 'rv-hero-stat-value--withheld' },
+      { label: 'Pay Fraction', value: Math.round((doneState.pay_fraction || 0) * 100) + '%', cls: 'rv-hero-stat-value--neutral' },
+    ];
+
+    statDefs.forEach(function (sd) {
+      var statEl = el('div', 'rv-hero-stat');
+      var label = el('div', 'rv-hero-stat-label');
+      label.textContent = sd.label;
+      var value = el('div', 'rv-hero-stat-value ' + sd.cls);
+      value.textContent = sd.value;
+      statEl.appendChild(label);
+      statEl.appendChild(value);
+      stats.appendChild(statEl);
+    });
+
+    inner.appendChild(stats);
+    section.appendChild(inner);
+    return section;
+  }
+
+  /* ----------------------------------------------------------
+     MAIN — RV.renderApp
+  ---------------------------------------------------------- */
+
+  /**
+   * RV.renderApp(mountEl, state, meta) -> void
+   *
+   * Pure idempotent renderer. Clears mountEl and rebuilds the
+   * entire panel view from the given RunState + replay meta header.
+   * Safe to call every animation frame.
+   *
+   * @param {Element} mountEl  - DOM node to render into
+   * @param {Object}  state    - RunState (from RV.initialState / RV.applyEvent)
+   * @param {Object}  meta     - Replay header minus events
+   */
+  function renderApp(mountEl, state, meta) {
+    if (!mountEl) return;
+
+    // Idempotent clear
+    mountEl.innerHTML = '';
+
+    // Ensure the root carries the rv-app class for scoped styles
+    if (!mountEl.classList.contains('rv-app')) {
+      mountEl.classList.add('rv-app');
+    }
+
+    var s = state || {};
+    var m = meta || {};
+
+    // ① Header (always)
+    mountEl.appendChild(renderHeader(m));
+
+    // Layout wrapper
+    var layout = el('div', 'rv-layout');
+    layout.style.paddingTop = '28px';
+
+    // ⑧ HERO banner — shown first when done so the catch is UNMISSABLE
+    if (s.done) {
+      var hero = renderHero(s.done);
+      if (hero) layout.appendChild(hero);
+    }
+
+    // ② StageBar
+    if (s.stages && s.stages.length > 0) {
+      layout.appendChild(renderStageBar(s.stages));
+    }
+
+    // ③ BidFeed — show once pool or bids exist
+    if ((s.pool && s.pool.length > 0) || (s.bids && s.bids.length > 0)) {
+      layout.appendChild(renderBidFeed(s.pool || [], s.bids || [], s.hire || null, s.hiredWorkers || new Set()));
+    }
+
+    // ④ WorkRoom — show once room has messages
+    if (s.room && s.room.length > 0) {
+      layout.appendChild(renderWorkRoom(s.room));
+    }
+
+    // ⑤ Findings — show once any finding exists
+    if (s.findings && s.findings.length > 0) {
+      layout.appendChild(renderFindings(s.findings));
+    }
+
+    // ⑥ SettleBar — show once any settlement exists
+    if (s.settlements && s.settlements.length > 0) {
+      layout.appendChild(renderSettleBar(s.settlements, s.done, m));
+    }
+
+    // ⑦ Receipt — show once receipt is available
+    if (s.receipt) {
+      var receiptPanel = renderReceipt(s.receipt);
+      if (receiptPanel) layout.appendChild(receiptPanel);
+    }
+
+    mountEl.appendChild(layout);
+  }
+
+  /* Attach to global namespace */
+  global.RV.renderApp = renderApp;
+
+}(typeof window !== 'undefined' ? window : globalThis));
+
+</script>
+<script>
+(function (global) {
+  'use strict';
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  var _meta   = null;   // replay header (everything except .events)
+  var _events = [];     // events[]
+  var _cursor = -1;     // -1 = before first event
+  var _playing = false;
+  var _speed  = 1;      // 0.5 | 1 | 2 | 4
+  var _timer  = null;   // setTimeout handle
+
+  // ── Event-type beat durations (ms at 1×) ──────────────────────────────────
+  var BEATS = {
+    stage:        700,
+    settle:       600,
+    bid:          350,
+    finding:      350,
+    room_message: 350,
+    // everything else:
+    _default:     450
+  };
+
+  function beatFor(eventType) {
+    return (BEATS[eventType] || BEATS._default);
+  }
+
+  // ── DOM helpers ────────────────────────────────────────────────────────────
+  function $id(id) { return document.getElementById(id); }
+
+  function setText(el, text) {
+    if (el) el.textContent = text;
+  }
+
+  // ── Fold: compute state at cursor ─────────────────────────────────────────
+  function computeState() {
+    if (!_events || _events.length === 0) return RV.initialState();
+    var slice = _events.slice(0, _cursor + 1);
+    return slice.reduce(function (s, e) {
+      return RV.applyEvent(s, { type: e.type, data: e.data });
+    }, RV.initialState());
+  }
+
+  // ── Render the app + update transport UI ──────────────────────────────────
+  function render() {
+    var mountEl = $id('rv-app');
+    if (!mountEl || !_meta) return;
+    var state = computeState();
+    RV.renderApp(mountEl, state, _meta);
+    updateControls();
+  }
+
+  function updateControls() {
+    var n = _events ? _events.length : 0;
+
+    // Scrubber
+    var scrubber = $id('rv-scrubber');
+    if (scrubber) {
+      scrubber.max   = Math.max(0, n - 1);
+      scrubber.value = Math.max(0, _cursor);
+      scrubber.disabled = (n === 0);
+    }
+
+    // Step readout
+    var readout = $id('rv-step-readout');
+    if (readout) {
+      if (_cursor < 0 || n === 0) {
+        setText(readout, 'step — / ' + n);
+      } else {
+        var ev = _events[_cursor];
+        setText(readout, 'step ' + (_cursor + 1) + ' / ' + n + ' — ' + ev.type);
+      }
+    }
+
+    // Play-pause button label
+    var btnPlay = $id('rv-btn-play');
+    if (btnPlay) btnPlay.textContent = _playing ? '⏸ pause' : '▶ play';
+
+    // Speed button label
+    var btnSpeed = $id('rv-btn-speed');
+    if (btnSpeed) btnSpeed.textContent = _speed + '×';
+  }
+
+  // ── Cursor movement ────────────────────────────────────────────────────────
+  function setCursor(c) {
+    var n = _events ? _events.length : 0;
+    _cursor = Math.max(-1, Math.min(n - 1, c));
+    render();
+  }
+
+  function stepBack() {
+    stopPlay();
+    setCursor(_cursor - 1);
+  }
+
+  function stepForward() {
+    stopPlay();
+    setCursor(_cursor + 1);
+  }
+
+  // ── Playback engine ───────────────────────────────────────────────────────
+  function stopPlay() {
+    _playing = false;
+    if (_timer !== null) { clearTimeout(_timer); _timer = null; }
+    updateControls();
+  }
+
+  function startPlay() {
+    var n = _events ? _events.length : 0;
+    if (n === 0) return;
+    // If already at end, restart from beginning
+    if (_cursor >= n - 1) {
+      _cursor = -1;
+      render();
+    }
+    _playing = true;
+    updateControls();
+    scheduleNext();
+  }
+
+  function scheduleNext() {
+    if (!_playing) return;
+    var n = _events ? _events.length : 0;
+    if (_cursor >= n - 1) {
+      // reached end
+      stopPlay();
+      return;
+    }
+    // Beat is keyed to the NEXT event's type
+    var nextEv = _events[_cursor + 1];
+    var delay  = beatFor(nextEv ? nextEv.type : '_default') / _speed;
+    _timer = setTimeout(function () {
+      _timer = null;
+      if (!_playing) return;
+      _cursor = Math.min(_cursor + 1, n - 1);
+      render();
+      scheduleNext();
+    }, delay);
+  }
+
+  function togglePlay() {
+    if (_playing) {
+      stopPlay();
+    } else {
+      startPlay();
+    }
+  }
+
+  function toggleSpeed() {
+    var speeds = [0.5, 1, 2, 4];
+    var idx = speeds.indexOf(_speed);
+    _speed = speeds[(idx + 1) % speeds.length];
+    // If playing, the next scheduleNext call will use the new speed automatically
+    updateControls();
+  }
+
+  // ── "Jump to the catch" ────────────────────────────────────────────────────
+  function jumpToCatch() {
+    stopPlay();
+    if (!_events) return;
+    for (var i = 0; i < _events.length; i++) {
+      var ev = _events[i];
+      if (ev.type === 'finding' && ev.data && ev.data.verdict === 'unsupported') {
+        setCursor(i);
+        return;
+      }
+    }
+    // No catch found — do nothing (guard)
+  }
+
+  // ── Load a replay object ──────────────────────────────────────────────────
+  function loadReplay(obj) {
+    if (!obj || typeof obj !== 'object') return false;
+    if (typeof obj.schema !== 'string' ||
+        !obj.schema.startsWith('agent-exchange.replay/')) return false;
+    if (!Array.isArray(obj.events)) return false;
+
+    _events = obj.events;
+    // meta = everything except events
+    _meta = {};
+    for (var k in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, k) && k !== 'events') {
+        _meta[k] = obj[k];
+      }
+    }
+    _cursor = -1;
+    _playing = false;
+    if (_timer !== null) { clearTimeout(_timer); _timer = null; }
+
+    // Hide loader, show app & controls
+    var drop = $id('rv-drop');
+    if (drop) drop.style.display = 'none';
+    var app  = $id('rv-app');
+    if (app)  app.style.display  = '';
+    var ctl  = $id('rv-controls');
+    if (ctl)  ctl.style.display  = '';
+
+    buildControls();
+    render();
+    return true;
+  }
+
+  // ── Build transport UI ────────────────────────────────────────────────────
+  function buildControls() {
+    var ctl = $id('rv-controls');
+    if (!ctl) return;
+    var n = _events ? _events.length : 0;
+
+    ctl.innerHTML = [
+      '<div class="rv-ctl-bar">',
+        '<button class="rv-ctl-btn" id="rv-btn-back" title="Step back">◀ back</button>',
+        '<button class="rv-ctl-btn rv-ctl-btn--primary" id="rv-btn-play" title="Play / Pause">▶ play</button>',
+        '<button class="rv-ctl-btn" id="rv-btn-fwd"  title="Step forward">fwd ▶▶</button>',
+        '<input  class="rv-ctl-scrubber" type="range" id="rv-scrubber"',
+                ' min="0" max="' + Math.max(0, n - 1) + '" value="0"',
+                ' step="1">',
+        '<button class="rv-ctl-btn rv-ctl-btn--speed" id="rv-btn-speed" title="Playback speed">1×</button>',
+        '<button class="rv-ctl-btn rv-ctl-btn--catch" id="rv-btn-catch" title="Jump to the unsupported finding">',
+          '⏭ Jump to the catch',
+        '</button>',
+        '<span class="rv-ctl-readout" id="rv-step-readout">step — / ' + n + '</span>',
+      '</div>'
+    ].join('');
+
+    // Wire events
+    var btnBack  = $id('rv-btn-back');
+    var btnPlay  = $id('rv-btn-play');
+    var btnFwd   = $id('rv-btn-fwd');
+    var btnSpeed = $id('rv-btn-speed');
+    var btnCatch = $id('rv-btn-catch');
+    var scrubber = $id('rv-scrubber');
+
+    if (btnBack)  btnBack.addEventListener('click',  stepBack);
+    if (btnPlay)  btnPlay.addEventListener('click',  togglePlay);
+    if (btnFwd)   btnFwd.addEventListener('click',   stepForward);
+    if (btnSpeed) btnSpeed.addEventListener('click', toggleSpeed);
+    if (btnCatch) btnCatch.addEventListener('click', jumpToCatch);
+
+    if (scrubber) {
+      scrubber.addEventListener('input', function () {
+        stopPlay();
+        setCursor(parseInt(scrubber.value, 10));
+      });
+    }
+
+    updateControls();
+  }
+
+  // ── Drag-drop / file-picker loader ───────────────────────────────────────
+  function handleFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var text = e.target.result;
+      var obj;
+      try { obj = JSON.parse(text); } catch (_) {
+        alert('Could not parse JSON: ' + file.name);
+        return;
+      }
+      if (!loadReplay(obj)) {
+        alert('Not a valid agent-exchange replay file: ' + file.name);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function wireDrop() {
+    var dropZone = $id('rv-drop');
+    if (!dropZone) return;
+
+    dropZone.style.display = '';
+
+    // Hidden file input
+    var fileInput = document.createElement('input');
+    fileInput.type    = 'file';
+    fileInput.accept  = '.json';
+    fileInput.style.display = 'none';
+    fileInput.id      = 'rv-file-input';
+    document.body.appendChild(fileInput);
+
+    fileInput.addEventListener('change', function () {
+      if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+    });
+
+    // Click the drop zone to open picker
+    dropZone.addEventListener('click', function () {
+      fileInput.click();
+    });
+
+    // Drag-over styling
+    dropZone.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      dropZone.classList.add('rv-ctl-drop--hover');
+    });
+
+    dropZone.addEventListener('dragleave', function () {
+      dropZone.classList.remove('rv-ctl-drop--hover');
+    });
+
+    // Drop
+    dropZone.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dropZone.classList.remove('rv-ctl-drop--hover');
+      var dt = e.dataTransfer;
+      if (dt && dt.files && dt.files[0]) handleFile(dt.files[0]);
+    });
+  }
+
+  // ── Bootstrap on DOMContentLoaded ────────────────────────────────────────
+  function init() {
+    // Hide app & controls until replay loaded
+    var app = $id('rv-app');
+    var ctl = $id('rv-controls');
+    if (app) app.style.display  = 'none';
+    if (ctl) ctl.style.display  = 'none';
+
+    // Read inline data slot
+    var dataEl = $id('rv-data');
+    var inlineObj = null;
+    if (dataEl) {
+      var raw = dataEl.textContent || '';
+      try { inlineObj = JSON.parse(raw.trim()); } catch (_) { inlineObj = null; }
+    }
+
+    if (inlineObj !== null &&
+        typeof inlineObj === 'object' &&
+        typeof inlineObj.schema === 'string' &&
+        inlineObj.schema.startsWith('agent-exchange.replay/')) {
+      loadReplay(inlineObj);
+    } else {
+      // No inline data — show drop zone
+      wireDrop();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Expose minimal API on RV namespace for potential external use
+  if (!global.RV) global.RV = {};
+  global.RV._player = {
+    loadReplay: loadReplay,
+    setCursor:  setCursor,
+    play:       startPlay,
+    stop:       stopPlay
+  };
+
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+
+</body>
+</html>

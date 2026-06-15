@@ -1,0 +1,363 @@
+/* ====================================================================== */
+/*  HOW IT WORKS — live mini-run                                           */
+/*                                                                        */
+/*  A compact, self-contained lifecycle walkthrough for the LIGHT page.    */
+/*  Auto-advances on scroll-into-view and loops gently. Compositor-only    */
+/*  motion (opacity + transform). All `ax-*`-adjacent tokens resolve under */
+/*  `.ax-light` already; we reach for the bare CSS vars here so the chips/  */
+/*  glows read correctly on the white editorial surface.                   */
+/*  Reduced-motion: every transition is neutralized at the foot of file.   */
+/* ====================================================================== */
+
+/* ── The stepped rail ─────────────────────────────────────────────────── */
+.rail {
+  position: relative;
+  display: grid;
+  /* 7 equal beats; the connecting line sits behind the nodes. */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0;
+}
+
+/* The base track + the emerald progress overlay (width driven inline). */
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11px;
+  height: 2px;
+  background: rgb(var(--ax-border-neutral-rgb) / 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.trackFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--ax-emerald-ink)) 0%,
+    var(--ax-emerald) 100%
+  );
+  border-radius: 2px;
+  transform-origin: left center;
+  transition: width 520ms var(--ax-ease-out);
+  will-change: width;
+}
+/* When the run reaches the catch beat the fill flushes red, then back. */
+.trackFillCaught {
+  background: linear-gradient(90deg, var(--ax-emerald) 0%, var(--ax-red) 100%);
+}
+
+/* ── A node on the rail ────────────────────────────────────────────────── */
+.node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  font: inherit;
+  color: inherit;
+}
+.node:focus-visible .dot {
+  outline: 2px solid var(--ax-emerald);
+  outline-offset: 3px;
+}
+
+.dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  background: var(--ax-surface);
+  border: 1.5px solid rgb(var(--ax-border-neutral-rgb) / 0.16);
+  color: var(--ax-fg-faint);
+  transition:
+    transform 320ms var(--ax-ease-out),
+    border-color 320ms ease,
+    color 320ms ease,
+    box-shadow 320ms ease,
+    background-color 320ms ease;
+  will-change: transform;
+}
+.dot svg {
+  opacity: 0.85;
+}
+
+/* Beats already played read as quietly "done" — emerald tick tint. */
+.dotDone {
+  border-color: rgb(var(--ax-emerald-ink) / 0.45);
+  color: rgb(var(--ax-emerald-ink));
+  background: var(--ax-emerald-dim);
+}
+/* The active beat lifts + glows in its tone (set via --tone on the node). */
+.dotActive {
+  transform: scale(1.18);
+  border-color: var(--tone, var(--ax-emerald));
+  color: var(--tone, var(--ax-emerald));
+  background: var(--ax-surface);
+  box-shadow:
+    0 0 0 4px var(--tone-dim, var(--ax-emerald-dim)),
+    0 4px 14px -4px var(--tone, var(--ax-emerald));
+}
+
+/* The label under each node. */
+.nodeLabel {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--ax-fg-faint);
+  transition: color 320ms ease;
+  /* Reserve two lines so the rail height never jumps between beats. */
+  min-height: 22px;
+}
+.nodeLabelActive {
+  color: var(--ax-fg);
+}
+
+/* ── The stage card (morphs per beat) ──────────────────────────────────── */
+.stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ax-r-lg);
+  border: 1px solid rgb(var(--ax-border-neutral-rgb) / 0.08);
+  background: var(--ax-surface);
+  box-shadow: var(--ax-shadow-card);
+  transition: border-color 420ms ease, box-shadow 420ms ease;
+}
+/* Tone the stage edge to the active beat (emerald / gold / red). */
+.stageEmerald {
+  border-color: rgb(var(--ax-emerald-ink) / 0.32);
+}
+.stageGold {
+  border-color: rgb(var(--ax-gold-ink) / 0.3);
+}
+.stageRed {
+  border-color: var(--ax-red);
+  box-shadow:
+    0 0 0 1px var(--ax-red),
+    0 18px 40px -18px rgba(255, 59, 92, 0.4),
+    var(--ax-shadow-card);
+}
+
+/* A faint wash behind the stage body that re-tints per beat. */
+.stageWash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: background 420ms ease, opacity 420ms ease;
+  background: radial-gradient(
+    120% 90% at 18% 0%,
+    var(--wash, transparent),
+    transparent 60%
+  );
+}
+
+/* The body swaps content per beat; we cross-fade with a key change. */
+.body {
+  position: relative;
+  z-index: 1;
+  padding: 22px 22px 24px;
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* The per-beat content enters with a soft fade + lift. */
+.beatEnter {
+  animation: hiwBeat 420ms var(--ax-ease-out) both;
+}
+@keyframes hiwBeat {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The big tone glyph on the left of the stage. */
+.glyph {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(var(--ax-border-neutral-rgb) / 0.1);
+  background: var(--ax-surface-2);
+  color: var(--tone, var(--ax-emerald));
+}
+.glyphTone {
+  border-color: var(--tone, var(--ax-emerald));
+  background: var(--tone-dim, var(--ax-emerald-dim));
+}
+
+.copy {
+  min-width: 0;
+}
+.beatStep {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tone-ink, var(--ax-fg-faint));
+}
+.beatTitle {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ax-fg);
+}
+.beatLine {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--ax-fg-muted);
+  max-width: 44ch;
+}
+
+/* ── Mini-diagram chips (the small per-beat visual) ────────────────────── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 11px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--ax-border-neutral-rgb) / 0.12);
+  background: var(--ax-surface-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--ax-fg-muted);
+  white-space: nowrap;
+}
+.chipEmerald {
+  border-color: rgb(var(--ax-emerald-ink) / 0.4);
+  color: rgb(var(--ax-emerald-ink));
+  background: var(--ax-emerald-dim);
+}
+.chipGold {
+  border-color: rgb(var(--ax-gold-ink) / 0.4);
+  color: rgb(var(--ax-gold-ink));
+  background: var(--ax-gold-dim);
+}
+.chipRed {
+  border-color: var(--ax-red);
+  color: rgb(var(--ax-red-ink));
+  background: var(--ax-red-dim);
+}
+.chipMuted {
+  opacity: 0.85;
+}
+/* A faint "cross-owner" badge dot. */
+.chipDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+/* The amount readout (USDC) — tabular, swaps emerald → red → emerald. */
+.amount {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* The "$0 withheld" strike on the catch beat. */
+.struck {
+  position: relative;
+  color: var(--ax-fg-faint);
+}
+.struck::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: 50%;
+  height: 1.5px;
+  background: var(--ax-red);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* The progress / play controls row under the stage. */
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+.footHint {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--ax-fg-faint);
+}
+.pauseBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--ax-border-neutral-rgb) / 0.14);
+  background: var(--ax-surface);
+  color: var(--ax-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, transform 140ms var(--ax-ease-out);
+}
+.pauseBtn:hover {
+  border-color: rgb(var(--ax-emerald-ink) / 0.5);
+  color: rgb(var(--ax-emerald-ink));
+}
+.pauseBtn:active {
+  transform: scale(0.96);
+}
+
+/* ── Reduced motion: snap to a calm static state ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .trackFill,
+  .dot,
+  .nodeLabel,
+  .stage,
+  .stageWash,
+  .pauseBtn {
+    transition: none !important;
+  }
+  .beatEnter {
+    animation: none !important;
+  }
+}

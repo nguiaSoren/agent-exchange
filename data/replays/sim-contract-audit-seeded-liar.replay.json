@@ -1,0 +1,556 @@
+{
+  "schema": "agent-exchange.replay/v1",
+  "job_id": "sim-contract-audit-seeded-liar",
+  "kind": "contract-audit",
+  "mode": "sim",
+  "title": "Acme MSA \u2014 clause audit",
+  "budget_usd": 0.2,
+  "recorded_at": "2026-06-13T00:00:00Z",
+  "seed": 1,
+  "totals": {
+    "gate_passed": false,
+    "pay_fraction": 0.0,
+    "total_settled_usd": 0.0,
+    "total_withheld_usd": 0.115,
+    "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"
+  },
+  "tx_links": [],
+  "events": [
+    {
+      "seq": 0,
+      "t_offset_ms": 0.0,
+      "type": "document",
+      "data": {
+        "kind": "contract-audit",
+        "title": "Acme MSA \u2014 clause audit",
+        "document_text": "MASTER SERVICES AGREEMENT\n\n1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.\n\n2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.\n\n3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes.\n\n4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.\n\n5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.\n\n6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements.\n\n7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".\n\n8. Governing Law. This Agreement is governed by the laws of the State of Delaware.\n",
+        "budget_usd": 0.2
+      }
+    },
+    {
+      "seq": 1,
+      "t_offset_ms": 0.0,
+      "type": "stage",
+      "data": {
+        "name": "Discover",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 2,
+      "t_offset_ms": 90.3,
+      "type": "pool",
+      "data": {
+        "agents": [
+          {
+            "id": "liability-bot",
+            "handle": "liability-bot",
+            "name": "Liability Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "crewai"
+          },
+          {
+            "id": "ip-bot",
+            "handle": "ip-bot",
+            "name": "IP Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "langgraph"
+          },
+          {
+            "id": "termination-bot",
+            "handle": "termination-bot",
+            "name": "Termination Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "native"
+          },
+          {
+            "id": "tax-bot",
+            "handle": "tax-bot",
+            "name": "Tax Auditor (cross-owner)",
+            "owner": "owner-2",
+            "cross_owner": true,
+            "framework": "native"
+          }
+        ]
+      }
+    },
+    {
+      "seq": 3,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Discover",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 4,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Bid",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 5,
+      "t_offset_ms": 90.3,
+      "type": "bid",
+      "data": {
+        "worker": "liability",
+        "price_usd": 0.04,
+        "relevance": 0.92,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "crewai"
+      }
+    },
+    {
+      "seq": 6,
+      "t_offset_ms": 90.3,
+      "type": "bid",
+      "data": {
+        "worker": "ip",
+        "price_usd": 0.03,
+        "relevance": 0.81,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "langgraph"
+      }
+    },
+    {
+      "seq": 7,
+      "t_offset_ms": 90.3,
+      "type": "bid",
+      "data": {
+        "worker": "termination",
+        "price_usd": 0.025,
+        "relevance": 0.74,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "native"
+      }
+    },
+    {
+      "seq": 8,
+      "t_offset_ms": 90.3,
+      "type": "bid",
+      "data": {
+        "worker": "tax",
+        "price_usd": 0.02,
+        "relevance": 0.66,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "native"
+      }
+    },
+    {
+      "seq": 9,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Bid",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 10,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Hire",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 11,
+      "t_offset_ms": 90.3,
+      "type": "hire",
+      "data": {
+        "hired": [
+          {
+            "worker": "liability",
+            "price_usd": 0.04
+          },
+          {
+            "worker": "ip",
+            "price_usd": 0.03
+          },
+          {
+            "worker": "termination",
+            "price_usd": 0.025
+          },
+          {
+            "worker": "tax",
+            "price_usd": 0.02
+          }
+        ],
+        "declined": [],
+        "strategy": "coverage_within_budget",
+        "pay_fraction_target": 1.0
+      }
+    },
+    {
+      "seq": 12,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Hire",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 13,
+      "t_offset_ms": 90.3,
+      "type": "stage",
+      "data": {
+        "name": "Work",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 14,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "Liability Auditor",
+        "content": "[liability] 1 findings:\n- 1: Vendor's aggregate liability is capped at the fees paid in the prior 12 months. (high)"
+      }
+    },
+    {
+      "seq": 15,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "IP Auditor",
+        "content": "[ip] 1 findings:\n- 2: All foreground IP and work product is assigned to Client upon creation. (high)"
+      }
+    },
+    {
+      "seq": 16,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "Termination Auditor",
+        "content": "[termination] 1 findings:\n- 4: Either party may terminate for cause on 30 days' notice with a 30-day cure period. (high)"
+      }
+    },
+    {
+      "seq": 17,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "Tax Auditor (cross-owner)",
+        "content": "[tax] 1 findings:\n- 14: Clause 14 obligates the Client to indemnify the Vendor without any cap, in perpetuity. (high)"
+      }
+    },
+    {
+      "seq": 18,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "Liability Auditor",
+        "content": "@Reporter please synthesize the team's findings."
+      }
+    },
+    {
+      "seq": 19,
+      "t_offset_ms": 92.6,
+      "type": "room_message",
+      "data": {
+        "sender": "Reporter",
+        "content": "Liability is capped at 12 months' fees and foreground IP vests in the Client; termination requires 30 days' notice with a cure period."
+      }
+    },
+    {
+      "seq": 20,
+      "t_offset_ms": 92.6,
+      "type": "stage",
+      "data": {
+        "name": "Work",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 21,
+      "t_offset_ms": 92.6,
+      "type": "stage",
+      "data": {
+        "name": "Verify",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 22,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "ip",
+        "clause_ref": "2",
+        "claim": "All foreground IP and work product is assigned to Client upon creation.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation."
+      }
+    },
+    {
+      "seq": 23,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "liability",
+        "clause_ref": "1",
+        "claim": "Vendor's aggregate liability is capped at the fees paid in the prior 12 months.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim."
+      }
+    },
+    {
+      "seq": 24,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "tax",
+        "clause_ref": "14",
+        "claim": "Clause 14 obligates the Client to indemnify the Vendor without any cap, in perpetuity.",
+        "verdict": "unsupported",
+        "confidence": 0.93,
+        "evidence_quote": null
+      }
+    },
+    {
+      "seq": 25,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "termination",
+        "clause_ref": "4",
+        "claim": "Either party may terminate for cause on 30 days' notice with a 30-day cure period.",
+        "verdict": "confirmed",
+        "confidence": 0.95,
+        "evidence_quote": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period."
+      }
+    },
+    {
+      "seq": 26,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "1",
+        "claim": "The contract caps Vendor liability at the prior 12 months' fees.",
+        "verdict": "confirmed",
+        "confidence": 0.93,
+        "evidence_quote": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim."
+      }
+    },
+    {
+      "seq": 27,
+      "t_offset_ms": 92.6,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "4",
+        "claim": "Termination for cause requires 30 days' notice and a 30-day cure period.",
+        "verdict": "confirmed",
+        "confidence": 0.93,
+        "evidence_quote": "Either party may terminate for cause on 30 days' written notice with a 30-day cure period."
+      }
+    },
+    {
+      "seq": 28,
+      "t_offset_ms": 97.5,
+      "type": "drift",
+      "data": {
+        "worker": "liability",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 29,
+      "t_offset_ms": 97.5,
+      "type": "drift",
+      "data": {
+        "worker": "ip",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 30,
+      "t_offset_ms": 97.5,
+      "type": "drift",
+      "data": {
+        "worker": "termination",
+        "flagged": true,
+        "severity": "critical",
+        "model": "gpt-4o-mini",
+        "baseline_label": "(n=12 task)",
+        "model_switch": true,
+        "price_mismatch": true,
+        "overcharge_ratio": 838.574,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "model swap: gpt-4.1 -> gpt-4o-mini at 838.6x markup"
+      }
+    },
+    {
+      "seq": 31,
+      "t_offset_ms": 97.5,
+      "type": "drift",
+      "data": {
+        "worker": "tax",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 32,
+      "t_offset_ms": 97.5,
+      "type": "stage",
+      "data": {
+        "name": "Verify",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 33,
+      "t_offset_ms": 97.5,
+      "type": "stage",
+      "data": {
+        "name": "Settle",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 34,
+      "t_offset_ms": 97.5,
+      "type": "settle",
+      "data": {
+        "worker": "liability",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.04,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 35,
+      "t_offset_ms": 97.5,
+      "type": "settle",
+      "data": {
+        "worker": "ip",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.03,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 36,
+      "t_offset_ms": 97.5,
+      "type": "settle",
+      "data": {
+        "worker": "termination",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.025,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 37,
+      "t_offset_ms": 97.5,
+      "type": "settle",
+      "data": {
+        "worker": "tax",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.02,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 38,
+      "t_offset_ms": 97.5,
+      "type": "stage",
+      "data": {
+        "name": "Settle",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 39,
+      "t_offset_ms": 103.9,
+      "type": "receipt",
+      "data": {
+        "signer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "signature": "0xe592c6555872489b8c4cfc3e60c1799d3518692ca1a10123988b3618e994054c0e2328118e913b9d336085289daaa2bd74cad7b7d3fa719108fc47215827abea1c",
+        "deliverable_hash": "0x1457dcf6807991f178ab103b256ca475a38a4b2d35edee73920b8da6088e8fac"
+      }
+    },
+    {
+      "seq": 40,
+      "t_offset_ms": 103.9,
+      "type": "stage",
+      "data": {
+        "name": "Done",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 41,
+      "t_offset_ms": 103.9,
+      "type": "done",
+      "data": {
+        "gate_passed": false,
+        "pay_fraction": 0.0,
+        "total_settled_usd": 0.0,
+        "total_withheld_usd": 0.115,
+        "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"
+      }
+    },
+    {
+      "seq": 42,
+      "t_offset_ms": 103.9,
+      "type": "stage",
+      "data": {
+        "name": "Done",
+        "status": "done"
+      }
+    }
+  ]
+}

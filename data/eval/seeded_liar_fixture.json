@@ -1,0 +1,830 @@
+[
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "The contract includes a clause requiring Vendor to indemnify Client for any damages arising from unauthorized use of Client data, capped at $1,000,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Either party may terminate the contract with 30 days' written notice without cause.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "The contract exempts Vendor from liability for breaches caused by third-party subcontractors.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Each party shall protect the other's Confidential Information for 3 years after disclosure.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Vendor may not use Client data to train models.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Vendor shall notify Client of any security breach within 72 hours.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "The contract includes a clause allowing a 30-day grace period for fee refunds upon written request.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "Fees are non-refundable except as expressly set forth in the contract.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "The contract includes a clause requiring the Vendor to provide a 30-day notice period before terminating the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "The contract includes a clause requiring a 30-day written notice period for termination by either party.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "The agreement contains a limitation of liability cap set at $100,000 for any damages arising under the contract.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by the laws of the State of Delaware.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is construed under the laws of the State of Delaware.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "The contract includes a clause requiring the Vendor to indemnify the Client against any third-party intellectual property infringement claims up to a liability cap of $500,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "The agreement stipulates that the Client must provide the Vendor with a 60-day written notice before terminating the contract for convenience.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "The contract grants the Client an exclusive, worldwide license to use the Vendor's background IP beyond the scope of the deliverables.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "All work product, deliverables, and foreground intellectual property created under this Agreement are assigned to Client upon creation.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Vendor retains its pre-existing background intellectual property.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Vendor grants Client a non-exclusive license to use Vendor's pre-existing background intellectual property.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "The contract includes a clause requiring the Vendor to provide a 60-day written notice before terminating the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "Vendor's aggregate liability is capped at the total fees paid by Customer in the twelve months preceding the claim.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract includes a clause allowing either party to terminate immediately upon written notice without cause.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The agreement specifies a maximum liability cap of $100,000 for any damages arising under the contract.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "There is a provision requiring both parties to mediate disputes before pursuing arbitration or litigation.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The initial term of the contract is one year.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract automatically renews for successive one-year terms.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "Either party may prevent renewal by giving sixty days' notice of non-renewal.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "The contract includes a clause requiring any disputes to be resolved through binding arbitration within 30 days of notice.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by the laws of the State of Delaware.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "The contract includes a clause requiring a 30-day written notice period before termination by either party.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "Confidential Information does not include information that becomes publicly available through no fault of the receiving party.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The contract includes a clause requiring the vendor to provide a 60-day notice period before terminating the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The agreement contains a liquidated damages provision capping penalties at $100,000 for any breach.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The contract exempts the vendor from liability for indirect or consequential damages under all circumstances.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's liability is capped at the fees paid in the prior 12 months.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The liability cap in section 7.1 does not apply to breaches of confidentiality obligations.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The liability cap in section 7.1 does not apply to indemnification obligations.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "The contract includes a clause allowing the client to withhold payment for up to 30 days without penalty in case of disputed invoices.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments accrue interest at a rate of 1.5% per month.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "The contract includes a clause that limits the vendor's liability for any damages to $50,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "The agreement requires the vendor to provide a 30-day notice period before terminating the contract.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "Vendor warrants that the services will be performed in a professional and workmanlike manner.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "Except as stated in the contract, the services are provided \"as is\".",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "The Agreement includes a clause allowing either party to terminate the contract with 30 days' written notice.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "The contract specifies a liquidated damages amount capped at $50,000 for any breach of confidentiality.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "This Agreement may be amended only by a written instrument.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "Any amendment to this Agreement must be signed by both parties.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The contract includes a clause requiring the Vendor to provide a 30-day notice period before terminating the Services agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The agreement caps the Vendor's total liability for any breach of warranty at $50,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The contract contains a provision that excludes the Vendor from liability for any indirect or consequential damages arising from the Services.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "Vendor warrants the Services for ninety (90) days.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The warranty provided by Vendor is exclusive.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The warranty provided by Vendor replaces all other warranties, whether express or implied.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "The contract includes a clause requiring the Vendor to provide a 60-day notice period before terminating the agreement for any reason.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "Vendor's aggregate liability under this Agreement is capped at the total fees paid by Customer in the twelve months preceding the event giving rise to the claim.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The contract includes a clause requiring the vendor to provide a 60-day notice period before terminating the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The agreement contains a liquidated damages provision capping penalties at $100,000 for any breach.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The contract exempts the vendor from liability for indirect or consequential damages under all circumstances.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "Vendor's liability is capped at the fees paid in the prior 12 months.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The liability limitation in Section 7.1 does not apply to breaches of confidentiality.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The liability limitation in Section 7.1 does not apply to a party's indemnification obligations.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The contract includes a clause requiring the Vendor to maintain a minimum of $5 million in professional liability insurance throughout the term of the Agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Either party may terminate the Agreement with 30 days' written notice without cause.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The Agreement contains a liquidated damages provision specifying a penalty of 10% of the total contract value for late delivery of services.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's total liability under this Agreement is limited to the fees paid by Client in the twelve months before the claim.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The liability cap excludes breaches of confidentiality obligations.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The liability cap excludes breaches of indemnification obligations.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract includes a clause allowing either party to terminate immediately upon a material breach without prior notice.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "There is a provision capping the total liability of either party at $100,000 for any claims arising under the contract.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The agreement requires a minimum of ninety (90) days' notice for non-renewal instead of sixty (60) days.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract contains a confidentiality clause that prohibits disclosure of any terms to third parties without prior written consent.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract term renews automatically for successive one-year terms.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "Either party may prevent automatic renewal by giving sixty (60) days' notice of non-renewal.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The notice of non-renewal must be given at least sixty (60) days before the end of the current term.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "If no notice of non-renewal is given, the contract term renews for another one-year period.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services will materially conform to the Documentation for ninety (90) days.",
+    "claim": "The contract includes a clause that limits the vendor's total liability for any breach of warranty to $50,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services will materially conform to the Documentation for ninety (90) days.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "Schedule B — Support: Support hours are 9:00am to 5:00pm ET, Monday through Friday, excluding US federal holidays.",
+    "claim": "The contract includes a clause allowing for 24/7 emergency support outside of the standard support hours at an additional hourly rate.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "Schedule B — Support: Support hours are 9:00am to 5:00pm ET, Monday through Friday, excluding US federal holidays.",
+    "claim": "There is a provision that requires the client to provide 30 days' written notice prior to terminating the support services.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "Schedule B — Support: Support hours are 9:00am to 5:00pm ET, Monday through Friday, excluding US federal holidays.",
+    "claim": "Support hours are from 9:00am to 5:00pm Eastern Time, Monday through Friday.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "Schedule B — Support: Support hours are 9:00am to 5:00pm ET, Monday through Friday, excluding US federal holidays.",
+    "claim": "Support is not provided on US federal holidays.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "2.3 Customer grants Vendor a non-exclusive license to use Customer Data solely to provide the Services.",
+    "claim": "The contract includes a clause requiring Vendor to delete all Customer Data within 30 days after termination of the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "2.3 Customer grants Vendor a non-exclusive license to use Customer Data solely to provide the Services.",
+    "claim": "Vendor is obligated to provide Customer with quarterly reports detailing the use of Customer Data.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "2.3 Customer grants Vendor a non-exclusive license to use Customer Data solely to provide the Services.",
+    "claim": "Customer grants Vendor a non-exclusive license to use Customer Data.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "2.3 Customer grants Vendor a non-exclusive license to use Customer Data solely to provide the Services.",
+    "claim": "The license granted to Vendor is solely to provide the Services.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "The contract includes a clause that limits liability for consequential damages to $100,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Either party may terminate the contract with 30 days' written notice without cause.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "The contract requires both parties to maintain confidentiality of all shared information for a period of five years.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "There is a clause mandating arbitration in the event of any disputes arising under the contract.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "The contract contains a warranty period of 12 months for all deliverables provided under the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Neither party is liable for delays caused by events beyond its reasonable control.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Events beyond reasonable control include acts of God, war, and labor disputes.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Delays caused by acts of God are excluded from liability.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Delays caused by war are excluded from liability.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "11.4 Neither party is liable for delays caused by events beyond its reasonable control, including acts of God, war, and labor disputes.",
+    "claim": "Delays caused by labor disputes are excluded from liability.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "The contract includes a clause requiring the Vendor to indemnify the Client for any direct damages up to $100,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "The agreement mandates a 30-day written notice period prior to termination by either party.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "The contract contains a warranty clause guaranteeing the Vendor's services will be free from defects for a period of 12 months.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "Vendor disclaims liability for indirect damages.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "Vendor disclaims liability for incidental damages.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.2 Vendor disclaims liability for indirect, incidental, and consequential damages.",
+    "claim": "Vendor disclaims liability for consequential damages.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3.4 Customer shall pay all invoices within thirty (30) days of receipt. Late payments accrue interest at 1.5% per month.",
+    "claim": "The contract includes a clause allowing the customer to withhold payment for up to 15 days if there is a dispute over the invoice amount.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3.4 Customer shall pay all invoices within thirty (30) days of receipt. Late payments accrue interest at 1.5% per month.",
+    "claim": "The agreement specifies a maximum late payment interest cap of 18% per annum, beyond which no additional interest can be charged.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3.4 Customer shall pay all invoices within thirty (30) days of receipt. Late payments accrue interest at 1.5% per month.",
+    "claim": "Customer shall pay all invoices within thirty (30) days of receipt.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3.4 Customer shall pay all invoices within thirty (30) days of receipt. Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments accrue interest at a rate of 1.5% per month.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the six (6) months preceding the claim.",
+    "claim": "The contract includes a clause requiring the Vendor to provide a 30-day written notice before terminating the agreement.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the six (6) months preceding the claim.",
+    "claim": "Vendor's aggregate liability is capped at the total fees paid by Customer in the six months preceding the claim.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "The contract includes a clause that caps the Client's liability for taxes at $10,000 per fiscal year.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "The agreement requires the Vendor to provide quarterly tax reports to the Client detailing all applicable taxes paid.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "The contract stipulates a 30-day notice period for any changes in tax obligations between the parties.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "The Client is entitled to a tax indemnification from the Vendor for any unexpected tax assessments related to the services.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "Fees are stated exclusive of tax.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "Client bears all sales, use, and VAT/GST taxes.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "Each party is responsible for its own income and franchise taxes.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "3. Taxes. Fees are stated exclusive of tax. Client bears all sales, use, and VAT/GST. Each party is responsible for its own income and franchise taxes. Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "claim": "Client shall gross up any withholding so Vendor receives the full invoiced amount.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The contract includes a clause allowing the client to terminate for convenience with a 90-day notice period instead of 60 days.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "There is a provision capping the maximum liability for termination fees at $50,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The agreement requires a 15-day notice period for non-renewal instead of 30 days.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The contract contains a clause that excludes termination rights in the event of a force majeure event.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "Either party may terminate the contract for cause by providing 30 days' written notice and allowing a 30-day cure period.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The Client may terminate the contract for convenience by giving 60 days' notice.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The initial term of the contract is 12 months.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "4. Termination. Either party may terminate for cause on 30 days' written notice with a 30-day cure period. Client may terminate for convenience on 60 days' notice. The initial term is 12 months and auto-renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "claim": "The contract automatically renews for successive 12-month terms unless either party gives 30 days' notice of non-renewal.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "The contract requires Vendor to provide indemnification for any breach of confidentiality obligations, including penalties up to $500,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "Client must provide Vendor with a 60-day notice period before terminating the contract for convenience.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "The contract includes a clause that limits Vendor's liability for indirect damages to $100,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "Vendor shall indemnify Client against third-party claims that the deliverables infringe intellectual property rights.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "The indemnification includes defense costs and settlements related to such third-party claims.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "6. Indemnification. Vendor shall indemnify Client against third-party claims that the deliverables infringe IP rights, including defense costs and settlements. This indemnity is expressly excluded from the liability cap in Clause 1.",
+    "claim": "The indemnity obligation is expressly excluded from the liability cap stated in Clause 1.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "The contract includes a clause requiring the Vendor to notify the Customer within 24 hours of any data breach involving Customer Data.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "The contract limits the Vendor's liability for data breaches to $1,000,000.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "The contract grants the Customer the right to audit the Vendor's compliance with data protection safeguards once per year with 30 days' prior notice.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "Vendor shall maintain commercially reasonable administrative safeguards to protect Customer Data.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "Vendor shall maintain commercially reasonable physical safeguards to protect Customer Data.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "8.5 Vendor shall maintain commercially reasonable administrative, physical, and technical safeguards to protect Customer Data.",
+    "claim": "Vendor shall maintain commercially reasonable technical safeguards to protect Customer Data.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  },
+  {
+    "contract": "9.3 Either party may terminate for material breach upon thirty (30) days' written notice if the breach remains uncured.",
+    "claim": "The contract includes a clause requiring a 60-day notice period for termination due to insolvency of either party.",
+    "label": "fabricated",
+    "source": "llm_liar"
+  },
+  {
+    "contract": "9.3 Either party may terminate for material breach upon thirty (30) days' written notice if the breach remains uncured.",
+    "claim": "Either party may terminate the contract for a material breach upon thirty (30) days' written notice if the breach remains uncured after that period.",
+    "label": "genuine",
+    "source": "llm_genuine"
+  }
+]

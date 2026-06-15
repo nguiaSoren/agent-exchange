@@ -1,0 +1,106 @@
+{
+  "model": "gpt-5.1-2025-11-13",
+  "n": 24,
+  "agreement": 0.875,
+  "ece": 0.11375000000000009,
+  "threshold": 1.0,
+  "target_accuracy": 0.9,
+  "pairs": [
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": false
+    },
+    {
+      "confidence": 0.94,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": false
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.83,
+      "correct": true
+    },
+    {
+      "confidence": 0.93,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": false
+    },
+    {
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 0.91,
+      "correct": true
+    },
+    {
+      "confidence": 0.86,
+      "correct": true
+    },
+    {
+      "confidence": 0.92,
+      "correct": true
+    },
+    {
+      "confidence": 0.99,
+      "correct": true
+    },
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 0.97,
+      "correct": true
+    },
+    {
+      "confidence": 1.0,
+      "correct": true
+    }
+  ]
+}

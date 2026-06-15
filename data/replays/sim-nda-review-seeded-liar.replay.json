@@ -1,0 +1,556 @@
+{
+  "schema": "agent-exchange.replay/v1",
+  "job_id": "sim-nda-review-seeded-liar",
+  "kind": "nda-review",
+  "mode": "sim",
+  "title": "Mutual NDA \u2014 review",
+  "budget_usd": 0.2,
+  "recorded_at": "2026-06-13T00:00:00Z",
+  "seed": 1,
+  "totals": {
+    "gate_passed": false,
+    "pay_fraction": 0.0,
+    "total_settled_usd": 0.0,
+    "total_withheld_usd": 0.11,
+    "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"
+  },
+  "tx_links": [],
+  "events": [
+    {
+      "seq": 0,
+      "t_offset_ms": 0.0,
+      "type": "document",
+      "data": {
+        "kind": "nda-review",
+        "title": "Mutual NDA \u2014 review",
+        "document_text": "MUTUAL NON-DISCLOSURE AGREEMENT\n\nThis Mutual Non-Disclosure Agreement (the \"Agreement\") is entered into as of March 1,\n2025 (the \"Effective Date\") by and between Northbridge Analytics, Inc., a Delaware\ncorporation (\"Northbridge\"), and Cedar Systems Ltd. (\"Cedar\"). Northbridge and Cedar\nare each a \"Party\" and, when disclosing information, the \"Disclosing Party,\" and when\nreceiving it, the \"Receiving Party.\"\n\n1. PURPOSE. The Parties wish to explore a potential business relationship concerning\nthe integration of Cedar's data-pipeline technology with Northbridge's analytics\nplatform (the \"Purpose\"), and in connection with the Purpose may disclose to each\nother certain confidential and proprietary information.\n\n2. CONFIDENTIAL INFORMATION. \"Confidential Information\" means any non-public\ninformation disclosed by the Disclosing Party to the Receiving Party, in any form,\nthat is either marked or identified as \"confidential\" or \"proprietary\" at the time of\ndisclosure, or that a reasonable person would understand to be confidential given the\nnature of the information and the circumstances of disclosure. Information disclosed\norally or visually shall be treated as Confidential Information if identified as\nconfidential at the time of disclosure and confirmed in writing as confidential within\nthirty (30) days. Confidential Information includes the existence and terms of this\nAgreement and the fact that discussions are taking place between the Parties.\n\n3. PERMITTED USE. The Receiving Party shall use the Confidential Information solely for\nthe Purpose and for no other purpose. The Receiving Party may disclose Confidential\nInformation only to its employees, officers, directors, and professional advisors\n(collectively, \"Representatives\") who have a need to know it for the Purpose and who\nare bound by written obligations of confidentiality at least as protective as those in\nthis Agreement. The Receiving Party shall be responsible for any breach of this\nAgreement by its Representatives. The Receiving Party shall not reverse-engineer,\ndecompile, or disassemble any Confidential Information.\n\n4. TERM AND SURVIVAL. This Agreement shall commence on the Effective Date and continue\nfor two (2) years, unless earlier terminated by either Party upon thirty (30) days'\nprior written notice. The Receiving Party's obligations of confidentiality and\nnon-use under this Agreement shall survive termination or expiration and shall remain\nin effect for three (3) years from the date of disclosure of the relevant Confidential\nInformation; provided, however, that with respect to any Confidential Information that\nconstitutes a trade secret, such obligations shall continue for as long as the\ninformation remains a trade secret under applicable law.\n\n5. EXCLUSIONS. The obligations in this Agreement do not apply to information that the\nReceiving Party can demonstrate: (a) is or becomes generally available to the public\nthrough no act or omission of the Receiving Party; (b) was rightfully known to the\nReceiving Party, without restriction, before its disclosure by the Disclosing Party;\n(c) is independently developed by the Receiving Party without use of or reference to\nthe Confidential Information; or (d) is rightfully obtained by the Receiving Party from\na third party who is free to disclose it without restriction. The Receiving Party may\ndisclose Confidential Information to the extent required by law, regulation, or valid\ncourt order, provided that it gives the Disclosing Party prompt written notice (where\nlegally permitted) and reasonable cooperation, at the Disclosing Party's expense, so\nthat the Disclosing Party may seek a protective order, and discloses only the portion\nof Confidential Information legally required.\n\n6. RETURN OR DESTRUCTION. Upon the Disclosing Party's written request, or upon\ntermination or expiration of this Agreement, the Receiving Party shall promptly, and\nin any event within thirty (30) days, return or destroy all Confidential Information\nin its possession, including all copies, notes, and derivatives thereof, and shall\ncertify such destruction in writing if requested. Notwithstanding the foregoing, the\nReceiving Party may retain one (1) archival copy solely for legal and compliance\npurposes and copies created by routine automated backup systems, provided that any\nretained copies remain subject to the confidentiality obligations of this Agreement.\n\n7. NO LICENSE. All Confidential Information remains the property of the Disclosing\nParty. Nothing in this Agreement grants the Receiving Party any license or other right\nin or to the Confidential Information, or any patent, copyright, trademark, or other\nintellectual property right of the Disclosing Party, except the limited right to use\nit for the Purpose. No warranty is made as to the accuracy or completeness of any\nConfidential Information.\n\n8. GENERAL. This Agreement shall be governed by and construed in accordance with the\nlaws of the State of Delaware, without regard to its conflict-of-laws principles. This\nAgreement constitutes the entire agreement between the Parties regarding its subject\nmatter and supersedes all prior discussions. Neither Party is obligated to proceed\nwith any transaction. This Agreement may be amended only by a writing signed by both\nParties.\n",
+        "budget_usd": 0.2
+      }
+    },
+    {
+      "seq": 1,
+      "t_offset_ms": 0.0,
+      "type": "stage",
+      "data": {
+        "name": "Discover",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 2,
+      "t_offset_ms": 91.1,
+      "type": "pool",
+      "data": {
+        "agents": [
+          {
+            "id": "confidentiality-bot",
+            "handle": "confidentiality-bot",
+            "name": "Confidentiality Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "langgraph"
+          },
+          {
+            "id": "permitted-use-bot",
+            "handle": "permitted-use-bot",
+            "name": "Permitted-Use Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "crewai"
+          },
+          {
+            "id": "term-bot",
+            "handle": "term-bot",
+            "name": "Term & Survival Auditor",
+            "owner": "owner-1",
+            "cross_owner": false,
+            "framework": "native"
+          },
+          {
+            "id": "carveout-bot",
+            "handle": "carveout-bot",
+            "name": "Carve-out Auditor (cross-owner)",
+            "owner": "owner-2",
+            "cross_owner": true,
+            "framework": "native"
+          }
+        ]
+      }
+    },
+    {
+      "seq": 3,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Discover",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 4,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Bid",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 5,
+      "t_offset_ms": 91.1,
+      "type": "bid",
+      "data": {
+        "worker": "confidentiality_scope",
+        "price_usd": 0.035,
+        "relevance": 0.9,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "langgraph"
+      }
+    },
+    {
+      "seq": 6,
+      "t_offset_ms": 91.1,
+      "type": "bid",
+      "data": {
+        "worker": "permitted_use",
+        "price_usd": 0.03,
+        "relevance": 0.84,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "crewai"
+      }
+    },
+    {
+      "seq": 7,
+      "t_offset_ms": 91.1,
+      "type": "bid",
+      "data": {
+        "worker": "term_survival",
+        "price_usd": 0.025,
+        "relevance": 0.72,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "native"
+      }
+    },
+    {
+      "seq": 8,
+      "t_offset_ms": 91.1,
+      "type": "bid",
+      "data": {
+        "worker": "carve_outs",
+        "price_usd": 0.02,
+        "relevance": 0.64,
+        "reputation": 0.5,
+        "n_jobs": 0,
+        "framework": "native"
+      }
+    },
+    {
+      "seq": 9,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Bid",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 10,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Hire",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 11,
+      "t_offset_ms": 91.1,
+      "type": "hire",
+      "data": {
+        "hired": [
+          {
+            "worker": "confidentiality_scope",
+            "price_usd": 0.035
+          },
+          {
+            "worker": "permitted_use",
+            "price_usd": 0.03
+          },
+          {
+            "worker": "term_survival",
+            "price_usd": 0.025
+          },
+          {
+            "worker": "carve_outs",
+            "price_usd": 0.02
+          }
+        ],
+        "declined": [],
+        "strategy": "coverage_within_budget",
+        "pay_fraction_target": 1.0
+      }
+    },
+    {
+      "seq": 12,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Hire",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 13,
+      "t_offset_ms": 91.1,
+      "type": "stage",
+      "data": {
+        "name": "Work",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 14,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Confidentiality Auditor",
+        "content": "[confidentiality_scope] 1 findings:\n- 1: Confidential Information is broadly defined to cover all disclosed business and technical information. (high)"
+      }
+    },
+    {
+      "seq": 15,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Permitted-Use Auditor",
+        "content": "[permitted_use] 1 findings:\n- 2: The receiving party may use Confidential Information solely to evaluate the proposed transaction. (high)"
+      }
+    },
+    {
+      "seq": 16,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Term & Survival Auditor",
+        "content": "[term_survival] 1 findings:\n- 5: Confidentiality obligations survive for a fixed period after the agreement ends. (high)"
+      }
+    },
+    {
+      "seq": 17,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Carve-out Auditor (cross-owner)",
+        "content": "[carve_outs] 1 findings:\n- 11: Clause 11 lets the receiving party publicly disclose the discloser's trade secrets at will. (high)"
+      }
+    },
+    {
+      "seq": 18,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Confidentiality Auditor",
+        "content": "@Reporter please synthesize the team's findings."
+      }
+    },
+    {
+      "seq": 19,
+      "t_offset_ms": 94.8,
+      "type": "room_message",
+      "data": {
+        "sender": "Reporter",
+        "content": "The NDA defines Confidential Information broadly, limits use to evaluating the transaction, and survives termination for a fixed term."
+      }
+    },
+    {
+      "seq": 20,
+      "t_offset_ms": 94.9,
+      "type": "stage",
+      "data": {
+        "name": "Work",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 21,
+      "t_offset_ms": 94.9,
+      "type": "stage",
+      "data": {
+        "name": "Verify",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 22,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "carve_outs",
+        "clause_ref": "11",
+        "claim": "Clause 11 lets the receiving party publicly disclose the discloser's trade secrets at will.",
+        "verdict": "unsupported",
+        "confidence": 0.93,
+        "evidence_quote": null
+      }
+    },
+    {
+      "seq": 23,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "confidentiality_scope",
+        "clause_ref": "1",
+        "claim": "Confidential Information is broadly defined to cover all disclosed business and technical information.",
+        "verdict": "confirmed",
+        "confidence": 0.475,
+        "evidence_quote": "Confidential Information means any non-public information disclosed by one party to the other."
+      }
+    },
+    {
+      "seq": 24,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "permitted_use",
+        "clause_ref": "2",
+        "claim": "The receiving party may use Confidential Information solely to evaluate the proposed transaction.",
+        "verdict": "confirmed",
+        "confidence": 0.475,
+        "evidence_quote": "The Receiving Party shall use the Confidential Information solely to evaluate the potential transaction."
+      }
+    },
+    {
+      "seq": 25,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "term_survival",
+        "clause_ref": "5",
+        "claim": "Confidentiality obligations survive for a fixed period after the agreement ends.",
+        "verdict": "confirmed",
+        "confidence": 0.475,
+        "evidence_quote": "The obligations of confidentiality shall survive termination of this Agreement."
+      }
+    },
+    {
+      "seq": 26,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "2",
+        "claim": "Use of Confidential Information is limited to evaluating the proposed transaction.",
+        "verdict": "confirmed",
+        "confidence": 0.465,
+        "evidence_quote": "The Receiving Party shall use the Confidential Information solely to evaluate the potential transaction."
+      }
+    },
+    {
+      "seq": 27,
+      "t_offset_ms": 94.9,
+      "type": "finding",
+      "data": {
+        "worker": "reporter",
+        "clause_ref": "5",
+        "claim": "Confidentiality obligations survive termination of the agreement.",
+        "verdict": "confirmed",
+        "confidence": 0.465,
+        "evidence_quote": "The obligations of confidentiality shall survive termination of this Agreement."
+      }
+    },
+    {
+      "seq": 28,
+      "t_offset_ms": 101.2,
+      "type": "drift",
+      "data": {
+        "worker": "confidentiality_scope",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 29,
+      "t_offset_ms": 101.2,
+      "type": "drift",
+      "data": {
+        "worker": "permitted_use",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 30,
+      "t_offset_ms": 101.2,
+      "type": "drift",
+      "data": {
+        "worker": "term_survival",
+        "flagged": true,
+        "severity": "critical",
+        "model": "gpt-4o-mini",
+        "baseline_label": "(n=12 task)",
+        "model_switch": true,
+        "price_mismatch": true,
+        "overcharge_ratio": 251.335,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "model swap: gpt-4.1 -> gpt-4o-mini at 251.3x markup"
+      }
+    },
+    {
+      "seq": 31,
+      "t_offset_ms": 101.2,
+      "type": "drift",
+      "data": {
+        "worker": "carve_outs",
+        "flagged": false,
+        "severity": "info",
+        "model": "gpt-4.1",
+        "baseline_label": "(n=12 task)",
+        "model_switch": false,
+        "price_mismatch": false,
+        "overcharge_ratio": 5.0,
+        "cost_delta_pct": null,
+        "latency_delta_pct": null,
+        "summary": "behaving in-baseline"
+      }
+    },
+    {
+      "seq": 32,
+      "t_offset_ms": 101.2,
+      "type": "stage",
+      "data": {
+        "name": "Verify",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 33,
+      "t_offset_ms": 101.2,
+      "type": "stage",
+      "data": {
+        "name": "Settle",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 34,
+      "t_offset_ms": 101.2,
+      "type": "settle",
+      "data": {
+        "worker": "confidentiality_scope",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.035,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 35,
+      "t_offset_ms": 101.2,
+      "type": "settle",
+      "data": {
+        "worker": "permitted_use",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.03,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 36,
+      "t_offset_ms": 101.2,
+      "type": "settle",
+      "data": {
+        "worker": "term_survival",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.025,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 37,
+      "t_offset_ms": 101.2,
+      "type": "settle",
+      "data": {
+        "worker": "carve_outs",
+        "pay_to": "0x00000000000000000000000000000000000051m1",
+        "authorized_usd": 0.02,
+        "settled_usd": 0.0,
+        "tx_hash": null,
+        "status": "withheld"
+      }
+    },
+    {
+      "seq": 38,
+      "t_offset_ms": 101.2,
+      "type": "stage",
+      "data": {
+        "name": "Settle",
+        "status": "done"
+      }
+    },
+    {
+      "seq": 39,
+      "t_offset_ms": 106.9,
+      "type": "receipt",
+      "data": {
+        "signer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "signature": "0x301358352674ad564cedc8e6fb11c8c4948b9ad106fc858c880f48347b5315ad0837b1bb9a295f6804605cdc82d1f1a00f5f168b44f25c892fec7f66f8ac2d171b",
+        "deliverable_hash": "0x146341a54e2757082f91f5a19055a70ec89258e962d5c80d444edff0c79b988f"
+      }
+    },
+    {
+      "seq": 40,
+      "t_offset_ms": 106.9,
+      "type": "stage",
+      "data": {
+        "name": "Done",
+        "status": "active"
+      }
+    },
+    {
+      "seq": 41,
+      "t_offset_ms": 106.9,
+      "type": "done",
+      "data": {
+        "gate_passed": false,
+        "pay_fraction": 0.0,
+        "total_settled_usd": 0.0,
+        "total_withheld_usd": 0.11,
+        "catch_summary": "1 fabricated claim(s) caught and withheld (6 claims graded)"
+      }
+    },
+    {
+      "seq": 42,
+      "t_offset_ms": 106.9,
+      "type": "stage",
+      "data": {
+        "name": "Done",
+        "status": "done"
+      }
+    }
+  ]
+}
