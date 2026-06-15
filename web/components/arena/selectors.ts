@@ -145,7 +145,12 @@ export function nodeStatus(vm: NodeVM, currentStage: string | null): NodeStatus 
   }
   if (vm.findings.length > 0) return "judged";
   if (vm.hired) {
-    if (currentStage === "Work") return "working";
+    // A hired node is "working" through the long thinking phase. The demo names
+    // that stage "Work"; the LIVE backend names it "collaborate" (and grading is
+    // "verify") — match both, case-insensitively, so the thinking animation fires
+    // live too (it previously only matched the demo's "Work").
+    const s = (currentStage ?? "").toLowerCase();
+    if (s === "work" || s === "collaborate" || s === "verify") return "working";
     return "hired";
   }
   if (vm.declined) return "declined";

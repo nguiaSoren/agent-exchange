@@ -143,6 +143,24 @@ export function ArenaNode({
         />
       )}
 
+      {/* "Thinking" pulse — two offset continuous rings while the agent works the
+          long collaborate/verify phase, so the node visibly reasons instead of
+          sitting frozen. (Suppressed during the transient speaking ping above.) */}
+      {status === "working" && !speaking && (
+        <>
+          <span
+            aria-hidden
+            className={`${styles.thinking} pointer-events-none absolute left-1/2 top-1/2 rounded-full`}
+            style={{ width: diameter, height: diameter, border: "1.5px solid var(--ax-emerald-glow)" }}
+          />
+          <span
+            aria-hidden
+            className={`${styles.thinking2} pointer-events-none absolute left-1/2 top-1/2 rounded-full`}
+            style={{ width: diameter, height: diameter, border: "1.5px solid var(--ax-emerald-glow)" }}
+          />
+        </>
+      )}
+
       {/* The disc — click affordance: lifts + gains a soft ring on hover/focus.
           Press state adds a 0.97 scale (pressed wins over hover). */}
       <div
@@ -334,7 +352,13 @@ export function ArenaNode({
             <GatewayLogo gateway={gateway} size={13} />
           </span>
         )}
-        {vm.bid && !vm.settlement ? (
+        {status === "working" ? (
+          <span
+            className={`${styles.thinkLabel} font-mono text-[8.5px] lowercase tracking-[0.08em] text-emerald`}
+          >
+            analyzing…
+          </span>
+        ) : vm.bid && !vm.settlement ? (
           <Stars value={vm.bid.reputation} size={9} />
         ) : !vm.settlement ? (
           <span className="font-mono text-[8.5px] text-fg-faint">

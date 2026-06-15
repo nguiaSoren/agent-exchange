@@ -142,6 +142,44 @@
   }
 }
 
+/* Continuous "thinking" pulse while a hired agent works the long collaborate/
+   verify phase — so the node reads as actively reasoning, not frozen. Reuses the
+   ping ring at a slower, steady cadence; the second ring is offset for a clear
+   "loading" rhythm. */
+.thinking {
+  animation: ax-ping 2000ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    infinite;
+}
+.thinking2 {
+  animation: ax-ping 2000ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    infinite;
+  animation-delay: 1000ms;
+}
+/* A small "analyzing…" label that breathes while the agent thinks. */
+.thinkLabel {
+  animation: ax-think-breathe 1400ms ease-in-out infinite;
+}
+@keyframes ax-think-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thinking,
+  .thinking2 {
+    animation: none;
+    opacity: 0;
+  }
+  .thinkLabel {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
 /* A2 — Verdict stamp pop: anticipation (overshoot 1.5) → settle under (.9) →
    small rebound (1.06) → rest (1). Lengthened to 480ms for a punchier feel. */
 .stamp {
