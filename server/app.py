@@ -331,6 +331,13 @@ def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, m
     """
     if framework == "langgraph":
         try:
+            # EAGER dep probe: the specialist imports langgraph/langchain lazily
+            # (inside findings()), so its constructor succeeds even when the dep is
+            # absent — which would leave a slot labelled "langgraph" that silently
+            # fails at runtime. Probe here so a missing dep falls back to native NOW
+            # (→ it actually works on AI/ML API + the gateway label is honest).
+            import langgraph  # noqa: F401
+            import langchain_openai  # noqa: F401
             from agent_exchange.workers.langgraph_specialist import LangGraphSpecialist
             return LangGraphSpecialist(name, area, prompt)
         except Exception as exc:  # missing langchain/langgraph deps or AIMLAPI key
@@ -339,6 +346,7 @@ def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, m
             return None
     if framework == "crewai":
         try:
+            import crewai  # noqa: F401 — eager probe (the worker imports it lazily)
             from agent_exchange.workers.crewai_specialist import CrewAISpecialist
             return CrewAISpecialist(name, area, prompt)
         except Exception as exc:  # missing crewai dep or FEATHERLESS key
