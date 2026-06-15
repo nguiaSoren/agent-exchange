@@ -238,6 +238,36 @@ export function ArenaNode({
         </svg>
       )}
 
+      {/* Continuously-rotating spinner head — the unmistakable "actively working"
+          motion that runs the ENTIRE think. A live in-room audit is a single long
+          (~1-2 min) model call with no intermediate output, so the determinate arc
+          would just sit there; this never stops sweeping until the agent's audit
+          lands (collabDone) — proving it's alive, not frozen. */}
+      {status === "working" && !vm.collabDone && (
+        <svg
+          aria-hidden
+          className={`${styles.workSpinner} pointer-events-none absolute left-1/2 top-1/2`}
+          width={ringSize}
+          height={ringSize}
+          viewBox={`0 0 ${ringSize} ${ringSize}`}
+          style={{
+            ["--ring-circ" as string]: ringCirc,
+            filter: "drop-shadow(0 0 4px var(--ax-emerald-glow))",
+          }}
+        >
+          <circle
+            cx={ringSize / 2}
+            cy={ringSize / 2}
+            r={ringR}
+            fill="none"
+            stroke="var(--ax-emerald-glow)"
+            strokeWidth={ringStroke}
+            strokeLinecap="round"
+            strokeDasharray={`${ringCirc * 0.25} ${ringCirc}`}
+          />
+        </svg>
+      )}
+
       {/* The disc — click affordance: lifts + gains a soft ring on hover/focus.
           Press state adds a 0.97 scale (pressed wins over hover). */}
       <div

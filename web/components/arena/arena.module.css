@@ -196,24 +196,25 @@
   /* The wrapper just positions/rotates; the circle owns the fill animation. */
   opacity: 1;
 }
+/* While working, the determinate arc stays EMPTY — the rotating .workSpinner head
+   provides the (continuous) motion, and the arc only fills once real progress
+   lands (collabDone → resolve). A long live audit thus shows a sweeping spinner
+   the whole time instead of an arc frozen at ~85%. */
 .progressWork circle {
-  animation: ax-ring-fill 26s var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
-    forwards;
+  stroke-dashoffset: var(--ring-circ);
 }
-/* Asymptotic fill: empty (1.0) → ~60% by 2.5s → crawls toward ~85% and holds.
-   The offset is (1 - fill) × circumference. fill: 0 → .60 → .78 → .85. */
-@keyframes ax-ring-fill {
-  0% {
-    stroke-dashoffset: var(--ring-circ);
+
+/* The rotating spinner head: a short bright arc that sweeps the ring ~once a
+   second, so a working node is unmistakably ALIVE for the entire think. */
+.workSpinner {
+  animation: ax-work-spin 1.05s linear infinite;
+}
+@keyframes ax-work-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
   }
-  10% {
-    stroke-dashoffset: calc(var(--ring-circ) * 0.4); /* ~60% fast */
-  }
-  45% {
-    stroke-dashoffset: calc(var(--ring-circ) * 0.22); /* ~78% slowing */
-  }
-  100% {
-    stroke-dashoffset: calc(var(--ring-circ) * 0.15); /* ~85% crawl-and-hold */
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 /* collabDone: smoothly advance to ~90% from wherever the crawl was. */
@@ -235,8 +236,12 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* No crawl/fade: show a static ~partial arc so the ring still reads as
-     "in progress" without motion; resolved snaps to a full, non-fading ring. */
+  /* No spin/crawl/fade: show a static ~partial arc so a working node still reads
+     as "in progress" without motion; resolved snaps to a full, non-fading ring. */
+  .workSpinner {
+    animation: none !important;
+    opacity: 0 !important;
+  }
   .progressWork circle,
   .progressDone circle {
     animation: none !important;
