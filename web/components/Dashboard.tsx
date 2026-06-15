@@ -39,6 +39,17 @@ const Arena = dynamic(() => import("./arena").then((m) => m.Arena), {
   ),
 });
 
+/** Banner copy shown when a live run falls back to the recorded real run. */
+const FALLBACK_COPY: Record<string, string> = {
+  live_busy: "Live backend busy — showing the last real Band-room run.",
+  live_cap_reached:
+    "Daily live-run budget reached — showing the last real Band-room run.",
+  live_unavailable:
+    "Live backend warming up — showing the last real Band-room run.",
+};
+
+const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
 type Action =
   | { kind: "reset" }
   | { kind: "start" }
@@ -70,6 +81,17 @@ export function Dashboard() {
   const [loadingSample, setLoadingSample] = useState<boolean>(false);
   // C3: immediate feedback — true from Run press until the first event lands
   const [starting, setStarting] = useState<boolean>(false);
+
+  // ── Live run + recorded fallback ──────────────────────────────────────────
+  // A judge-triggered LIVE run (ax:run-live) hits the real backend. On free-tier
+  // Render the cold start is ~60-90s, so we show an intentional "spinning up a
+  // real Band room…" notice while no event has landed. If the backend returns
+  // 429 (busy / cap / unavailable) or errors/times-out, we transparently fall
+  // back to the LAST RECORDED real run — same arena, with a clear banner. Never
+  // a dead spinner.
+  const [liveStarting, setLiveStarting] = useState<boolean>(false);
+  // Fallback banner copy (null = no fallback active).
+  const [fallbackNote, setFallbackNote] = useState<string | null>(null);
 
   // ── Cinematic auto-play demo ──────────────────────────────────────────────
   // `cinematic` is the on-rails mode: intro overlay → auto-start the run → beat
@@ -125,58 +147,146 @@ export function Dashboard() {
   const narratorOn = state.running || state.finished;
   const consoleOpen = !narratorOn;
 
-  const onRun = useCallback(async () => {
-    abortRef.current?.();
-    const myRun = ++runIdRef.current;
-    // C3: show "Assembling" micro-state immediately — before any event lands
-    setStarting(true);
-    dispatch({ kind: "start" });
-
-    // The console collapses on this render and the arena takes the stage —
-    // scroll it FULLY into view (bottom corners + legend) after the relayout
-    // paints. Two rAFs so the collapsed layout has settled first.
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => scrollIntoFullView(arenaRef.current)),
-    );
-
-    const req: RunRequest = {
-      kind,
-      document,
-      budget_usd: budget,
-      mode: demoMode ? "sim" : "live",
-    };
-
-    try {
-      if (demoMode) {
-        abortRef.current = null;
-        // Cinematic take runs slower so the beat captions are readable.
-        const scale = cinematicRef.current ? CINEMATIC_DELAY_SCALE : 1;
-        for await (const ev of mockRun(req, scale)) {
-          if (runIdRef.current !== myRun) return;
-          setStarting(false);
-          dispatch({ kind: "event", ev });
-        }
-      } else {
-        const handle = runJob(req);
-        abortRef.current = handle.abort;
-        for await (const ev of handle.events) {
-          if (runIdRef.current !== myRun) return;
-          setStarting(false);
-          dispatch({ kind: "event", ev });
-        }
-      }
-    } catch (err) {
+  // Play the LAST RECORDED real Band-room run through the SAME arena reducer.
+  // Triggered when a live run is busy/capped/unavailable or fails on cold start.
+  // Reuses the canonical replay schema (web/public/replays/live-real-run.replay.json,
+  // produced by a parallel engineer). If the fixture 404s, we fail gracefully —
+  // a banner pointing at the cinematic above — never a dead spinner.
+  const playRecordedFallback = useCallback(
+    async (myRun: number, reason: "live_busy" | "live_cap_reached" | "live_unavailable") => {
       if (runIdRef.current !== myRun) return;
-      setStarting(false);
-      dispatch({
-        kind: "event",
-        ev: {
-          type: "error",
-          data: { message: err instanceof Error ? err.message : String(err) },
-        },
-      });
-    }
-  }, [kind, document, budget, demoMode]);
+      try {
+        const res = await fetch("/replays/live-real-run.replay.json", {
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error(`replay ${res.status}`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const raw: any = await res.json();
+        const events: { type: string; data: unknown }[] = Array.isArray(raw?.events)
+          ? raw.events
+          : [];
+        if (events.length === 0) throw new Error("empty replay");
+
+        // We're now showing the recorded run — clear the spinner, set the banner.
+        setStarting(false);
+        setLiveStarting(false);
+        setFallbackNote(FALLBACK_COPY[reason]);
+        dispatch({ kind: "reset" });
+        dispatch({ kind: "start" });
+
+        for (const e of events) {
+          if (runIdRef.current !== myRun) return;
+          await sleep(220);
+          if (runIdRef.current !== myRun) return;
+          dispatch({ kind: "event", ev: { type: e.type, data: e.data } as ExchangeEvent });
+        }
+      } catch {
+        if (runIdRef.current !== myRun) return;
+        // Fixture missing / unreadable: don't spin forever. Surface a calm note
+        // that points the judge back at the cinematic demo above.
+        setStarting(false);
+        setLiveStarting(false);
+        setFallbackNote(null);
+        dispatch({
+          kind: "event",
+          ev: {
+            type: "error",
+            data: {
+              message:
+                "Live run unavailable right now — watch the cinematic above for the full flow.",
+            },
+          },
+        });
+      }
+    },
+    [],
+  );
+
+  // `onRun` accepts an optional override so a LIVE trigger (ax:run-live) can pass
+  // the judge's exact {kind, document, mode} synchronously — React state set in
+  // the same tick wouldn't be visible to this closure yet. With no override it
+  // uses the launch-console state (the Run button path), unchanged.
+  const onRun = useCallback(
+    async (override?: { kind?: JobKind; document?: string; mode?: "sim" | "live" }) => {
+      abortRef.current?.();
+      const myRun = ++runIdRef.current;
+
+      const runKind = override?.kind ?? kind;
+      const runDoc = override?.document ?? document;
+      const isDemo = override?.mode ? override.mode === "sim" : demoMode;
+
+      // C3: show "Assembling" micro-state immediately — before any event lands
+      setStarting(true);
+      setFallbackNote(null);
+      // Live cold-start notice only on the live path (Render spin-up reads ~60-90s).
+      setLiveStarting(!isDemo);
+      dispatch({ kind: "start" });
+
+      // The console collapses on this render and the arena takes the stage —
+      // scroll it FULLY into view (bottom corners + legend) after the relayout
+      // paints. Two rAFs so the collapsed layout has settled first.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => scrollIntoFullView(arenaRef.current)),
+      );
+
+      const req: RunRequest = {
+        kind: runKind,
+        document: runDoc,
+        budget_usd: budget,
+        mode: isDemo ? "sim" : "live",
+      };
+
+      try {
+        if (isDemo) {
+          abortRef.current = null;
+          // Cinematic take runs slower so the beat captions are readable.
+          const scale = cinematicRef.current ? CINEMATIC_DELAY_SCALE : 1;
+          for await (const ev of mockRun(req, scale)) {
+            if (runIdRef.current !== myRun) return;
+            setStarting(false);
+            dispatch({ kind: "event", ev });
+          }
+        } else {
+          const handle = runJob(req);
+          abortRef.current = handle.abort;
+          for await (const ev of handle.events) {
+            if (runIdRef.current !== myRun) return;
+            // A typed 429 (busy/cap/unavailable) arrives as an error event with
+            // `live_status` set BEFORE any stream content — fall back to the
+            // recorded real run rather than showing a hard error.
+            if (ev.type === "error" && ev.data.live_status) {
+              handle.abort();
+              await playRecordedFallback(myRun, ev.data.live_status);
+              return;
+            }
+            setStarting(false);
+            setLiveStarting(false);
+            dispatch({ kind: "event", ev });
+          }
+        }
+      } catch (err) {
+        if (runIdRef.current !== myRun) return;
+        // On the LIVE path, a network/cold-start failure also falls back to the
+        // recorded run — never a dead spinner.
+        if (!isDemo) {
+          await playRecordedFallback(myRun, "live_unavailable");
+          return;
+        }
+        setStarting(false);
+        setLiveStarting(false);
+        dispatch({
+          kind: "event",
+          ev: {
+            type: "error",
+            data: { message: err instanceof Error ? err.message : String(err) },
+          },
+        });
+      }
+    },
+    // playRecordedFallback is a stable useCallback declared below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [kind, document, budget, demoMode],
+  );
 
   // Landing CTAs ("Watch it run" / "Run the live demo") fire `ax:run-demo` to
   // start the demo exactly like clicking Run — same code path ⇒ the demo plays
@@ -186,6 +296,26 @@ export function Dashboard() {
     window.addEventListener("ax:run-demo", handler);
     return () => window.removeEventListener("ax:run-demo", handler);
   }, [onRun]);
+
+  // `ax:run-live` (fired by the "Run it live" section) starts a REAL backend run
+  // of the judge's document. It REUSES onRun on the live path — same arena, same
+  // stream, same fallback — by passing the doc + kind as a synchronous override
+  // and forcing mode:"live". It also flips the masthead badge to LIVE.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ kind?: JobKind; document?: string }>).detail;
+      const liveKind = detail?.kind ?? kind;
+      const liveDoc = detail?.document ?? document;
+      // Reflect the live choice in the console state (so a later reset/edit reads
+      // the same doc) and drive the masthead's LIVE badge.
+      if (detail?.kind) setKind(liveKind);
+      if (typeof detail?.document === "string") setDocument(liveDoc);
+      setDemoMode(false);
+      void onRun({ kind: liveKind, document: liveDoc, mode: "live" });
+    };
+    window.addEventListener("ax:run-live", handler);
+    return () => window.removeEventListener("ax:run-live", handler);
+  }, [onRun, kind, document]);
 
   // Start the cinematic: raise the intro overlay. Its lift fires `onLift`, which
   // calls onRun() — so the run starts on the SAME path as the Run button. We
@@ -241,6 +371,8 @@ export function Dashboard() {
     abortRef.current?.();
     cleanupRef.current?.();
     setStarting(false);
+    setLiveStarting(false);
+    setFallbackNote(null);
     setCinematic(false);
     setIntroUp(false);
     dispatch({ kind: "reset" });
@@ -344,6 +476,34 @@ export function Dashboard() {
               Toggle demo mode to play the canned run without a backend.
             </span>
           )}
+        </div>
+      )}
+
+      {/* ── Live cold-start notice: the Render spin-up reads ~60-90s ──── */}
+      {liveStarting && state.running && (
+        <div className="ax-fade-up flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-lg border border-emerald/40 bg-emerald-dim px-4 py-3 font-mono text-[12.5px] text-emerald">
+          <LiveDot tone="emerald" size={7} />
+          <span className="font-display font-bold uppercase tracking-[0.08em]">
+            Spinning up a real Band room…
+          </span>
+          <span className="text-fg-muted">
+            ~60–90s on first call (real Band + agents + x402). Watch the arena —
+            it streams as soon as the room is live.
+          </span>
+        </div>
+      )}
+
+      {/* ── Recorded-fallback banner: live was busy/capped/warming up ──── */}
+      {fallbackNote && (
+        <div className="ax-fade-up flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-lg border border-gold/40 bg-gold-dim px-4 py-3 font-mono text-[12.5px] text-gold">
+          <span className="font-display font-bold uppercase tracking-[0.08em]">
+            Recorded run
+          </span>
+          <span className="text-fg-muted">{fallbackNote}</span>
+          <span className="text-fg-faint">
+            This is a real Band-room run we recorded earlier — same flow, same
+            catch → $0.
+          </span>
         </div>
       )}
 

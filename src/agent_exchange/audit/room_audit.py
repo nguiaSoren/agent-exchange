@@ -111,13 +111,14 @@ async def _member_round(
                 exc_info=True,
             )
             return []
-        await _best_effort_post(
-            member.band,
-            room_id,
-            _format_findings_post(member.specialty, findings),
-            mentions=[reporter_mention],
-            what=f"findings ({member.specialty})",
-        )
+        if member.post_to_room:
+            await _best_effort_post(
+                member.band,
+                room_id,
+                _format_findings_post(member.specialty, findings),
+                mentions=[reporter_mention],
+                what=f"findings ({member.specialty})",
+            )
         return findings
 
 
@@ -182,6 +183,12 @@ async def collaborate_in_room(
     # addressed to the team; the members' findings posts are addressed to the reporter.
     team_mentions: list[dict] = []
     for member in team:
+        # Skip non-posting members (e.g. the seeded probe, which borrows the
+        # market client): mentioning them = mentioning the market identity, and
+        # when the reporter falls back to that same identity Band rejects the
+        # summary post with `cannot_mention_self`. They aren't real room speakers.
+        if not member.post_to_room:
+            continue
         try:
             me = await member.band.me()
             team_mentions.append(

@@ -135,6 +135,13 @@ export interface DoneEvent {
 
 export interface ErrorEvent {
   message: string;
+  /**
+   * Set only when a LIVE run could not start because the backend returned
+   * HTTP 429 (busy / daily cap / unavailable) before streaming. The Dashboard
+   * reads this to fall back to the recorded real run instead of surfacing a
+   * hard error. Absent on every normal stream / true error.
+   */
+  live_status?: "live_busy" | "live_cap_reached" | "live_unavailable";
 }
 
 /** Discriminated union of every event the UI consumes. */

@@ -66,3 +66,8 @@ data/reputation.json
 Thumbs.db
 .vscode/
 .idea/
+data/telemetry/
+
+# Research wedge — unpublished paper outlines / publishability assessment.
+# Keep private until published (un-ignore to show research depth in the public repo).
+docs/research/

@@ -37,6 +37,12 @@ class CollaborationMember:
     area: str
     band: BandClient
     auditor: Auditor
+    # When False, this member's findings are still collected + verified, but NOT
+    # posted to the room. Used by the seeded verifier-probe, which has no Band
+    # identity of its own (it borrows the market client) — posting would either
+    # @mention itself (Band rejects `cannot_mention_self`) or impersonate the
+    # market. It only needs to be GRADED, not to speak in the room.
+    post_to_room: bool = True
 
 
 @dataclass(frozen=True, slots=True)

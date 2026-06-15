@@ -57,6 +57,38 @@ export interface RunHandle {
   abort: () => void;
 }
 
+/** The locked 429 reasons the backend returns before a live run can stream. */
+export type LiveUnavailableReason =
+  | "live_busy"
+  | "live_cap_reached"
+  | "live_unavailable";
+
+const LIVE_REASONS: ReadonlySet<string> = new Set<LiveUnavailableReason>([
+  "live_busy",
+  "live_cap_reached",
+  "live_unavailable",
+]);
+
+/** Judge-readable copy per reason (used only as the error message fallback). */
+const LIVE_REASON_COPY: Record<LiveUnavailableReason, string> = {
+  live_busy: "A live Band room is already in flight.",
+  live_cap_reached: "The daily live-run budget has been reached.",
+  live_unavailable: "The live backend is unavailable right now.",
+};
+
+/** Parse the 429 body `{"error": "live_busy"|…}` into a typed reason. */
+async function readLiveReason(res: Response): Promise<LiveUnavailableReason> {
+  try {
+    const body = (await res.json()) as { error?: string };
+    if (body?.error && LIVE_REASONS.has(body.error)) {
+      return body.error as LiveUnavailableReason;
+    }
+  } catch {
+    // fall through — a 429 with an unreadable body is still "unavailable"
+  }
+  return "live_unavailable";
+}
+
 /**
  * Start a live job run and stream typed events back.
  *
@@ -79,11 +111,24 @@ export function runJob(req: RunRequest): RunHandle {
     });
 
     if (!res.ok || !res.body) {
+      // A 429 (live busy / daily cap / unavailable) is a CLEAN, expected signal:
+      // the backend returns it BEFORE streaming, with a typed JSON reason. We
+      // surface it as `live_status` on the error event so the Dashboard can fall
+      // back to the recorded real run rather than treating it as a hard error.
+      let liveStatus: LiveUnavailableReason | undefined;
+      if (res.status === 429) {
+        liveStatus = await readLiveReason(res);
+      }
       yield {
         type: "error",
-        data: {
-          message: `Backend responded ${res.status} ${res.statusText}. Is ${API_BASE} running?`,
-        },
+        data: liveStatus
+          ? {
+              message: LIVE_REASON_COPY[liveStatus],
+              live_status: liveStatus,
+            }
+          : {
+              message: `Backend responded ${res.status} ${res.statusText}. Is ${API_BASE} running?`,
+            },
       };
       return;
     }

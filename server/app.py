@@ -81,6 +81,11 @@ from agent_exchange.workers.job_types import (  # noqa: E402
 )
 
 from demo_budget import DEMO_DAILY_CAP_USD, DEMO_TASK_LABEL, get_demo_guard  # noqa: E402
+from live_guard import (  # noqa: E402
+    LIVE_DAILY_CAP_USD,
+    LIVE_DAILY_RUNS,
+    get_live_guard,
+)
 from sim import SIM_SIGNER_KEY, KeyedVerifierBackend, SimGate, build_sim_scenario  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -218,6 +223,10 @@ class RunContext:
     drift_bids_atomic: dict[str, int]        # worker -> accepted bid (USDC atomic)
     drift_now_ms: int                        # injected "now" (sim: fixed; live: wall)
     closeables: list[Any] = field(default_factory=list)  # http clients to aclose()
+    # The cross-owner recruit narration, emitted as room_message(s) around the hire
+    # stage so the UI shows the "an agent you don't own joined the room" hero beat.
+    # Each entry is {"sender", "content"}; empty (the default) ⇒ no cross-owner beat.
+    recruit_messages: list[dict] = field(default_factory=list)
 
 
 async def _build_sim_context(kind: str, document: str) -> RunContext:
@@ -245,6 +254,69 @@ async def _build_sim_context(kind: str, document: str) -> RunContext:
         drift_bids_atomic=scenario.drift_bids_atomic,
         drift_now_ms=scenario.drift_now_ms,
     )
+
+
+# ---------------------------------------------------------------------------
+# The seeded fabricator — the LIVE verifier test (the "catch -> $0" hero moment).
+#
+# The live run injects ONE extra specialist that asserts a plausible-but-FALSE clause
+# finding NOT present in the document. The REAL verifier then grades it ``unsupported``,
+# which (by the job-level settlement gate) fails the whole job -> $0 withheld. This makes
+# the verifier's withhold-on-fabrication moat VISIBLE on every live demo, deterministically
+# (a real model with a "lie" prompt is not reliably fabricating; a canned finding is).
+#
+# It is honestly flagged so the UI never passes it off as a genuine worker:
+#   * its worker id is the distinct ``seeded-probe`` (not a real clause area);
+#   * every event it produces carries ``"seeded": True`` (pool / bid / finding);
+#   * the ``done`` event's ``catch_summary`` notes the seeded test.
+# Every OTHER live worker is genuine. The sim path is NOT seeded here (sim has its own
+# seeded liar in sim.py); this fabricator is live-only.
+# ---------------------------------------------------------------------------
+
+#: The distinct, non-clause-area worker id for the seeded probe (so the UI can label it).
+SEEDED_PROBE_ID = "seeded-probe"
+
+#: A plausible-but-FALSE finding per job kind: a clause that does NOT exist in the sample
+#: document, so the real verifier finds no supporting quote and grades it ``unsupported``.
+_SEEDED_FABRICATION: dict[str, tuple[str, str]] = {
+    # (clause_ref, claim) — both fabricated; no such clause in SAMPLE_MSA / SAMPLE_NDA.
+    "contract-audit": (
+        "12",
+        "Clause 12 grants the Vendor an uncapped indemnity from the Client in perpetuity, "
+        "with no limitation of liability and no right of termination for the Client.",
+    ),
+    "nda-review": (
+        "9",
+        "Clause 9 permits the Receiving Party to publicly disclose the Disclosing Party's "
+        "trade secrets at will, with no surviving confidentiality obligation.",
+    ),
+}
+
+
+class _SeededFabricator:
+    """A deterministic auditor that always emits ONE fabricated finding (live verifier test).
+
+    Satisfies the `Specialist` protocol (`.name` + async `findings`). It ignores the
+    contract and returns the kind's plausible-but-FALSE finding so the real verifier — run
+    unchanged — grades it ``unsupported`` and the job-level gate withholds payment. The
+    finding is stamped with :data:`SEEDED_PROBE_ID` so it is attributable and labellable as
+    the seeded probe, never as a genuine worker.
+    """
+
+    name = SEEDED_PROBE_ID
+
+    def __init__(self, kind: str) -> None:
+        from agent_exchange.workers.finding import Finding
+
+        clause_ref, claim = _SEEDED_FABRICATION.get(
+            kind, _SEEDED_FABRICATION["contract-audit"]
+        )
+        self._finding = Finding(
+            worker=SEEDED_PROBE_ID, clause_ref=clause_ref, claim=claim, severity="high"
+        )
+
+    async def findings(self, contract: str) -> list:  # type: ignore[type-arg]
+        return [self._finding]
 
 
 def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, model: str):
@@ -291,18 +363,34 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     from agent_exchange.workers.reporter import ReporterWorker
     from agent_exchange.workers.specialist import SPECIALISTS, SpecialistWorker
 
+    from cross_owner import cross_owner_handle, cross_owner_specialty, owner_label_for
+
     model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
     verifier_model = os.getenv("OPENAI_VERIFIER_MODEL", "gpt-4.1")
     spec_meta = {name: (area, prompt) for name, area, prompt in SPECIALISTS}
     keys = specialist_band_keys()
 
-    closeables: list[Any] = []
+    # The market identity (created up front so the cross-owner handshake — which the
+    # market drives BEFORE the agent is added to the room — runs against the real
+    # market client). It also creates + populates the work room below.
+    market_key = _env("BAND_MARKET_KEY") or _env("BAND_AGENT_A_KEY") or next(iter(keys.values()))
+    market = make_http_band_client(market_key)
+
+    # Cross-owner designation: the specialty whose Band key is a SECOND account's, to be
+    # recruited across the owner boundary via a real contact handshake. Disabled when the
+    # specialty is unset/blank, not in the roster, or its handle is missing.
+    xowner_specialty = cross_owner_specialty()
+    xowner_handle = cross_owner_handle(xowner_specialty)
+    cross_owner_enabled = bool(xowner_specialty and xowner_handle and xowner_specialty in keys)
+
+    closeables: list[Any] = [market]
     team: list[CollaborationMember] = []
     pool: list[dict] = []
     bids: list[dict] = []
     hires: list[Hire] = []
     payout: dict[str, str] = {}
     payout_fallback = _env("SELLER_PAYTO_ADDRESS")
+    recruit_messages: list[dict] = []
 
     for name, key in keys.items():
         meta = spec_meta.get(name)
@@ -327,9 +415,29 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         team.append(
             CollaborationMember(specialty=name, area=area, band=band, auditor=auditor)
         )
+        # CROSS-OWNER beat: the designated specialty's key is a SECOND account's, so
+        # BEFORE it is added to the work room the market runs the real contact-consent
+        # handshake with it (inverse auto-accept). On success it is marked cross_owner so
+        # the UI shows the cross-org marker + a recruit narration; on any failure it
+        # degrades to same-owner (still recruited) — the run never crashes.
+        is_cross = False
+        if cross_owner_enabled and name == xowner_specialty:
+            from cross_owner import establish_cross_owner_contact
+
+            is_cross = await establish_cross_owner_contact(market, band, xowner_handle)
+            if is_cross:
+                owner_label = owner_label_for(xowner_handle)
+                recruit_messages.append({
+                    "sender": "market",
+                    "content": (
+                        f"contact request → @{owner_label}/{name} approved "
+                        f"→ joined the work room (cross-owner recruit via Band)"
+                    ),
+                })
+        owner_label = owner_label_for(xowner_handle) if is_cross else "self"
         pool.append({"id": ident["id"], "handle": ident.get("handle", ""),
-                     "name": ident.get("name", name), "owner": "self",
-                     "cross_owner": False, "framework": framework})
+                     "name": ident.get("name", name), "owner": owner_label,
+                     "cross_owner": is_cross, "framework": framework})
         # A live bid: a modest fixed asking price (the on-network bidding auction is its
         # own spike; here we hire the keyed specialists directly so the demo always runs).
         price_usd = round(budget_usd / max(1, len(keys)), 4)
@@ -350,15 +458,35 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
                  "name": reporter_me.get("name") or "reporter"},
     )
 
-    # The market creates + populates the work room.
-    market_key = _env("BAND_MARKET_KEY") or _env("BAND_AGENT_A_KEY") or next(iter(keys.values()))
-    market = make_http_band_client(market_key)
-    closeables.append(market)
+    # The market (created up front, above) creates + populates the work room.
     work_room_id = await market.create_room(f"{kind} — work room")
     for m in team:
         ident = await m.band.me()
         await market.add_participant(work_room_id, ident["id"])
     await market.add_participant(work_room_id, reporter_me["id"])
+
+    # Inject the SEEDED FABRICATOR (the live verifier test). It joins the room as the
+    # market identity (already a participant) but is honestly labelled the seeded probe
+    # everywhere downstream (pool/bid/finding carry seeded=True; done notes it). Its FALSE
+    # finding is graded ``unsupported`` by the REAL verifier -> the gate withholds $0. It
+    # is priced $0 so it never affects the budget or any genuine worker's payout.
+    team.append(
+        CollaborationMember(
+            specialty=SEEDED_PROBE_ID, area="seeded verifier test (fabricated finding)",
+            band=market, auditor=_SeededFabricator(kind),
+            # Don't post to the room: the probe borrows the market client, so a post
+            # would @mention itself (Band 422 `cannot_mention_self`). Its false finding
+            # is still collected + graded `unsupported` → gate → $0.
+            post_to_room=False,
+        )
+    )
+    pool.append({"id": SEEDED_PROBE_ID, "handle": SEEDED_PROBE_ID,
+                 "name": "Seeded Probe (verifier test)", "owner": "system",
+                 "cross_owner": False, "framework": "native", "seeded": True})
+    bids.append({"worker": SEEDED_PROBE_ID, "price_usd": 0.0, "relevance": 0.0,
+                 "reputation": 0.0, "n_jobs": 0, "framework": "native", "seeded": True})
+    hires.append(Hire(worker=SEEDED_PROBE_ID, price_atomic=0, value=0.0, relevance=0.0))
+    payout[SEEDED_PROBE_ID] = payout_fallback
 
     # Ablation gate ON for the demo: hardens the verifier (verbatim-quote +
     # ablation routing + escalate-on-absent) — it only penalizes/escalates,
@@ -392,7 +520,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         gate=gate, signer_key=_env("EVM_PRIVATE_KEY"), bids=bids,
         drift_store=drift_store, drift_models=drift_models,
         drift_bids_atomic=drift_bids_atomic, drift_now_ms=_now_ms(),
-        closeables=closeables,
+        closeables=closeables, recruit_messages=recruit_messages,
     )
 
 
@@ -515,6 +643,12 @@ async def run_job(
             "strategy": "coverage_within_budget",
             "pay_fraction_target": 1.0,
         }
+        # CROSS-OWNER recruit beat — "an agent you don't own joined the room". The live
+        # path records these after the real contact-consent handshake; surface them as
+        # room_messages right at the hire/recruit moment so the UI shows the cross-org
+        # join. Empty on the sim path (the sim marks cross_owner in its pool directly).
+        for rm in ctx.recruit_messages:
+            yield "room_message", rm
         yield "stage", {"name": "hire", "status": "end"}
 
         # 4. COLLABORATE — the in-room team audit (the real `collaborate_in_room`).
@@ -539,6 +673,9 @@ async def run_job(
                 "verdict": _VERDICT_LABEL[v.verdict],
                 "confidence": round(v.confidence, 3),
                 "evidence_quote": v.evidence_quote,
+                # The seeded probe is honestly labelled so the UI never shows it as a
+                # genuine worker — it is the verifier test, caught on purpose.
+                "seeded": af.finding.worker == SEEDED_PROBE_ID,
             }
 
         # 5b. DRIFT — the SECOND cheat-signal, independent of the verifier: did
@@ -587,15 +724,26 @@ async def run_job(
             af.verdict.verdict is Verdict.UNSUPPORTED for af in result.all_audited
         )
         n_total = len(result.all_audited)
+        seeded_caught = any(
+            af.finding.worker == SEEDED_PROBE_ID
+            and af.verdict.verdict is Verdict.UNSUPPORTED
+            for af in result.all_audited
+        )
         catch = (f"{n_unsupported} fabricated claim(s) caught and withheld"
                  if n_unsupported else "no fabrication — all claims verified")
+        # On the live path one of those catches is the SEEDED verifier test — disclose it.
+        seeded_note = (
+            " (incl. the seeded verifier-test probe — caught on purpose)"
+            if seeded_caught else ""
+        )
         yield "stage", {"name": "done", "status": "start"}
         yield "done", {
             "gate_passed": settlement.gate_passed,
             "pay_fraction": round(settlement.pay_fraction, 3),
             "total_settled_usd": _usd(settlement.total_settled_atomic),
             "total_withheld_usd": _usd(settlement.total_withheld_atomic),
-            "catch_summary": f"{catch} ({n_total} claims graded)",
+            "catch_summary": f"{catch} ({n_total} claims graded){seeded_note}",
+            "seeded_probe_caught": seeded_caught,
         }
         yield "stage", {"name": "done", "status": "end"}
 
@@ -731,23 +879,90 @@ async def sample(kind: str = "contract-audit") -> JSONResponse:
     })
 
 
+#: The SSE response headers (shared by the sim + live streams).
+_SSE_HEADERS = {
+    "Cache-Control": "no-cache",
+    "Connection": "keep-alive",
+    "X-Accel-Buffering": "no",  # disable proxy buffering so events flush live
+}
+
+
+def _project_live_cost(kind: str, document: str, budget_usd: float) -> float:
+    """Project the USD provider spend of one LIVE run (for the daily $-cap reservation).
+
+    A live run fans the kind's roster over the document (one model call each on the
+    configured worker model) plus one verifier pass — the same shape the audit estimator
+    projects. The seeded probe makes no model call (it is canned), so it adds nothing.
+    Unknown-price models contribute 0 (honest — never a fabricated number).
+    """
+    from agent_exchange.workers.job_types import JOB_TYPES
+
+    worker_model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+    verifier_model = os.getenv("OPENAI_VERIFIER_MODEL", "gpt-4.1")
+    job_type = JOB_TYPES.get(kind)
+    n_specialists = len(job_type.specialists) if job_type is not None else 6
+    doc = (document or "").strip() or _sample_document(kind)
+    return _estimate_audit_cost(doc, worker_model, verifier_model, n_specialists)
+
+
 @app.post("/api/run")
-async def run(req: RunRequest) -> StreamingResponse:
-    """Run a marketplace job and stream its lifecycle as Server-Sent Events."""
+async def run(req: RunRequest):
+    """Run a marketplace job and stream its lifecycle as Server-Sent Events.
 
-    async def _stream() -> AsyncIterator[str]:
-        async for event, data in run_job(req.kind, req.document, req.budget_usd, req.mode):
-            yield _sse(event, data)
+    SIM mode (the default) is unrestricted (no spend). LIVE mode is gated BEFORE any
+    streaming or spend, returning a 429 JSON (never an SSE) when refused:
 
-    return StreamingResponse(
-        _stream(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no",  # disable proxy buffering so events flush live
-        },
-    )
+      * 429 ``live_unavailable``  — live keys are not configured (frontend falls back to
+        the recorded run).
+      * 429 ``live_busy``         — a live run is already in progress (single-flight).
+      * 429 ``live_cap_reached``  — the daily run-count or $ cap is exhausted.
+
+    Once admitted, a live run holds the single-flight flag + its budget reservation until
+    the stream ends; both are released in a ``finally`` inside the stream so an error or a
+    client disconnect can never wedge the lock or leak the reservation.
+    """
+    # SIM (or live-degraded-to-sim): no guards, no spend — stream straight through.
+    if req.mode != "live":
+        async def _sim_stream() -> AsyncIterator[str]:
+            async for event, data in run_job(req.kind, req.document, req.budget_usd, "sim"):
+                yield _sse(event, data)
+
+        return StreamingResponse(_sim_stream(), media_type="text/event-stream",
+                                 headers=_SSE_HEADERS)
+
+    # LIVE — gate before streaming.
+    if not _live_keys_present():
+        return JSONResponse(
+            status_code=429,
+            content={
+                "error": "live_unavailable",
+                "detail": ("live keys are not configured on this server — use the "
+                           "recorded run instead (the frontend falls back automatically)"),
+            },
+        )
+
+    projected = _project_live_cost(req.kind, req.document, req.budget_usd)
+    guard = get_live_guard()
+    admission = guard.try_acquire(projected_usd=projected)
+    if not admission.admitted:
+        return JSONResponse(
+            status_code=429,
+            content={"error": admission.error_code, "detail": admission.detail},
+        )
+
+    async def _live_stream() -> AsyncIterator[str]:
+        try:
+            async for event, data in run_job(req.kind, req.document, req.budget_usd, "live"):
+                yield _sse(event, data)
+        except Exception as exc:  # noqa: BLE001 — never a 500/half-stream; emit a clean error.
+            yield _sse("error", {"message": f"{type(exc).__name__}: {exc}"})
+        finally:
+            # ALWAYS release the single-flight flag + reconcile the budget reservation,
+            # even on error or client disconnect (GeneratorExit also runs this finally).
+            guard.release(admission)
+
+    return StreamingResponse(_live_stream(), media_type="text/event-stream",
+                             headers=_SSE_HEADERS)
 
 
 # ---------------------------------------------------------------------------

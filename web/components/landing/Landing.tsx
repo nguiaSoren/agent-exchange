@@ -5,7 +5,7 @@ import { HeroShotRecruit } from "./HeroShotRecruit";
 import { HowItWorks } from "./HowItWorks";
 import { Numbers } from "./Numbers";
 import { Research } from "./Research";
-import { AuditYourContract } from "./AuditYourContract";
+import { TryItLive } from "./TryItLive";
 import { ClosingCTA } from "./ClosingCTA";
 import { Footer } from "./Footer";
 
@@ -13,7 +13,7 @@ import { Footer } from "./Footer";
  * Landing — the concept landing page for The Agent Exchange.
  * Reads top-to-bottom: topbar → hero → the two HERO SHOTS (the catch → $0, and
  * cross-owner recruitment) → how it works → numbers → research/proof →
- * audit-your-own-contract (the LIVE judge path) → closing CTA → footer.
+ * run-it-live-in-a-real-Band-room (the LIVE judge path) → closing CTA → footer.
  */
 export function Landing() {
   return (
@@ -26,7 +26,7 @@ export function Landing() {
         <HowItWorks />
         <Numbers />
         <Research />
-        <AuditYourContract />
+        <TryItLive />
         <ClosingCTA />
       </main>
       <Footer />
