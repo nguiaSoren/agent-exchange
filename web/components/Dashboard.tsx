@@ -4,7 +4,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { ExchangeEvent, JobKind, RunRequest } from "@/lib/events";
 import { applyEvent, initialState, type RunState } from "@/lib/runState";
-import { runJob, fetchSample, API_BASE } from "@/lib/stream";
+import { runJob, fetchSample, warmBackend, API_BASE } from "@/lib/stream";
 import { localSample, mockRun } from "@/lib/mockRun";
 import { scrollIntoFullView } from "@/lib/scroll";
 import { JobCard } from "./JobCard";
@@ -142,6 +142,15 @@ export function Dashboard() {
   // Clean up an in-flight stream on unmount.
   useEffect(() => () => abortRef.current?.(), []);
 
+  // Pre-warm the live backend so a judge's click streams in ~1s instead of
+  // hitting Render's ~40-90s free-tier cold start (which reads as a frozen
+  // "waiting for job"). Ping on mount + every 5 min while the page is open.
+  useEffect(() => {
+    void warmBackend();
+    const id = setInterval(() => void warmBackend(), 5 * 60_000);
+    return () => clearInterval(id);
+  }, []);
+
   // The launch console collapses once a run is active so the arena owns the
   // stage; it returns on reset (idle) so a new job can be posted.
   const narratorOn = state.running || state.finished;
@@ -249,19 +258,33 @@ export function Dashboard() {
         } else {
           const handle = runJob(req);
           abortRef.current = handle.abort;
-          for await (const ev of handle.events) {
-            if (runIdRef.current !== myRun) return;
-            // A typed 429 (busy/cap/unavailable) arrives as an error event with
-            // `live_status` set BEFORE any stream content — fall back to the
-            // recorded real run rather than showing a hard error.
-            if (ev.type === "error" && ev.data.live_status) {
-              handle.abort();
-              await playRecordedFallback(myRun, ev.data.live_status);
-              return;
+          // Safety net: if the backend never streams a FIRST event (a stuck cold
+          // start or a dead dyno), don't spin forever — abort after the stated
+          // cold-start window so the catch below falls back to the recorded run.
+          // Pre-warming usually lands the first event in ~1s, so this rarely fires.
+          let gotFirst = false;
+          const firstEventTimer = setTimeout(() => {
+            if (!gotFirst) handle.abort();
+          }, 90_000);
+          try {
+            for await (const ev of handle.events) {
+              if (runIdRef.current !== myRun) return;
+              // A typed 429 (busy/cap/unavailable) arrives as an error event with
+              // `live_status` set BEFORE any stream content — fall back to the
+              // recorded real run rather than showing a hard error.
+              if (ev.type === "error" && ev.data.live_status) {
+                handle.abort();
+                await playRecordedFallback(myRun, ev.data.live_status);
+                return;
+              }
+              gotFirst = true;
+              clearTimeout(firstEventTimer);
+              setStarting(false);
+              setLiveStarting(false);
+              dispatch({ kind: "event", ev });
             }
-            setStarting(false);
-            setLiveStarting(false);
-            dispatch({ kind: "event", ev });
+          } finally {
+            clearTimeout(firstEventTimer);
           }
         }
       } catch (err) {

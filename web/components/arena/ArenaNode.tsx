@@ -404,14 +404,15 @@ export function ArenaNode({
               <GatewayLogo gateway={node.provider.gateway} size={13} />
             </span>
           )}
-        {/* Native-node gateway chip — only when a LIVE pool/bid folded a real
-            gateway onto this node (vm.gateway). Non-native nodes show the gateway
-            in their routing pill above, so they're excluded here (no double-
-            render). Sim native nodes never send a gateway → no chip, so the
-            cinematic look is unchanged. Reads "claude-haiku · [AI/ML API mark]",
-            reusing the node-chip vocab (rounded-full border px-1.5 py-0.5 mono). */}
+        {/* Native-node gateway chip — uses the EFFECTIVE gateway (a LIVE pool/bid
+            gateway folded onto vm.gateway, else the illustrative providers.ts
+            value). Shown in BOTH modes so the demo surfaces the AI/ML API +
+            Featherless spread as much as a live run does — the legend's honesty
+            caption flags the assignment as illustrative. Non-native nodes show
+            the gateway in their routing pill above, so they're excluded here (no
+            double-render). Reads "claude-haiku · [AI/ML API mark]". */}
         {vm.framework === "native" &&
-          (vm.gateway === "AI/ML API" || vm.gateway === "Featherless") && (
+          (gateway === "AI/ML API" || gateway === "Featherless") && (
           <span
             title={`${node.provider.model} routed through ${gateway}, collaborating via Band`}
             className="flex items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-0.5"

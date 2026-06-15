@@ -19,6 +19,27 @@ export const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") ||
   "http://localhost:8000";
 
+/**
+ * Pre-warm the backend (fire-and-forget). The live backend runs on Render's free
+ * tier, which spins DOWN after ~15 min idle — a cold first request then hangs
+ * ~40-90s during spin-up, which reads as a frozen "waiting for job" arena. Pinging
+ * `/health` when the live UI mounts (and periodically while it's open) keeps the
+ * dyno warm so the judge's click streams in ~1s instead. Errors are swallowed —
+ * warming is best-effort and never blocks or surfaces.
+ */
+export async function warmBackend(): Promise<void> {
+  try {
+    await fetch(`${API_BASE}/health`, {
+      method: "GET",
+      // Don't let a hung warm-ping linger; it's purely opportunistic.
+      signal: AbortSignal.timeout(30_000),
+      cache: "no-store",
+    });
+  } catch {
+    // best-effort; a failed warm just means the first real call may cold-start.
+  }
+}
+
 const KNOWN_EVENT_TYPES: ReadonlySet<string> = new Set<ExchangeEventType>([
   "stage",
   "document",
@@ -26,6 +47,7 @@ const KNOWN_EVENT_TYPES: ReadonlySet<string> = new Set<ExchangeEventType>([
   "bid",
   "hire",
   "room_message",
+  "progress",
   "finding",
   "drift",
   "settle",
