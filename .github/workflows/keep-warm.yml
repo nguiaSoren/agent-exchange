@@ -1,0 +1,17 @@
+# Keeps the free-tier Render backend (agent-exchange-api) awake so a judge's
+# first "audit my contract" call doesn't hit a ~40s cold start. Pings /health
+# every ~10 min (Render free sleeps after ~15min idle). Best-effort: GitHub's
+# scheduler can lag a few minutes under load — for guaranteed warmth during a
+# live judging window, also add a free UptimeRobot/cron-job.org monitor on the
+# same URL. `workflow_dispatch` lets you trigger a wake manually.
+name: keep-warm
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render /health
+        run: curl -fsS -m 30 https://agent-exchange-api.onrender.com/health || true
