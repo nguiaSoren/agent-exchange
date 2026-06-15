@@ -32,6 +32,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import uuid
 from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -54,6 +55,7 @@ from fastapi.responses import JSONResponse, StreamingResponse  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 
 from agent_exchange.audit.room_audit import collaborate_in_room  # noqa: E402
+from agent_exchange.core import make_backend  # noqa: E402
 from agent_exchange.audit.room_audit_types import (  # noqa: E402
     CollaborationMember,
     ReporterMember,
@@ -67,8 +69,13 @@ from agent_exchange.payments.receipts import (  # noqa: E402
 from agent_exchange.payments.settlement import settle_job  # noqa: E402
 from agent_exchange.verify.schema import LENIENT, Verdict  # noqa: E402
 from agent_exchange.verify.verifier import Verifier  # noqa: E402
-from agent_exchange.workers.job_types import document_label_for  # noqa: E402
+from agent_exchange.workers.job_types import (  # noqa: E402
+    document_label_for,
+    job_kinds,
+    roster_for,
+)
 
+from demo_budget import DEMO_DAILY_CAP_USD, DEMO_TASK_LABEL, get_demo_guard  # noqa: E402
 from sim import SIM_SIGNER_KEY, KeyedVerifierBackend, SimGate, build_sim_scenario  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -109,6 +116,15 @@ workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED "AS IS".
 
 # Default authorized budget per job kind (USDC). Small — the live path moves real coin.
 _DEFAULT_BUDGET_USD = 0.20
+
+# --- /api/audit (verify-only, live verifier) tunables ---
+# Max pasted-document size. A contract that needs auditing is well under this; past it we
+# 413 rather than burn a large prompt. ~20k chars ≈ a long MSA.
+_AUDIT_MAX_DOC_CHARS = 20_000
+# Provider models for the verify-only endpoint. Read from env (AI/ML API model ids drift —
+# L6/L8), with sane fallbacks so the endpoint still answers if the env is unset.
+_AUDIT_WORKER_MODEL_DEFAULT = "gpt-4.1-mini"
+_AUDIT_VERIFIER_MODEL_DEFAULT = "gpt-4.1"
 
 # Job-level latency stamped on every worker's drift telemetry row. The in-room
 # audit runs the team together, so there is no per-worker wall clock; this is a
@@ -727,3 +743,218 @@ async def run(req: RunRequest) -> StreamingResponse:
             "X-Accel-Buffering": "no",  # disable proxy buffering so events flush live
         },
     )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/audit — the verify-only "paste your own contract" endpoint.
+#
+# This runs the REAL workers + the REAL verifier (ablation gate ON, exactly as the live
+# demo) against a document the caller pastes in, and returns the graded findings. It is
+# NOT the marketplace lifecycle — there is no Band room, no bidding, no x402 settlement;
+# it is purely "fan specialists over the doc, grade their claims, report what was caught".
+#
+# Because every call is real provider spend, a process-global daily cap (server/
+# demo_budget.py) gates it: the projected cost is reserved BEFORE the run and the run is
+# refused with 429 once the day's cap is reached. Any worker/verifier failure degrades to
+# a clean JSON error — the endpoint never returns a 500 stack.
+# ---------------------------------------------------------------------------
+
+
+class AuditRequest(BaseModel):
+    """Body for ``POST /api/audit`` (the locked frontend contract)."""
+
+    kind: str = Field(default="contract-audit")
+    document_text: str = Field(default="")
+
+
+def _audit_models() -> tuple[str, str]:
+    """(worker_model, verifier_model) for the audit endpoint, from env with fallbacks."""
+    worker = _env("AIMLAPI_MODEL") or _AUDIT_WORKER_MODEL_DEFAULT
+    verifier = _env("AIMLAPI_VERIFIER_MODEL") or _AUDIT_VERIFIER_MODEL_DEFAULT
+    return worker, verifier
+
+
+def _audit_catch_summary(n_unsupported: int, n_total: int) -> str:
+    """The short human string for the audit result (mirrors the /api/run done event)."""
+    if n_total == 0:
+        return "no findings to grade"
+    if n_unsupported:
+        return f"{n_unsupported} fabricated claim(s) caught — payment would be withheld ($0)"
+    return f"no fabrication — all {n_total} claim(s) verified"
+
+
+async def _run_audit(
+    kind: str,
+    document_text: str,
+    *,
+    worker_backend: Any = None,
+    verifier_backend: Any = None,
+) -> dict:
+    """Run the verify-only audit and return the locked response dict.
+
+    Fans the kind's specialist roster over ``document_text`` (an `AuditPool`), grades
+    every emitted claim with a real `Verifier` (``ablation_gate=True``), and pairs each
+    finding with its verdict. ``gate_passed`` is False iff any verdict is ``unsupported``.
+
+    Backends are injectable so tests can pass `MockBackend`s (no network); in production
+    they are left ``None`` and built from env via :func:`make_backend` on provider
+    ``"aimlapi"``. Raises on a build/run failure — the caller maps that to a clean JSON
+    error (never a 500 stack).
+    """
+    from agent_exchange.workers.pool import AuditPool
+
+    worker_model, verifier_model = _audit_models()
+
+    if worker_backend is None:
+        # roster_for builds its own backend from (provider, model) via make_backend.
+        specialists = roster_for(kind, "aimlapi", worker_model)
+    else:
+        # Test/inject path: build the roster on the supplied backend directly.
+        from agent_exchange.workers.job_types import JOB_TYPES
+        from agent_exchange.workers.specialist import SpecialistWorker
+
+        specialists = [
+            SpecialistWorker(name=n, area=a, system_prompt=p, backend=worker_backend)
+            for n, a, p in JOB_TYPES[kind].specialists
+        ]
+
+    if verifier_backend is None:
+        verifier_backend = make_backend("aimlapi", verifier_model)
+
+    pool = AuditPool(specialists)
+    findings = await pool.run(document_text)
+
+    verifier = Verifier(
+        verifier_backend,
+        document_label=document_label_for(kind),
+        ablation_gate=True,
+    )
+    verdicts = await verifier.verify(document_text, [f.claim for f in findings])
+
+    # Pair each finding with its verdict (verify() returns one verdict per claim, in
+    # order). A short verdict list (shouldn't happen — verify is per-claim fail-safe)
+    # leaves the tail unpaired, which we simply drop rather than guess.
+    out_findings: list[dict] = []
+    n_confirmed = n_partial = n_unsupported = 0
+    for finding, v in zip(findings, verdicts):
+        label = _VERDICT_LABEL[v.verdict]
+        if v.verdict is Verdict.CONFIRMED:
+            n_confirmed += 1
+        elif v.verdict is Verdict.PARTIAL:
+            n_partial += 1
+        else:
+            n_unsupported += 1
+        out_findings.append({
+            "worker": finding.worker,
+            "clause_ref": finding.clause_ref or "",
+            "claim": finding.claim,
+            "verdict": label,
+            "confidence": round(v.confidence, 3),
+            "evidence_quote": v.evidence_quote,
+        })
+
+    n_total = len(out_findings)
+    est_cost = _estimate_audit_cost(document_text, worker_model, verifier_model, len(specialists))
+    return {
+        "kind": kind,
+        "n_findings": n_total,
+        "n_confirmed": n_confirmed,
+        "n_partial": n_partial,
+        "n_unsupported": n_unsupported,
+        "gate_passed": n_unsupported == 0,
+        "catch_summary": _audit_catch_summary(n_unsupported, n_total),
+        "est_cost_usd": round(est_cost, 6),
+        "findings": out_findings,
+    }
+
+
+def _estimate_audit_cost(
+    document_text: str, worker_model: str, verifier_model: str, n_specialists: int
+) -> float:
+    """Project the USD cost of one audit run (workers fan-out + one verifier pass).
+
+    Each specialist sends ~the document as its prompt; the verifier sends the document
+    plus the collected claims once. Unknown-price models contribute 0 (honest — never a
+    fabricated number). This same estimate feeds the budget-cap reservation.
+    """
+    from agent_exchange.core.pricing import estimate_cost
+
+    worker_each = estimate_cost(worker_model, document_text) or 0.0
+    verifier_cost = estimate_cost(verifier_model, document_text) or 0.0
+    return worker_each * max(1, n_specialists) + verifier_cost
+
+
+@app.post("/api/audit")
+async def audit(req: AuditRequest) -> JSONResponse:
+    """Grade a pasted document with the REAL verifier (verify-only, daily-capped).
+
+    Returns the locked response shape on 200. Error responses:
+      * 422 — unknown ``kind``.
+      * 413 — document larger than ``_AUDIT_MAX_DOC_CHARS``.
+      * 429 — the process daily spend cap was reached (``demo_budget_reached``).
+      * 500-shaped-as-JSON — any worker/verifier failure (graceful; never a stack).
+    """
+    kind = (req.kind or "").strip()
+    document_text = req.document_text or ""
+
+    # 1. Validate kind (must be a registered job kind).
+    if kind not in job_kinds():
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": "unknown_kind",
+                "detail": f"kind must be one of {job_kinds()}; got {kind!r}",
+            },
+        )
+
+    # 2. Size guard.
+    if len(document_text) > _AUDIT_MAX_DOC_CHARS:
+        return JSONResponse(
+            status_code=413,
+            content={
+                "error": "document_too_large",
+                "detail": (
+                    f"document_text is {len(document_text)} chars; "
+                    f"the limit is {_AUDIT_MAX_DOC_CHARS}"
+                ),
+            },
+        )
+
+    # 3. Budget cap — project cost, reserve against the daily window, refuse if over.
+    worker_model, verifier_model = _audit_models()
+    # n_specialists for the estimate: the kind's full roster size.
+    from agent_exchange.workers.job_types import JOB_TYPES
+
+    n_specialists = len(JOB_TYPES[kind].specialists)
+    projected = _estimate_audit_cost(document_text, worker_model, verifier_model, n_specialists)
+
+    guard = get_demo_guard()
+    task_id = f"audit-{uuid.uuid4().hex}"
+    decision = guard.check_and_reserve(
+        task_id, projected_usd=projected, task_label=DEMO_TASK_LABEL
+    )
+    if not decision.allowed:
+        return JSONResponse(
+            status_code=429,
+            content={
+                "error": "demo_budget_reached",
+                "detail": (
+                    f"the demo's daily spend cap of ${DEMO_DAILY_CAP_USD} has been "
+                    "reached — try again tomorrow (the cap resets daily)"
+                ),
+            },
+        )
+
+    # 4. Run — any failure degrades to a clean JSON error; always reconcile the reserve.
+    actual = projected
+    try:
+        result = await _run_audit(kind, document_text)
+        actual = float(result["est_cost_usd"])
+        return JSONResponse(status_code=200, content=result)
+    except Exception as exc:  # noqa: BLE001 — never 500-crash; return a clean JSON error.
+        return JSONResponse(
+            status_code=500,
+            content={"error": "audit_failed", "detail": f"{type(exc).__name__}: {exc}"},
+        )
+    finally:
+        guard.reconcile(task_id, actual_usd=actual)

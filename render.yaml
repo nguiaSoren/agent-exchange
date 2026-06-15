@@ -1,0 +1,51 @@
+# Render Blueprint for the Agent Exchange demo API (server/app.py).
+#
+# Deploys the FastAPI server that serves POST /api/audit (the verify-only "paste your
+# own contract" endpoint), /api/run (SSE marketplace lifecycle), /api/jobs/sample, and
+# /health. Free-tier Python web service.
+#
+# ── Dashboard steps (do these once after pushing this file) ─────────────────────────
+#   1. Render dashboard -> New -> Blueprint -> pick this repo. Render reads render.yaml.
+#   2. The service is created with all `sync: false` env vars BLANK. Set them under the
+#      service's Environment tab (NEVER commit secrets):
+#        - AIMLAPI_API_KEY          (required — the AI/ML API key the workers + verifier use)
+#        - AIMLAPI_MODEL            (worker model id; e.g. gpt-4.1-mini — verify vs /models, L6)
+#        - AIMLAPI_VERIFIER_MODEL   (verifier model id; e.g. gpt-4.1)
+#        - OPENAI_API_KEY           (fallback provider key; optional)
+#   3. Click Manual Deploy (or push to the connected branch) to build + go live.
+#   4. Smoke-test:  curl https://<svc>.onrender.com/health   -> {"ok": true}
+#
+# ── Why these deps ──────────────────────────────────────────────────────────────────
+# server/app.py imports `agent_exchange.payments.receipts`, which triggers
+# `agent_exchange/payments/__init__.py` -> that package's __init__ EAGERLY imports
+# `x402_gate`, which imports `x402` AT MODULE TOP. So x402 (and its web3/eth-account
+# stack) IS required at import time even for the verify-only endpoint — hence
+# `pip install -e ".[x402]"` rather than the bare base install. The `frameworks` extra
+# (crewai/langgraph) is NOT installed: those are lazy-imported with a native fallback and
+# are never reached on the /api/audit path (verified by a blocked-import check). The HTTP
+# skin (fastapi + uvicorn) comes from server/requirements.txt.
+
+services:
+  - type: web
+    name: agent-exchange-api
+    runtime: python
+    plan: free
+    # Install the package WITH the x402 extra (required at import time, see note above)
+    # plus the server's HTTP deps. Editable install so `agent_exchange` resolves from src/.
+    buildCommand: "pip install -e \".[x402]\" && pip install -r server/requirements.txt"
+    # app.py adds src/ to sys.path and load_dotenv()s, so launching from the repo root works.
+    startCommand: "uvicorn server.app:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    autoDeploy: false
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # Secrets — set in the dashboard, never committed.
+      - key: AIMLAPI_API_KEY
+        sync: false
+      - key: AIMLAPI_MODEL
+        sync: false
+      - key: AIMLAPI_VERIFIER_MODEL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
