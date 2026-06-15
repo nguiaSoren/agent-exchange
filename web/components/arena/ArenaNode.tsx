@@ -74,6 +74,10 @@ export function ArenaNode({
   const driftFlagged = vm.drift?.flagged === true;
   const ring = driftFlagged ? "var(--ax-red)" : ringColor(status, worst);
 
+  // The provider this node ACTUALLY routes through. LIVE pool/bid events carry it
+  // (folded onto vm.gateway); otherwise fall back to the illustrative record.
+  const gateway = vm.gateway ?? node.provider.gateway;
+
   // Open the hover card toward the canvas center (where there's room): a node
   // on the LEFT half opens RIGHT, a node on the RIGHT half opens LEFT.
   const openSide: "left" | "right" = point.x < cx ? "right" : "left";
@@ -305,6 +309,31 @@ export function ArenaNode({
               <GatewayLogo gateway={node.provider.gateway} size={13} />
             </span>
           )}
+        {/* Native-node gateway chip — only when a LIVE pool/bid folded a real
+            gateway onto this node (vm.gateway). Non-native nodes show the gateway
+            in their routing pill above, so they're excluded here (no double-
+            render). Sim native nodes never send a gateway → no chip, so the
+            cinematic look is unchanged. Reads "claude-haiku · [AI/ML API mark]",
+            reusing the node-chip vocab (rounded-full border px-1.5 py-0.5 mono). */}
+        {vm.framework === "native" &&
+          (vm.gateway === "AI/ML API" || vm.gateway === "Featherless") && (
+          <span
+            title={`${node.provider.model} routed through ${gateway}, collaborating via Band`}
+            className="flex items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-0.5"
+            style={{
+              borderColor: "var(--ax-border-neutral)",
+              background: "rgb(var(--ax-surface-rgb))",
+            }}
+          >
+            <span className="font-mono text-[8px] font-medium lowercase tracking-[0.04em] text-fg-faint">
+              {node.provider.model}
+            </span>
+            <span className="text-fg-faint opacity-50" aria-hidden>
+              ·
+            </span>
+            <GatewayLogo gateway={gateway} size={13} />
+          </span>
+        )}
         {vm.bid && !vm.settlement ? (
           <Stars value={vm.bid.reputation} size={9} />
         ) : !vm.settlement ? (

@@ -348,6 +348,16 @@ def _make_framework_auditor(framework: str, name: str, area: str, prompt: str, m
     return None
 
 
+def _gateway_for(framework: str) -> str:
+    """The real provider a live slot's worker runs through, for the UI badge.
+
+    ``langgraph``/``native`` → ``"AI/ML API"`` (native now runs on AI/ML API per the
+    live-run switch); ``crewai`` → ``"Featherless"``. Honest — it names the provider
+    the worker's backend actually calls.
+    """
+    return "Featherless" if framework == "crewai" else "AI/ML API"
+
+
 async def _build_live_context(kind: str, document: str, budget_usd: float) -> RunContext:
     """Assemble the live run world from env, exactly as the spikes wire it.
 
@@ -366,8 +376,11 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
 
     from cross_owner import cross_owner_handle, cross_owner_specialty, owner_label_for
 
-    model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-    verifier_model = os.getenv("OPENAI_VERIFIER_MODEL", "gpt-4.1")
+    # The live run executes on AI/ML API (the sponsor): the native workers, the
+    # reporter, AND the verifier (= the moat brain on AI/ML API). The framework
+    # workers bind their own providers (LangGraph→AI/ML API, CrewAI→Featherless).
+    model = os.getenv("AIMLAPI_MODEL", "anthropic/claude-haiku-4.5")
+    verifier_model = os.getenv("AIMLAPI_VERIFIER_MODEL", "gpt-4.1")
     spec_meta = {name: (area, prompt) for name, area, prompt in SPECIALISTS}
     keys = specialist_band_keys()
 
@@ -412,7 +425,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         if auditor is None:
             framework, auditor = "native", SpecialistWorker(
                 name=name, area=area, system_prompt=prompt,
-                backend=make_backend("openai", model))
+                backend=make_backend("aimlapi", model))
         team.append(
             CollaborationMember(specialty=name, area=area, band=band, auditor=auditor)
         )
@@ -439,6 +452,8 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         pool.append({"id": ident["id"], "handle": ident.get("handle", ""),
                      "name": ident.get("name", name), "owner": owner_label,
                      "cross_owner": is_cross, "framework": framework,
+                     # The real provider this slot's worker calls (for the UI badge).
+                     "gateway": _gateway_for(framework),
                      # The specialty key — so the UI keys this node the SAME way as its
                      # bid/finding/settlement events (which carry `worker`) and resolves
                      # the right provider logo. Without it, live handles (e.g.
@@ -449,7 +464,8 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         # own spike; here we hire the keyed specialists directly so the demo always runs).
         price_usd = round(budget_usd / max(1, len(keys)), 4)
         bids.append({"worker": name, "price_usd": price_usd, "relevance": 0.85,
-                     "reputation": 0.5, "n_jobs": 0, "framework": framework})
+                     "reputation": 0.5, "n_jobs": 0, "framework": framework,
+                     "gateway": _gateway_for(framework)})
         hires.append(Hire(worker=name, price_atomic=usdc(price_usd), value=0.85, relevance=0.85))
         payout[name] = _env(f"PAYOUT_{name.upper()}_ADDRESS") or payout_fallback
 
@@ -460,7 +476,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     reporter_me = await reporter_band.me()
     reporter = ReporterMember(
         band=reporter_band,
-        reporter=ReporterWorker(make_backend("openai", model)),
+        reporter=ReporterWorker(make_backend("aimlapi", model)),
         mention={"id": reporter_me.get("id"), "handle": reporter_me.get("handle") or "",
                  "name": reporter_me.get("name") or "reporter"},
     )
@@ -490,16 +506,19 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     pool.append({"id": SEEDED_PROBE_ID, "handle": SEEDED_PROBE_ID,
                  "name": "Seeded Probe (verifier test)", "owner": "system",
                  "cross_owner": False, "framework": "native", "seeded": True,
+                 # Graded by the AI/ML API verifier; native framework → AI/ML API.
+                 "gateway": _gateway_for("native"),
                  "worker": SEEDED_PROBE_ID})
     bids.append({"worker": SEEDED_PROBE_ID, "price_usd": 0.0, "relevance": 0.0,
-                 "reputation": 0.0, "n_jobs": 0, "framework": "native", "seeded": True})
+                 "reputation": 0.0, "n_jobs": 0, "framework": "native", "seeded": True,
+                 "gateway": _gateway_for("native")})
     hires.append(Hire(worker=SEEDED_PROBE_ID, price_atomic=0, value=0.0, relevance=0.0))
     payout[SEEDED_PROBE_ID] = payout_fallback
 
     # Ablation gate ON for the demo: hardens the verifier (verbatim-quote +
     # ablation routing + escalate-on-absent) — it only penalizes/escalates,
     # never auto-withholds, so it can't regress false-withhold-0%.
-    verifier = Verifier(make_backend("openai", verifier_model),
+    verifier = Verifier(make_backend("aimlapi", verifier_model),
                         document_label=document_label_for(kind), ablation_gate=True)
     gate = make_x402_gate(
         _env("EVM_PRIVATE_KEY"),
@@ -668,6 +687,21 @@ async def run_job(
 
         # 4. COLLABORATE — the in-room team audit (the real `collaborate_in_room`).
         yield "stage", {"name": "collaborate", "status": "start"}
+        # ANTI-STALL: the real `collaborate_in_room` is ~60-90s of LLM work that emits
+        # nothing, so the arena reads as frozen. Emit a paced "starting work" beat per
+        # posting team member (skip the seeded probe / non-posting members) BEFORE the
+        # await, so the agents animate as working. Honest — a real start-of-work beat,
+        # not fabricated findings. Sender = the specialty key (the arena resolves room
+        # senders by handle AND key, the same key the pool/bid carry as `worker`).
+        if mode == "live":
+            for m in ctx.team:
+                if not m.post_to_room:
+                    continue
+                yield "room_message", {
+                    "sender": m.specialty,
+                    "content": f"Reviewing the contract for {m.area}…",
+                }
+                await asyncio.sleep(pace)
         result = await collaborate_in_room(
             ctx.work_room_id, document, ctx.team, ctx.reporter, ctx.verifier
         )

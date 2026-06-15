@@ -7,6 +7,8 @@
  * off this union.
  */
 
+import type { Gateway } from "@/lib/providers";
+
 export type StageStatus = "pending" | "active" | "done" | "error";
 
 export type Verdict = "confirmed" | "partial" | "unsupported";
@@ -48,6 +50,11 @@ export interface PoolAgent {
    * matches its bid/finding/settlement events and gets the right logo.
    */
   worker?: string;
+  /**
+   * The provider the worker ACTUALLY runs through (LIVE only). Sim/cinematic
+   * pool agents omit it and keep the illustrative `providers.ts` gateway.
+   */
+  gateway?: Gateway;
 }
 
 export interface PoolEvent {
@@ -65,6 +72,11 @@ export interface BidEvent {
   n_jobs: number;
   /** The agent framework this worker runs on (native | langgraph | crewai). */
   framework: Framework;
+  /**
+   * The provider the worker ACTUALLY runs through (LIVE only). Sim/cinematic
+   * bids omit it and keep the illustrative `providers.ts` gateway.
+   */
+  gateway?: Gateway;
 }
 
 /** The hiring decision: who got hired, who was declined, and the policy used. */

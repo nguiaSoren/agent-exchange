@@ -14,6 +14,7 @@ import type {
   SettleEvent,
   Verdict,
 } from "@/lib/events";
+import type { Gateway } from "@/lib/providers";
 import type { RunState, RoomLine } from "@/lib/runState";
 import { keyForRef } from "./geometry";
 
@@ -41,6 +42,8 @@ export interface NodeVM {
   drift: DriftEvent | null;
   /** The agent framework this node runs on (from pool/bid; default "native"). */
   framework: Framework;
+  /** The provider this node ACTUALLY routes through (LIVE pool/bid only; else undefined). */
+  gateway?: Gateway;
   settlement: SettleEvent | null;
   /** Most recent room line whose sender resolves to this node. */
   lastLine: RoomLine | null;
@@ -55,6 +58,7 @@ const EMPTY_VM: NodeVM = {
   worstVerdict: null,
   drift: null,
   framework: "native",
+  gateway: undefined,
   settlement: null,
   lastLine: null,
 };
@@ -86,6 +90,7 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
   for (const a of state.pool) {
     const nodeKey = keyForRef(a.worker || a.handle);
     ensure(nodeKey).framework = a.framework;
+    if (a.gateway) ensure(nodeKey).gateway = a.gateway;
     if (a.handle) handleToKey.set(keyForRef(a.handle), nodeKey);
   }
 
@@ -93,6 +98,7 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
     const vm = ensure(keyForRef(bid.worker));
     vm.bid = bid;
     vm.framework = bid.framework;
+    if (bid.gateway) vm.gateway = bid.gateway;
   }
 
   if (state.hire) {
