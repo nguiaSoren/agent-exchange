@@ -388,6 +388,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
     # reporter, AND the verifier (= the moat brain on AI/ML API). The framework
     # workers bind their own providers (LangGraph→AI/ML API, CrewAI→Featherless).
     model = os.getenv("AIMLAPI_MODEL", "anthropic/claude-haiku-4.5")
+    featherless_model = os.getenv("FEATHERLESS_MODEL", "Qwen/Qwen2.5-72B-Instruct")
     verifier_model = os.getenv("AIMLAPI_VERIFIER_MODEL", "gpt-4.1")
     spec_meta = {name: (area, prompt) for name, area, prompt in SPECIALISTS}
     keys = specialist_band_keys()
@@ -429,11 +430,24 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         # missing framework dep/key falls back to the native worker for that slot so a
         # live run never crashes on an absent optional framework.
         framework = framework_for(kind, name)
+        # The provider this slot SHOULD run on (its honest target) — captured BEFORE
+        # any native fallback so the UI badge stays correct even when the framework
+        # dep is absent. crewai → Featherless, langgraph/native → AI/ML API.
+        gateway = _gateway_for(framework)
         auditor = _make_framework_auditor(framework, name, area, prompt, model)
         if auditor is None:
-            framework, auditor = "native", SpecialistWorker(
-                name=name, area=area, system_prompt=prompt,
-                backend=make_backend("aimlapi", model))
+            # Framework dep absent (e.g. the slim Render image ships no crewai/langgraph):
+            # run this slot NATIVELY on the SAME provider the framework would have used,
+            # so we genuinely exercise that provider and the badge stays honest — CrewAI's
+            # slot really calls Featherless (open-weight Qwen), LangGraph's AI/ML API.
+            backend = (
+                make_backend("featherless", featherless_model)
+                if gateway == "Featherless"
+                else make_backend("aimlapi", model)
+            )
+            framework = "native"
+            auditor = SpecialistWorker(
+                name=name, area=area, system_prompt=prompt, backend=backend)
         team.append(
             CollaborationMember(specialty=name, area=area, band=band, auditor=auditor)
         )
@@ -460,8 +474,10 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         pool.append({"id": ident["id"], "handle": ident.get("handle", ""),
                      "name": ident.get("name", name), "owner": owner_label,
                      "cross_owner": is_cross, "framework": framework,
-                     # The real provider this slot's worker calls (for the UI badge).
-                     "gateway": _gateway_for(framework),
+                     # The real provider this slot's worker calls (for the UI badge) —
+                     # captured above so it's honest whether the slot ran via its
+                     # framework or fell back to a native worker on the same provider.
+                     "gateway": gateway,
                      # The specialty key — so the UI keys this node the SAME way as its
                      # bid/finding/settlement events (which carry `worker`) and resolves
                      # the right provider logo. Without it, live handles (e.g.
@@ -473,7 +489,7 @@ async def _build_live_context(kind: str, document: str, budget_usd: float) -> Ru
         price_usd = round(budget_usd / max(1, len(keys)), 4)
         bids.append({"worker": name, "price_usd": price_usd, "relevance": 0.85,
                      "reputation": 0.5, "n_jobs": 0, "framework": framework,
-                     "gateway": _gateway_for(framework)})
+                     "gateway": gateway})
         hires.append(Hire(worker=name, price_atomic=usdc(price_usd), value=0.85, relevance=0.85))
         payout[name] = _env(f"PAYOUT_{name.upper()}_ADDRESS") or payout_fallback
 
