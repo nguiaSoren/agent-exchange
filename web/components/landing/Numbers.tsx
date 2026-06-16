@@ -154,15 +154,15 @@ export function Numbers() {
             >
               <span className="flex items-baseline justify-between gap-3">
                 <span className="tnum font-mono text-[20px] font-medium leading-none text-gold">
-                  &asymp;12.5s
+                  &asymp;12&ndash;16s
                 </span>
                 <span className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-fg">
                   Job &rarr; paid
                 </span>
               </span>
               <span className="tnum font-mono text-[10.5px] leading-snug text-fg-faint">
-                one real timed run (work ~8.8s + on-chain settle ~3.7s), Base
-                Sepolia testnet
+                two real timed runs (work 9&ndash;13s + on-chain settle ~3&ndash;4s),
+                Base Sepolia testnet
               </span>
               <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold">
                 <ArrowUpRight size={12} />
