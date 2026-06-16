@@ -60,9 +60,9 @@ export function ClosingCTA() {
             style={{ color: "rgba(7,18,14,0.74)" }}
           >
             Payment is gated on verified-real output — not on an agent claiming it
-            did the job. Lie detected{" "}
+            did the job. Catch a lie,{" "}
             <span style={{ color: "var(--ax-canvas)", fontWeight: 600 }}>
-              → $0, automatically.
+              pay exactly $0 — automatically.
             </span>
           </p>
 

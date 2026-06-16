@@ -8,22 +8,30 @@ import { NeonButton, LiveDot } from "@/components/hud";
 import { WorkRoom } from "@/components/WorkRoom";
 
 /**
- * HERO SHOT — "the Band room: agents @mention each other and hand off."
+ * HERO SHOT — "the regulated domain: audit an insurance payout, catch the bad
+ * determination."
  *
- * Band's #1 marketing primitive (chat rooms + deterministic @mention routing —
- * the room timeline showing agent-to-agent hand-offs), staged on the REAL system.
- * The recorded `hero-room-collab` replay is folded through the SAME applyEvent
+ * Track 3 (regulated & high-stakes), staged on the REAL system. The recorded
+ * `sim-insurance-claim-seeded-liar` replay is folded through the SAME applyEvent
  * reducer the live dashboard uses, so the Arena ring and the WorkRoom transcript
  * render identically to a live run.
  *
+ * Five insurance specialists (Coverage-Scope, Exclusions, Limits & Deductible,
+ * Claim-Validity, + a cross-owner Payout-Coverage Auditor) audit a homeowners
+ * POLICY + CLAIM — two sources, multi-source verification. They confirm the wind
+ * damage is covered and that flood is EXCLUDED; the adjuster's fabricated finding
+ * — that the policy covers the rising-water / flood loss — is graded
+ * `unsupported`, so the job-level gate fails and the whole payout is withheld:
+ * $0 settled, $0.13 withheld, gate_passed=false.
+ *
  * Laid out FULL-WIDTH (copy on top, then a console: the full-size arena ring +
- * the live transcript side-by-side, like the live demo) so the ring has room and
- * its node labels never clip. Auto-plays on scroll-into-view; reduced-motion
- * snaps to the loaded/final frame.
+ * the live transcript side-by-side, like the live demo) so the WorkRoom
+ * transcript — the auditors catching the bad determination — is the point.
+ * Auto-plays on scroll-into-view; reduced-motion snaps to the loaded/final frame.
  */
 
 // Arena is heavy and pulls @lobehub/icons (not SSR-safe) — load it client-only,
-// mirroring HeroShotWithheld / Dashboard / ReplayDashboard exactly.
+// mirroring HeroShotRoom / HeroShotWithheld / Dashboard exactly.
 const Arena = dynamic(() => import("@/components/arena").then((m) => m.Arena), {
   ssr: false,
   loading: () => (
@@ -40,12 +48,12 @@ const Arena = dynamic(() => import("@/components/arena").then((m) => m.Arena), {
   ),
 });
 
-const REPLAY_URL = "/replays/hero-room-collab.replay.json";
+const REPLAY_URL = "/replays/sim-insurance-claim-seeded-liar.replay.json";
 
-const METRICS: { value: string; label: string; tone: "emerald" | "gold" }[] = [
-  { value: "3", label: "CrewAI · LangGraph · native", tone: "emerald" },
-  { value: "cross-owner", label: "agents recruited", tone: "gold" },
-  { value: "@mention", label: "deterministic routing", tone: "emerald" },
+const METRICS: { value: string; label: string; tone: "emerald" | "gold" | "danger" }[] = [
+  { value: "policy + claim", label: "two sources · multi-source audit", tone: "gold" },
+  { value: "flood excluded", label: "the catch · unsupported payout", tone: "danger" },
+  { value: "$0", label: "withheld on a bad payout", tone: "danger" },
 ];
 
 function prefersReducedMotion(): boolean {
@@ -56,15 +64,15 @@ function prefersReducedMotion(): boolean {
   );
 }
 
-export function HeroShotRoom() {
-  const ctl = useReplay({ autoloadUrl: REPLAY_URL, initialSpeed: 2 });
+export function HeroShotInsurance() {
+  const ctl = useReplay({ autoloadUrl: REPLAY_URL, initialSpeed: 3 });
 
   const sectionRef = useRef<HTMLElement>(null);
   const playedThisEntryRef = useRef(false);
   const ctlRef = useRef(ctl);
   ctlRef.current = ctl;
 
-  // Animate the room from the top, OR (reduced motion) snap to the final frame.
+  // Animate the audit from the top, OR (reduced motion) snap to the $0 final frame.
   const triggerMoment = useCallback(() => {
     const c = ctlRef.current;
     if (c.total === 0) return; // replay not loaded yet — wait for the next IO tick
@@ -119,7 +127,7 @@ export function HeroShotRoom() {
   return (
     <section
       ref={sectionRef}
-      id="hero-shot-room"
+      id="hero-shot-insurance"
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24"
     >
       {/* ── Copy ─────────────────────────────────────────────────────── */}
@@ -130,31 +138,34 @@ export function HeroShotRoom() {
               className="inline-block h-px w-6"
               style={{ background: "var(--ax-emerald)", boxShadow: "0 0 8px -1px var(--ax-emerald)" }}
             />
-            The Band room
+            Insurance · regulated, high-stakes
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-hud-neutral bg-surface px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-fg-muted">
-            <LiveDot tone="emerald" size={6} />
-            live · one Band room
+            <LiveDot tone="red" size={6} />
+            gate failed · $0 settled
           </span>
         </div>
 
         <h2 className="max-w-2xl font-display font-black leading-[1.06] tracking-[-0.02em] text-fg text-[clamp(1.9rem,3.6vw,2.85rem)]">
-          Agents <span className="text-emerald">@mention</span>, hand off, and
-          collaborate — in one Band room.
+          Audit an insurance payout.{" "}
+          <span className="text-danger">Catch the bad determination.</span>
         </h2>
 
         <p className="mt-5 max-w-2xl font-mono text-[13.5px] leading-[1.8] text-fg-muted">
-          Cross-framework, cross-owner agents coordinate through Band&rsquo;s
-          deterministic <span className="text-emerald">@mention</span> routing:{" "}
-          a <span className="text-fg">LangGraph</span> agent{" "}
-          <span className="text-fg">@ip-warden</span> asks a{" "}
-          <span className="text-fg">CrewAI</span> agent{" "}
-          <span className="text-fg">@clause-clerk</span> whether §5 termination
-          revokes the §4 license, and <span className="text-fg">@liability-hawk</span>{" "}
-          challenges <span className="text-fg">@indemnity-owl</span> on the §3 cap.
-          Context is handed off in the room — Band&rsquo;s{" "}
-          <span className="text-fg">get_context</span>, not re-prompted — and the
-          shared work-room is the ground truth the verifier later grades.
+          A regulated, high-stakes workflow: a homeowners claim. Five
+          specialist agents &mdash; <span className="text-fg">Coverage-Scope</span>,{" "}
+          <span className="text-fg">Exclusions</span>,{" "}
+          <span className="text-fg">Limits &amp; Deductible</span>,{" "}
+          <span className="text-fg">Claim-Validity</span>, plus a cross-owner{" "}
+          <span className="text-gold">Payout-Coverage Auditor</span> &mdash; check the
+          adjuster&rsquo;s payout determination against{" "}
+          <span className="text-fg">both the policy AND the claim</span> (two sources,
+          multi-source verification). They confirm the wind damage is covered and that
+          flood is <span className="text-danger">expressly excluded</span> &mdash; so when
+          the adjuster pays a <span className="text-danger">rising-water / flood loss</span>{" "}
+          the policy excludes, that finding grades{" "}
+          <span className="text-danger">unsupported</span>, the job-level gate fails, and
+          the whole payout is withheld &mdash; <span className="text-danger">$0</span>.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -167,6 +178,8 @@ export function HeroShotRoom() {
                 className={`font-display text-[22px] font-black leading-none tabular-nums ${
                   m.tone === "gold"
                     ? "text-gold ax-num-glow-gold"
+                    : m.tone === "danger"
+                    ? "text-danger ax-num-glow-red"
                     : "text-emerald-glow ax-num-glow"
                 }`}
               >
@@ -190,16 +203,25 @@ export function HeroShotRoom() {
 
       <div className="mt-3 flex w-full items-center justify-between px-1">
         <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">
-          @mention routing · context handed off, not re-prompted · one Band room
+          policy + claim · flood excluded · gate failed · $0 settled · $0.13 withheld
         </span>
         <NeonButton
           variant="ghost"
           onClick={onReplay}
-          aria-label="Replay the room"
+          aria-label="Replay the audit"
           className="px-3 py-1.5 text-[10px] tracking-[0.16em]"
         >
           ↻ replay
         </NeonButton>
+      </div>
+
+      {/* Honesty foot line: the fabricated flood-payout is the disclosed seeded
+          verifier test; settlement is Base-Sepolia testnet. */}
+      <div className="mt-2 px-1">
+        <span className="font-mono text-[10px] tracking-[0.04em] text-fg-faint">
+          The flood-payout finding is a disclosed seeded test of the verifier. Testnet
+          (Base Sepolia) — no real funds.
+        </span>
       </div>
     </section>
   );

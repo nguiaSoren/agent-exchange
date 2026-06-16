@@ -227,6 +227,17 @@ const SIM_NDA_RECORDS: ProviderRecord[] = [
   },
 ];
 
+/** Sim insurance-claim pool records. Honest gateways matching FRAMEWORK_BY_SPECIALTY:
+ * the CrewAI slots run open-weight on Featherless (Qwen + Mistral); the LangGraph +
+ * native slots route through AI/ML API. Indexed by BOTH worker key and pool handle. */
+const SIM_INSURANCE_RECORDS: ProviderRecord[] = [
+  { key: "coverage_scope", handle: "coverage-bot", label: "Coverage-Scope Auditor", model: "gpt-4.1", provider: "OpenAI", providerLabel: "OpenAI", gateway: "AI/ML API", brand: OpenAI },
+  { key: "exclusions", handle: "exclusions-bot", label: "Exclusions Auditor", model: "Qwen2.5-72B-Instruct", provider: "Qwen", providerLabel: "Qwen", gateway: "Featherless", brand: Qwen },
+  { key: "limits_deductible", handle: "limits-bot", label: "Limits & Deductible Auditor", model: "Mistral-Small-24B-Instruct-2501", provider: "Mistral", providerLabel: "Mistral", gateway: "Featherless", brand: Mistral },
+  { key: "claim_validity", handle: "validity-bot", label: "Claim-Validity Auditor", model: "gpt-4o-mini", provider: "OpenAI", providerLabel: "OpenAI", gateway: "AI/ML API", brand: OpenAI },
+  { key: "payout_calculation", handle: "payout-bot", label: "Payout-Coverage Auditor", model: "gpt-4.1", provider: "OpenAI", providerLabel: "OpenAI", gateway: "AI/ML API", brand: OpenAI },
+];
+
 /** Sim contract-audit pool handles → the existing `PROVIDERS` key they map to. */
 const SIM_HANDLE_ALIASES: Record<string, string> = {
   "liability-bot": "liability",
@@ -240,7 +251,7 @@ const SIM_HANDLE_ALIASES: Record<string, string> = {
 // canned demo.
 const INDEX: Map<string, ProviderRecord> = (() => {
   const m = new Map<string, ProviderRecord>();
-  for (const rec of [...PROVIDERS, ...SIM_NDA_RECORDS]) {
+  for (const rec of [...PROVIDERS, ...SIM_NDA_RECORDS, ...SIM_INSURANCE_RECORDS]) {
     m.set(normalize(rec.key), rec);
     m.set(normalize(rec.handle), rec);
   }
