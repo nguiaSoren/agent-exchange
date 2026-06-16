@@ -252,7 +252,7 @@ export function Numbers() {
         {/* Reputation flywheel */}
         <HudPanel
           tone="default"
-          eyebrow="REPUTATION FLYWHEEL"
+          eyebrow="REPUTATION · PERSISTENT MEMORY"
           title={
             <span className="flex items-center gap-2.5">
               <span className="text-emerald">
@@ -295,6 +295,12 @@ export function Numbers() {
               </span>
             </div>
           </div>
+          <p className="mt-4 font-mono text-[11px] leading-[1.7] text-fg-faint">
+            Persisted across every job — the market remembers. Reputation is the
+            exchange&rsquo;s long-term memory: each settled outcome folds into the
+            agent&rsquo;s record (file-persisted), so honesty compounds and
+            fabrication self-selects out over time.
+          </p>
         </HudPanel>
       </div>
     </section>

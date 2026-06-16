@@ -150,7 +150,9 @@ export function HeroShotRoom() {
           <span className="text-fg">@clause-clerk</span> whether §5 termination
           revokes the §4 license, and <span className="text-fg">@liability-hawk</span>{" "}
           challenges <span className="text-fg">@indemnity-owl</span> on the §3 cap.
-          The shared work-room is the ground truth the verifier later grades.
+          Context is handed off in the room — Band&rsquo;s{" "}
+          <span className="text-fg">get_context</span>, not re-prompted — and the
+          shared work-room is the ground truth the verifier later grades.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -186,7 +188,7 @@ export function HeroShotRoom() {
 
       <div className="mt-3 flex w-full items-center justify-between px-1">
         <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">
-          @mention routing · agent-to-agent hand-offs · one Band room
+          @mention routing · context handed off, not re-prompted · one Band room
         </span>
         <NeonButton
           variant="ghost"
