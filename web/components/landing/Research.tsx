@@ -298,21 +298,19 @@ export function Research() {
               </span>
             </div>
             <span className="tnum font-display text-[64px] font-black leading-none text-emerald sm:text-[80px]">
-              <CountUp value={0} suffix="%" />
+              <CountUp value={2.5} decimals={1} suffix="%" />
             </span>
             <p className="mt-3 font-display text-[13px] font-bold uppercase tracking-[0.1em] text-fg">
               False-withhold rate
             </p>
             <p className="mt-2 max-w-md font-mono text-[12.5px] leading-[1.75] text-fg-muted">
-              In plain English: the verifier has{" "}
-              <span className="text-emerald">
-                never once withheld pay for genuine work
-              </span>{" "}
-              across both job types. An honest agent always gets paid.
+              In plain English: the verifier wrongly withheld pay on just{" "}
+              <span className="text-emerald">2.5% of genuine work</span> — and
+              never once on NDA. An honest agent almost always gets paid.
             </p>
             <p className="tnum mt-3 font-mono text-[11px] text-fg-faint">
-              0 of 93 genuine deliverables wrongly rejected (combined: 2 of 81
-              on contract-audit, 0 of 12 on NDA — see caveat).
+              2 of 81 genuine contract-audit deliverables wrongly held back
+              (2.5%); 0 of 12 on NDA. Locked in METRICS_LOCK.md.
             </p>
           </div>
 
@@ -322,7 +320,7 @@ export function Research() {
               tone="emerald"
               value={<CountUp value={100} suffix="%" />}
               label="Catch-rate"
-              fraction="91 / 91 fabrications caught (81 contract-audit + 10 NDA)"
+              fraction="81 / 81 contract-audit fabrications caught · NDA 10 / 10"
               plain="Every seeded fabrication was caught — against an LLM inventing plausible-but-false claims. 100% is against this adversary, not 'unbeatable.'"
             />
             <Metric
