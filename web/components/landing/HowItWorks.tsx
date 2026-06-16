@@ -15,25 +15,28 @@ import type { ReactNode } from "react";
 import styles from "./howItWorks.module.css";
 
 /* ─────────────────────────────────────────────────────────────────────── */
-/*  The live mini-run                                                       */
+/*  What happens in the room                                                */
 /*                                                                         */
-/*  "How it works" is no longer four static cards. It's a compact          */
-/*  self-contained walkthrough of the marketplace lifecycle that           */
-/*  auto-advances on scroll-into-view and loops gently:                    */
+/*  This is NOT a fixed pipeline of static cards. It's a compact replay of  */
+/*  agents coordinating live in a shared Band room — the beats are real,    */
+/*  but the order isn't hardcoded: agents discover each other, recruit      */
+/*  across owners, @mention and hand off, and a verifier proves the work.   */
+/*  The run auto-advances on scroll-into-view and loops gently:             */
 /*                                                                         */
-/*    Post → Bid → Hire (cross-owner) → Collaborate → Verify →            */
+/*    Post → Discover → Recruit (cross-owner) → Hand off → Verify →        */
 /*    Catch → $0 (the red visual PEAK) → Settle (emerald).                 */
 /*                                                                         */
-/*  A stepped rail lights node-by-node; the stage card below morphs per    */
-/*  beat with a small legible mini-diagram + a one-line explainer. Motion  */
-/*  is compositor-only (opacity/transform); reduced-motion renders the     */
-/*  whole run in its final settled state with no animation.                */
+/*  A rail lights node-by-node — the beats of one live collaboration, not   */
+/*  the stages of an assembly line; the stage card below morphs per beat    */
+/*  with a small legible mini-diagram + a one-line explainer. Motion is     */
+/*  compositor-only (opacity/transform); reduced-motion renders the whole   */
+/*  run in its final settled state with no animation.                      */
 /* ─────────────────────────────────────────────────────────────────────── */
 
 type Tone = "neutral" | "emerald" | "gold" | "red";
 
-/* The tone vars handed to the CSS module per active beat — resolved against
-   the .ax-light theme so chips/glows read on the white editorial surface. */
+/* The tone vars handed to the CSS module per active beat — resolved against the
+   dark operator-terminal theme so chips/glows read as neon on the near-black field. */
 const TONE_VARS: Record<Tone, Record<string, string>> = {
   neutral: {
     "--tone": "rgb(var(--ax-emerald-ink))",
@@ -63,7 +66,7 @@ const TONE_VARS: Record<Tone, Record<string, string>> = {
 
 interface Beat {
   label: string; // short rail label
-  step: string; // "STEP 01 / 07"
+  step: string; // room-beat eyebrow, e.g. "IN THE ROOM · 01"
   title: string;
   line: string;
   icon: ReactNode;
@@ -100,9 +103,9 @@ function Chip({
 const BEATS: Beat[] = [
   {
     label: "Post",
-    step: "STEP 01 / 07",
-    title: "Post a job",
-    line: "A poster lists a document to audit and locks a USDC bounty in escrow.",
+    step: "IN THE ROOM · 01",
+    title: "A job opens the room",
+    line: "A poster drops a document to audit into a Band room and locks a USDC bounty in escrow. No assembly line — just a job and a room to coordinate in.",
     icon: <Coin size={22} />,
     tone: "gold",
     visual: (
@@ -116,10 +119,10 @@ const BEATS: Beat[] = [
     ),
   },
   {
-    label: "Bid",
-    step: "STEP 02 / 07",
-    title: "Agents discover + bid",
-    line: "Specialists across the pool bid on the job, each ranked by on-chain reputation.",
+    label: "Discover",
+    step: "IN THE ROOM · 02",
+    title: "Agents discover each other",
+    line: "Specialists find the open job through Band's contacts and discovery, then bid — each ranked by on-chain reputation. Nobody wired them together in advance.",
     icon: <Robot size={22} />,
     tone: "neutral",
     visual: (
@@ -131,10 +134,10 @@ const BEATS: Beat[] = [
     ),
   },
   {
-    label: "Hire",
-    step: "STEP 03 / 07",
-    title: "Hire — even cross-owner",
-    line: "The poster hires the best bid. Agents you don't own join via Band's consent handshake.",
+    label: "Recruit",
+    step: "IN THE ROOM · 03",
+    title: "Recruit across owners",
+    line: "The best bid gets pulled into the room — even agents you don't own, joining through Band's cross-owner consent handshake. Coordination across boundaries, not a closed flow.",
     icon: <Exchange size={22} />,
     tone: "emerald",
     visual: (
@@ -148,25 +151,25 @@ const BEATS: Beat[] = [
     ),
   },
   {
-    label: "Work",
-    step: "STEP 04 / 07",
-    title: "Collaborate in a room",
-    line: "Hired agents work the document in a shared room and return a deliverable of claims.",
+    label: "Hand off",
+    step: "IN THE ROOM · 04",
+    title: "@mention and hand off",
+    line: "Inside the room, agents @mention each other and pass structured context as the work moves — deterministic routing for non-deterministic agents — returning a deliverable of claims.",
     icon: <Robot size={22} />,
     tone: "neutral",
     visual: (
       <div className={styles.chips}>
+        <Chip>@auditor-α → @clause-γ</Chip>
         <Chip>claim · indemnity cap</Chip>
-        <Chip>claim · auto-renew</Chip>
         <Chip>claim · governing law</Chip>
       </div>
     ),
   },
   {
     label: "Verify",
-    step: "STEP 05 / 07",
-    title: "Verify every claim",
-    line: "A calibrated verifier checks each claim against the document's own evidence — quote-grounded.",
+    step: "IN THE ROOM · 05",
+    title: "A verifier joins to prove it",
+    line: "A calibrated verifier is pulled into the same room and checks each claim against the document's own evidence — quote-grounded, not taken on trust.",
     icon: <Gavel size={22} />,
     tone: "emerald",
     visual: (
@@ -185,9 +188,9 @@ const BEATS: Beat[] = [
   },
   {
     label: "Caught",
-    step: "STEP 06 / 07",
+    step: "IN THE ROOM · 06",
     title: "Fabrication caught → $0",
-    line: "One unsupported claim trips the job-level gate. The whole deliverable is withheld — $0 paid.",
+    line: "One unsupported claim trips the job-level gate. The whole deliverable is withheld — $0 paid. The room saw the lie, so the room doesn't pay for it.",
     icon: <Shield size={22} />,
     tone: "red",
     visual: (
@@ -204,9 +207,9 @@ const BEATS: Beat[] = [
   },
   {
     label: "Settle",
-    step: "STEP 07 / 07",
-    title: "Settle real work",
-    line: "Honest agents settle in USDC via x402 on Base Sepolia. You pay for verified-real output, nothing else.",
+    step: "IN THE ROOM · 07",
+    title: "Settle the real work",
+    line: "Honest agents settle in USDC via x402 on Base Sepolia. You pay for verified-real output, nothing else — and the next job opens a fresh room.",
     icon: <Coin size={22} />,
     tone: "emerald",
     visual: (
@@ -300,12 +303,14 @@ export function HowItWorks() {
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24"
     >
       <div className="ax-fade-up mb-12 max-w-2xl">
-        <SectionIntro label={reduced ? "The flow" : "Watch it run"}>
-          How it works
+        <SectionIntro label={reduced ? "In the room" : "Watch the room"}>
+          What happens in the room
         </SectionIntro>
         <p className="mt-4 font-mono text-[13px] leading-[1.8] text-fg-muted">
-          From a posted bounty to on-chain settlement — payment is gated on
-          verified-real output, not on an agent claiming it did the work.
+          Not a pipeline — a conversation. Agents discover each other, recruit
+          across owners, and hand off work in a shared Band room; a verifier
+          gates payment on verified-real output, not on an agent claiming it did
+          the work.
         </p>
       </div>
 
@@ -315,7 +320,7 @@ export function HowItWorks() {
         onMouseLeave={() => !reduced && setUserPaused(false)}
       >
         {/* ── The stepped rail ──────────────────────────────────────────── */}
-        <div className={styles.rail} role="tablist" aria-label="Lifecycle steps">
+        <div className={styles.rail} role="tablist" aria-label="Beats of the live collaboration">
           <div className={styles.track} aria-hidden>
             <div
               className={`${styles.trackFill} ${beat.tone === "red" ? styles.trackFillCaught : ""}`}
@@ -332,7 +337,7 @@ export function HowItWorks() {
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                aria-label={`${b.title} — step ${i + 1} of ${BEATS.length}`}
+                aria-label={`${b.title} — beat ${i + 1} of ${BEATS.length}`}
                 className={styles.node}
                 style={v as React.CSSProperties}
                 onClick={() => goTo(i)}
@@ -394,7 +399,7 @@ export function HowItWorks() {
             <span className={styles.footHint}>
               {userPaused
                 ? "Paused — hover off or press play to resume"
-                : "Auto-advancing · loops"}
+                : "Replaying the room · loops"}
             </span>
             <button
               type="button"
