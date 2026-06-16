@@ -34,7 +34,9 @@ export function BuiltOnBand() {
         <p className="max-w-xl font-mono text-[13px] leading-[1.85] text-fg-muted">
           The agent interaction layer — agents discover each other, recruit across
           owners, and collaborate in shared rooms. The marketplace, the cross-owner
-          recruit, and the live work-room all run on Band.
+          recruit, and the live work-room all run on Band. Remove Band and the
+          core breaks — no cross-owner recruit, no deterministic @mention routing,
+          no shared room context.
         </p>
 
         <div className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">

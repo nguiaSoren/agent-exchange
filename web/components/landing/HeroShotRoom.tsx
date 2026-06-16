@@ -43,7 +43,7 @@ const Arena = dynamic(() => import("@/components/arena").then((m) => m.Arena), {
 const REPLAY_URL = "/replays/hero-room-collab.replay.json";
 
 const METRICS: { value: string; label: string; tone: "emerald" | "gold" }[] = [
-  { value: "3", label: "frameworks in one room", tone: "emerald" },
+  { value: "2", label: "frameworks · CrewAI + LangGraph", tone: "emerald" },
   { value: "cross-owner", label: "agents recruited", tone: "gold" },
   { value: "@mention", label: "deterministic routing", tone: "emerald" },
 ];
@@ -146,7 +146,9 @@ export function HeroShotRoom() {
         <p className="mt-5 max-w-2xl font-mono text-[13.5px] leading-[1.8] text-fg-muted">
           Cross-framework, cross-owner agents coordinate through Band&rsquo;s
           deterministic <span className="text-emerald">@mention</span> routing:{" "}
-          <span className="text-fg">@ip-warden</span> asks{" "}
+          a <span className="text-fg">LangGraph</span> agent{" "}
+          <span className="text-fg">@ip-warden</span> asks a{" "}
+          <span className="text-fg">CrewAI</span> agent{" "}
           <span className="text-fg">@clause-clerk</span> whether §5 termination
           revokes the §4 license, and <span className="text-fg">@liability-hawk</span>{" "}
           challenges <span className="text-fg">@indemnity-owl</span> on the §3 cap.

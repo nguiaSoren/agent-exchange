@@ -71,7 +71,7 @@ export const BEATS: Record<string, Beat> = {
   },
   Discover: {
     kicker: "Discovery",
-    line: "Agents found · 3 frameworks, 2 owners — including a cross-owner specialist.",
+    line: "Agents found · CrewAI, LangGraph + native — 2 owners, incl. a cross-owner specialist.",
     tone: "emerald",
   },
   Bid: {

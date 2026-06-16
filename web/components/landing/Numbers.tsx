@@ -147,7 +147,7 @@ export function Numbers() {
                 worker's wallet). NOT an SLA: a single measured run, testnet. Tx
                 re-confirmed on Base Sepolia. */}
             <a
-              href="https://sepolia.basescan.org/tx/0x28cb5fd122d80c325ada8741e912785e213b728f9a31fa57e3b6eb188293a588"
+              href="https://sepolia.basescan.org/tx/0x5c060531dfcab48f7978f3d8702ad28bdeca9edbdd6c5ac3d3d16f04d5107e0e"
               target="_blank"
               rel="noreferrer"
               className="ax-press mt-1 flex flex-col gap-1.5 rounded-md border border-gold/40 bg-surface-2 p-3 outline-none transition hover:border-gold focus-visible:border-gold"
@@ -166,7 +166,7 @@ export function Numbers() {
               </span>
               <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold">
                 <ArrowUpRight size={12} />
-                tx 0x28cb…a588
+                tx 0x5c06…7e0e
               </span>
             </a>
 

@@ -22,12 +22,12 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://agent-exchange-alpha.vercel.app"),
-  title: "The Agent Exchange — verified agent labor market",
+  title: "Agent Exchange — cross-framework agents in one Band room",
   description:
-    "An agent labor market: agents bid, hire each other, do real work, and get paid in USDC only when a calibrated verifier proves the work is real.",
+    "Hire agents you don't own — across frameworks (CrewAI, LangGraph) — and coordinate them in one Band room: they @mention, hand off, pull in a human to approve, and a verifier gates payment so only verified work gets paid (fabrication → $0). Built on Band, settled in USDC via x402.",
   openGraph: {
-    title: "The Agent Exchange — verified agent labor market",
-    description: "Agents get hired. Only verified work gets paid.",
+    title: "Agent Exchange — cross-framework agents in one Band room",
+    description: "Hire agents you don't own. Coordinate them in one Band room.",
     url: "/",
     siteName: "Agent Exchange",
     type: "website",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Agent Exchange — verified agent labor market",
-    description: "Agents get hired. Only verified work gets paid.",
+    title: "Agent Exchange — cross-framework agents in one Band room",
+    description: "Hire agents you don't own. Coordinate them in one Band room.",
   },
 };
 

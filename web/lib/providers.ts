@@ -284,7 +284,7 @@ export const GATEWAYS: Record<Gateway, { label: string }> = {
 /**
  * Agent FRAMEWORKS — the agent-orchestration framework an agent runs on, which is
  * ORTHOGONAL to its model provider/gateway (a LangGraph agent still runs ON
- * AI/ML API). Surfacing this is the "3 frameworks collaborating in one Band room"
+ * AI/ML API). Surfacing this is the "CrewAI + LangGraph + native collaborating in one Band room"
  * story. No @lobehub mark exists for these, so the arena renders them as small
  * text chips. `accent` is a CSS custom-property token (reused from the existing
  * palette) so a non-native framework reads at a glance; `native` carries no
