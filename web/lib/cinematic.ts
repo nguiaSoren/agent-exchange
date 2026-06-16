@@ -71,7 +71,7 @@ export const BEATS: Record<string, Beat> = {
   },
   Discover: {
     kicker: "Discovery",
-    line: "Agents found · 3 frameworks, 2 owners — including cross-owner specialists.",
+    line: "Agents found · 3 frameworks, 2 owners — including a cross-owner specialist.",
     tone: "emerald",
   },
   Bid: {
@@ -80,9 +80,9 @@ export const BEATS: Record<string, Beat> = {
     tone: "gold",
   },
   Hire: {
-    kicker: "Recruitment",
-    line: "A cross-owner specialist is recruited onto the team.",
-    tone: "emerald",
+    kicker: "Cross-org recruit",
+    line: "Hired an agent you don't own — across orgs, via Band.",
+    tone: "gold",
   },
   Work: {
     kicker: "Collaboration",

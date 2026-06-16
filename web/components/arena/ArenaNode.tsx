@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GatewayLogo, ProviderLogo } from "@/components/ProviderLogo";
 import { Stars, VerdictGlyph } from "@/components/hud";
 import { verdictStyle } from "@/lib/ui";
 import { FRAMEWORKS } from "@/lib/providers";
-import type { ArenaNode as ArenaNodeT, NodePoint } from "./geometry";
+import { offRingPoint, type ArenaLayout, type ArenaNode as ArenaNodeT, type NodePoint } from "./geometry";
 import { type NodeVM, type NodeStatus } from "./selectors";
 import { NodeHoverCard } from "./NodeHoverCard";
 import styles from "./arena.module.css";
@@ -20,6 +20,7 @@ import styles from "./arena.module.css";
 export function ArenaNode({
   node,
   point,
+  layout,
   cx,
   vm,
   status,
@@ -37,6 +38,8 @@ export function ArenaNode({
 }: {
   node: ArenaNodeT;
   point: NodePoint;
+  /** The arena layout — used to compute a cross-owner node's off-ring entrance. */
+  layout: ArenaLayout;
   /** The arena center x — used to open the hover card toward open space. */
   cx: number;
   vm: NodeVM;
@@ -69,6 +72,22 @@ export function ArenaNode({
   const dim = status === "declined";
   const hired = ["hired", "working", "judged", "paid", "withheld"].includes(status);
   const worst = vm.worstVerdict;
+
+  // ── Cross-owner recruit pulse ──────────────────────────────────────────
+  // A cross-owner agent (one you don't own) gets a brief "joined from @owner →"
+  // gold label the moment it's recruited onto the team (status leaves bidding/
+  // idle for a hired-ish state). Fires ONCE per node; under reduced motion the
+  // label is shown statically present (the CSS snaps it), then cleared on a timer.
+  const [recruited, setRecruited] = useState(false);
+  const recruitFired = useState(() => ({ done: false }))[0];
+  useEffect(() => {
+    if (!node.crossOwner || recruitFired.done) return;
+    if (!vm.hired) return; // wait for the hire decision to land on this node
+    recruitFired.done = true;
+    setRecruited(true);
+    const t = window.setTimeout(() => setRecruited(false), 2300);
+    return () => window.clearTimeout(t);
+  }, [node.crossOwner, vm.hired, recruitFired]);
 
   // ── Filling progress ring ─────────────────────────────────────────────
   // Shows HOW FAR each agent is through its work, resolving one-by-one:
@@ -129,17 +148,34 @@ export function ArenaNode({
   // on the LEFT half opens RIGHT, a node on the RIGHT half opens LEFT.
   const openSide: "left" | "right" = point.x < cx ? "right" : "left";
 
+  // Cross-owner nodes ENTER from beyond the ring (across the owner boundary): the
+  // crossEnter keyframe travels from this off-ring origin onto the ring slot, with
+  // a gold streak. Same-owner nodes keep the in-place nodeEnter fade.
+  const off = node.crossOwner && !exiting ? offRingPoint(layout, point) : null;
+  const entranceClass = exiting
+    ? styles.nodeExit
+    : node.crossOwner
+      ? styles.crossEnter
+      : styles.nodeEnter;
+
   return (
     <div
       role={onSelect ? "button" : undefined}
       tabIndex={onSelect ? 0 : undefined}
       aria-label={onSelect ? `Open agent detail: ${node.label} (${node.handle})` : undefined}
-      className={`${exiting ? styles.nodeExit : styles.nodeEnter} ${dimmed ? styles.dimmed : ""} absolute ${onSelect && !exiting ? "cursor-pointer focus-visible:outline-none" : ""}`}
+      className={`${entranceClass} ${dimmed ? styles.dimmed : ""} absolute ${onSelect && !exiting ? "cursor-pointer focus-visible:outline-none" : ""}`}
       style={{
         left: point.x,
         top: point.y,
         ["--i" as string]: index,
         ["--exit-i" as string]: exitIndex,
+        // Off-ring origin for the cross-owner entrance (px deltas from the slot).
+        ...(off
+          ? {
+              ["--cross-dx" as string]: `${off.dx}px`,
+              ["--cross-dy" as string]: `${off.dy}px`,
+            }
+          : {}),
         // Survivors glide to their new ring slot when the roster shrinks; exiting
         // ghosts hold their last position and fade in place.
         transition: exiting
@@ -163,6 +199,40 @@ export function ArenaNode({
         }
       }}
     >
+      {/* Cross-owner GOLD HALO — a steady gold ring around the WHOLE node so an
+          agent you don't own stands out among your own. Sits just outside the
+          disc rim. Reduced-motion keeps it on (steady), only the breathe is cut. */}
+      {node.crossOwner && (
+        <span
+          aria-hidden
+          className={`${styles.crossHalo} pointer-events-none absolute left-1/2 top-1/2 rounded-full`}
+          style={{
+            width: diameter + 12,
+            height: diameter + 12,
+            transform: "translate(-50%, -50%)",
+            border: "2px solid var(--ax-gold)",
+          }}
+        />
+      )}
+
+      {/* Recruit pulse — a brief "joined from @owner →" gold label at the moment
+          the cross-owner agent is hired across the org boundary. */}
+      {node.crossOwner && recruited && (
+        <span
+          aria-hidden
+          className={`${styles.recruitPulse} pointer-events-none absolute left-1/2 top-1/2 z-30 inline-flex items-center gap-1 whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[8.5px] font-bold tracking-[0.04em]`}
+          style={{
+            transform: `translate(-50%, calc(-50% - ${diameter * 0.5 + 24}px))`,
+            color: "var(--ax-gold)",
+            borderColor: "var(--ax-gold)",
+            background: "rgb(var(--ax-canvas-rgb))",
+            boxShadow: "0 0 12px -2px rgba(255,194,51,0.8)",
+          }}
+        >
+          joined from @{node.owner ?? "external"} →
+        </span>
+      )}
+
       {/* Speaking / judged ping rings (compositor-only; reduced-motion off). */}
       {(speaking || (status === "judged" && !vm.settlement)) && (
         <span
@@ -350,17 +420,13 @@ export function ArenaNode({
           />
         )}
 
-        {/* Cross-owner marker (gold pip, top-right). */}
+        {/* Cross-owner accessibility marker — the visual signal is the gold halo
+            ring around the node (above); this carries the label for SR/title. */}
         {node.crossOwner && (
           <span
-            aria-label="cross-owner agent"
+            aria-label={`cross-owner agent · ${node.owner ?? "external"}`}
             title={`cross-owner · ${node.owner ?? "external"}`}
-            className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border"
-            style={{
-              background: "var(--ax-gold)",
-              borderColor: "var(--ax-canvas)",
-              boxShadow: "0 0 6px -1px rgba(255,194,51,0.8)",
-            }}
+            className="sr-only"
           />
         )}
 

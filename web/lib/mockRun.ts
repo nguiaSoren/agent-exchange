@@ -78,9 +78,14 @@ function buildTimeline(req: RunRequest): Tick[] {
         { id: "ag_liab", handle: "@liability-hawk", name: "Liability Hawk", owner: "you", cross_owner: false, framework: "crewai" },
         { id: "ag_ip", handle: "@ip-warden", name: "IP Warden", owner: "you", cross_owner: false, framework: "langgraph" },
         { id: "ag_term", handle: "@clause-clerk", name: "Clause Clerk", owner: "you", cross_owner: false, framework: "crewai" },
-        { id: "ag_data", handle: "@privacy-sentinel", name: "Privacy Sentinel", owner: "acme-labs", cross_owner: true, framework: "native" },
-        { id: "ag_indem", handle: "@indemnity-owl", name: "Indemnity Owl", owner: "northwind", cross_owner: true, framework: "native" },
-        { id: "ag_tax", handle: "@tax-scribe", name: "Tax Scribe", owner: "you", cross_owner: false, framework: "native" },
+        { id: "ag_data", handle: "@privacy-sentinel", name: "Privacy Sentinel", owner: "you", cross_owner: false, framework: "native" },
+        { id: "ag_indem", handle: "@indemnity-owl", name: "Indemnity Owl", owner: "you", cross_owner: false, framework: "native" },
+        // THE cross-owner hero: an agent you DON'T own, recruited across an org
+        // boundary via Band. Its real Band handle keeps the owner prefix
+        // ("babidibuu19/tax-clause-bot") — that different owner IS the proof.
+        // Honest worker → it gets PAID (coin → owner B), linked to the real
+        // Base-Sepolia cross-org settlement tx in the settle event below.
+        { id: "ag_tax", handle: "babidibuu19/tax-clause-bot", name: "Tax Clause Bot", owner: "babidibuu19", cross_owner: true, worker: "tax", framework: "native" },
       ],
     },
   });
@@ -93,7 +98,9 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(240, { type: "bid", data: { worker: "termination", price_usd: 1.8, relevance: 0.81, reputation: 0.79, n_jobs: 0, framework: "crewai" } });
   push(260, { type: "bid", data: { worker: "data_privacy", price_usd: 2.6, relevance: 0.9, reputation: 0.88, n_jobs: 0, framework: "native" } });
   push(240, { type: "bid", data: { worker: "indemnity", price_usd: 2.2, relevance: 0.86, reputation: 0.72, n_jobs: 0, framework: "native" } });
-  push(220, { type: "bid", data: { worker: "tax", price_usd: 1.5, relevance: 0.41, reputation: 0.69, n_jobs: 0, framework: "native" } });
+  // The cross-owner specialist (babidibuu19/tax-clause-bot) bids like a peer
+  // across the org boundary — strong on the fees/tax clause, so it gets hired.
+  push(220, { type: "bid", data: { worker: "tax", price_usd: 1.9, relevance: 0.87, reputation: 0.83, n_jobs: 0, framework: "native" } });
   push(350, { type: "stage", data: { name: "Bid", status: "done" } });
 
   // ---- Stage: hire ----
@@ -107,17 +114,23 @@ function buildTimeline(req: RunRequest): Tick[] {
         { worker: "termination", price_usd: 1.8 },
         { worker: "data_privacy", price_usd: 2.6 },
         { worker: "indemnity", price_usd: 2.2 },
+        // The cross-owner specialist is recruited onto YOUR team across the org
+        // boundary — Band's #1 magic (an agent you don't own, hired + paid).
+        { worker: "tax", price_usd: 1.9 },
       ],
-      declined: ["tax"],
+      declined: [],
       strategy: "reputation-aware Thompson sampling under budget",
       pay_fraction_target: 0.85,
     },
   });
-  push(300, { type: "stage", data: { name: "Hire", status: "done" } });
+  // Linger on the HIRE beat — the cross-owner recruit is the hero moment (the
+  // node crosses in from beyond the ring, the gold boundary sweeps, the "joined
+  // from @owner →" pulse plays). Give it room to land before Work begins.
+  push(1500, { type: "stage", data: { name: "Hire", status: "done" } });
 
   // ---- Stage: room work ----
   push(150, { type: "stage", data: { name: "Work", status: "active" } });
-  push(450, { type: "room_message", data: { sender: "@coordinator", content: `Job posted: audit "${title}" — budget $${budget.toFixed(2)}. Hired team: @liability-hawk, @ip-warden, @clause-clerk, @privacy-sentinel, @indemnity-owl.` } });
+  push(450, { type: "room_message", data: { sender: "@coordinator", content: `Job posted: audit "${title}" — budget $${budget.toFixed(2)}. Hired team: @liability-hawk, @ip-warden, @clause-clerk, @privacy-sentinel, @indemnity-owl, and babidibuu19/tax-clause-bot (recruited across orgs via Band).` } });
   push(700, { type: "room_message", data: { sender: "@liability-hawk", content: "Reviewing §3 Limitation of Liability. Cap is tied to 12 months of fees; mutual exclusion of consequential damages. Drafting two findings." } });
   push(750, { type: "room_message", data: { sender: "@ip-warden", content: "§4 IP — license to Deliverables is non-exclusive + non-transferable, internal use only. Vendor keeps background tools/know-how. One finding." } });
   push(750, { type: "room_message", data: { sender: "@clause-clerk", content: "§5 Term & Termination — one-year term, auto-renews unless 60 days' notice; either party may terminate for uncured material breach after 30 days. One finding." } });
@@ -131,6 +144,8 @@ function buildTimeline(req: RunRequest): Tick[] {
   // capped by §3; @indemnity-owl (the seeded liar) hands back an uncapped claim.
   push(750, { type: "room_message", data: { sender: "@liability-hawk", content: "@indemnity-owl §8 is 'subject to the limitation of liability in §3' — that caps your indemnity." } });
   push(750, { type: "room_message", data: { sender: "@indemnity-owl", content: "@liability-hawk noted — but I'll file it as an uncapped IP carve-out. Let the verifier rule." } });
+  // The cross-owner specialist (you don't own it) does real work in the SAME room.
+  push(750, { type: "room_message", data: { sender: "babidibuu19/tax-clause-bot", content: "§2 Fees — undisputed fees due within thirty (30) days of invoice. No tax gross-up clause. One finding." } });
   // Per-agent work-progress: each specialist's in-room audit completes one-by-one
   // during the Work dwell, mirroring the LIVE `progress {worker, done:true}`
   // ordering (progress during work → findings during verify). The staggered
@@ -142,8 +157,9 @@ function buildTimeline(req: RunRequest): Tick[] {
   push(1000, { type: "progress", data: { worker: "termination", done: true } });
   push(1200, { type: "progress", data: { worker: "data_privacy", done: true } });
   push(1300, { type: "progress", data: { worker: "indemnity", done: true } });
+  push(1000, { type: "progress", data: { worker: "tax", done: true } });
   push(800, { type: "room_message", data: { sender: "@coordinator", content: "All specialists done. @reporter — consolidate findings and hand to the verifier." } });
-  push(550, { type: "room_message", data: { sender: "@reporter", content: "Consolidated 6 findings across 5 clauses. Handing off to verifier for claim-vs-contract grading." } });
+  push(550, { type: "room_message", data: { sender: "@reporter", content: "Consolidated 7 findings across 6 clauses. Handing off to verifier for claim-vs-contract grading." } });
   push(300, { type: "stage", data: { name: "Work", status: "done" } });
 
   // ---- Stage: verify ----
@@ -213,6 +229,19 @@ function buildTimeline(req: RunRequest): Tick[] {
       verdict: "unsupported",
       confidence: 0.95,
       evidence_quote: "subject to the limitation of liability in Section 3.",
+    },
+  });
+  // The CROSS-OWNER specialist's finding — honest, confirmed → it gets PAID. The
+  // cross-org payment (coin → owner B) lands on this node at settle.
+  push(700, {
+    type: "finding",
+    data: {
+      worker: "tax",
+      clause_ref: "2",
+      claim: "Customer must pay all undisputed fees within thirty (30) days of invoice.",
+      verdict: "confirmed",
+      confidence: 0.95,
+      evidence_quote: "Customer shall pay all undisputed fees within thirty (30) days of invoice.",
     },
   });
   // Behavioral-drift signals — one per hired worker, after findings + before
@@ -309,6 +338,23 @@ function buildTimeline(req: RunRequest): Tick[] {
       summary: "behaving in-baseline",
     },
   });
+  // The cross-owner specialist ran its declared model honestly — in-baseline.
+  push(220, {
+    type: "drift",
+    data: {
+      worker: "tax",
+      flagged: false,
+      severity: "info",
+      model: "Gemini-2.0-Flash",
+      baseline_label: "(n=21 task)",
+      model_switch: false,
+      price_mismatch: false,
+      overcharge_ratio: 1.2,
+      cost_delta_pct: 4.0,
+      latency_delta_pct: 1.0,
+      summary: "behaving in-baseline",
+    },
+  });
   push(350, { type: "stage", data: { name: "Verify", status: "done" } });
 
   // ---- Stage: settle ----
@@ -368,6 +414,20 @@ function buildTimeline(req: RunRequest): Tick[] {
       status: "withheld (unsupported claim — not paid)",
     },
   });
+  // The CROSS-ORG payment — honest work by an agent you DON'T own settles to its
+  // OWNER (babidibuu19) on Base Sepolia. The coin visibly flies out to owner B,
+  // linked to the REAL cross-org settlement tx (testnet).
+  push(650, {
+    type: "settle",
+    data: {
+      worker: "tax",
+      pay_to: "babidibuu19 · 0xA316...7d05",
+      authorized_usd: 1.9,
+      settled_usd: 1.9,
+      tx_hash: "0xa316216c2d29b2b3ce0c10a5d9ab9dfc74109741d93e51846a0fa10a79427d05",
+      status: "settled (cross-org → babidibuu19)",
+    },
+  });
   push(350, { type: "stage", data: { name: "Settle", status: "done" } });
 
   // ---- Receipt + done ----
@@ -384,11 +444,11 @@ function buildTimeline(req: RunRequest): Tick[] {
     type: "done",
     data: {
       gate_passed: true,
-      pay_fraction: 0.57,
-      total_settled_usd: 6.3,
+      pay_fraction: 0.63,
+      total_settled_usd: 8.2,
       total_withheld_usd: 4.8,
       catch_summary:
-        "6 findings graded · 4 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. $6.30 settled, $4.80 withheld.",
+        "7 findings graded · 5 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. The cross-owner specialist (babidibuu19/tax-clause-bot) passed and was paid across orgs. $8.20 settled, $4.80 withheld.",
     },
   });
 
@@ -424,6 +484,6 @@ export function localSample(kind: string): { title: string; document_text: strin
   return {
     title: "Master Services Agreement — Acme × DataCo",
     document_text: MSA,
-    budget_usd: 12,
+    budget_usd: 14,
   };
 }

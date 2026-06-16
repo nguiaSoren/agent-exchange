@@ -24,6 +24,7 @@ import { ArenaCore } from "./ArenaCore";
 import { ArenaSummary } from "./ArenaSummary";
 import { ArenaLegend } from "./ArenaLegend";
 import { DetailDrawer, type ArenaSelection } from "./DetailDrawer";
+import arenaStyles from "./arena.module.css";
 
 /** Senders that are orchestration roles, not ring nodes. */
 const NON_NODE_SENDERS = new Set(["@coordinator", "@reporter", "coordinator", "reporter"]);
@@ -191,6 +192,10 @@ export function Arena({
   const [catchBeat, setCatchBeat] = useState(false);
   // T2-3: the node whose paid coin just landed (pulse ring + chip pop).
   const [paidKey, setPaidKey] = useState<string | null>(null);
+  // Cross-owner: a dashed gold "owner boundary" hint sweeps in once when a
+  // cross-owner agent is recruited (the node crosses INTO the room across it).
+  const [crossBoundary, setCrossBoundary] = useState(false);
+  const seenCrossHire = useRef(false);
 
   // ── particle queue (capped) ───────────────────────────────────────
   const [particles, setParticles] = useState<EdgeParticle[]>([]);
@@ -233,9 +238,30 @@ export function Arena({
       setFakeKey(null);
       setCatchBeat(false);
       setPaidKey(null);
+      setCrossBoundary(false);
+      seenCrossHire.current = false;
       setParticles([]);
     }
   }, [state.room.length, state.bids.length]);
+
+  // Cross-owner recruit → sweep in the gold "owner boundary" hint once, when a
+  // hired worker resolves to a cross-owner node (it crosses INTO the room across
+  // the boundary). Reduced-motion: the CSS hides the hint (no travel to imply).
+  useEffect(() => {
+    if (!state.hire || seenCrossHire.current || reducedMotion()) return;
+    const crossKeys = new Set(
+      nodes.filter((nd) => nd.crossOwner).map((nd) => nd.key),
+    );
+    const hiredCross = state.hire.hired.some((h) =>
+      crossKeys.has(keyForRef(h.worker)),
+    );
+    if (!hiredCross) return;
+    seenCrossHire.current = true;
+    setCrossBoundary(true);
+    const t = window.setTimeout(() => setCrossBoundary(false), 1200);
+    timers.current.push(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.hire, nodes]);
 
   // New bids → a bid particle node→core.
   useEffect(() => {
@@ -394,6 +420,25 @@ export function Arena({
             }}
           />
 
+          {/* Cross-owner "owner boundary" hint — a gold dashed ring BEYOND the
+              guide ring that sweeps in exactly while a cross-owner agent crosses
+              into the room. Marks the org boundary the recruit travels across.
+              One-shot (mounted only during the recruit); reduced-motion hides it. */}
+          {crossBoundary && (
+            <div
+              aria-hidden
+              className={`${arenaStyles.ownerBoundary} pointer-events-none absolute rounded-full`}
+              style={{
+                left: layout.cx,
+                top: layout.cy,
+                width: (layout.radius + Math.min(layout.size * 0.42, layout.size / 2 - layout.radius) * 0.55) * 2,
+                height: (layout.radius + Math.min(layout.size * 0.42, layout.size / 2 - layout.radius) * 0.55) * 2,
+                border: "1.5px dashed var(--ax-gold)",
+                boxShadow: "0 0 24px -8px rgba(255,194,51,0.6)",
+              }}
+            />
+          )}
+
           <ArenaEdges
             layout={layout}
             nodes={nodes}
@@ -419,6 +464,7 @@ export function Arena({
               key={node.key}
               node={node}
               point={points[i]}
+              layout={layout}
               cx={layout.cx}
               vm={vmFor(node.key)}
               status={statusFor(node.key)}
@@ -440,6 +486,7 @@ export function Arena({
               key={`exit-${e.key}`}
               node={e.node}
               point={e.point}
+              layout={layout}
               cx={layout.cx}
               vm={e.vm}
               status={e.status}

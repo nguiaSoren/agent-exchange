@@ -41,6 +41,109 @@
   }
 }
 
+/* ── CROSS-OWNER entrance ──────────────────────────────────────────────
+   A cross-owner agent (one you DON'T own, recruited across an org boundary)
+   does NOT fade in place like a same-owner node — it CROSSES INTO the room
+   from beyond the ring. The wrapper translates from its off-ring origin
+   (--cross-dx/--cross-dy, set inline from geometry.offRingPoint) onto its ring
+   slot, with a longer travel + a gold streak trailing behind it. Compositor-only
+   (transform + opacity + a gold drop-shadow streak that shortens as it lands). */
+.crossEnter {
+  animation: ax-cross-enter 760ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    backwards;
+  animation-delay: calc(var(--i, 0) * 42ms + 90ms);
+}
+@keyframes ax-cross-enter {
+  0% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--cross-dx, 0px)),
+        calc(-50% + var(--cross-dy, 0px))
+      )
+      scale(0.72);
+    /* A long gold streak pointing back toward the boundary it came from. */
+    filter: drop-shadow(
+      calc(var(--cross-dx, 0px) * -0.5) calc(var(--cross-dy, 0px) * -0.5) 10px
+        rgba(255, 194, 51, 0.85)
+    );
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 0 rgba(255, 194, 51, 0));
+  }
+}
+
+/* The dashed "owner boundary" arc the cross-owner node crosses on entry — a
+   gold dashed ring hint that sweeps in then fades, so the org boundary is
+   visible exactly while the recruit travels across it. Sized/positioned inline
+   (centered on the court). One-shot. */
+.ownerBoundary {
+  animation: ax-owner-boundary 1100ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    forwards;
+}
+@keyframes ax-owner-boundary {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.99);
+  }
+}
+
+/* The persistent GOLD HALO around a cross-owner node — a steady gold ring that
+   marks "this agent is not yours" among your own agents. A gentle breathe keeps
+   it alive without competing with the working pulses. */
+.crossHalo {
+  animation: ax-cross-halo 2600ms ease-in-out infinite;
+}
+@keyframes ax-cross-halo {
+  0%,
+  100% {
+    opacity: 0.55;
+    box-shadow: 0 0 10px -1px rgba(255, 194, 51, 0.55);
+  }
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 16px 0 rgba(255, 194, 51, 0.8);
+  }
+}
+
+/* The brief "joined from @owner →" recruit pulse label at the moment of hire —
+   pops gold, holds, then fades. One-shot (mounted transiently by ArenaNode). */
+.recruitPulse {
+  animation: ax-recruit-pulse 2200ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
+    forwards;
+}
+@keyframes ax-recruit-pulse {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(6px) scale(0.92);
+  }
+  16% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1.04);
+  }
+  26% {
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-2px) scale(1);
+  }
+}
+
 /* Core entrance. */
 .coreEnter {
   animation: ax-core-enter 520ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
@@ -434,6 +537,7 @@
     animation: none !important;
   }
   .nodeEnter,
+  .crossEnter,
   .coreEnter,
   .edgeDraw,
   .stamp,
@@ -442,9 +546,31 @@
   .fakeShake,
   .fakeFlash,
   .chipPop,
+  .recruitPulse,
   .summaryEnter {
     animation-duration: 0.001ms !important;
     animation-delay: 0ms !important;
+  }
+  /* Cross-owner node: snap onto its ring slot (no off-ring travel/streak) and
+     show the recruit label statically present. */
+  .crossEnter {
+    transform: translate(-50%, -50%) scale(1) !important;
+    filter: none !important;
+  }
+  .recruitPulse {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  /* Gold halo stays ON (the signal) but steady — no breathe. */
+  .crossHalo {
+    animation: none !important;
+    opacity: 0.8 !important;
+    box-shadow: 0 0 12px -1px rgba(255, 194, 51, 0.7) !important;
+  }
+  /* The owner-boundary hint adds nothing without motion — hide it. */
+  .ownerBoundary {
+    animation: none !important;
+    opacity: 0 !important;
   }
   /* Travel particles don't animate position under reduced motion — they're
      hidden entirely (the verdict stamp + coin landing carry the meaning). */

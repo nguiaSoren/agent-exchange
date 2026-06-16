@@ -116,6 +116,36 @@ export function edgePoints(
 }
 
 /**
+ * The OFF-RING start point for a cross-owner node's entrance: the same outward
+ * angle as the node's ring slot, but pushed BEYOND the ring radius (a multiple of
+ * it) so the node visibly crosses INTO the room from outside the org boundary.
+ * Returned in px space; used as the CSS keyframe's `from` translate so the node
+ * travels across the dashed owner-boundary hint and settles onto its ring slot.
+ *
+ * `reach` is the fraction of the layout half-size to travel past the ring (so the
+ * start sits clearly outside the guide ring but never off-canvas on small sizes).
+ */
+export function offRingPoint(
+  layout: ArenaLayout,
+  p: NodePoint,
+  reach = 0.42,
+): { dx: number; dy: number; radius: number } {
+  // Direction = the node's own outward angle (cos/sin of its slot angle).
+  const ux = Math.cos(p.angle);
+  const uy = Math.sin(p.angle);
+  // Push out past the ring by a clamped fraction of the half-size, so the start
+  // is beyond the boundary ring yet stays on (or just at) the canvas edge.
+  const extra = Math.min(layout.size * reach, layout.size / 2 - layout.radius + layout.nodeR * 0.5);
+  return {
+    // Delta from the node's final ring position to its off-ring origin.
+    dx: ux * extra,
+    dy: uy * extra,
+    // The boundary-ring radius the node crosses (for the dashed owner hint).
+    radius: layout.radius + extra * 0.55,
+  };
+}
+
+/**
  * A gently-bowed arc BETWEEN two ring nodes, trimmed to each node's rim — the
  * path an agent→agent @mention hand-off particle travels. Returns an SVG path
  * string (a quadratic curve) usable directly as a CSS `offset-path`.
