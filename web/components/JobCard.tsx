@@ -28,6 +28,7 @@ interface JobCardProps {
 const KINDS: { value: JobKind; label: string; blurb: string }[] = [
   { value: "contract-audit", label: "Contract audit", blurb: "Vendor MSA clause review" },
   { value: "nda-review", label: "NDA review", blurb: "Mutual NDA risk pass" },
+  { value: "insurance-claim", label: "Insurance claim", blurb: "Adjuster payout review" },
 ];
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
@@ -78,7 +79,7 @@ export function JobCard(props: JobCardProps) {
           {/* Kind */}
           <div className="flex flex-col gap-2.5">
             <FieldLabel>Job kind</FieldLabel>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {KINDS.map((k) => {
                 const active = k.value === kind;
                 return (
