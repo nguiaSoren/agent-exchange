@@ -14,14 +14,19 @@ export function Topbar() {
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
         {/* Wordmark + live */}
         <div className="flex min-w-0 items-center gap-2.5">
-          {/* Designed horizontal lockup (light page → -light variant). */}
-          <Image
-            src="/brand/lockup-horizontal-light.svg"
-            alt="Agent Exchange"
-            width={210}
-            height={34}
-            priority
-          />
+          {/* Chip + wordmark, dark-surface variant. The page canvas is dark
+              green-black (#07120E), so the wordmark must be near-white to read —
+              the -light variant (dark ink) was invisible here. */}
+          <span className="flex items-center gap-2">
+            <Image src="/brand/logomark.svg" alt="" width={26} height={26} priority />
+            <Image
+              src="/brand/wordmark-light.svg"
+              alt="Agent Exchange"
+              width={208}
+              height={17}
+              priority
+            />
+          </span>
           <span className="hidden items-center gap-1.5 rounded-md border border-hud bg-emerald-dim px-2 py-0.5 sm:inline-flex">
             <LiveDot tone="emerald" size={7} />
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-emerald">
