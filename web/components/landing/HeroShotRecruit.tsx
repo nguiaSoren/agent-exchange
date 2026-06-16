@@ -40,12 +40,12 @@ const HeroRecruitLogo = dynamic(
  */
 
 // LEFT: your market's own agent (same-owner, auto-visible). RIGHT: a cross-owner
-// agent on a different owner ("northwind"), brought in by the handshake.
+// agent on a different owner ("babidibuu19"), brought in by the handshake.
 const HOME_KEY = "liability"; // OpenAI-badged, "@agent-exchange" home
-const GUEST_KEY = "data_privacy"; // Meta (Llama) · Privacy Sentinel
+const GUEST_KEY = "tax"; // the real cross-owner · @tax-clause-bot
 const HOME_HANDLE = "@agent-exchange";
-const GUEST_HANDLE = "@privacy-sentinel";
-const GUEST_OWNER = "northwind";
+const GUEST_HANDLE = "@tax-clause-bot";
+const GUEST_OWNER = "babidibuu19";
 
 const METRICS: HeroMetric[] = [
   { value: "2", label: "owners, one pool", tone: "gold" },
