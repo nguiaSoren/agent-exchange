@@ -210,6 +210,10 @@ function edgeStyle(status: NodeStatus): {
       return { stroke: "var(--ax-emerald)", width: 1.6, opacity: 0.85, dashed: false, active: false };
     case "withheld":
       return { stroke: "var(--ax-red)", width: 1.4, opacity: 0.7, dashed: true, active: false };
+    case "escalated":
+      // Paused for human review — a live cyan edge (governance accent), pulsing
+      // (active) so the held connection reads as "awaiting", not abandoned.
+      return { stroke: "var(--ax-cyan)", width: 1.5, opacity: 0.78, dashed: false, active: true };
     case "judged":
     case "working":
     case "hired":

@@ -5,10 +5,12 @@
  */
 
 import type {
+  ApprovalEvent,
   BidEvent,
   DocumentEvent,
   DoneEvent,
   DriftEvent,
+  EscalationEvent,
   ExchangeEvent,
   FindingEvent,
   HireEvent,
@@ -39,6 +41,10 @@ export interface RunState {
   collabDone: Set<string>;
   findings: FindingEvent[];
   drifts: DriftEvent[];
+  /** Claims the verifier was too unsure to pass — routed to a human (needs_human). */
+  escalations: EscalationEvent[];
+  /** Human review verdicts on escalated claims (DEMO-only; never on the live path). */
+  approvals: ApprovalEvent[];
   settlements: SettleEvent[];
   receipt: ReceiptEvent | null;
   done: DoneEvent | null;
@@ -72,6 +78,8 @@ export function initialState(): RunState {
     collabDone: new Set(),
     findings: [],
     drifts: [],
+    escalations: [],
+    approvals: [],
     settlements: [],
     receipt: null,
     done: null,
@@ -113,6 +121,16 @@ export function applyEvent(prev: RunState, ev: ExchangeEvent): RunState {
       return { ...prev, findings: [...prev.findings, ev.data as FindingEvent] };
     case "drift":
       return { ...prev, drifts: [...prev.drifts, ev.data as DriftEvent] };
+    case "escalate":
+      return {
+        ...prev,
+        escalations: [...prev.escalations, ev.data as EscalationEvent],
+      };
+    case "approval":
+      return {
+        ...prev,
+        approvals: [...prev.approvals, ev.data as ApprovalEvent],
+      };
     case "settle":
       return { ...prev, settlements: [...prev.settlements, ev.data as SettleEvent] };
     case "receipt":

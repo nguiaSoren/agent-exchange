@@ -386,6 +386,25 @@
   }
 }
 
+/* Human-in-the-loop badge ("⏸ awaiting human") — a slow cyan opacity breathe
+   layered ON TOP of the .stamp reveal, so a node paused for human review gently
+   pulses (alive, waiting) instead of sitting static. Compositor-only (opacity).
+   Killed under reduced-motion (snaps to steady, fully present). */
+.escalateBadge {
+  animation: ax-stamp 480ms var(--ax-ease-out-2, cubic-bezier(0.23, 1, 0.32, 1))
+      both,
+    ax-escalate-breathe 1.8s ease-in-out 480ms infinite;
+}
+@keyframes ax-escalate-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.62;
+  }
+}
+
 /* Transient floating speech bubble near a node. */
 .bubble {
   animation: ax-bubble 360ms var(--ax-ease-out, cubic-bezier(0.16, 1, 0.3, 1))
@@ -547,9 +566,15 @@
   .fakeFlash,
   .chipPop,
   .recruitPulse,
+  .escalateBadge,
   .summaryEnter {
     animation-duration: 0.001ms !important;
     animation-delay: 0ms !important;
+  }
+  /* Escalation badge: drop the breathe loop entirely, snap fully present. */
+  .escalateBadge {
+    animation: none !important;
+    opacity: 1 !important;
   }
   /* Cross-owner node: snap onto its ring slot (no off-ring travel/streak) and
      show the recruit label statically present. */

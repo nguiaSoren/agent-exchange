@@ -545,6 +545,36 @@ function AgentView({
         )}
       </Section>
 
+      {/* Human-in-the-loop review — only when this agent's claim was escalated
+          (the verifier was too unsure to clear it on its own). */}
+      {vm.escalation && (
+        <Section eyebrow="Human review">
+          <div
+            className="space-y-1.5 rounded-md border px-3 py-2.5 font-mono text-[11.5px] leading-relaxed"
+            style={{
+              borderColor: "var(--ax-cyan)",
+              background: "rgba(34,211,238,0.06)",
+              color: "rgb(var(--ax-fg-muted-rgb))",
+            }}
+          >
+            <div style={{ color: "var(--ax-cyan-glow)" }}>
+              ⏸ Escalated to a human — {vm.escalation.reason}
+            </div>
+            {vm.approval ? (
+              <div>
+                {vm.approval.approved ? "Approved" : "Rejected"} by{" "}
+                <span style={{ color: "var(--ax-cyan-glow)" }}>
+                  {vm.approval.reviewer}
+                </span>{" "}
+                (human): {vm.approval.note}
+              </div>
+            ) : (
+              <div>Awaiting human review — settlement is paused.</div>
+            )}
+          </div>
+        </Section>
+      )}
+
       {/* Settlement */}
       <Section eyebrow="Settlement">
         {vm.settlement ? (

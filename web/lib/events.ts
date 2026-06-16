@@ -138,6 +138,44 @@ export interface DriftEvent {
   summary: string; // human string, e.g. "model swap: gpt-4.1 -> gpt-4o-mini at 606.1x markup"
 }
 
+/**
+ * A claim the verifier was too UNSURE to pass on its own — its grading
+ * confidence fell below the settlement threshold (0.60), so the verifier's
+ * fail-safe (`needs_human`) routes it OUT of the machine and INTO the Band room
+ * for a human to review. Emitted inside the verify flow, after the worker's
+ * `finding` and before `settle`. It does NOT mean the claim is wrong — only that
+ * the verifier couldn't clear it confidently. On the LIVE path an escalated
+ * claim is held (fail-safe withhold, "awaiting human review") and never
+ * auto-paid; only the disclosed demo scripts a human approving it.
+ */
+export interface EscalationEvent {
+  worker: string;
+  clause_ref: string;
+  claim: string;
+  /** Why it escalated (human string, e.g. "confidence 0.58 < 0.60 threshold"). */
+  reason: string;
+  confidence: number; // 0..1 — the sub-threshold grading confidence
+  /** The fail-safe trigger. Currently only "needs_human". */
+  escalation_type: "needs_human";
+}
+
+/**
+ * A human's review verdict on an escalated claim. DEMO-ONLY: the disclosed
+ * cinematic scripts a `@compliance-lead` (a clearly-human role) approving an
+ * escalated-but-valid finding so it settles PAID. The LIVE `/api/run` path NEVER
+ * emits this — an escalated claim there stays held ("awaiting human review").
+ * `approved=true` ⇒ the claim is confirmed valid by a human and may settle.
+ */
+export interface ApprovalEvent {
+  /** The human reviewer's room handle, e.g. "@compliance-lead". */
+  reviewer: string;
+  worker: string;
+  clause_ref: string;
+  approved: boolean;
+  /** Short human rationale shown in the room / arena. */
+  note: string;
+}
+
 /** A settlement for one worker (USDC via x402). */
 export interface SettleEvent {
   worker: string;
@@ -186,6 +224,8 @@ export type ExchangeEvent =
   | { type: "progress"; data: ProgressEvent }
   | { type: "finding"; data: FindingEvent }
   | { type: "drift"; data: DriftEvent }
+  | { type: "escalate"; data: EscalationEvent }
+  | { type: "approval"; data: ApprovalEvent }
   | { type: "settle"; data: SettleEvent }
   | { type: "receipt"; data: ReceiptEvent }
   | { type: "done"; data: DoneEvent }

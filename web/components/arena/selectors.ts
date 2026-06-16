@@ -7,8 +7,10 @@
  */
 
 import type {
+  ApprovalEvent,
   BidEvent,
   DriftEvent,
+  EscalationEvent,
   FindingEvent,
   Framework,
   SettleEvent,
@@ -25,6 +27,9 @@ export type NodeStatus =
   | "declined"
   | "working"
   | "judged"
+  // The verifier was too unsure (sub-threshold confidence) → routed to a human.
+  // Settlement is PAUSED on this node until the human review lands.
+  | "escalated"
   | "paid"
   | "withheld";
 
@@ -40,6 +45,10 @@ export interface NodeVM {
   worstVerdict: Verdict | null;
   /** Latest behavioral-drift signal for this node (latest wins), or null. */
   drift: DriftEvent | null;
+  /** A claim of this node the verifier escalated (needs_human), or null. */
+  escalation: EscalationEvent | null;
+  /** The human's review verdict on this node's escalation (latest wins), or null. */
+  approval: ApprovalEvent | null;
   /** True once a `progress {worker, done:true}` arrived (in-room audit complete). */
   collabDone: boolean;
   /** The agent framework this node runs on (from pool/bid; default "native"). */
@@ -59,6 +68,8 @@ const EMPTY_VM: NodeVM = {
   findings: [],
   worstVerdict: null,
   drift: null,
+  escalation: null,
+  approval: null,
   collabDone: false,
   framework: "native",
   gateway: undefined,
@@ -127,6 +138,11 @@ export function buildNodeVMs(state: RunState): Map<string, NodeVM> {
   // Latest drift signal per node wins (one event per worker, but be defensive).
   for (const d of state.drifts) ensure(keyForRef(d.worker)).drift = d;
 
+  // Escalations (verifier too unsure → routed to a human) and the human's
+  // review verdict, both keyed onto the node that owns the claim. Latest wins.
+  for (const e of state.escalations) ensure(keyForRef(e.worker)).escalation = e;
+  for (const a of state.approvals) ensure(keyForRef(a.worker)).approval = a;
+
   // Per-worker collaborate-completion (progress {done:true}). Keyed the same way
   // as bids/findings so the ring resolves on the node that actually finished.
   for (const w of state.collabDone) ensure(keyForRef(w)).collabDone = true;
@@ -150,6 +166,10 @@ export function nodeStatus(vm: NodeVM, currentStage: string | null): NodeStatus 
   if (vm.settlement) {
     return vm.settlement.settled_usd > 0 ? "paid" : "withheld";
   }
+  // Verifier was too unsure → a human is reviewing. Settlement PAUSES here until
+  // the review lands (then a settle event flips it to paid/withheld above). The
+  // human's approval doesn't itself settle — it unblocks the held claim.
+  if (vm.escalation && !vm.approval) return "escalated";
   if (vm.findings.length > 0) return "judged";
   if (vm.hired) {
     // A hired node is "working" through the long thinking phase. The demo names

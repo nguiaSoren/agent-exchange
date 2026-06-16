@@ -20,7 +20,16 @@ import { BEATS } from "@/lib/cinematic";
  */
 export function BeatCaption({ state }: { state: RunState }) {
   const step = currentStep(state.stages);
-  const name = step?.name ?? null;
+  // While a sub-threshold claim is escalated and a human hasn't finished settling
+  // it yet, OVERRIDE the stage caption with the "Human in the loop" beat — so the
+  // lower-third lingers on the approval moment between Verify and Settle. We hold
+  // it from the escalation until that worker's settlement lands (the approval +
+  // payout), which is exactly the window the human owns.
+  const settledWorkers = new Set(state.settlements.map((s) => s.worker));
+  const humanPending = state.escalations.some(
+    (e) => !settledWorkers.has(e.worker),
+  );
+  const name = humanPending ? "Human" : (step?.name ?? null);
   const beat = name ? BEATS[name] : null;
 
   // Re-trigger the fade on each beat change by keying a transient "shown" flag.
@@ -49,7 +58,9 @@ export function BeatCaption({ state }: { state: RunState }) {
       ? "#2BFF9A"
       : beat.tone === "red"
         ? "#FF3B5C"
-        : "#FFC233";
+        : beat.tone === "cyan"
+          ? "#67E8F9"
+          : "#FFC233";
 
   return (
     <div

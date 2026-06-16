@@ -13,6 +13,21 @@ function isSystemSender(sender: string): boolean {
 }
 
 /**
+ * A HUMAN reviewer pulled into the room — a clearly-human governance role (e.g.
+ * `@compliance-lead`) who approves a borderline claim the verifier was too unsure
+ * to pass. This is THE "pull a human in for approval" surface, so the human's
+ * line must be unmistakable: a cyan HUMAN badge + a distinct cyan avatar.
+ */
+function isHumanSender(sender: string): boolean {
+  const s = sender.toLowerCase();
+  return (
+    s.includes("compliance-lead") ||
+    s.includes("compliance lead") ||
+    s.includes("human")
+  );
+}
+
+/**
  * Render a room line with @mentions emphasised as routing chips — the visible
  * "deterministic @mention routing" Band markets. A mention of another agent
  * reads as a hand-off target, so it gets a bordered emerald chip; everything
@@ -95,7 +110,8 @@ export function WorkRoom({
         )}
 
         {room.map((line, i) => {
-          const isSystem = isSystemSender(line.sender);
+          const isHuman = isHumanSender(line.sender);
+          const isSystem = !isHuman && isSystemSender(line.sender);
           return (
             <div
               key={line.id}
@@ -105,12 +121,53 @@ export function WorkRoom({
                 "--index": i,
               }}
             >
-              <Avatar seed={line.sender} size={28} />
+              {isHuman ? (
+                // A real person in the room — a distinct cyan, glyph-marked avatar
+                // (NOT a generated agent monogram) so it's unmistakably a human.
+                <div
+                  className="flex shrink-0 items-center justify-center rounded-md font-display"
+                  style={{
+                    width: 28,
+                    height: 28,
+                    background: "rgba(34,211,238,0.14)",
+                    color: "var(--ax-cyan-glow)",
+                    boxShadow:
+                      "inset 0 0 0 1px var(--ax-cyan), 0 0 12px -2px var(--ax-cyan)",
+                    fontSize: 14,
+                  }}
+                  title={`${line.sender} (human reviewer)`}
+                  aria-hidden
+                >
+                  {/* bust-in-silhouette: a person, not an agent */}
+                  ☻
+                </div>
+              ) : (
+                <Avatar seed={line.sender} size={28} />
+              )}
               <div className="min-w-0 flex-1">
                 <div className="mb-1 flex items-baseline gap-2">
-                  <span className="font-mono text-[11px] font-medium text-fg-muted">
+                  <span
+                    className="font-mono text-[11px] font-medium"
+                    style={{
+                      color: isHuman
+                        ? "var(--ax-cyan-glow)"
+                        : "rgb(var(--ax-fg-muted-rgb))",
+                    }}
+                  >
                     {line.sender}
                   </span>
+                  {isHuman && (
+                    <span
+                      className="inline-flex items-center gap-1 rounded-[3px] border px-1 py-px font-mono text-[8px] font-bold uppercase tracking-[0.12em]"
+                      style={{
+                        color: "var(--ax-cyan-glow)",
+                        borderColor: "var(--ax-cyan)",
+                        background: "rgba(34,211,238,0.1)",
+                      }}
+                    >
+                      ☻ human
+                    </span>
+                  )}
                   {isSystem && (
                     <span className="rounded-[3px] border border-hud-neutral px-1 py-px font-mono text-[8px] font-medium uppercase tracking-[0.12em] text-fg-faint">
                       system
@@ -120,12 +177,16 @@ export function WorkRoom({
                 <div
                   className="rounded-md rounded-tl-[3px] border px-3.5 py-2.5 font-mono text-[12.5px] leading-relaxed text-fg-muted"
                   style={{
-                    borderColor: isSystem
-                      ? "rgba(0,214,122,0.18)"
-                      : "rgba(255,255,255,0.06)",
-                    background: isSystem
-                      ? "rgba(0,214,122,0.06)"
-                      : "var(--ax-surface-2)",
+                    borderColor: isHuman
+                      ? "var(--ax-cyan)"
+                      : isSystem
+                        ? "rgba(0,214,122,0.18)"
+                        : "rgba(255,255,255,0.06)",
+                    background: isHuman
+                      ? "rgba(34,211,238,0.07)"
+                      : isSystem
+                        ? "rgba(0,214,122,0.06)"
+                        : "var(--ax-surface-2)",
                   }}
                 >
                   {renderContent(line.content)}

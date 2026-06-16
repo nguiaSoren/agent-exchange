@@ -197,6 +197,15 @@ function buildTimeline(req: RunRequest): Tick[] {
       evidence_quote: "non-exclusive, non-transferable license to use the Deliverables solely for its internal business purposes",
     },
   });
+  // The HUMAN-IN-THE-LOOP claim. This finding is GENUINELY VALID — every word is
+  // grounded in §5's text (one-year term, auto-renewal, 60-day non-renewal
+  // notice). What makes it borderline is the INTERPRETIVE edge the room debated:
+  // whether §5 termination-for-breach revokes the §4 internal-use license (a
+  // reasonable judgment call, not a fact in the text). The verifier grades the
+  // claim as confirmed but lands BELOW its 0.60 confidence threshold (0.58) — it
+  // is UNSURE, not that the claim is wrong. Its fail-safe (needs_human) then
+  // routes this OUT to a human rather than auto-passing. (See the `escalate`
+  // event below + the @compliance-lead approval.)
   push(650, {
     type: "finding",
     data: {
@@ -204,7 +213,7 @@ function buildTimeline(req: RunRequest): Tick[] {
       clause_ref: "5",
       claim: "The Agreement runs one year and auto-renews for successive one-year terms unless either party gives 60 days' notice of non-renewal.",
       verdict: "confirmed",
-      confidence: 0.93,
+      confidence: 0.58,
       evidence_quote: "continues for one (1) year, renewing automatically for successive one-year terms unless either party gives sixty (60) days' written notice of non-renewal",
     },
   });
@@ -355,6 +364,43 @@ function buildTimeline(req: RunRequest): Tick[] {
       summary: "behaving in-baseline",
     },
   });
+  // ── HUMAN-IN-THE-LOOP — the verifier escalates a borderline claim ──────────
+  // The §5 termination finding graded BELOW the 0.60 confidence threshold (0.58):
+  // a genuinely-valid claim the verifier is simply too UNSURE to clear on its
+  // own (the §4-license-revocation edge is a judgment call). Its fail-safe
+  // (needs_human) routes it OUT of the machine and INTO the Band room — settle
+  // PAUSES on this node ("⏸ awaiting human") until a person reviews it. This is
+  // the SECOND, honest governance moment (the first is the auto-caught liar): the
+  // machine doesn't guess — it pulls a human in. (Disclosed demo beat; the LIVE
+  // path emits the same escalate but NEVER scripts the approval — see server.)
+  push(700, {
+    type: "escalate",
+    data: {
+      worker: "termination",
+      clause_ref: "5",
+      claim: "The Agreement runs one year and auto-renews for successive one-year terms unless either party gives 60 days' notice of non-renewal.",
+      reason: "grading confidence 0.58 < 0.60 threshold — verifier unsure on the §4-license-revocation edge",
+      confidence: 0.58,
+      escalation_type: "needs_human",
+    },
+  });
+  push(650, { type: "room_message", data: { sender: "@coordinator", content: "Verifier escalated @clause-clerk's §5 finding — confidence 0.58 is below the 0.60 bar. Pulling in a human reviewer for approval before settlement." } });
+  // A HUMAN joins the Band room — a clearly-human governance role. THIS is "pull
+  // a human in for approval." The room renders @compliance-lead with a HUMAN badge.
+  push(950, { type: "room_message", data: { sender: "@compliance-lead", content: "Compliance here — reviewing the escalated §5 finding. The claim tracks the text exactly: one-year term, auto-renewal, 60-day non-renewal notice. The only open question is the §4 license interaction, which is a judgment call, not an error." } });
+  push(1100, { type: "room_message", data: { sender: "@compliance-lead", content: "@clause-clerk this is a valid reading. Approving §5 as confirmed — release the payment. I'll note the §4 interaction as advisory, not a defect." } });
+  // The human's review verdict — approves the escalated-but-valid claim. The node
+  // leaves "⏸ awaiting human" and settles PAID (as confirmed) at settle below.
+  push(550, {
+    type: "approval",
+    data: {
+      reviewer: "@compliance-lead",
+      worker: "termination",
+      clause_ref: "5",
+      approved: true,
+      note: "Valid reading of §5 — approved as confirmed. §4 license interaction noted as advisory.",
+    },
+  });
   push(350, { type: "stage", data: { name: "Verify", status: "done" } });
 
   // ---- Stage: settle ----
@@ -381,6 +427,9 @@ function buildTimeline(req: RunRequest): Tick[] {
       status: "settled",
     },
   });
+  // Settles PAID after the human's approval unblocked it — honest work the
+  // machine was too unsure to clear on its own. Approved-valid → paid (not a
+  // "partial"; nothing contradicts the strict policy).
   push(520, {
     type: "settle",
     data: {
@@ -389,7 +438,7 @@ function buildTimeline(req: RunRequest): Tick[] {
       authorized_usd: 1.8,
       settled_usd: 1.8,
       tx_hash: "0x6b2e8d1f0a9c4b73e5d28a1c6f0b9e34d7a5c1f28b0e6d4a3c9f7b1e0d5a2c83",
-      status: "settled",
+      status: "settled (approved by @compliance-lead after escalation)",
     },
   });
   push(550, {
@@ -448,7 +497,7 @@ function buildTimeline(req: RunRequest): Tick[] {
       total_settled_usd: 8.2,
       total_withheld_usd: 4.8,
       catch_summary:
-        "7 findings graded · 5 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. The cross-owner specialist (babidibuu19/tax-clause-bot) passed and was paid across orgs. $8.20 settled, $4.80 withheld.",
+        "7 findings graded · 5 confirmed, 1 partial, 1 unsupported. The fabricated §8 'uncapped indemnity' claim was caught and not paid; the §7 '24-hour' figure was wrong (text says 72h) and withheld. One valid §5 finding graded below the 0.60 confidence bar (0.58) — the verifier escalated it and a human (@compliance-lead) reviewed and approved it as confirmed, so it settled. The cross-owner specialist (babidibuu19/tax-clause-bot) passed and was paid across orgs. $8.20 settled, $4.80 withheld.",
     },
   });
 

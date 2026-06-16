@@ -3,7 +3,7 @@
  * (honors reduced-motion via the .ax-breathe guard in globals.css).
  */
 
-type DotTone = "emerald" | "gold" | "red" | "muted";
+type DotTone = "emerald" | "gold" | "red" | "cyan" | "muted";
 
 // Accent dots keep their fixed neon hue (a live dot means the same thing in
 // every theme). The neutral `muted` dot reads the theme-able faint channel so
@@ -12,6 +12,7 @@ const TONE: Record<DotTone, string> = {
   emerald: "#2bff9a",
   gold: "#ffc233",
   red: "#ff3b5c",
+  cyan: "#67e8f9",
   muted: "rgb(var(--ax-fg-faint-rgb))",
 };
 

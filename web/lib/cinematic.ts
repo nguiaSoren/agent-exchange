@@ -59,8 +59,8 @@ export interface Beat {
   kicker: string;
   /** The punchy headline line. */
   line: string;
-  /** Accent tone for the dot + kicker. */
-  tone: "emerald" | "gold" | "red";
+  /** Accent tone for the dot + kicker. (`cyan` = the human-in-the-loop beat.) */
+  tone: "emerald" | "gold" | "red" | "cyan";
 }
 
 export const BEATS: Record<string, Beat> = {
@@ -93,6 +93,14 @@ export const BEATS: Record<string, Beat> = {
     kicker: "The verifier",
     line: "Every claim is checked against the contract — one is fabricated.",
     tone: "emerald",
+  },
+  // The human-in-the-loop beat — NOT a pipeline stage. BeatCaption swaps this in
+  // (overriding the Verify caption) while a sub-threshold claim is escalated and
+  // a human is reviewing it, then lingers on the approval before Settle.
+  Human: {
+    kicker: "Human in the loop",
+    line: "Too unsure to pass alone — a human is pulled in, reviews, and approves the honest work.",
+    tone: "cyan",
   },
   Settle: {
     kicker: "Settlement",

@@ -70,7 +70,7 @@ export function ArenaNode({
   const [pressed, setPressed] = useState(false);
 
   const dim = status === "declined";
-  const hired = ["hired", "working", "judged", "paid", "withheld"].includes(status);
+  const hired = ["hired", "working", "judged", "escalated", "paid", "withheld"].includes(status);
   const worst = vm.worstVerdict;
 
   // ── Cross-owner recruit pulse ──────────────────────────────────────────
@@ -115,7 +115,14 @@ export function ArenaNode({
   // A flagged drift signal reads as a failure (this agent cheated) — same danger
   // accent as fabrication/withheld. Clean (non-flagged) drifts render NO badge.
   const driftFlagged = vm.drift?.flagged === true;
-  const ring = driftFlagged ? "var(--ax-red)" : ringColor(status, worst);
+  // An escalated node (verifier too unsure → awaiting a human) overrides the
+  // verdict tint with its own cyan governance accent while it's paused.
+  const escalated = status === "escalated";
+  const ring = escalated
+    ? "var(--ax-cyan)"
+    : driftFlagged
+      ? "var(--ax-red)"
+      : ringColor(status, worst);
 
   // The provider this node ACTUALLY routes through. LIVE pool/bid events carry it
   // (folded onto vm.gateway); otherwise fall back to the illustrative record.
@@ -467,6 +474,30 @@ export function ArenaNode({
         </span>
       )}
 
+      {/* Human-in-the-loop badge (cyan) — the verifier was too UNSURE to pass
+          this claim on its own (sub-threshold confidence), so settlement is
+          PAUSED and a human is reviewing. A distinct governance state, NOT a
+          failure: not red (fabrication), not gold (partial), not emerald (paid).
+          Reuses the .stamp reveal/pop vocab (killed under reduced-motion). */}
+      {escalated && (
+        <span
+          aria-label={`escalated — awaiting human review: ${vm.escalation!.reason}`}
+          title={vm.escalation!.reason}
+          className={`${styles.stamp} ${styles.escalateBadge} absolute z-20 inline-flex items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-0.5 font-mono text-[8.5px] font-bold uppercase tracking-[0.07em]`}
+          style={{
+            left: "50%",
+            top: "50%",
+            transform: `translate(-50%, calc(-50% - ${diameter * 0.5 + 9}px))`,
+            color: "var(--ax-cyan-glow)",
+            borderColor: "var(--ax-cyan)",
+            background: "rgb(var(--ax-canvas-rgb))",
+            boxShadow: "0 0 12px -2px var(--ax-cyan)",
+          }}
+        >
+          ⏸ awaiting human
+        </span>
+      )}
+
       {/* Bid price tag (gold) — floats beside the node while bidding/hired.
           Dropped once a verdict exists so a judged/withheld node doesn't keep
           its stale gold bid tag on screen. */}
@@ -630,6 +661,9 @@ function ringColor(status: NodeStatus, worst: string | null): string {
 }
 
 function glowFor(status: NodeStatus, worst: string | null): string {
+  // Escalated wins over the verdict tint — the node is paused for human review,
+  // so it reads in its own cyan governance accent, not its (sub-threshold) verdict.
+  if (status === "escalated") return "var(--ax-glow-cyan)";
   if (worst === "unsupported" || status === "withheld") return "var(--ax-glow-red)";
   if (worst === "partial") return "var(--ax-glow-gold)";
   return "var(--ax-glow-emerald)";

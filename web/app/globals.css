@@ -97,6 +97,15 @@
   --ax-red: #ff3b5c;
   --ax-red-dim: rgba(255, 59, 92, 0.18);
 
+  /* ── ACCENT 4 — cyan (HUMAN-IN-THE-LOOP / escalated → awaiting human) ─ */
+  /*    A distinct fixed neon, NOT red/gold/emerald: a sub-threshold claim  */
+  /*    paused for human review reads instantly as its own governance state.*/
+  --ax-cyan: #22d3ee;
+  --ax-cyan-glow: #67e8f9;
+  --ax-cyan-dim: rgba(34, 211, 238, 0.18);
+  --ax-glow-cyan: 0 0 0 1px var(--ax-cyan-dim),
+    0 0 26px -6px rgba(34, 211, 238, 0.5);
+
   /* ── Grid + spotlight tints (theme-overridable rgba) ─────────────── */
   --ax-grid-line: rgba(255, 255, 255, 0.035); /* de-greened, neutral  */
   --ax-spotlight: rgba(0, 214, 122, 0.13); /* signature emerald top   */

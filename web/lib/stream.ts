@@ -50,6 +50,8 @@ const KNOWN_EVENT_TYPES: ReadonlySet<string> = new Set<ExchangeEventType>([
   "progress",
   "finding",
   "drift",
+  "escalate",
+  "approval",
   "settle",
   "receipt",
   "done",
