@@ -12,7 +12,7 @@
     "pay_fraction": 0.0,
     "total_settled_usd": 0.0,
     "total_withheld_usd": 11.1,
-    "catch_summary": "6 findings graded across 5 clauses; 1 fabricated (unsupported) claim caught and withheld."
+    "catch_summary": "6 findings graded. §5 termination was borderline (conf 0.58) → escalated to a human, approved. §8 indemnity was fabricated → caught. One fabrication trips the job-level gate → the whole deliverable is withheld ($0)."
   },
   "tx_links": [],
   "events": [
@@ -31,7 +31,10 @@
       "seq": 1,
       "t_offset_ms": 150.0,
       "type": "stage",
-      "data": { "name": "Discover", "status": "active" }
+      "data": {
+        "name": "Discover",
+        "status": "active"
+      }
     },
     {
       "seq": 2,
@@ -39,12 +42,54 @@
       "type": "pool",
       "data": {
         "agents": [
-          { "id": "ag_liab", "handle": "@liability-hawk", "name": "Liability Hawk", "owner": "you", "cross_owner": false, "framework": "crewai" },
-          { "id": "ag_ip", "handle": "@ip-warden", "name": "IP Warden", "owner": "you", "cross_owner": false, "framework": "langgraph" },
-          { "id": "ag_term", "handle": "@clause-clerk", "name": "Clause Clerk", "owner": "you", "cross_owner": false, "framework": "crewai" },
-          { "id": "ag_data", "handle": "@privacy-sentinel", "name": "Privacy Sentinel", "owner": "acme-labs", "cross_owner": true, "framework": "native" },
-          { "id": "ag_indem", "handle": "@indemnity-owl", "name": "Indemnity Owl", "owner": "northwind", "cross_owner": true, "framework": "native" },
-          { "id": "ag_tax", "handle": "@tax-scribe", "name": "Tax Scribe", "owner": "you", "cross_owner": false, "framework": "native" }
+          {
+            "id": "ag_liab",
+            "handle": "@liability-hawk",
+            "name": "Liability Hawk",
+            "owner": "you",
+            "cross_owner": false,
+            "framework": "crewai"
+          },
+          {
+            "id": "ag_ip",
+            "handle": "@ip-warden",
+            "name": "IP Warden",
+            "owner": "you",
+            "cross_owner": false,
+            "framework": "langgraph"
+          },
+          {
+            "id": "ag_term",
+            "handle": "@clause-clerk",
+            "name": "Clause Clerk",
+            "owner": "you",
+            "cross_owner": false,
+            "framework": "crewai"
+          },
+          {
+            "id": "ag_data",
+            "handle": "@privacy-sentinel",
+            "name": "Privacy Sentinel",
+            "owner": "acme-labs",
+            "cross_owner": true,
+            "framework": "native"
+          },
+          {
+            "id": "ag_indem",
+            "handle": "@indemnity-owl",
+            "name": "Indemnity Owl",
+            "owner": "northwind",
+            "cross_owner": true,
+            "framework": "native"
+          },
+          {
+            "id": "ag_tax",
+            "handle": "@tax-scribe",
+            "name": "Tax Scribe",
+            "owner": "you",
+            "cross_owner": false,
+            "framework": "native"
+          }
         ]
       }
     },
@@ -52,61 +97,115 @@
       "seq": 3,
       "t_offset_ms": 650.0,
       "type": "stage",
-      "data": { "name": "Discover", "status": "done" }
+      "data": {
+        "name": "Discover",
+        "status": "done"
+      }
     },
     {
       "seq": 4,
       "t_offset_ms": 800.0,
       "type": "stage",
-      "data": { "name": "Bid", "status": "active" }
+      "data": {
+        "name": "Bid",
+        "status": "active"
+      }
     },
     {
       "seq": 5,
       "t_offset_ms": 1100.0,
       "type": "bid",
-      "data": { "worker": "liability", "price_usd": 2.4, "relevance": 0.93, "reputation": 0.91, "n_jobs": 0, "framework": "crewai" }
+      "data": {
+        "worker": "liability",
+        "price_usd": 2.4,
+        "relevance": 0.93,
+        "reputation": 0.91,
+        "n_jobs": 0,
+        "framework": "crewai"
+      }
     },
     {
       "seq": 6,
       "t_offset_ms": 1360.0,
       "type": "bid",
-      "data": { "worker": "ip", "price_usd": 2.1, "relevance": 0.88, "reputation": 0.84, "n_jobs": 0, "framework": "langgraph" }
+      "data": {
+        "worker": "ip",
+        "price_usd": 2.1,
+        "relevance": 0.88,
+        "reputation": 0.84,
+        "n_jobs": 0,
+        "framework": "langgraph"
+      }
     },
     {
       "seq": 7,
       "t_offset_ms": 1600.0,
       "type": "bid",
-      "data": { "worker": "termination", "price_usd": 1.8, "relevance": 0.81, "reputation": 0.79, "n_jobs": 0, "framework": "crewai" }
+      "data": {
+        "worker": "termination",
+        "price_usd": 1.8,
+        "relevance": 0.81,
+        "reputation": 0.79,
+        "n_jobs": 0,
+        "framework": "crewai"
+      }
     },
     {
       "seq": 8,
       "t_offset_ms": 1860.0,
       "type": "bid",
-      "data": { "worker": "data_privacy", "price_usd": 2.6, "relevance": 0.9, "reputation": 0.88, "n_jobs": 0, "framework": "native" }
+      "data": {
+        "worker": "data_privacy",
+        "price_usd": 2.6,
+        "relevance": 0.9,
+        "reputation": 0.88,
+        "n_jobs": 0,
+        "framework": "native"
+      }
     },
     {
       "seq": 9,
       "t_offset_ms": 2100.0,
       "type": "bid",
-      "data": { "worker": "indemnity", "price_usd": 2.2, "relevance": 0.86, "reputation": 0.72, "n_jobs": 0, "framework": "native" }
+      "data": {
+        "worker": "indemnity",
+        "price_usd": 2.2,
+        "relevance": 0.86,
+        "reputation": 0.72,
+        "n_jobs": 0,
+        "framework": "native"
+      }
     },
     {
       "seq": 10,
       "t_offset_ms": 2320.0,
       "type": "bid",
-      "data": { "worker": "tax", "price_usd": 1.5, "relevance": 0.41, "reputation": 0.69, "n_jobs": 0, "framework": "native" }
+      "data": {
+        "worker": "tax",
+        "price_usd": 1.5,
+        "relevance": 0.41,
+        "reputation": 0.69,
+        "n_jobs": 0,
+        "framework": "native"
+      }
     },
     {
       "seq": 11,
       "t_offset_ms": 2670.0,
       "type": "stage",
-      "data": { "name": "Bid", "status": "done" }
+      "data": {
+        "name": "Bid",
+        "status": "done"
+      }
     },
     {
       "seq": 12,
       "t_offset_ms": 2820.0,
       "type": "stage",
-      "data": { "name": "Hire", "status": "active" }
+      "data": {
+        "name": "Hire",
+        "status": "active"
+      }
     },
     {
       "seq": 13,
@@ -114,13 +213,30 @@
       "type": "hire",
       "data": {
         "hired": [
-          { "worker": "liability", "price_usd": 2.4 },
-          { "worker": "ip", "price_usd": 2.1 },
-          { "worker": "termination", "price_usd": 1.8 },
-          { "worker": "data_privacy", "price_usd": 2.6 },
-          { "worker": "indemnity", "price_usd": 2.2 }
+          {
+            "worker": "liability",
+            "price_usd": 2.4
+          },
+          {
+            "worker": "ip",
+            "price_usd": 2.1
+          },
+          {
+            "worker": "termination",
+            "price_usd": 1.8
+          },
+          {
+            "worker": "data_privacy",
+            "price_usd": 2.6
+          },
+          {
+            "worker": "indemnity",
+            "price_usd": 2.2
+          }
         ],
-        "declined": ["tax"],
+        "declined": [
+          "tax"
+        ],
         "strategy": "reputation-aware Thompson sampling under budget",
         "pay_fraction_target": 0.85
       }
@@ -129,13 +245,19 @@
       "seq": 14,
       "t_offset_ms": 3570.0,
       "type": "stage",
-      "data": { "name": "Hire", "status": "done" }
+      "data": {
+        "name": "Hire",
+        "status": "done"
+      }
     },
     {
       "seq": 15,
       "t_offset_ms": 3720.0,
       "type": "stage",
-      "data": { "name": "Work", "status": "active" }
+      "data": {
+        "name": "Work",
+        "status": "active"
+      }
     },
     {
       "seq": 16,
@@ -231,31 +353,46 @@
       "seq": 26,
       "t_offset_ms": 12220.0,
       "type": "progress",
-      "data": { "worker": "liability", "done": true }
+      "data": {
+        "worker": "liability",
+        "done": true
+      }
     },
     {
       "seq": 27,
       "t_offset_ms": 13320.0,
       "type": "progress",
-      "data": { "worker": "ip", "done": true }
+      "data": {
+        "worker": "ip",
+        "done": true
+      }
     },
     {
       "seq": 28,
       "t_offset_ms": 14320.0,
       "type": "progress",
-      "data": { "worker": "termination", "done": true }
+      "data": {
+        "worker": "termination",
+        "done": true
+      }
     },
     {
       "seq": 29,
       "t_offset_ms": 15520.0,
       "type": "progress",
-      "data": { "worker": "data_privacy", "done": true }
+      "data": {
+        "worker": "data_privacy",
+        "done": true
+      }
     },
     {
       "seq": 30,
       "t_offset_ms": 16820.0,
       "type": "progress",
-      "data": { "worker": "indemnity", "done": true }
+      "data": {
+        "worker": "indemnity",
+        "done": true
+      }
     },
     {
       "seq": 31,
@@ -279,13 +416,19 @@
       "seq": 33,
       "t_offset_ms": 18470.0,
       "type": "stage",
-      "data": { "name": "Work", "status": "done" }
+      "data": {
+        "name": "Work",
+        "status": "done"
+      }
     },
     {
       "seq": 34,
       "t_offset_ms": 18620.0,
       "type": "stage",
-      "data": { "name": "Verify", "status": "active" }
+      "data": {
+        "name": "Verify",
+        "status": "active"
+      }
     },
     {
       "seq": 35,
@@ -335,8 +478,47 @@
         "clause_ref": "5",
         "claim": "The Agreement runs one year and auto-renews for successive one-year terms unless either party gives 60 days' notice of non-renewal.",
         "verdict": "confirmed",
-        "confidence": 0.93,
+        "confidence": 0.58,
         "evidence_quote": "continues for one (1) year, renewing automatically for successive one-year terms unless either party gives sixty (60) days' written notice of non-renewal"
+      }
+    },
+    {
+      "type": "escalate",
+      "data": {
+        "worker": "termination",
+        "clause_ref": "5",
+        "claim": "The Agreement runs one year and auto-renews for successive one-year terms unless either party gives 60 days' notice of non-renewal.",
+        "reason": "confidence 0.58 < 0.60 — the team split on whether §5 termination revokes the §4 license",
+        "confidence": 0.58,
+        "escalation_type": "needs_human"
+      }
+    },
+    {
+      "seq": 16,
+      "t_offset_ms": 4170.0,
+      "type": "room_message",
+      "data": {
+        "sender": "@coordinator",
+        "content": "@compliance-lead the team split on §5 — does termination revoke the §4 Deliverables license? The verifier is under threshold. Pulling you in to rule before we settle."
+      }
+    },
+    {
+      "seq": 16,
+      "t_offset_ms": 4170.0,
+      "type": "room_message",
+      "data": {
+        "sender": "@compliance-lead",
+        "content": "Reviewed §5 — on termination the internal-use license ends; the conservative reading holds. Approved as a valid finding."
+      }
+    },
+    {
+      "type": "approval",
+      "data": {
+        "reviewer": "@compliance-lead",
+        "worker": "termination",
+        "clause_ref": "5",
+        "approved": true,
+        "note": "§5 termination-vs-license interpretation upheld"
       }
     },
     {
@@ -369,13 +551,19 @@
       "seq": 41,
       "t_offset_ms": 22870.0,
       "type": "stage",
-      "data": { "name": "Verify", "status": "done" }
+      "data": {
+        "name": "Verify",
+        "status": "done"
+      }
     },
     {
       "seq": 42,
       "t_offset_ms": 23020.0,
       "type": "stage",
-      "data": { "name": "Settle", "status": "active" }
+      "data": {
+        "name": "Settle",
+        "status": "active"
+      }
     },
     {
       "seq": 43,
@@ -446,7 +634,10 @@
       "seq": 48,
       "t_offset_ms": 26190.0,
       "type": "stage",
-      "data": { "name": "Settle", "status": "done" }
+      "data": {
+        "name": "Settle",
+        "status": "done"
+      }
     },
     {
       "seq": 49,
@@ -462,7 +653,10 @@
       "seq": 50,
       "t_offset_ms": 26740.0,
       "type": "stage",
-      "data": { "name": "Done", "status": "active" }
+      "data": {
+        "name": "Done",
+        "status": "active"
+      }
     },
     {
       "seq": 51,
@@ -473,14 +667,17 @@
         "pay_fraction": 0.0,
         "total_settled_usd": 0.0,
         "total_withheld_usd": 11.1,
-        "catch_summary": "6 findings graded across 5 clauses; the fabricated §8 'uncapped indemnity' claim was caught (unsupported) — gate failed, $0 settled, $11.10 withheld."
+        "catch_summary": "6 findings graded. §5 termination was borderline (conf 0.58) → escalated to a human, approved. §8 indemnity was fabricated → caught. One fabrication trips the job-level gate → the whole deliverable is withheld ($0)."
       }
     },
     {
       "seq": 52,
       "t_offset_ms": 27290.0,
       "type": "stage",
-      "data": { "name": "Done", "status": "done" }
+      "data": {
+        "name": "Done",
+        "status": "done"
+      }
     }
   ]
 }
