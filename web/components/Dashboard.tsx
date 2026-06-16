@@ -274,7 +274,7 @@ export function Dashboard() {
       // paints. Two rAFs so the collapsed layout has settled first.
       requestAnimationFrame(() =>
         requestAnimationFrame(() =>
-          scrollIntoFullView(arenaRef.current, { align: "bottom" }),
+          scrollIntoFullView(arenaRef.current, { align: "bottom", offset: 70 }),
         ),
       );
 

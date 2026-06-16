@@ -19,7 +19,7 @@
  */
 export function scrollIntoFullView(
   el: HTMLElement | null,
-  { margin = 24, align }: { margin?: number; align?: "top" | "bottom" } = {},
+  { margin = 24, align, offset = 0 }: { margin?: number; align?: "top" | "bottom"; offset?: number } = {},
 ): void {
   if (!el || typeof window === "undefined") return;
   const reduce =
@@ -48,6 +48,11 @@ export function scrollIntoFullView(
     // Taller than the viewport: align the bottom so the bottom corners show.
     targetTop = window.scrollY + rect.bottom - vh + margin;
   }
+
+  // `offset` nudges the landing position UP by that many px (lands a little
+  // higher than the computed frame) — used to keep the bottom-aligned run-start
+  // from sitting too low.
+  targetTop -= offset;
 
   window.scrollTo({
     top: Math.max(0, targetTop),
