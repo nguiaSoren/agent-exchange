@@ -142,6 +142,85 @@ export function Numbers() {
                 </a>
               ))}
             </div>
+
+            {/* TIME-TO-PAID — one real timed end-to-end run (job posted → USDC in
+                worker's wallet). NOT an SLA: a single measured run, testnet. Tx
+                re-confirmed on Base Sepolia. */}
+            <a
+              href="https://sepolia.basescan.org/tx/0x28cb5fd122d80c325ada8741e912785e213b728f9a31fa57e3b6eb188293a588"
+              target="_blank"
+              rel="noreferrer"
+              className="ax-press mt-1 flex flex-col gap-1.5 rounded-md border border-gold/40 bg-surface-2 p-3 outline-none transition hover:border-gold focus-visible:border-gold"
+            >
+              <span className="flex items-baseline justify-between gap-3">
+                <span className="tnum font-mono text-[20px] font-medium leading-none text-gold">
+                  &asymp;12.5s
+                </span>
+                <span className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-fg">
+                  Job &rarr; paid
+                </span>
+              </span>
+              <span className="tnum font-mono text-[10.5px] leading-snug text-fg-faint">
+                one real timed run (work ~8.8s + on-chain settle ~3.7s), Base
+                Sepolia testnet
+              </span>
+              <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold">
+                <ArrowUpRight size={12} />
+                tx 0x28cb…a588
+              </span>
+            </a>
+
+            {/* CROSS-OWNER proof — the Band magic: ONE job paid TWO different
+                owners' agents in real USDC, crossing an org boundary. Hashes +
+                wallets from data/eval/cross_org_settlement_evidence.json. */}
+            <div className="mt-3 flex flex-col gap-2 rounded-md border border-gold/40 bg-gold-dim p-3">
+              <span className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-gold">
+                Cross-owner payment · one job, two owners paid
+              </span>
+              <p className="font-mono text-[11px] leading-[1.7] text-fg-muted">
+                Real USDC crossed an owner boundary on{" "}
+                <span className="text-gold">Base Sepolia (testnet)</span> — one
+                job settled to two different owners&rsquo; agents.
+              </p>
+              <div className="flex flex-col gap-2">
+                {[
+                  {
+                    label: "agent-exchange · liability-auditor",
+                    wallet: "0x39A41624Fb28783a361871F245dC7b773B75e4b5",
+                    tx: "0x2dd46b14c97000283638de83ce8480204d7d084c78fa4faf6c26db70512dfd67",
+                    amount: "0.020 USDC",
+                  },
+                  {
+                    label: "babidibuu19 · tax-clause-bot (cross-owner)",
+                    wallet: "0xa68255d2e9054A2728c53d1D2b252bD784E950d2",
+                    tx: "0xa316216c2d29b2b3ce0c10a5d9ab9dfc74109741d93e51846a0fa10a79427d05",
+                    amount: "0.010 USDC",
+                  },
+                ].map((leg) => (
+                  <a
+                    key={leg.tx}
+                    href={`https://sepolia.basescan.org/tx/${leg.tx}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ax-press flex items-center justify-between gap-2 rounded-[4px] border border-gold/40 bg-surface-2 px-2 py-1.5 outline-none transition hover:border-gold focus-visible:border-gold"
+                  >
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <span className="truncate font-mono text-[10px] text-fg">
+                        {leg.label}
+                      </span>
+                      <span className="tnum truncate font-mono text-[9.5px] text-fg-faint">
+                        {leg.wallet.slice(0, 6)}…{leg.wallet.slice(-4)} ·{" "}
+                        {leg.amount}
+                      </span>
+                    </span>
+                    <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold">
+                      <ArrowUpRight size={12} />
+                      tx
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </HudPanel>
 

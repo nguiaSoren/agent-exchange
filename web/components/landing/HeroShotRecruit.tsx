@@ -241,6 +241,23 @@ export function HeroShotRecruit() {
           ↻ replay
         </NeonButton>
       </div>
+
+      {/* Honesty foot line: this scene is an illustration, not the live arena.
+          The receipt is the real cross-owner USDC settlement on Base Sepolia —
+          tx from data/eval/cross_org_settlement_evidence.json. */}
+      <div className="flex w-full max-w-[520px] flex-wrap items-center justify-between gap-2 px-1">
+        <span className="font-mono text-[10px] tracking-[0.04em] text-fg-faint">
+          Illustration of the handshake — not a live arena render.
+        </span>
+        <a
+          href="https://sepolia.basescan.org/tx/0xa316216c2d29b2b3ce0c10a5d9ab9dfc74109741d93e51846a0fa10a79427d05"
+          target="_blank"
+          rel="noreferrer"
+          className="ax-press inline-flex items-center gap-1.5 rounded-[4px] border border-emerald/40 bg-surface-2 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-emerald outline-none transition hover:border-emerald focus-visible:border-emerald"
+        >
+          real cross-org settlement on Base Sepolia →
+        </a>
+      </div>
     </div>
   );
 
@@ -249,7 +266,7 @@ export function HeroShotRecruit() {
       id="hero-shot-recruit"
       index="02"
       eyebrow="HERO SHOT · CROSS-OWNER"
-      badge="live · permissioned contact"
+      badge="illustrated · permissioned contact"
       badgeTone="gold"
       headline={
         <>

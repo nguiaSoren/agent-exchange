@@ -13,7 +13,7 @@ export type StageStatus = "pending" | "active" | "done" | "error";
 
 export type Verdict = "confirmed" | "partial" | "unsupported";
 
-export type JobKind = "contract-audit" | "nda-review";
+export type JobKind = "contract-audit" | "nda-review" | "insurance-claim";
 
 export type RunMode = "live" | "sim";
 

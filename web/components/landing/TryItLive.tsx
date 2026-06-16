@@ -39,13 +39,40 @@ const SAMPLE_NDA = `MUTUAL NON-DISCLOSURE AGREEMENT
 
 7. No License. Nothing in this Agreement grants any license to any intellectual property of the disclosing party.`;
 
+const SAMPLE_INSURANCE = `===== POLICY =====
+HOMEOWNERS POLICY HO-3 · No. HP-44821 · Insured: M. Alvarez
+
+SECTION I — PROPERTY COVERAGES
+A. Dwelling — $420,000   C. Personal Property — $210,000   Deductible — $2,500
+
+SECTION I — EXCLUSIONS (we do not insure for loss caused by):
+  1. Water Damage, meaning: (a) FLOOD, surface water, waves, tidal water, or
+     overflow of a body of water, whether or not driven by wind; (b) water that
+     backs up through sewers or drains. Flood is covered ONLY under a separate
+     NFIP flood policy, which the insured does NOT hold.
+  2. Earth movement.   3. Neglect.   4. Intentional loss.
+
+===== CLAIM & ADJUSTER DETERMINATION =====
+Claim No. CLM-99317 · Date of loss: 2026-05-28 · Peril reported: storm
+
+Adjuster findings: A severe storm caused a nearby creek to overflow; rising
+SURFACE WATER entered the dwelling and damaged flooring, drywall, and personal
+property on the ground floor. Origin confirmed as FLOOD / surface water.
+
+Itemized loss: flooring $18,400 · drywall $9,200 · personal property $14,650.
+Determination: APPROVED — PAY $39,750 (less $2,500 deductible) = $37,250 under
+Section I Coverage A & C.`;
+
 function sampleFor(kind: JobKind): string {
-  return kind === "nda-review" ? SAMPLE_NDA : SAMPLE_CONTRACT;
+  if (kind === "nda-review") return SAMPLE_NDA;
+  if (kind === "insurance-claim") return SAMPLE_INSURANCE;
+  return SAMPLE_CONTRACT;
 }
 
 const KIND_LABEL: Record<JobKind, string> = {
   "contract-audit": "Contract audit",
   "nda-review": "NDA review",
+  "insurance-claim": "Insurance claim",
 };
 
 export function TryItLive() {
@@ -60,7 +87,9 @@ export function TryItLive() {
       if (next === kind) return;
       setKind(next);
       setText((t) =>
-        t === SAMPLE_CONTRACT || t === SAMPLE_NDA ? sampleFor(next) : t,
+        t === SAMPLE_CONTRACT || t === SAMPLE_NDA || t === SAMPLE_INSURANCE
+          ? sampleFor(next)
+          : t,
       );
     },
     [kind],
@@ -123,9 +152,9 @@ export function TryItLive() {
         <div
           role="radiogroup"
           aria-label="Job kind"
-          className="grid grid-cols-2 gap-2 rounded-md border border-hud-neutral bg-surface-2 p-1"
+          className="grid grid-cols-3 gap-2 rounded-md border border-hud-neutral bg-surface-2 p-1"
         >
-          {(["contract-audit", "nda-review"] as JobKind[]).map((k) => {
+          {(["contract-audit", "nda-review", "insurance-claim"] as JobKind[]).map((k) => {
             const on = k === kind;
             return (
               <button
@@ -134,7 +163,7 @@ export function TryItLive() {
                 role="radio"
                 aria-checked={on}
                 onClick={() => swapKind(k)}
-                className={`ax-press rounded-[5px] px-3 py-2 font-display text-[11px] font-bold uppercase tracking-[0.1em] outline-none transition focus-visible:ring-2 focus-visible:ring-emerald/70 ${
+                className={`ax-press rounded-[5px] px-2 py-2 text-center font-display text-[10.5px] font-bold uppercase leading-tight tracking-[0.08em] outline-none transition focus-visible:ring-2 focus-visible:ring-emerald/70 sm:px-3 sm:text-[11px] sm:tracking-[0.1em] ${
                   on
                     ? "bg-emerald text-canvas shadow-glow-emerald"
                     : "bg-transparent text-fg-muted hover:text-fg"
@@ -153,8 +182,12 @@ export function TryItLive() {
               htmlFor="try-live-doc"
               className="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint"
             >
-              {kind === "nda-review" ? "NDA" : "Contract"} text — edit or paste
-              your own
+              {kind === "nda-review"
+                ? "NDA"
+                : kind === "insurance-claim"
+                  ? "Policy + claim"
+                  : "Contract"}{" "}
+              text — edit or paste your own
             </label>
             <button
               type="button"
@@ -169,7 +202,7 @@ export function TryItLive() {
             value={text}
             onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
             spellCheck={false}
-            placeholder="Paste your contract or NDA here — or keep the sample and just hit Run."
+            placeholder="Paste your contract, NDA, or insurance policy + claim here — or keep the sample and just hit Run."
             className="tnum h-56 w-full resize-y rounded-md border border-hud-neutral bg-surface-2 p-3 font-mono text-[12px] leading-[1.65] text-fg outline-none transition placeholder:text-fg-faint focus-visible:border-emerald focus-visible:ring-1 focus-visible:ring-emerald/40"
           />
           <div className="flex items-center justify-between gap-3">
