@@ -301,6 +301,52 @@ def test_job_settlement_money_properties_on_full_withhold():
     assert result.total_withheld_atomic == result.total_authorized_atomic
 
 
+def test_hold_workers_holds_an_escalated_claim_pending_human_review():
+    """HUMAN-IN-THE-LOOP: a worker in `hold_workers` is HELD ($0, "awaiting human
+    review", settle never called for it) on a job that otherwise PASSES — its
+    teammate still settles. This is the live-path honesty split: an escalated
+    (needs_human) claim is never auto-paid; only an out-of-band human releases it."""
+    gate = _FakeGate()
+    # Both confirmed → the job gate passes; we HOLD beta (its claim escalated).
+    deliverable = _deliverable(
+        _audited(Verdict.CONFIRMED, worker="alpha"),
+        _audited(Verdict.CONFIRMED, worker="beta"),
+    )
+    hires = [_hire("alpha", 0.05), _hire("beta", 0.03)]
+    addrs = {"alpha": "0xAAA", "beta": "0xBBB"}
+
+    result = asyncio.run(
+        settle_job(gate, deliverable, hires, addrs, hold_workers={"beta"})
+    )
+
+    assert result.gate_passed is True
+    ws = _by_worker(result)
+    # alpha settles its full bid; beta is HELD — $0, no tx, the human-review status.
+    assert ws["alpha"].settled_atomic == usdc(0.05)
+    assert ws["alpha"].status == "settled"
+    assert ws["beta"].settled_atomic == 0
+    assert ws["beta"].tx_hash is None
+    assert ws["beta"].status == "awaiting human review"
+    # The gate NEVER settled beta (no auto-pay for an escalated claim).
+    assert gate.settled == [(usdc(0.05), "0xAAA")]
+    assert ("settle", "0xBBB") not in gate.calls
+    # Money identity still holds: authorized = settled + withheld.
+    assert (
+        result.total_withheld_atomic
+        == result.total_authorized_atomic - result.total_settled_atomic
+    )
+
+
+def test_default_no_hold_is_backward_compatible():
+    """No `hold_workers` (the default) → nobody is held; behaviour is unchanged."""
+    gate = _FakeGate()
+    deliverable = _deliverable(_audited(Verdict.CONFIRMED, worker="alpha"))
+    result = _settle(gate, deliverable, [_hire("alpha", 0.05)], {"alpha": "0xAAA"})
+    w = _by_worker(result)["alpha"]
+    assert w.status == "settled"
+    assert w.settled_atomic == usdc(0.05)
+
+
 def test_fakegate_satisfies_payment_gate_protocol():
     """The fake honours the injected seam — `_FakeGate` IS a `PaymentGate`."""
     assert isinstance(_FakeGate(), PaymentGate)

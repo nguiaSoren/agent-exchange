@@ -73,7 +73,11 @@ from agent_exchange.payments.receipts import (  # noqa: E402
     make_receipt_signer,
 )
 from agent_exchange.payments.settlement import settle_job  # noqa: E402
-from agent_exchange.verify.schema import STRICT, Verdict  # noqa: E402
+from agent_exchange.verify.schema import (  # noqa: E402
+    DEFAULT_THRESHOLD,
+    STRICT,
+    Verdict,
+)
 from agent_exchange.verify.verifier import Verifier  # noqa: E402
 from agent_exchange.workers.job_types import (  # noqa: E402
     document_label_for,
@@ -999,6 +1003,32 @@ async def run_job(
                 yield drift_event
         except Exception:  # noqa: BLE001 — drift is additive; never break the stream.
             pass
+
+        # 5c. ESCALATE — the human-in-the-loop fail-safe. Any claim the verifier
+        # was too UNSURE to clear (`confidence < threshold` ⇒ `needs_human`) is
+        # routed OUT to a human rather than auto-passed. We emit one `escalate`
+        # per such verdict so the UI can pause settlement on that node ("awaiting
+        # human"). IMPORTANT (honesty split): the LIVE path NEVER fakes a human
+        # approval — an escalated claim is NOT auto-paid. Below, settle_job's
+        # fail-safe withholds it ("awaiting human review"); only the disclosed
+        # demo scripts an approval. Additive: a failure here never breaks the stream.
+        try:
+            for af in result.all_audited:
+                v = af.verdict
+                if not v.needs_human(DEFAULT_THRESHOLD):
+                    continue
+                yield "escalate", {
+                    "worker": af.finding.worker,
+                    "clause_ref": af.finding.clause_ref or "",
+                    "claim": af.finding.claim,
+                    "reason": v.escalate_reason
+                    or f"grading confidence {round(v.confidence, 2)} < {DEFAULT_THRESHOLD} threshold — routed to a human",
+                    "confidence": round(v.confidence, 3),
+                    "escalation_type": "needs_human",
+                }
+                await asyncio.sleep(pace)
+        except Exception:  # noqa: BLE001 — escalation surfacing is additive.
+            pass
         yield "stage", {"name": "verify", "status": "end"}
 
         # 6. SETTLE — the x402 verify->settle gate, per worker (the real `settle_job`).
@@ -1007,8 +1037,19 @@ async def run_job(
         # "you only pay for verified work" is literally true on the live path.
         # (The no-fabrication gate is policy-independent — any unsupported claim
         # zeroes the job regardless — so the catch->$0 beat is unchanged.)
+        #
+        # HONESTY SPLIT: any worker whose claim escalated (needs_human) is HELD —
+        # the LIVE path NEVER fakes a human approval, so an escalated claim is not
+        # auto-paid; it settles "awaiting human review" ($0). Only the disclosed
+        # demo scripts the approval that releases it. This is the real fail-safe.
+        hold_workers = {
+            af.finding.worker
+            for af in result.all_audited
+            if af.verdict.needs_human(DEFAULT_THRESHOLD)
+        }
         settlement = await settle_job(
-            ctx.gate, result, ctx.hires, ctx.payout_addresses, policy=STRICT
+            ctx.gate, result, ctx.hires, ctx.payout_addresses,
+            policy=STRICT, hold_workers=hold_workers,
         )
         for w in settlement.workers:
             yield "settle", {

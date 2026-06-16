@@ -64,6 +64,7 @@ async def settle_job(
     *,
     policy: SettlementPolicy = LENIENT,
     hooks: GateHooks | None = None,
+    hold_workers: frozenset[str] | set[str] | None = None,
 ) -> JobSettlement:
     """Settle a graded deliverable into per-worker money movement through the gate.
 
@@ -80,6 +81,12 @@ async def settle_job(
             after settle, withhold) for the audit trail. ``None`` (default) ⇒ no hooks
             fire — fully backward compatible. A hook that raises is caught + logged and
             never affects settlement (hooks are observation-only).
+        hold_workers: optional set of worker ids to HOLD pending human review — a worker
+            whose claim the verifier was too unsure to clear (``needs_human``) is routed
+            to a human, so its money is NOT moved here ("awaiting human review", $0
+            settled). This is a fail-safe that can only REDUCE payment (never a false
+            pay), so it never affects the catch-rate/false-withhold metrics. ``None``
+            (default) ⇒ nothing held — fully backward compatible.
 
     Returns:
         A `JobSettlement`: the gate decision, the prorate fraction actually applied, the
@@ -212,6 +219,37 @@ async def settle_job(
                     authorized_atomic=hire.price_atomic,
                     status="withheld",
                     detail="job withheld: fabricated claim in deliverable",
+                ),
+            )
+            continue
+
+        # HUMAN-IN-THE-LOOP HOLD — this worker's claim was too unsure to clear
+        # (``needs_human``), so it is routed to a human. We DID verify, but we do
+        # NOT move money: an escalated claim is held ("awaiting human review"),
+        # never auto-paid. A fail-safe withhold (can only reduce pay → never a
+        # false pay), independent of the job-level gate. Only a human (out of band)
+        # releases it. Empty ``hold_workers`` (the default) skips this entirely.
+        if hold_workers and hire.worker in hold_workers:
+            workers.append(
+                WorkerSettlement(
+                    worker=hire.worker,
+                    pay_to=pay_to,
+                    authorized_atomic=hire.price_atomic,
+                    settled_atomic=0,
+                    tx_hash=None,
+                    status="awaiting human review",
+                )
+            )
+            await _fire(
+                hooks,
+                "on_withhold",
+                GateEvent(
+                    job_id=job_id,
+                    event="withheld",
+                    worker=hire.worker,
+                    authorized_atomic=hire.price_atomic,
+                    status="awaiting human review",
+                    detail="escalated to human (needs_human) — held, not auto-paid",
                 ),
             )
             continue
