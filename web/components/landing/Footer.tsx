@@ -2,8 +2,6 @@
 
 import { Exchange } from "@/components/hud";
 
-const BUILT_WITH = ["Band", "x402", "AI/ML API", "Featherless"];
-
 export function Footer() {
   return (
     <footer className="border-t border-hud-neutral">
@@ -17,14 +15,7 @@ export function Footer() {
           </span>
         </div>
         <p className="font-mono text-[11px] leading-relaxed text-fg-faint">
-          Built for the Band of Agents Hackathon · Built with{" "}
-          {BUILT_WITH.map((b, i) => (
-            <span key={b}>
-              {i > 0 && " · "}
-              <span className="text-fg-muted">{b}</span>
-            </span>
-          ))}
-          .
+          Built for the Band of Agents Hackathon.
         </p>
       </div>
     </footer>

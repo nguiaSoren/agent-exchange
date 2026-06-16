@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import type { RoomLine } from "@/lib/runState";
 import { Avatar } from "./Avatar";
-import { HudPanel, Robot } from "@/components/hud";
+import { HudPanel } from "@/components/hud";
+import { BandMark } from "./landing/BandMark";
 
 /** Senders that are orchestration roles (the market/reporter), not ring agents. */
 function isSystemSender(sender: string): boolean {
@@ -71,9 +72,7 @@ export function WorkRoom({
       bodyClassName="flex min-h-0 flex-1 flex-col"
       title={
         <span className="flex items-center gap-2.5">
-          <span className="text-emerald-glow">
-            <Robot size={17} />
-          </span>
+          <BandMark size={18} />
           WORK ROOM
         </span>
       }
@@ -86,9 +85,7 @@ export function WorkRoom({
       <div className="ax-scroll min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5">
         {room.length === 0 && (
           <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 px-6 text-center">
-            <span className="text-emerald/50">
-              <Robot size={24} />
-            </span>
+            <BandMark size={30} />
             <span className="font-mono text-[12px] leading-relaxed text-fg-faint">
               The agents&apos; shared Band room. Their messages and{" "}
               <span className="text-emerald-glow">@mention</span> hand-offs stream

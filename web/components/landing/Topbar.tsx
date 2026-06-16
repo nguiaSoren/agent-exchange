@@ -2,8 +2,10 @@
 
 import { NeonButton, LiveDot, Bolt } from "@/components/hud";
 import { ScrollLink } from "./ScrollLink";
+import { BandMark } from "./BandMark";
 
-const SPONSORS = ["Band", "x402", "AI/ML API", "Featherless"];
+// Band is the HOST sponsor (featured as a lockup); the rest are partner prizes.
+const PARTNERS = ["x402", "AI/ML API", "Featherless"];
 
 export function Topbar() {
   return (
@@ -32,14 +34,22 @@ export function Topbar() {
           </span>
         </div>
 
-        {/* Sponsor strip */}
-        <div className="ml-auto hidden items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint lg:flex">
-          {SPONSORS.map((s, i) => (
-            <span key={s} className="flex items-center gap-2">
-              {i > 0 && <span className="text-fg-faint/50">·</span>}
-              {s}
+        {/* Host-sponsor lockup — the real Band mark leads; partners credited smaller. */}
+        <div className="ml-auto hidden items-center gap-3 lg:flex">
+          <span className="inline-flex items-center gap-2 rounded-full border border-hud bg-surface px-2.5 py-1">
+            <BandMark size={20} />
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+              Built&nbsp;on <span className="font-bold text-fg">Band</span>
             </span>
-          ))}
+          </span>
+          <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">
+            {PARTNERS.map((s, i) => (
+              <span key={s} className="flex items-center gap-2">
+                {i > 0 && <span className="text-fg-faint/50">·</span>}
+                {s}
+              </span>
+            ))}
+          </span>
         </div>
 
         <ScrollLink href="#arena-stage" runDemo className="ml-auto lg:ml-4">

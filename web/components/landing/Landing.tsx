@@ -7,6 +7,7 @@ import { Numbers } from "./Numbers";
 import { Research } from "./Research";
 import { TryItLive } from "./TryItLive";
 import { ClosingCTA } from "./ClosingCTA";
+import { BuiltOnBand } from "./BuiltOnBand";
 import { Footer } from "./Footer";
 
 /**
@@ -28,6 +29,7 @@ export function Landing() {
         <Research />
         <TryItLive />
         <ClosingCTA />
+        <BuiltOnBand />
       </main>
       <Footer />
     </>

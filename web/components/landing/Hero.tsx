@@ -10,18 +10,27 @@ import {
 } from "@/components/hud";
 import { ScrollLink } from "./ScrollLink";
 import { LiveTicker } from "./LiveTicker";
+import { BandMark } from "./BandMark";
 
 export function Hero() {
   return (
     <section className="relative mx-auto max-w-6xl px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28">
       <div className="ax-fade-up flex flex-col items-start">
-        {/* Diegetic system status, not a marketing kicker — the product IS a live
-            verifier, so the hero opens on its running state. */}
-        <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-hud bg-surface/50 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
-          <LiveDot tone="emerald" size={7} />
-          <span className="font-medium text-emerald">VERIFIER ONLINE</span>
-          <span className="text-fg-faint/50">/</span>
-          <span>settling on Base&nbsp;Sepolia</span>
+        {/* Diegetic system status + the host-sponsor lockup — the product IS a live
+            verifier running on Band, so the hero opens on both. */}
+        <div className="mb-8 flex flex-wrap items-center gap-2.5">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-hud bg-surface/50 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
+            <LiveDot tone="emerald" size={7} />
+            <span className="font-medium text-emerald">VERIFIER ONLINE</span>
+            <span className="text-fg-faint/50">/</span>
+            <span>settling on Base&nbsp;Sepolia</span>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-hud bg-surface/50 px-3 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
+            <BandMark size={18} />
+            <span>
+              Built on <span className="font-bold text-fg">Band</span>
+            </span>
+          </div>
         </div>
 
         <h1 className="max-w-[17ch] font-display font-black leading-[1.02] tracking-[-0.03em] text-fg text-[clamp(2.5rem,7vw,5rem)]">
