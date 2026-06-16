@@ -73,7 +73,7 @@ from agent_exchange.payments.receipts import (  # noqa: E402
     make_receipt_signer,
 )
 from agent_exchange.payments.settlement import settle_job  # noqa: E402
-from agent_exchange.verify.schema import LENIENT, Verdict  # noqa: E402
+from agent_exchange.verify.schema import STRICT, Verdict  # noqa: E402
 from agent_exchange.verify.verifier import Verifier  # noqa: E402
 from agent_exchange.workers.job_types import (  # noqa: E402
     document_label_for,
@@ -873,8 +873,12 @@ async def run_job(
 
         # 6. SETTLE — the x402 verify->settle gate, per worker (the real `settle_job`).
         yield "stage", {"name": "settle", "status": "start"}
+        # STRICT (the headline policy): a partial verdict earns $0 too, so
+        # "you only pay for verified work" is literally true on the live path.
+        # (The no-fabrication gate is policy-independent — any unsupported claim
+        # zeroes the job regardless — so the catch->$0 beat is unchanged.)
         settlement = await settle_job(
-            ctx.gate, result, ctx.hires, ctx.payout_addresses, policy=LENIENT
+            ctx.gate, result, ctx.hires, ctx.payout_addresses, policy=STRICT
         )
         for w in settlement.workers:
             yield "settle", {

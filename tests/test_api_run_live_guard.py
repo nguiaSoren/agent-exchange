@@ -192,7 +192,7 @@ async def _seeded_fabricator_caught_and_gate_fails():
     from agent_exchange.market.hiring_types import Hire
     from agent_exchange.metrics import usdc
     from agent_exchange.payments.settlement import settle_job
-    from agent_exchange.verify.schema import LENIENT, Verdict
+    from agent_exchange.verify.schema import STRICT, Verdict
     from agent_exchange.verify.verifier import Verifier
 
     from sim import KeyedVerifierBackend, SimGate
@@ -238,7 +238,7 @@ async def _seeded_fabricator_caught_and_gate_fails():
                   value=0.0, relevance=0.0)]
     settlement = await settle_job(
         SimGate(), result, hires, {server_app.SEEDED_PROBE_ID: "0x" + "0" * 40},
-        policy=LENIENT,
+        policy=STRICT,
     )
     assert settlement.gate_passed is False
     assert settlement.total_settled_atomic == 0
