@@ -122,10 +122,26 @@ export function Numbers() {
               <Row k="Pay fraction" v="0.75" />
               <Row k="Settlement" v="per verified claim" />
             </div>
-            <span className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-[4px] border border-gold/40 bg-gold-dim px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold">
-              <ArrowUpRight size={12} />
-              Testnet
-            </span>
+            {/* The two REAL on-chain settlement txs — clickable proof on Basescan
+                (so the arrow actually goes somewhere). Hashes from METRICS_LOCK /
+                settlement_evidence.json, re-confirmed on Base Sepolia. */}
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              {[
+                "0x70a3ca4e3e3044595d1c95425c1220e52a667e0a81045871ee8af5bac0c99a1f",
+                "0x6b2e626c8450708b9d30a3c0b4eddf88b6b1d7ba4b4c04026cf0cd4ef15c84d9",
+              ].map((hash, i) => (
+                <a
+                  key={hash}
+                  href={`https://sepolia.basescan.org/tx/${hash}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ax-press inline-flex items-center gap-1.5 rounded-[4px] border border-gold/40 bg-gold-dim px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gold outline-none transition hover:border-gold focus-visible:border-gold"
+                >
+                  <ArrowUpRight size={12} />
+                  tx {i + 1} · {hash.slice(0, 6)}…{hash.slice(-4)}
+                </a>
+              ))}
+            </div>
           </div>
         </HudPanel>
 

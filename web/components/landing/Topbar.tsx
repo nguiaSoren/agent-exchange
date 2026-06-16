@@ -1,6 +1,6 @@
 "use client";
 
-import { NeonButton, LiveDot, Bolt } from "@/components/hud";
+import { NeonButton, LiveDot, Bolt, Exchange } from "@/components/hud";
 import { ScrollLink } from "./ScrollLink";
 import { BandMark } from "./BandMark";
 
@@ -13,16 +13,11 @@ export function Topbar() {
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
         {/* Wordmark + live */}
         <div className="flex min-w-0 items-center gap-2.5">
-          {/* Instrument mark — a small emerald block that reads as a logotype tick. */}
-          <span
-            aria-hidden
-            className="inline-block h-3.5 w-3.5 shrink-0 rounded-[3px]"
-            style={{
-              background:
-                "linear-gradient(150deg, var(--ax-emerald-glow), var(--ax-emerald))",
-              boxShadow: "0 0 12px -2px var(--ax-emerald)",
-            }}
-          />
+          {/* Logomark — the Exchange glyph, matching the dashboard masthead, so it
+              reads as an intentional mark rather than an ambiguous glowing square. */}
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-hud bg-emerald-dim text-emerald-glow">
+            <Exchange size={14} />
+          </span>
           <span className="font-display text-[14px] font-black uppercase tracking-[0.1em] text-fg sm:text-[16px]">
             Agent&nbsp;Exchange
           </span>
