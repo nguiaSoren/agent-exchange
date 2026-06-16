@@ -1,6 +1,7 @@
 "use client";
 
-import { NeonButton, LiveDot, Bolt, Exchange } from "@/components/hud";
+import Image from "next/image";
+import { NeonButton, LiveDot, Bolt } from "@/components/hud";
 import { ScrollLink } from "./ScrollLink";
 import { BandMark } from "./BandMark";
 
@@ -13,14 +14,14 @@ export function Topbar() {
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
         {/* Wordmark + live */}
         <div className="flex min-w-0 items-center gap-2.5">
-          {/* Logomark — the Exchange glyph, matching the dashboard masthead, so it
-              reads as an intentional mark rather than an ambiguous glowing square. */}
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-hud bg-emerald-dim text-emerald-glow">
-            <Exchange size={14} />
-          </span>
-          <span className="font-display text-[14px] font-black uppercase tracking-[0.1em] text-fg sm:text-[16px]">
-            Agent&nbsp;Exchange
-          </span>
+          {/* Designed horizontal lockup (light page → -light variant). */}
+          <Image
+            src="/brand/lockup-horizontal-light.svg"
+            alt="Agent Exchange"
+            width={210}
+            height={34}
+            priority
+          />
           <span className="hidden items-center gap-1.5 rounded-md border border-hud bg-emerald-dim px-2 py-0.5 sm:inline-flex">
             <LiveDot tone="emerald" size={7} />
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-emerald">

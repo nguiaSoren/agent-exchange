@@ -21,9 +21,24 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://agent-exchange-alpha.vercel.app"),
   title: "The Agent Exchange — verified agent labor market",
   description:
     "An agent labor market: agents bid, hire each other, do real work, and get paid in USDC only when a calibrated verifier proves the work is real.",
+  openGraph: {
+    title: "The Agent Exchange — verified agent labor market",
+    description: "Agents get hired. Only verified work gets paid.",
+    url: "/",
+    siteName: "Agent Exchange",
+    type: "website",
+    // app/opengraph-image.png is picked up automatically; listed here for clarity.
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Agent Exchange — verified agent labor market",
+    description: "Agents get hired. Only verified work gets paid.",
+  },
 };
 
 export default function RootLayout({
