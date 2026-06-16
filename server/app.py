@@ -125,6 +125,28 @@ workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED "AS IS".
 8. Governing Law. This Agreement is governed by the laws of the State of Delaware.
 """
 
+# The Track-3 insurance-claim document = the POLICY + the CLAIM, clearly delimited so
+# the multi-source CrossSourceVerifier showcase can split them back into two sources, and
+# so the single-document audit/settle path sees them as one auditable document. Built from
+# the roster's sample constants (single source of truth — no duplicated policy/claim text).
+def _sample_insurance() -> str:
+    from agent_exchange.workers.insurance_specialists import (
+        SAMPLE_INSURANCE_CLAIM,
+        SAMPLE_INSURANCE_POLICY,
+    )
+
+    return (
+        "===== POLICY =====\n"
+        f"{SAMPLE_INSURANCE_POLICY.rstrip()}\n\n"
+        "===== CLAIM & ADJUSTER DETERMINATION =====\n"
+        f"{SAMPLE_INSURANCE_CLAIM.rstrip()}\n"
+    )
+
+
+# Eagerly materialised at import (the roster module is import-safe, no network) so the
+# constant reads like SAMPLE_MSA at the call sites that expect a string.
+SAMPLE_INSURANCE = _sample_insurance()
+
 # Default authorized budget per job kind (USDC). Small — the live path moves real coin.
 _DEFAULT_BUDGET_USD = 0.20
 
@@ -146,15 +168,22 @@ _DRIFT_LATENCY_MS = 5000
 _SAMPLE_TITLES = {
     "contract-audit": "Acme MSA — clause audit",
     "nda-review": "Mutual NDA — review",
+    "insurance-claim": "Homeowners claim — payout review",
 }
 
 
 def _sample_document(kind: str) -> str:
-    """The prefill document for a job kind (MSA for contract, SAMPLE_NDA for nda)."""
+    """The prefill document for a job kind.
+
+    MSA for contract-audit, SAMPLE_NDA for nda-review, and the delimited
+    policy+claim file for insurance-claim (Track 3).
+    """
     if kind == "nda-review":
         from agent_exchange.workers.nda_specialists import SAMPLE_NDA
 
         return SAMPLE_NDA
+    if kind == "insurance-claim":
+        return SAMPLE_INSURANCE
     return SAMPLE_MSA
 
 
@@ -290,6 +319,14 @@ _SEEDED_FABRICATION: dict[str, tuple[str, str]] = {
         "9",
         "Clause 9 permits the Receiving Party to publicly disclose the Disclosing Party's "
         "trade secrets at will, with no surviving confidentiality obligation.",
+    ),
+    # A fabricated COVERAGE assertion: the policy's named perils never include flood, and
+    # Exclusion 4(a) expressly bars it — so the real verifier finds no supporting quote and
+    # grades this ``unsupported`` (catch -> $0), the Track-3 regulated hero beat.
+    "insurance-claim": (
+        "1",
+        "The policy's insuring agreement covers flood and rising surface water, so the "
+        "adjuster's flood payout is fully within coverage.",
     ),
 }
 
@@ -624,6 +661,77 @@ def _now_ms() -> int:
     return int(datetime.now(timezone.utc).timestamp() * 1000)
 
 
+def _split_insurance_sources(document: str) -> list[tuple[str, str]]:
+    """Split the Track-3 insurance document into its TWO sources: policy + claim.
+
+    The insurance-claim document is the policy and the claim concatenated under the
+    ``===== POLICY =====`` / ``===== CLAIM & ADJUSTER DETERMINATION =====`` headers (see
+    `SAMPLE_INSURANCE`). This recovers the two sources so the multi-source
+    `CrossSourceVerifier` can grade each independently. Falls back to a single
+    ``("document", document)`` source if the delimiters are absent (a pasted custom doc),
+    so the showcase is best-effort and never crashes the run.
+    """
+    policy_marker = "===== POLICY ====="
+    claim_marker = "===== CLAIM & ADJUSTER DETERMINATION ====="
+    if policy_marker in document and claim_marker in document:
+        after = document.split(policy_marker, 1)[1]
+        policy_part, claim_part = after.split(claim_marker, 1)
+        policy_part = policy_part.strip()
+        claim_part = claim_part.strip()
+        if policy_part and claim_part:
+            return [("policy", policy_part), ("claim", claim_part)]
+    return [("document", document.strip())]
+
+
+async def _cross_source_events(ctx: RunContext, document: str) -> list[tuple[str, dict]]:
+    """ISOLATED multi-source showcase for ``kind == "insurance-claim"`` ONLY.
+
+    Runs the EXISTING `CrossSourceVerifier` over the report's claims against the TWO
+    recovered sources (policy + claim), surfacing per-claim corroboration (corroborated /
+    single_source / divergent / uncorroborated). This is PURELY ADDITIVE telemetry — it
+    NEVER touches the settlement gate, the per-finding verdicts, or any other kind's path;
+    the catch -> $0 outcome is decided entirely by the unchanged single-document verifier
+    in `collaborate_in_room`. Best-effort: any failure yields no events (the caller wraps
+    this so the lifecycle stream is never broken).
+
+    Reuses ``ctx.verifier`` as the per-source base `Verifier` (the same calibrated brain the
+    gate uses — in sim it grades by claim content per-source; in live it is the real
+    verifier backend), so this genuinely demonstrates the multi-source machinery rather
+    than a parallel re-implementation.
+    """
+    from agent_exchange.verify.cross_source_verifier import CrossSourceVerifier
+
+    sources = _split_insurance_sources(document)
+    if len(sources) < 2:
+        return []  # no two distinct sources to cross-check (custom paste) — skip silently.
+    # A small, fixed set of cross-check claims spanning the two sources: a genuine covered
+    # peril (grounded in the policy), a genuine exclusion (grounded in the policy), and the
+    # FABRICATED flood-coverage assertion (grounded in NEITHER → uncorroborated). This makes
+    # the corroboration levels (corroborated / single_source / uncorroborated) visible.
+    claims = [
+        "Wind-driven roof damage is a covered windstorm loss under the policy.",
+        "Flood and rising surface water are expressly excluded from coverage.",
+        "The policy's insuring agreement covers the rising-water flood loss.",
+    ]
+    csv = CrossSourceVerifier(ctx.verifier)
+    verdicts = await csv.verify_claims(claims, sources)
+    events: list[tuple[str, dict]] = []
+    for v in verdicts:
+        events.append(("cross_source", {
+            "claim": v.claim,
+            "level": v.level.value,
+            "n_confirming": v.n_confirming,
+            "n_rejecting": v.n_rejecting,
+            "corroboration_score": round(v.corroboration_score, 3),
+            "per_source": [
+                {"label": s.label, "verdict": s.verdict,
+                 "confidence": round(s.confidence, 3), "confirms": s.confirms}
+                for s in v.per_source
+            ],
+        }))
+    return events
+
+
 def _member_findings_message(findings: list) -> str:
     """A granular in-room line summarizing a member's REAL findings (the claims it
     actually produced this round) — so the live transcript shows WHAT each agent
@@ -710,6 +818,14 @@ async def run_job(
                           pool/bid carry). The sim path does NOT emit ``progress`` (its
                           collaborate is instant/canned).
       * ``finding``      {worker, clause_ref, claim, verdict, confidence, evidence_quote}
+      * ``cross_source`` {claim, level, n_confirming, n_rejecting,
+                          corroboration_score, per_source:[{label, verdict,
+                          confidence, confirms}]} — Track-3 (insurance-claim) ONLY.
+                          The multi-source showcase: the existing CrossSourceVerifier
+                          run over the policy + the claim as TWO sources, surfacing
+                          per-claim corroboration (corroborated|single_source|
+                          divergent|uncorroborated). PURELY ADDITIVE — it never
+                          touches the settlement gate or the per-finding verdicts.
       * ``drift``        {worker, flagged, severity, model, baseline_label,
                           model_switch, price_mismatch, overcharge_ratio,
                           cost_delta_pct, latency_delta_pct, summary} — one per
@@ -858,6 +974,20 @@ async def run_job(
                 "seeded": af.finding.worker == SEEDED_PROBE_ID,
             }
             await asyncio.sleep(pace)  # verdicts land one-by-one (the catch reads)
+
+        # 5a. CROSS-SOURCE — Track-3 ONLY (insurance-claim): the multi-source showcase.
+        # Runs the existing CrossSourceVerifier over the policy + the claim as TWO sources,
+        # surfacing per-claim corroboration. PURELY ADDITIVE — isolated by kind, it never
+        # touches the gate or the per-finding verdicts above (the catch -> $0 outcome is
+        # decided entirely by the unchanged single-document verifier). Wrapped so a failure
+        # degrades gracefully and never breaks the lifecycle stream.
+        if kind == "insurance-claim":
+            try:
+                for cs_event in await _cross_source_events(ctx, document):
+                    yield cs_event
+                    await asyncio.sleep(pace)
+            except Exception:  # noqa: BLE001 — additive showcase; never break the stream.
+                pass
 
         # 5b. DRIFT — the SECOND cheat-signal, independent of the verifier: did
         # any worker quietly swap its declared model for a cheaper one while

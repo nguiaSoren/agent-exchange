@@ -5,11 +5,14 @@ job *kind* (the routing key carried on `Job.kind`) to two things: the human-read
 *document label* used in prompts and reports ("contract" vs "NDA"), and the *roster*
 of `(name, area, system_prompt)` specialist triples that should be hired for it.
 
-Today two kinds are registered:
+Today three kinds are registered:
   - ``"contract-audit"`` — the general commercial-contract clause-audit pool
     (`specialist.SPECIALISTS`), labelled "contract".
   - ``"nda-review"`` — the NDA-focused review pool (`nda_specialists.NDA_SPECIALISTS`),
     labelled "NDA".
+  - ``"insurance-claim"`` — the regulated insurance-claim review pool
+    (`insurance_specialists.INSURANCE_SPECIALISTS`), labelled "insurance claim file";
+    it audits an adjuster's payout determination against the policy + the claim.
 
 Public API:
   - `JobType`            — a frozen (kind, document_label, specialists) record.
@@ -33,6 +36,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .insurance_specialists import INSURANCE_SPECIALISTS
 from .nda_specialists import NDA_SPECIALISTS
 from .specialist import SPECIALISTS, SpecialistWorker, make_backend
 
@@ -67,6 +71,11 @@ class JobType:
 JOB_TYPES: dict[str, JobType] = {
     "contract-audit": JobType("contract-audit", "contract", SPECIALISTS),
     "nda-review": JobType("nda-review", "NDA", NDA_SPECIALISTS),
+    # Track 3 — a REGULATED, high-stakes domain: auditing an adjuster's payout
+    # determination against the policy + the claim (both supplied as one document).
+    "insurance-claim": JobType(
+        "insurance-claim", "insurance claim file", INSURANCE_SPECIALISTS
+    ),
 }
 
 
@@ -93,6 +102,11 @@ FRAMEWORK_BY_SPECIALTY: dict[str, dict[str, str]] = {
         "permitted_use": "crewai",
         "term_survival": "crewai",
     },
+    "insurance-claim": {
+        "coverage_scope": "langgraph",
+        "exclusions": "crewai",
+        "limits_deductible": "crewai",
+    },
 }
 
 #: Which Featherless model TIER each CrewAI slot runs, so the two open-weight
@@ -102,6 +116,7 @@ FRAMEWORK_BY_SPECIALTY: dict[str, dict[str, str]] = {
 FEATHERLESS_TIER: dict[str, dict[str, str]] = {
     "contract-audit": {"liability": "primary", "termination": "secondary"},
     "nda-review": {"permitted_use": "primary", "term_survival": "secondary"},
+    "insurance-claim": {"exclusions": "primary", "limits_deductible": "secondary"},
 }
 
 

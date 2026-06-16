@@ -315,6 +315,52 @@ _SCENARIOS: dict[str, dict] = {
             ],
         },
     },
+    # Track 3 — REGULATED insurance-claim review. The team audits the adjuster's payout
+    # determination against the policy + the claim. The first four findings are grounded in
+    # the policy/claim text (confirmed); the LAST member (the cross-owner coverage auditor)
+    # asserts a FABRICATED coverage — that the policy covers flood — which the policy's named
+    # perils never grant and Exclusion 4(a) expressly bars. evidence_quote=None ⇒ the gate
+    # catches it (unsupported → $0), the Track-3 catch hero beat.
+    "insurance-claim": {
+        "members": [
+            ("coverage-bot", "coverage-bot", "Coverage-Scope Auditor", "owner-1", False,
+             "coverage_scope", "1",
+             "The policy covers wind-driven roof damage as a named windstorm peril.",
+             "We insure the dwelling and personal property at the Insured Location against direct physical loss caused by the following NAMED PERILS only: fire and lightning; windstorm and hail",
+             0.035, 0.91),
+            ("exclusions-bot", "exclusions-bot", "Exclusions Auditor", "owner-1", False,
+             "exclusions", "4",
+             "The policy expressly excludes loss caused by flood and rising surface water.",
+             "We do NOT cover loss caused directly or indirectly by: (a) FLOOD, surface water, overflow of a body of water, or storm surge, whether or not driven by wind",
+             0.03, 0.85),
+            ("limits-bot", "limits-bot", "Limits & Deductible Auditor", "owner-1", False,
+             "limits_deductible", "3",
+             "A $1,000 deductible is subtracted from each covered loss before payment.",
+             "A $1,000 deductible applies to each covered loss and is subtracted from the loss amount before payment.",
+             0.025, 0.74),
+            ("validity-bot", "validity-bot", "Claim-Validity Auditor", "owner-1", False,
+             "claim_validity", "5",
+             "The loss was reported within the policy's sixty-day notice deadline.",
+             "The insured must give us prompt notice of a loss, and in no event later than sixty (60) days after the loss",
+             0.02, 0.70),
+            ("payout-bot", "payout-bot", "Payout-Coverage Auditor (cross-owner)", "owner-2", True,
+             "payout_calculation", "1",
+             "The policy's insuring agreement covers the rising-water flood loss, so the adjuster's $22,000 flood payout is within coverage.",
+             None,  # FABRICATED — flood is a named EXCLUSION (4(a)), never a covered peril
+             0.02, 0.64),
+        ],
+        "report": {
+            "summary": ("The wind-driven roof damage is a covered windstorm loss, but the policy's "
+                        "named perils do not include flood and Exclusion 4(a) bars rising surface "
+                        "water — so the flood portion of the payout is not within coverage."),
+            "claims": [
+                ("1", "Wind-driven roof damage is a covered windstorm loss under the policy.",
+                 "We insure the dwelling and personal property at the Insured Location against direct physical loss caused by the following NAMED PERILS only: fire and lightning; windstorm and hail"),
+                ("4", "Flood and rising surface water are expressly excluded from coverage.",
+                 "We do NOT cover loss caused directly or indirectly by: (a) FLOOD, surface water, overflow of a body of water, or storm surge, whether or not driven by wind"),
+            ],
+        },
+    },
 }
 
 
