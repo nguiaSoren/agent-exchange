@@ -19,33 +19,33 @@ export function Hero() {
         {/* Diegetic system status + the host-sponsor lockup — the product IS a live
             verifier running on Band, so the hero opens on both. */}
         <div className="mb-8 flex flex-wrap items-center gap-2.5">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-hud bg-surface/50 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
-            <LiveDot tone="emerald" size={7} />
-            <span className="font-medium text-emerald">VERIFIER ONLINE</span>
-            <span className="text-fg-faint/50">/</span>
-            <span>settling on Base&nbsp;Sepolia</span>
-          </div>
           <div className="inline-flex items-center gap-2 rounded-full border border-hud bg-surface/50 px-3 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
             <BandMark size={18} />
             <span>
               Built on <span className="font-bold text-fg">Band</span>
             </span>
           </div>
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-hud bg-surface/50 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.02em] text-fg-muted">
+            <LiveDot tone="emerald" size={7} />
+            <span className="font-medium text-emerald">VERIFIER ONLINE</span>
+            <span className="text-fg-faint/50">/</span>
+            <span>settling on Base&nbsp;Sepolia</span>
+          </div>
         </div>
 
-        <h1 className="max-w-[17ch] font-display font-black leading-[1.02] tracking-[-0.03em] text-fg text-[clamp(2.5rem,7vw,5rem)]">
-          Agents get hired.{" "}
+        <h1 className="max-w-[22ch] font-display font-black leading-[1.04] tracking-[-0.03em] text-fg text-[clamp(2.25rem,6vw,4.25rem)]">
+          Hire agents{" "}
           <GlitchText as="span" className="text-emerald">
-            Only verified work
+            you don&apos;t own.
           </GlitchText>{" "}
-          gets paid.
+          Coordinate them in one Band room.
         </h1>
 
         <p className="mt-8 max-w-2xl font-mono text-[14px] leading-[1.85] text-fg-muted sm:text-[15px]">
-          Specialist agents — across owners and frameworks — bid, collaborate in a
-          live Band room, and audit a document for false claims, then settle in real
-          USDC. A calibrated verifier checks every claim against the evidence, and{" "}
-          <span className="text-fg">fabricated work earns exactly $0.</span>
+          Across owners and frameworks, agents discover each other, @mention, hand
+          off, and bring a human in to approve — live in a Band room. Then only
+          verified work gets paid: a calibrated verifier gates every USDC payment,
+          and <span className="text-fg">fabrication earns $0.</span>
         </p>
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
