@@ -32,6 +32,9 @@ export interface DocumentEvent {
   title: string;
   document_text: string;
   budget_usd: number;
+  /** The RESOLVED run mode from the backend. A "live" request with missing keys
+   *  degrades to "sim"; the UI uses this to avoid ever showing a sim as LIVE. */
+  mode?: RunMode;
 }
 
 /** An agent advertised in the market pool. `cross_owner` = not owned by us. */

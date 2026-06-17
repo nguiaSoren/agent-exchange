@@ -859,7 +859,10 @@ async def run_job(
     try:
         # 0. The document the team will audit (sent first so the UI can render it).
         title = _SAMPLE_TITLES.get(kind, kind)
-        yield "document", {"kind": kind, "title": title,
+        # `mode` is the RESOLVED mode (a "live" request with missing keys degrades
+        # to "sim" — see _resolve_mode). Sent first so the UI can honestly reflect
+        # what actually ran and NEVER show a sim under a "LIVE" badge.
+        yield "document", {"kind": kind, "title": title, "mode": mode,
                            "document_text": document, "budget_usd": budget_usd}
 
         # 1. DISCOVER — build the run world (sim or live) and surface the agent pool.

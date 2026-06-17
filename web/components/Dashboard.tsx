@@ -317,6 +317,14 @@ export function Dashboard() {
                 await playRecordedFallback(myRun, ev.data.live_status);
                 return;
               }
+              // Honesty guard: a LIVE request whose live keys aren't configured is
+              // resolved to "sim" by the backend (_resolve_mode). NEVER render that
+              // sim under the LIVE badge — show the disclosed recorded real run.
+              if (ev.type === "document" && ev.data.mode === "sim") {
+                handle.abort();
+                await playRecordedFallback(myRun, "live_unavailable");
+                return;
+              }
               gotFirst = true;
               clearTimeout(firstEventTimer);
               setStarting(false);

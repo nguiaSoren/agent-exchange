@@ -11,7 +11,22 @@
 #        - AIMLAPI_API_KEY          (required — the AI/ML API key the workers + verifier use)
 #        - AIMLAPI_MODEL            (worker model id; e.g. gpt-4.1-mini — verify vs /models, L6)
 #        - AIMLAPI_VERIFIER_MODEL   (verifier model id; e.g. gpt-4.1)
-#        - OPENAI_API_KEY           (fallback provider key; optional)
+#        - OPENAI_API_KEY           (the live-mode model provider key; required for mode=live)
+#      For mode=live (real Band room + real x402), ALSO set ALL of these — missing any
+#      ONE degrades a "live" request to a sim (see server/app.py::_live_keys_present):
+#        - BAND_MARKET_KEY                     (or BAND_AGENT_A_KEY — the market identity)
+#        - BAND_SPECIALIST_LIABILITY_KEY       (>=1 specialist; the more, the richer the room)
+#        - BAND_SPECIALIST_IP_KEY
+#        - BAND_SPECIALIST_TERMINATION_KEY
+#        - BAND_SPECIALIST_TAX_KEY             (a SECOND owner's account => the cross-owner beat)
+#        - BAND_SPECIALIST_DATA_PRIVACY_KEY
+#        - BAND_SPECIALIST_INDEMNITY_KEY
+#        - BAND_REPORTER_KEY                   (optional; falls back to the market key)
+#        - EVM_PRIVATE_KEY                     (the FUNDED Base-Sepolia buyer wallet — testnet only)
+#        - SELLER_PAYTO_ADDRESS                (the payout address for the x402 settle)
+#        - X402_FACILITATOR_URL                (optional; defaults to https://x402.org/facilitator)
+#      SAFETY: server/live_guard.py caps the public live path (single-flight, 30 runs/day,
+#      $3/day). Fund the wallet with only a small testnet amount; it is disposable.
 #   3. Click Manual Deploy (or push to the connected branch) to build + go live.
 #   4. Smoke-test:  curl https://<svc>.onrender.com/health   -> {"ok": true}
 #
@@ -48,4 +63,31 @@ services:
       - key: AIMLAPI_VERIFIER_MODEL
         sync: false
       - key: OPENAI_API_KEY
+        sync: false
+      # --- LIVE-mode secrets (set ALL for mode=live; missing any one => sim) ---
+      - key: BAND_MARKET_KEY
+        sync: false
+      - key: BAND_AGENT_A_KEY
+        sync: false
+      - key: BAND_AGENT_B_KEY
+        sync: false
+      - key: BAND_REPORTER_KEY
+        sync: false
+      - key: BAND_SPECIALIST_LIABILITY_KEY
+        sync: false
+      - key: BAND_SPECIALIST_IP_KEY
+        sync: false
+      - key: BAND_SPECIALIST_TERMINATION_KEY
+        sync: false
+      - key: BAND_SPECIALIST_TAX_KEY
+        sync: false
+      - key: BAND_SPECIALIST_DATA_PRIVACY_KEY
+        sync: false
+      - key: BAND_SPECIALIST_INDEMNITY_KEY
+        sync: false
+      - key: EVM_PRIVATE_KEY
+        sync: false
+      - key: SELLER_PAYTO_ADDRESS
+        sync: false
+      - key: X402_FACILITATOR_URL
         sync: false
