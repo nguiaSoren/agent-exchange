@@ -82,18 +82,18 @@ export function Numbers() {
             <div className="grid min-w-0 grid-cols-1 gap-3">
               <StatBlock
                 value={<CountUp value={2.5} decimals={1} suffix="%" />}
-                label="False-withhold"
-                qualifier="real work wrongly held back"
+                label="Real work wrongly held back"
+                qualifier="false-withhold rate"
               />
               <StatBlock
                 value={<CountUp value={97.6} decimals={1} suffix="%" />}
-                label="Precision"
-                qualifier="paid claims that are real"
+                label="Paid claims that are real"
+                qualifier="precision"
               />
               <StatBlock
                 value={<CountUp value={0.015} decimals={3} />}
-                label="Calibration ECE"
-                qualifier="lower is better-calibrated"
+                label="Confidence you can trust"
+                qualifier="calibration ECE · lower is better"
               />
             </div>
           </div>
@@ -238,13 +238,13 @@ export function Numbers() {
             />
             <StatBlock
               value={<CountUp value={0} suffix="%" />}
-              label="False-withhold"
-              qualifier="none held back"
+              label="None held back"
+              qualifier="false-withhold"
             />
             <StatBlock
               value={<CountUp value={0.009} decimals={3} />}
-              label="ECE"
-              qualifier="calibration"
+              label="Calibrated"
+              qualifier="ECE"
             />
           </div>
         </HudPanel>

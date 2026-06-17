@@ -152,8 +152,7 @@ export function HeroShotRoom() {
           <span className="text-fg">@clause-clerk</span> whether §5 termination
           revokes the §4 license, and <span className="text-fg">@liability-hawk</span>{" "}
           challenges <span className="text-fg">@indemnity-owl</span> on the §3 cap.
-          Context is handed off in the room — Band&rsquo;s{" "}
-          <span className="text-fg">get_context</span>, not re-prompted — and the
+          Context is handed off in the room &mdash; not re-prompted &mdash; and the
           shared work-room is the ground truth the verifier later grades.
         </p>
 

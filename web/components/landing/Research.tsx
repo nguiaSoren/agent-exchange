@@ -301,7 +301,10 @@ export function Research() {
               <CountUp value={2.5} decimals={1} suffix="%" />
             </span>
             <p className="mt-3 font-display text-[13px] font-bold uppercase tracking-[0.1em] text-fg">
-              False-withhold rate
+              Honest work wrongly held back
+              <span className="ml-2 font-normal normal-case tracking-normal text-fg-faint">
+                false-withhold rate
+              </span>
             </p>
             <p className="mt-2 max-w-md font-mono text-[12.5px] leading-[1.75] text-fg-muted">
               In plain English: the verifier wrongly withheld pay on just{" "}
@@ -319,22 +322,22 @@ export function Research() {
             <Metric
               tone="emerald"
               value={<CountUp value={100} suffix="%" />}
-              label="Catch-rate"
-              fraction="81 / 81 contract-audit fabrications caught · NDA 10 / 10"
+              label="Fabricated work caught"
+              fraction="catch-rate · 81 / 81 contract-audit fabrications caught · NDA 10 / 10"
               plain="Every seeded fabrication was caught — against an LLM inventing plausible-but-false claims. 100% is against this adversary, not 'unbeatable.'"
             />
             <Metric
               tone="fg"
               value={<CountUp value={97.6} decimals={1} suffix="%" />}
-              label="Precision"
-              fraction="contract-audit: 81 / 83 withholds were truly fabricated · NDA: 10 / 10"
+              label="Withholds that were right"
+              fraction="precision · contract-audit: 81 / 83 withholds were truly fabricated · NDA: 10 / 10"
               plain="When it withholds pay, it is almost always right to. Few honest deliverables get caught in the net."
             />
             <Metric
               tone="emerald"
               value={<CountUp value={0.015} decimals={3} />}
-              label="Calibration · ECE"
-              fraction="contract-audit, N=162 · NDA ECE 0.005, N=22"
+              label="Confidence you can trust"
+              fraction="calibration ECE · contract-audit, N=162 · NDA ECE 0.005, N=22"
               plain="Expected calibration error: how far the verifier's confidence drifts from reality. ~0.01 means a '90% sure' is right about 90% of the time."
             />
             <Metric
@@ -345,8 +348,8 @@ export function Research() {
                   <span className="text-fg-faint"> txs</span>
                 </span>
               }
-              label="Real settlement"
-              fraction="live x402 on Base Sepolia (testnet) · pay_fraction 0.75"
+              label="Paid on-chain, for real"
+              fraction="real settlement · live x402 on Base Sepolia (testnet) · pay_fraction 0.75"
               plain="Verify → settle is live and on-chain: the worker is paid per verified claim, the rest withheld. Mechanism real; amounts are test funds."
             />
           </div>
