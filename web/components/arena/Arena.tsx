@@ -92,9 +92,12 @@ export function Arena({
     const el = wrapRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width ?? 640;
-      // Cap height so the arena fits a laptop viewport; clamp small screens.
-      setSize(Math.max(300, Math.min(w, 720)));
+      const w = entries[0]?.contentRect.width ?? 0;
+      // Use the ACTUAL container width so the arena never overflows a narrow
+      // (mobile) parent; cap at 720 for laptop viewports. No 300px floor: it
+      // would exceed a ~320px phone's width and get clipped by ax-court's
+      // overflow:hidden (the mobile bug).
+      if (w > 0) setSize(Math.min(w, 720));
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -376,7 +379,7 @@ export function Arena({
   // the layout doesn't jump and SSR never instantiates a brand logo.
   if (!mounted) {
     return (
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex min-w-0 flex-col items-center gap-6">
         <div
           className="relative mx-auto flex w-full items-center justify-center"
           style={{ maxWidth: 720, aspectRatio: "1 / 1" }}
@@ -393,11 +396,11 @@ export function Arena({
   }
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex min-w-0 flex-col items-center gap-6">
       {/* The square stage. The SVG edge layer sits under the HTML node layer. */}
       <div
         ref={wrapRef}
-        className="relative mx-auto w-full"
+        className="relative mx-auto w-full min-w-0"
         style={{ maxWidth: 720 }}
       >
         <div
