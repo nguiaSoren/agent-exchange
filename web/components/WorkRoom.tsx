@@ -69,7 +69,14 @@ export function WorkRoom({
 }) {
   const endRef = useRef<HTMLDivElement>(null);
 
+  // Follow the newest line as the transcript grows. Guarded on a non-empty room
+  // so an IDLE WorkRoom never scrolls on mount: three of these mount on the
+  // landing (two hero shots + the live Dashboard's), and an empty one calling
+  // scrollIntoView would yank the whole page down to the bottom-most panel on
+  // first load. With the guard the page stays at the top until a real run (or a
+  // hero shot scrolled into view) actually puts lines in the room.
   useEffect(() => {
+    if (room.length === 0) return;
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [room.length]);
 
