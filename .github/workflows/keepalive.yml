@@ -1,0 +1,18 @@
+# Keep the free-tier Render backend warm so a judge's first "Run it live" click
+# doesn't cold-start (~60-90s). Render free web services sleep after ~15 min idle;
+# pinging /health every 10 min keeps the dyno awake during the judging window.
+#
+# NOTE: GitHub's scheduled runs are best-effort and can be delayed under load, and
+# the schedule auto-disables after 60 days of repo inactivity. For the most reliable
+# keep-warm, ALSO add an UptimeRobot HTTP monitor on the same /health URL at 5 min.
+name: keep-backend-warm
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes
+  workflow_dispatch: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ping /health
+        run: curl -fsS --max-time 60 https://agent-exchange-api.onrender.com/health || true
