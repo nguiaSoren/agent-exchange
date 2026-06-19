@@ -21,10 +21,9 @@ DAY-BY-DAY*.md
 Prompt*.md
 PROMPT*.md
 MEMORY.md
-# Keep the strategy/process narrative OUT of the published repo — the internal
-# README + agent instructions reveal the sponsor-targeting playbook to rivals.
-# (A clean, neutral public README is written separately for the submission.)
-README.md
+# Keep the internal strategy/process narrative OUT of the published repo.
+# README.md IS published (a clean public README); the agent-instruction +
+# internal case-study docs below stay private.
 CLAUDE.md
 glossary.md
 BAND_CASE_STUDY.md
@@ -71,3 +70,10 @@ data/telemetry/
 # Research wedge — unpublished paper outlines / publishability assessment.
 # Keep private until published (un-ignore to show research depth in the public repo).
 docs/research/
+PAPERS.md
+assets/trailer/
+.claude/
+
+# Personal design/UI agent skills (private — not part of the product).
+web/.agents/
+web/skills-lock.json
