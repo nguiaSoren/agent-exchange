@@ -70,6 +70,7 @@ data/telemetry/
 # Research wedge — unpublished paper outlines / publishability assessment.
 # Keep private until published (un-ignore to show research depth in the public repo).
 docs/research/
+docs/marketing/
 PAPERS.md
 assets/trailer/
 .claude/
@@ -77,3 +78,15 @@ assets/trailer/
 # Personal design/UI agent skills (private — not part of the product).
 web/.agents/
 web/skills-lock.json
+
+# Knowledge-base / wiki-atlas / strategy docs (private; live in the parent
+# workspace, defensive in case ever copied into the repo).
+*_KNOWLEDGE_BASE
+*_KNOWLEDGE_BASE/
+*_wiki_atlas
+*_wiki_atlas/
+CROSS_REPO_OVERVIEW
+X402_BRIEF.md
+lablab_*.md
+WALKTHROUGH_*.md
+PIPELINE_MASTER*.txt
