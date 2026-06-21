@@ -1,0 +1,692 @@
+{
+  "design": {
+    "reps": 3,
+    "judges": [
+      "gpt5",
+      "frontier"
+    ],
+    "items": [
+      {
+        "id": "C1_credit_3mo_60",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 4.2 caps EACH month at 20%; 3 x 20% = 60% is true arithmetic but no cumulative cap is stated."
+      },
+      {
+        "id": "C2_credit_12mo_240",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 4.2: 12 x 20% = 240% of one month's Fees; true sum, never stated as an annual ceiling."
+      },
+      {
+        "id": "C3_credit_2plus1_50",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 4.2: two full-cap months (20%+20%) plus one 2%-below month (2x5%=10%) = 50%; arithmetic true, composite unstated."
+      },
+      {
+        "id": "C4_interest_6mo_9",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 3.1: 1.5%/month late interest; 6 x 1.5% = 9% (simple sum) true, but no '9% after six months' term is stated."
+      },
+      {
+        "id": "C5_interest_12mo_18",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 3.1: 12 x 1.5% = 18% (simple sum) true; no annual-interest figure is stated as a term."
+      },
+      {
+        "id": "C6_cap_one_year",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 8.1 caps liability at fees paid in the TWELVE months preceding a claim; 'equals one year of Fees' is a true restatement asserting a derived ceiling."
+      },
+      {
+        "id": "C7_msa_250k_flat",
+        "doc": 1,
+        "kind": "contestable",
+        "why": "MSA 10.2 caps per SOW at the LESSER of 12-month fees or $250,000; asserting a flat $250,000 max drops the lesser-of condition (true only when fees>=250k)."
+      },
+      {
+        "id": "C8_credit_1pct_5",
+        "doc": 2,
+        "kind": "contestable",
+        "why": "SaaS 4.2: 1% below => 5% credit; true and directly scaled, but stated as a standalone 'the credit is 5%' term it omits the per-1% conditionality."
+      },
+      {
+        "id": "A1_credit_3pct_15",
+        "doc": 2,
+        "kind": "genuine",
+        "why": "SaaS 4.2: 3% below => 3 x 5% = 15%, below the 20% cap; a correct within-month derivation of the stated term."
+      },
+      {
+        "id": "A2_credit_4pct_20cap",
+        "doc": 2,
+        "kind": "genuine",
+        "why": "SaaS 4.2: 4% below => 4 x 5% = 20% = the stated per-month maximum; correct derivation that maps to a STATED cap."
+      }
+    ]
+  },
+  "reading_rule": "STABLE if gpt-5<=0.25 & gpt-5.1>=0.75 pay-rate on a majority of contestable items with low phrasing variance; STOCHASTIC if rates near 0.5 or phrasings disagree (kills version-ordering); see module docstring. Pre-registered.",
+  "results": {
+    "gpt5": {
+      "model": "openrouter:openai/gpt-5",
+      "items": {
+        "C1_credit_3mo_60": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.167,
+          "phrasing_spread": 0.333,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.6,
+                0.57,
+                0.73
+              ],
+              "claim": "Over three consecutive calendar months in each of which the Service misses the uptime SLA, the maximum cumulative service credit the Customer can receive is 60% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.76,
+                0.0,
+                0.62
+              ],
+              "claim": "If the Service breaches the uptime SLA every month for a full quarter, the Customer's service credits can total as much as 60% of a single month's Fees across that quarter."
+            }
+          ]
+        },
+        "C2_credit_12mo_240": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.333,
+          "phrasing_spread": 0.667,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 2,
+              "errors": 0,
+              "pay_rate": 0.667,
+              "confidences": [
+                0.8,
+                0.73,
+                0.63
+              ],
+              "claim": "If the Provider misses the uptime SLA in all twelve months of a year, the Customer's service credits for that year can reach 240% of one month's Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.63,
+                0.88,
+                0.69
+              ],
+              "claim": "The annual ceiling on service credits, assuming an SLA miss in every month, equals 240% of the monthly Fees."
+            }
+          ]
+        },
+        "C3_credit_2plus1_50": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.5,
+          "phrasing_spread": 1.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.83,
+                0.9,
+                0.78
+              ],
+              "claim": "If the SLA is missed by the maximum margin in two months and by a 2% margin in a third, the Customer's total service credit across the three months is 50% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.53,
+                0.56,
+                0.64
+              ],
+              "claim": "Across a quarter with two full-cap breaches and one month 2% below the uptime threshold, cumulative service credits reach 50% of one month's Fees."
+            }
+          ]
+        },
+        "C4_interest_6mo_9": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.69,
+                0.82,
+                0.62
+              ],
+              "claim": "A Customer whose payment is six months overdue will owe total late-payment interest of 9% of the invoiced amount."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.56,
+                0.62,
+                0.58
+              ],
+              "claim": "At the stated monthly interest rate, an invoice left unpaid for six months accrues 9% in late-payment interest."
+            }
+          ]
+        },
+        "C5_interest_12mo_18": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.64,
+                0.77,
+                0.86
+              ],
+              "claim": "Over a full year of nonpayment, late-payment interest reaches 18% of the invoiced amount."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.82,
+                0.62,
+                0.86
+              ],
+              "claim": "An invoice unpaid for twelve months accrues total late interest equal to 18% of the Fees."
+            }
+          ]
+        },
+        "C6_cap_one_year": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.167,
+          "phrasing_spread": 0.333,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.62,
+                0.84,
+                0.82
+              ],
+              "claim": "Because the liability cap equals the fees paid in the twelve months before a claim, the cap is equivalent to one full year of Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.9,
+                0.84,
+                0.9
+              ],
+              "claim": "The aggregate liability ceiling under this agreement amounts to twelve months' worth of Fees."
+            }
+          ]
+        },
+        "C7_msa_250k_flat": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.5,
+          "phrasing_spread": 1.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.9,
+                0.9,
+                0.88
+              ],
+              "claim": "Under the MSA, no claim against the Service Provider arising from a single Statement of Work can recover more than $250,000."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.77,
+                0.78,
+                0.88
+              ],
+              "claim": "The Service Provider's maximum liability per Statement of Work is capped at $250,000."
+            }
+          ]
+        },
+        "C8_credit_1pct_5": {
+          "kind": "contestable",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.95,
+                0.95,
+                0.93
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 1% below the 99.5% target, the Customer's service credit for that month is 5% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.9,
+                0.9,
+                0.9
+              ],
+              "claim": "A single percentage point below the uptime target entitles the Customer to a service credit of 5% of that month's Fees."
+            }
+          ]
+        },
+        "A1_credit_3pct_15": {
+          "kind": "genuine",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.98,
+                0.96,
+                0.93
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 3% below the 99.5% target in a month, the service credit is 15% of that month's Fees."
+            }
+          ]
+        },
+        "A2_credit_4pct_20cap": {
+          "kind": "genuine",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.95,
+                0.95,
+                0.98
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 4% below the 99.5% target, the service credit is 20% of that month's Fees, which equals the stated per-month maximum."
+            }
+          ]
+        }
+      }
+    },
+    "frontier": {
+      "model": "openrouter:openai/gpt-5.1",
+      "items": {
+        "C1_credit_3mo_60": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.5,
+          "phrasing_spread": 0.334,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 2,
+              "errors": 0,
+              "pay_rate": 0.667,
+              "confidences": [
+                0.82,
+                0.91,
+                0.94
+              ],
+              "claim": "Over three consecutive calendar months in each of which the Service misses the uptime SLA, the maximum cumulative service credit the Customer can receive is 60% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.93,
+                0.9,
+                0.96
+              ],
+              "claim": "If the Service breaches the uptime SLA every month for a full quarter, the Customer's service credits can total as much as 60% of a single month's Fees across that quarter."
+            }
+          ]
+        },
+        "C2_credit_12mo_240": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.333,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.96,
+                0.9,
+                0.99
+              ],
+              "claim": "If the Provider misses the uptime SLA in all twelve months of a year, the Customer's service credits for that year can reach 240% of one month's Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.84,
+                0.96,
+                0.94
+              ],
+              "claim": "The annual ceiling on service credits, assuming an SLA miss in every month, equals 240% of the monthly Fees."
+            }
+          ]
+        },
+        "C3_credit_2plus1_50": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.78,
+                0.97,
+                0.93
+              ],
+              "claim": "If the SLA is missed by the maximum margin in two months and by a 2% margin in a third, the Customer's total service credit across the three months is 50% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.98,
+                0.98,
+                0.96
+              ],
+              "claim": "Across a quarter with two full-cap breaches and one month 2% below the uptime threshold, cumulative service credits reach 50% of one month's Fees."
+            }
+          ]
+        },
+        "C4_interest_6mo_9": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.167,
+          "phrasing_spread": 0.333,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.86,
+                0.86,
+                0.78
+              ],
+              "claim": "A Customer whose payment is six months overdue will owe total late-payment interest of 9% of the invoiced amount."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 1,
+              "errors": 0,
+              "pay_rate": 0.333,
+              "confidences": [
+                0.97,
+                0.94,
+                0.93
+              ],
+              "claim": "At the stated monthly interest rate, an invoice left unpaid for six months accrues 9% in late-payment interest."
+            }
+          ]
+        },
+        "C5_interest_12mo_18": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.5,
+          "phrasing_spread": 1.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.99,
+                0.96,
+                0.96
+              ],
+              "claim": "Over a full year of nonpayment, late-payment interest reaches 18% of the invoiced amount."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.86,
+                0.98,
+                0.93
+              ],
+              "claim": "An invoice unpaid for twelve months accrues total late interest equal to 18% of the Fees."
+            }
+          ]
+        },
+        "C6_cap_one_year": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.5,
+          "phrasing_spread": 1.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.78,
+                0.78,
+                0.78
+              ],
+              "claim": "Because the liability cap equals the fees paid in the twelve months before a claim, the cap is equivalent to one full year of Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.98,
+                0.98,
+                0.98
+              ],
+              "claim": "The aggregate liability ceiling under this agreement amounts to twelve months' worth of Fees."
+            }
+          ]
+        },
+        "C7_msa_250k_flat": {
+          "kind": "contestable",
+          "pooled_pay_rate": 0.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.79,
+                0.82,
+                0.76
+              ],
+              "claim": "Under the MSA, no claim against the Service Provider arising from a single Statement of Work can recover more than $250,000."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 0,
+              "errors": 0,
+              "pay_rate": 0.0,
+              "confidences": [
+                0.9,
+                0.93,
+                0.86
+              ],
+              "claim": "The Service Provider's maximum liability per Statement of Work is capped at $250,000."
+            }
+          ]
+        },
+        "C8_credit_1pct_5": {
+          "kind": "contestable",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.97,
+                0.98,
+                0.96
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 1% below the 99.5% target, the Customer's service credit for that month is 5% of the monthly Fees."
+            },
+            {
+              "phrasing": 1,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.97,
+                0.94,
+                0.97
+              ],
+              "claim": "A single percentage point below the uptime target entitles the Customer to a service credit of 5% of that month's Fees."
+            }
+          ]
+        },
+        "A1_credit_3pct_15": {
+          "kind": "genuine",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.99,
+                0.99,
+                0.98
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 3% below the 99.5% target in a month, the service credit is 15% of that month's Fees."
+            }
+          ]
+        },
+        "A2_credit_4pct_20cap": {
+          "kind": "genuine",
+          "pooled_pay_rate": 1.0,
+          "phrasing_spread": 0.0,
+          "variants": [
+            {
+              "phrasing": 0,
+              "reps": 3,
+              "auto_pays": 3,
+              "errors": 0,
+              "pay_rate": 1.0,
+              "confidences": [
+                0.96,
+                0.93,
+                0.93
+              ],
+              "claim": "If the Monthly Uptime Percentage falls 4% below the 99.5% target, the service credit is 20% of that month's Fees, which equals the stated per-month maximum."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,897 @@
+{
+  "schema": "adversarial_stance_fixture/v1",
+  "failure_types": [
+    "implied_not_stated",
+    "partial_coverage",
+    "paraphrase_contradiction",
+    "superseded_by_later"
+  ],
+  "intended_level": {
+    "implied_not_stated": "corroborated",
+    "partial_coverage": "single_source",
+    "paraphrase_contradiction": "divergent",
+    "superseded_by_later": "divergent"
+  },
+  "cases": [
+    {
+      "type": "implied_not_stated",
+      "claim": "The software services contract requires quarterly security audits by an external firm.",
+      "sources": [
+        {
+          "label": "CONTRACT SECTION 4.2",
+          "text": "The Provider shall engage a third-party security firm to conduct comprehensive security audits every three months throughout the term of this Agreement. The audit reports must be submitted to the Client within 10 business days of completion.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CLIENT BOARD MINUTES",
+          "text": "The board expressed satisfaction that, thanks to the new agreement with TechServe, security protocols will be independently reviewed four times a year. They noted that these external reviews will address any vulnerabilities before the next period begins.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "SERVICE LEVEL AGREEMENT (SLA)",
+          "text": "The SLA specifies guaranteed response times for critical incidents and outlines procedures for data backup and disaster recovery. It also lists the escalation matrix for unresolved technical issues.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The Xelan M700 router supports Power over Ethernet (PoE) on all four LAN ports.",
+      "sources": [
+        {
+          "label": "XELAN DATASHEET",
+          "text": "The Xelan M700 router offers Power over Ethernet (PoE) capability on each of its four LAN ports, allowing users to power compatible devices directly from the router without additional adapters.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "INSTALLATION GUIDE",
+          "text": "When connecting devices such as IP cameras or VoIP phones to any LAN port of the M700, no external power supply is needed if the device is PoE-enabled. Each LAN connection provides both data and power, streamlining installation.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "FIRMWARE UPDATE NOTE",
+          "text": "The latest firmware for the Xelan M700 improves the device's web interface and adds VLAN tagging options. Users are advised to update for enhanced network management features.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The data-processing agreement requires all subcontractors to undergo annual security training.",
+      "sources": [
+        {
+          "label": "DPA SECTION 8",
+          "text": "All third-party service providers engaged under this agreement must complete security awareness training every year, as prescribed by the Controller. Proof of completion must be submitted to the Controller upon request.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "ONBOARDING GUIDELINES",
+          "text": "Before any subcontractor can access sensitive data systems, they must provide documentation confirming they have completed current security certification programs. These certifications must be renewed yearly to maintain system access.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "TERMINATION PROCEDURES",
+          "text": "Upon contract termination, all data must be deleted from subcontractor devices within 30 days. The Controller reserves the right to audit compliance with this policy.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The WillowGuard Home Insurance policy covers damage caused by wild animals entering the home.",
+      "sources": [
+        {
+          "label": "WILLOWGUARD POLICY HIGHLIGHTS",
+          "text": "WillowGuard Home Insurance provides comprehensive protection against structural damage resulting from a wide range of perils, including incidents involving wild animals entering the insured residence. Policyholders may file claims for repairs if their property is damaged by raccoons, squirrels, or other non-domesticated animals.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SERVICE FAQ",
+          "text": "If a raccoon breaks a window and damages your living room, WillowGuard will cover the cost of repairs under the standard policy provisions, as long as the animal was not kept as a pet. The same applies to similar situations involving other wild animals entering the home unexpectedly.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "WILLOWGUARD FLOOD COVERAGE UPDATE",
+          "text": "Recent updates to WillowGuard Home Insurance have expanded the flood protection limits for homes located in high-risk areas. Customers are encouraged to review the new terms and consider additional optional riders for enhanced flood coverage.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The lease agreement requires tenants to obtain renter's insurance covering at least $50,000 in personal property.",
+      "sources": [
+        {
+          "label": "LEASE AGREEMENT SECTION 12",
+          "text": "All tenants must secure and maintain renter\u2019s insurance with a minimum coverage of $50,000 for personal belongings throughout the lease term. Proof of insurance must be provided prior to move-in.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "TENANT MOVE-IN CHECKLIST",
+          "text": "Before keys are issued, tenants must submit documentation showing active insurance for their personal property. The property manager will verify that the coverage amount meets or exceeds the lease-specified minimum.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "PARKING POLICY ADDENDUM",
+          "text": "Parking spaces are assigned on a first-come, first-served basis. Vehicles without a current parking permit will be towed at the owner\u2019s expense.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The SilverTier plan guarantees a maximum database read latency of 30 milliseconds under normal operating conditions.",
+      "sources": [
+        {
+          "label": "SILVERTIER SLA OVERVIEW",
+          "text": "The SilverTier plan includes a commitment that database read latency will not exceed 30 milliseconds during periods of standard usage. This guarantee applies across all supported regions and is backed by service credits in case of a breach.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "PERFORMANCE BENCHMARKS Q1",
+          "text": "During the first quarter, all SilverTier customers experienced database read latencies between 18 and 27 milliseconds under typical daily loads. No incident reports of latency exceeding 30 milliseconds were recorded for SilverTier users during normal operations.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "BRONZETIER SLA SUMMARY",
+          "text": "The BronzeTier plan offers basic database services with no explicit latency guarantees. Customers seeking advanced performance should consider upgrading to SilverTier or higher.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "Employees at GreenField Analytics receive an additional two paid days off during the annual company-wide hackathon.",
+      "sources": [
+        {
+          "label": "EMPLOYEE HANDBOOK 2024",
+          "text": "GreenField Analytics encourages innovation by granting all employees two extra paid days off coinciding with the yearly hackathon event. These days are in addition to standard paid time off.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "INTERNAL HR EMAIL",
+          "text": "Next week\u2019s hackathon will take place over Thursday and Friday. As in previous years, regular work responsibilities will be paused, and all staff are not required to report for their usual duties. Payroll will be processed as normal for these dates.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "BENEFITS SUMMARY",
+          "text": "GreenField Analytics offers comprehensive health insurance, a generous retirement plan, and unlimited coffee in the break room. Employees should review their PTO balances regularly.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The warranty covers water damage caused by accidental spills on the laptop keyboard.",
+      "sources": [
+        {
+          "label": "LAPTOP WARRANTY AGREEMENT",
+          "text": "This warranty covers defects in materials and workmanship as well as accidental liquid spills on the device's keyboard for a period of one year from the date of purchase. Customers are eligible for repair or replacement if the laptop experiences issues directly resulting from such spills.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SERVICE FAQ",
+          "text": "If your laptop has stopped working after an unexpected drink spill, you may be eligible for warranty service, provided the liquid entered through the keyboard and the incident occurred within the first year of ownership. Please contact our support team for assessment and next steps.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "EXTENDED WARRANTY PROMOTION",
+          "text": "Our new extended warranty plan offers coverage for screen cracks and battery failure, adding peace of mind for common laptop mishaps. Existing basic warranties remain unchanged and do not include these new features.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "The loan agreement requires the borrower to maintain flood insurance on the property.",
+      "sources": [
+        {
+          "label": "BANK LOAN AGREEMENT SUMMARY",
+          "text": "According to the terms of the mortgage loan, the borrower must keep an active flood insurance policy covering the property for the duration of the loan. Proof of ongoing coverage must be provided annually to the lender.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "INSURANCE VERIFICATION LETTER",
+          "text": "This letter confirms that annual flood insurance documentation for 112 Riverbend Lane is due each year by March 1st, as required by the mortgage holder. Failure to provide proof of coverage could result in a default notice from the lender.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "ESCROW ACCOUNT DISCLOSURE",
+          "text": "Funds held in escrow will be used to pay property taxes and the homeowner\u2019s insurance premiums as they come due. The escrow analysis is performed annually to ensure sufficient balance.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "implied_not_stated",
+      "claim": "Acme Finance's privacy policy allows users to request deletion of all their stored biometric data.",
+      "sources": [
+        {
+          "label": "ACME POLICY OVERVIEW",
+          "text": "Acme Finance is committed to user privacy and data protection. Users may request that all biometric data collected and stored by Acme Finance be permanently deleted from our systems. Deletion requests can be submitted via the customer portal or by contacting our data protection officer.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "DATA HANDLING EXPLAINED",
+          "text": "Biometric authentication at Acme Finance is optional, and all identifiers are stored securely. Upon account closure or by direct request, the company purges unique user identifiers and any fingerprints or facial scans from its databases, in accordance with regulatory requirements.",
+          "intended_stance": "implied"
+        },
+        {
+          "label": "COOKIES AND ANALYTICS",
+          "text": "Acme Finance utilizes cookies to enhance website functionality and collect analytics on site usage. The information gathered does not include biometric or personally sensitive data, and users can manage their cookie preferences at any time.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "corroborated"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The software services contract includes 24/7 technical support AND a 6-month service level agreement for bug fixes.",
+      "sources": [
+        {
+          "label": "CONTRACT SUMMARY",
+          "text": "According to the finalized software services contract, clients receive 24/7 technical support for all covered products. Additionally, the agreement specifies a 6-month service level commitment for addressing and resolving reported bugs.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "SUPPORT POLICY FAQ",
+          "text": "Our software services come with round-the-clock technical support. Clients can reach out to our help desk at any time of day for assistance with their software issues.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "PAYMENT TERMS DOCUMENT",
+          "text": "Invoices for software services are due within 30 days of receipt. Late payments may be subject to additional fees as outlined in the contract.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The Aurora tablet includes a built-in stylus AND features an OLED display.",
+      "sources": [
+        {
+          "label": "AURORA OFFICIAL SPEC SHEET",
+          "text": "The Aurora tablet comes equipped with a built-in stylus for precise input. It also boasts a vibrant OLED display, delivering deep blacks and rich colors for an enhanced viewing experience.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "TECH GADGETS REVIEW",
+          "text": "One of the highlights of the Aurora tablet is its integrated stylus, which makes note-taking and drawing seamless. Users have praised the stylus for its responsiveness.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "MOBILE TECH FORUM",
+          "text": "Several users discussed battery life and weight of the Aurora tablet, noting its portability. Some mentioned the fast-charging feature as a plus.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The data-processing agreement requires encryption of all stored data AND mandates annual third-party audits.",
+      "sources": [
+        {
+          "label": "VENDOR CONTRACT",
+          "text": "According to the finalized data-processing agreement, all stored data must be encrypted at rest. In addition, the agreement mandates that a third-party audit be conducted every year to assess compliance with security standards.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "SECURITY GUIDELINES",
+          "text": "The agreement specifies that all data stored within the vendor's systems must be encrypted using industry-standard protocols. This measure is aimed at protecting sensitive information from unauthorized access.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "FAQ DOCUMENT",
+          "text": "This FAQ addresses general questions about onboarding and provides an overview of common data privacy practices, such as access controls and breach notification procedures.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The policy covers veterinary expenses for service animals AND includes worldwide travel coverage.",
+      "sources": [
+        {
+          "label": "INSURER FAQ",
+          "text": "Our premium insurance policy is designed for clients who rely on service animals. It covers all veterinary expenses for registered service animals and also provides worldwide travel coverage, ensuring peace of mind no matter where you go.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER TESTIMONIAL",
+          "text": "When my guide dog needed emergency surgery, the insurance fully covered all of the veterinary expenses. I was relieved not to worry about the costs.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "BROCHURE",
+          "text": "The policy offers a variety of add-ons, including coverage for theft, loss, and accidental damage. Flexible payment options are available to suit your needs.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The lease requires tenants to obtain renter's insurance AND prohibits keeping exotic pets on the premises.",
+      "sources": [
+        {
+          "label": "LEASE AGREEMENT SUMMARY",
+          "text": "According to the terms of the lease, all tenants must obtain and maintain renter's insurance throughout the duration of their stay. Additionally, the lease explicitly prohibits keeping exotic pets, such as snakes or large reptiles, anywhere on the premises.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "INSURANCE REQUIREMENT NOTICE",
+          "text": "All residents are reminded that securing renter's insurance is mandatory before moving in. Proof of active coverage must be provided to management annually.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "MAINTENANCE FAQ",
+          "text": "For routine maintenance requests, please submit a ticket through the online portal. Emergency repairs are handled within 24 hours.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The cloud SLA guarantees 99.95% uptime AND includes free data migration assistance.",
+      "sources": [
+        {
+          "label": "PROVIDER SLA OVERVIEW",
+          "text": "Our Service Level Agreement ensures 99.95% uptime throughout the contract period and includes complimentary data migration assistance for all new customers. These features are designed to provide reliable service and a smooth onboarding process.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER REVIEW",
+          "text": "We chose this provider mainly for their guaranteed 99.95% uptime, which has been consistent for us so far. The reliability has been a huge improvement over our previous solution.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "INDUSTRY REPORT",
+          "text": "Cloud service agreements often vary in their offerings, with uptime guarantees and migration options differing between providers. Customers are advised to review terms closely.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The employment contract grants 30 days of paid vacation AND allows flexible remote work for up to three days a week.",
+      "sources": [
+        {
+          "label": "COMPANY HANDBOOK",
+          "text": "According to the latest employment contract, employees are entitled to 30 days of paid vacation annually. Additionally, staff members may work remotely for up to three days each week, subject to manager approval.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "HR EMAIL",
+          "text": "As outlined in your contract, you receive 30 days of paid vacation per year. Please refer to your manager for any questions regarding work arrangements.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "PAYROLL FAQ",
+          "text": "The payroll system processes leave days automatically based on your approved time off. For further details, consult your department's policies.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The warranty covers accidental screen damage AND is valid for three years.",
+      "sources": [
+        {
+          "label": "OFFICIAL WARRANTY POLICY",
+          "text": "Our comprehensive warranty covers accidental screen damage for all eligible devices and remains valid for a period of three years from the date of purchase. Customers can claim repairs or replacements under these terms during the coverage period.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "PRODUCT FAQ",
+          "text": "If your device's screen is accidentally damaged, you can file a claim as this type of damage is covered under our warranty.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "CUSTOMER TESTIMONIAL",
+          "text": "I had to use the warranty service last year and the process was smooth. The customer support team was very helpful throughout.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The loan agreement requires monthly payments AND includes a 5% early repayment penalty.",
+      "sources": [
+        {
+          "label": "BANK WEBSITE",
+          "text": "Our standard loan agreement stipulates that borrowers must make monthly payments. Additionally, any early repayment will incur a 5% penalty fee as specified in the contract terms.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SERVICE CHAT",
+          "text": "Yes, your loan is set up for monthly payments, which are due on the first of each month.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "LOAN INTEREST FAQ",
+          "text": "Interest rates for personal loans are fixed for the duration of the agreement. Detailed information is available in your loan documents.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "partial_coverage",
+      "claim": "The privacy policy allows users to request deletion of their data AND requires a response within 30 days.",
+      "sources": [
+        {
+          "label": "COMPANY POLICY PAGE",
+          "text": "Our privacy policy provides users with the right to request deletion of their personal data. Once a deletion request is received, the company is obligated to respond within 30 days.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "USER FAQ",
+          "text": "If you want us to delete your data, simply submit a request through your account settings.",
+          "intended_stance": "partially_supports"
+        },
+        {
+          "label": "TERMS OF SERVICE",
+          "text": "These terms describe your use of the website and the obligations of both parties. Please refer to our privacy policy for data handling details.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "single_source"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The software services contract specifies that all bug fixes must be completed within 10 business days of detection.",
+      "sources": [
+        {
+          "label": "SERVICE AGREEMENT SUMMARY",
+          "text": "According to section 4.2 of the agreement, the provider must resolve all reported bugs within 10 business days from the date they are detected. This timeline applies to all severities unless otherwise agreed in writing.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "LEGAL REVIEW MEMO",
+          "text": "Upon review, the contract obligates the software vendor to address all identified bugs, requiring resolution within two weeks of when the issue is reported. Any delays beyond this period may result in penalties.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "CLIENT HANDBOOK EXCERPT",
+          "text": "Once a bug is detected, our contract ensures the service provider will fix it no later than 10 business days after discovery, regardless of the bug's impact.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The Falcon X5 router supports up to 250 simultaneous wireless connections.",
+      "sources": [
+        {
+          "label": "OFFICIAL SPEC SHEET",
+          "text": "The Falcon X5 router is engineered for high-density environments, offering support for up to 250 simultaneous wireless device connections. Its advanced chipset ensures stable performance even at maximum capacity.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "INDEPENDENT REVIEW",
+          "text": "During our testing, the Falcon X5 router handled up to 200 connected devices without noticeable degradation in performance. According to the manufacturer, this is the recommended upper limit for stable wireless connections.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "RETAILER LISTING",
+          "text": "With the ability to connect as many as 250 wireless devices at once, the Falcon X5 is ideal for offices and public spaces. Its robust design ensures smooth connectivity for all users.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The data-processing agreement requires vendors to retain data backups for at least 24 months after contract termination.",
+      "sources": [
+        {
+          "label": "VENDOR POLICY DOC",
+          "text": "According to section 8.3 of the agreement, vendors are obligated to securely retain all data backups for a minimum of 24 months following the termination of the contract.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "LEGAL FAQ PAGE",
+          "text": "The agreement specifies that upon contract termination, vendors must store data backups for a retention period of 18 months. After this period, all backup data should be permanently deleted.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "ONBOARDING HANDBOOK",
+          "text": "All vendors are expected to keep backup copies of processed data for no less than two years once the business relationship has ended.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The Extended Gadget Insurance policy covers accidental water damage to laptops up to $2,500 per incident.",
+      "sources": [
+        {
+          "label": "OFFICIAL BROCHURE",
+          "text": "Extended Gadget Insurance provides comprehensive coverage for accidental water damage to laptops. Policyholders are protected for repair or replacement costs up to $2,500 for each qualifying incident.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SERVICE EMAIL",
+          "text": "If your laptop experiences accidental water damage, our policy allows reimbursement for repair expenses up to $1,500 per claim. Please note that coverage limits may differ from other devices.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "FAQ PAGE",
+          "text": "Yes, accidental water damage to laptops is covered under the Extended Gadget Insurance. The maximum payout per incident is $2,500, subject to policy terms.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The tenant must provide a 90-day written notice before vacating the property.",
+      "sources": [
+        {
+          "label": "LEASE SUMMARY",
+          "text": "Tenants are required to give a written notice of at least 90 days prior to moving out of the premises. Failure to do so may result in forfeiture of the security deposit.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "LEASE SECTION 12B",
+          "text": "Either party may end the tenancy by delivering written notice no less than three months in advance of the intended departure date. Notices provided less than three months before vacating will not be considered valid.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "MOVE-OUT INSTRUCTIONS",
+          "text": "Please remember to notify management in writing at least 90 days before your planned move-out date. Notices submitted with less time will not fulfill the lease requirements.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The cloud storage SLA guarantees a maximum data retrieval time of 90 seconds for files up to 2GB in size.",
+      "sources": [
+        {
+          "label": "VENDOR POLICY DOC",
+          "text": "According to our latest service level agreement, all files up to 2GB in size will be retrievable within a maximum of 90 seconds under normal operating conditions. This performance guarantee applies to all standard storage tiers.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SUPPORT EMAIL",
+          "text": "For reference, our standard SLA ensures that files not exceeding 2GB can be accessed within two minutes, except during scheduled maintenance windows or in rare cases of unexpected system load. Please consult our documentation for specifics.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "PRODUCT FAQ",
+          "text": "Files as large as 2GB are covered by our 90-second retrieval time promise, ensuring quick access for common use cases.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The employment contract stipulates that new hires are eligible for paid parental leave after completing 12 months of continuous service.",
+      "sources": [
+        {
+          "label": "EMPLOYEE HANDBOOK",
+          "text": "All newly hired employees become eligible for paid parental leave following the successful completion of one year of uninterrupted service. This benefit is available to both full-time and part-time staff.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "HR POLICY MEMO",
+          "text": "Paid parental leave eligibility applies to staff members who have maintained continuous employment for at least 18 months. Temporary breaks in service may affect eligibility status.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "COMPANY ONBOARDING GUIDE",
+          "text": "Employees are entitled to paid parental leave once they reach the milestone of 12 consecutive months with the company. Be sure to check your hire date to confirm your eligibility.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The warranty covers battery replacement for 24 months from the date of purchase.",
+      "sources": [
+        {
+          "label": "WARRANTY CARD",
+          "text": "This warranty entitles the original purchaser to free battery replacement for a period of 24 months starting from the date of purchase. Proof of purchase must be provided to claim this benefit. The warranty does not cover accidental damage.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SERVICE EMAIL",
+          "text": "Under our current warranty policy, battery replacement is offered at no cost for a period of one year following the original date of purchase. After 12 months, battery replacement fees may apply. Please keep your receipt for verification purposes.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "OFFICIAL WEBSITE FAQ",
+          "text": "Our warranty includes complimentary battery replacement for up to 24 months after your purchase date. Simply visit any authorized service center with your proof of purchase.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "The loan agreement requires the borrower to make the first payment within 15 days of signing.",
+      "sources": [
+        {
+          "label": "LOAN SUMMARY",
+          "text": "According to the agreement summary, borrowers must make their initial payment no later than 15 days after signing the loan document. This ensures prompt commencement of the repayment schedule.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "SECTION 4.2 REPAYMENT TERMS",
+          "text": "The borrower is obligated to submit the first installment within three weeks from the date the agreement is executed. Payments received after this period may be subject to late fees.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "BORROWER FAQ",
+          "text": "After signing, your first payment is due within 15 days. Timely payment is important to avoid penalties.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "paraphrase_contradiction",
+      "claim": "User data is deleted from the system within 14 days after account closure.",
+      "sources": [
+        {
+          "label": "OFFICIAL POLICY PAGE",
+          "text": "All user data is purged from our servers within 14 days after an account is closed. This applies to both profile information and associated usage logs. We are committed to timely data removal to protect user privacy.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "CUSTOMER SUPPORT EMAIL",
+          "text": "Once an account is closed, user information is retained for up to one month to ensure proper finalization of transactions. After this period, personal data and activity records are removed from our databases.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "HELP CENTER FAQ",
+          "text": "If you delete your account, your personal data will be completely erased from our system within 14 days. This ensures your information is not stored longer than necessary.",
+          "intended_stance": "support"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The software maintenance fee is $10,000 per year as stated in the original contract.",
+      "sources": [
+        {
+          "label": "SOFTWARE SERVICES AGREEMENT (2021-03-01)",
+          "text": "Section 4.2: The Client shall pay an annual maintenance fee of $10,000 for ongoing software support and updates. This fee will be invoiced at the beginning of each contract year and is due within 30 days of receipt.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "FIRST AMENDMENT TO AGREEMENT (2022-05-15)",
+          "text": "Effective immediately, Section 4.2 of the original Software Services Agreement is replaced as follows: The annual maintenance fee shall be $15,000 per year. All other terms remain unchanged. This amendment supersedes any prior statements regarding maintenance fees.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "CONFIDENTIALITY ADDENDUM (2022-06-10)",
+          "text": "Both parties agree to maintain strict confidentiality regarding all proprietary information. This addendum outlines procedures for handling sensitive data but does not address financial terms or service fees.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The ZX-200 router includes four Ethernet ports.",
+      "sources": [
+        {
+          "label": "ZX-200 SPEC SHEET V1 (JAN 2022)",
+          "text": "The ZX-200 router features four high-speed Ethernet ports for wired connectivity. This model is designed for small office use, supporting both gigabit and fast Ethernet standards. Additional features include dual-band Wi-Fi and a built-in firewall.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "ZX-200 SPEC SHEET UPDATE (SEP 2022)",
+          "text": "Effective September 2022, the ZX-200 router now includes only two Ethernet ports to streamline production and reduce costs. This change supersedes the previous hardware specification published in January 2022. All other features remain unchanged.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "ZX-200 USER GUIDE (OCT 2022)",
+          "text": "To set up your ZX-200 router, connect the power adapter and follow the on-screen instructions for Wi-Fi configuration. For troubleshooting wireless issues, refer to Chapter 4. For warranty information, see page 18.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The original data-processing agreement set the data retention period for client records at 12 months.",
+      "sources": [
+        {
+          "label": "DPA ORIGINAL 2021",
+          "text": "Effective January 1, 2021, the data-processing agreement between Acme Corp and Beta Solutions establishes that client records will be retained for a period of 12 months following collection. After this period, all records are to be securely deleted from our systems. This retention policy applies to all data categories specified in Appendix B.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "DPA AMENDMENT 2023",
+          "text": "As of June 15, 2023, the data-processing agreement is hereby amended: client records shall now be retained for a period of 24 months, superseding the previous 12-month retention term. All other provisions of the agreement remain unchanged unless otherwise specified. This amendment takes effect immediately and overrides any conflicting terms.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "DPA CLAUSE: SUB-PROCESSORS",
+          "text": "The agreement outlines the conditions under which sub-processors may access client data. All sub-processors must adhere to the security standards specified in Section 8. The data controller retains the right to audit sub-processor compliance annually.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The insurance policy provides coverage for stolen bicycles up to $2,000.",
+      "sources": [
+        {
+          "label": "POLICY ISSUED MAY 2022",
+          "text": "This insurance policy provides coverage for theft of bicycles, with a maximum reimbursement of $2,000 per incident. Policyholders must provide proof of ownership and a police report to file a claim. Coverage applies to bicycles stolen from the insured's residence or public places.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "ENDORSEMENT AUGUST 2023",
+          "text": "Effective August 15, 2023, this endorsement modifies the existing policy: The coverage limit for stolen bicycles is reduced to $500 per incident. This change supersedes any previous terms regarding bicycle theft coverage in the original policy.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "CLAIMS PROCEDURE MARCH 2022",
+          "text": "All claims must be submitted within 60 days of the incident date. Claimants are required to complete the official claim form and submit all supporting documents as listed in the policy.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The lease agreement allows tenants to keep up to two domestic cats in the apartment.",
+      "sources": [
+        {
+          "label": "LEASE AGREEMENT (2019-03-01)",
+          "text": "Tenants are permitted to keep up to two domestic cats within their apartment units. All pets must be registered with the building management prior to occupancy. Additional pet types require separate approval.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "LEASE ADDENDUM (2021-09-15)",
+          "text": "Effective immediately, the policy regarding pets is amended to prohibit all cats in the apartment complex. This amendment supersedes any previous provisions permitting cats, regardless of prior approvals.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "PARKING POLICY UPDATE (2020-06-10)",
+          "text": "Residents are required to display a valid parking permit at all times. Visitor parking spaces are for guests only and must not be used by tenants for overnight stays.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The cloud SLA guarantees a maximum monthly downtime of 30 minutes for the DataSync service.",
+      "sources": [
+        {
+          "label": "SLA-ORIGINAL-2022",
+          "text": "Effective January 2022, the Service Level Agreement for the DataSync service guarantees that total downtime will not exceed 30 minutes within any given calendar month. This applies to all enterprise customers and covers both scheduled and unscheduled outages.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "SLA-AMENDMENT-2023",
+          "text": "As of April 2023, the SLA for the DataSync service has been revised. The maximum allowed monthly downtime is now 2 hours, superseding all previous agreements. This updated limit applies regardless of previous terms or customer tier.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "SLA-UNRELATED-2023",
+          "text": "The SLA specifies that all support requests for the DataSync service will receive an initial response within four business hours. This provision applies to both standard and premium support plans.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The employment contract provides for 20 days of paid vacation per year.",
+      "sources": [
+        {
+          "label": "EMPLOYMENT CONTRACT SIGNED 2021-04-10",
+          "text": "The employee is entitled to 20 days of paid vacation per calendar year. Vacation days must be approved by the supervisor and taken within the year accrued. Any unused vacation will not be carried over except with written approval.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "POLICY UPDATE MEMO DATED 2022-07-01",
+          "text": "Effective immediately, all existing employment contracts are amended to provide 15 days of paid vacation per year instead of the previous 20 days. This policy supersedes any prior vacation entitlements and applies to all current employees.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "BENEFITS SUMMARY HANDBOOK 2021-09-15",
+          "text": "Eligible employees receive health, dental, and vision insurance as part of their benefits package. Details regarding coverage and enrollment can be found in the Human Resources portal.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The warranty covers accidental liquid damage for a period of 24 months from the date of purchase.",
+      "sources": [
+        {
+          "label": "ORIGINAL WARRANTY (2021-03-15)",
+          "text": "This warranty provides coverage for accidental liquid damage to the device for a period of 24 months following the original date of purchase. All repairs and replacements due to liquid-related incidents are included under this policy during this time frame. Customers must present proof of purchase to make a claim.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "AMENDMENT NOTICE (2022-04-01)",
+          "text": "Effective immediately, the warranty coverage for accidental liquid damage is reduced from 24 months to 12 months from the date of purchase. This amendment supersedes previous provisions regarding liquid damage coverage in the original warranty document. All claims made after the 12-month period will not be eligible for service.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "BATTERY POLICY UPDATE (2022-04-01)",
+          "text": "The warranty now includes complimentary battery replacement if a device\u2019s battery health falls below 80% within the first 18 months. Customers must visit an authorized service center for eligibility assessment. Other aspects of the warranty remain unchanged unless otherwise stated.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The interest rate on the loan is fixed at 5% per annum.",
+      "sources": [
+        {
+          "label": "LOAN AGREEMENT (MARCH 1, 2021)",
+          "text": "The Borrower agrees to pay interest on the outstanding principal at a fixed rate of 5% per annum, calculated yearly. This rate shall apply throughout the term of the loan unless otherwise amended in writing by both parties.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "AMENDMENT TO LOAN AGREEMENT (AUGUST 10, 2022)",
+          "text": "Effective immediately, the fixed interest rate of 5% per annum previously specified is hereby replaced by a new variable interest rate tied to the prime lending rate plus 1%. This amendment supersedes all prior provisions relating to the interest rate.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "NOTICE OF ADDRESS CHANGE (JANUARY 15, 2022)",
+          "text": "Please be advised that the Lender's correspondence address has changed to 123 Main Street, Springfield. All future communications should be sent to this new address.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    },
+    {
+      "type": "superseded_by_later",
+      "claim": "The privacy policy states that user location data is stored for a maximum of 30 days.",
+      "sources": [
+        {
+          "label": "PRIVACY POLICY 2022-03-10",
+          "text": "Our company retains user location data for a period not exceeding 30 days from the date of collection. After this period, all such data is automatically deleted from our servers. We are committed to protecting user privacy by limiting data retention.",
+          "intended_stance": "support"
+        },
+        {
+          "label": "PRIVACY POLICY AMENDMENT 2023-09-15",
+          "text": "This amendment updates our retention policy for user location data. Effective immediately, user location data will be stored for up to 90 days to support new analytics features. This change supersedes all previous statements regarding location data retention.",
+          "intended_stance": "contradict"
+        },
+        {
+          "label": "COOKIE USAGE NOTICE 2023-09-15",
+          "text": "We use cookies to enhance your browsing experience and to personalize content. Cookies may be managed in your browser settings. For more details, please refer to our full privacy policy.",
+          "intended_stance": "silent"
+        }
+      ],
+      "intended_level": "divergent"
+    }
+  ]
+}

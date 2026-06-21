@@ -1,0 +1,24 @@
+{
+ "experiment": "E6 time-to-paid",
+ "time_to_paid_seconds": 16.2,
+ "stage_seconds": {
+  "work": 13.0,
+  "settle": 3.2
+ },
+ "stage_ns": {
+  "work": 13001046167,
+  "settle": 3249422250
+ },
+ "network": "eip155:84532",
+ "facilitator": "https://x402.org/facilitator",
+ "specialists_model": "gpt-4.1-mini",
+ "verifier_model": "gpt-5.1-2025-11-13",
+ "bid_usdc": 0.01,
+ "worker": "data_privacy",
+ "settled_usdc": 0.01,
+ "status": "settled",
+ "tx": "0x5c060531dfcab48f7978f3d8702ad28bdeca9edbdd6c5ac3d3d16f04d5107e0e",
+ "explorer": "https://sepolia.basescan.org/tx/0x5c060531dfcab48f7978f3d8702ad28bdeca9edbdd6c5ac3d3d16f04d5107e0e",
+ "single_run": true,
+ "note": "ONE real timed end-to-end run (job posted -> USDC in the worker's wallet on Base Sepolia); stage marks from the trace's monotonic_ns clock. Not a distribution -- cite as ~12s end-to-end, never an SLA. The number is dominated by the work leg (model latency); the tx is verifiable on a public explorer."
+}

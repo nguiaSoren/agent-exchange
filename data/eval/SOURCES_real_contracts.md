@@ -1,0 +1,42 @@
+# Real-contract corpus — sources (SEC EDGAR EX-10 exhibits, public-domain filings)
+
+1. **master_services** — Sunrise Communications AG  (SNRS)  (CIK 0002021938) (Sunrise Communications AG  (SNRS)  (CIK 0002021938), EX-10.4). <https://www.sec.gov/Archives/edgar/data/2021938/000119312524206325/d805815dex104.htm>
+2. **saas** — NSB SOFTWARE AS A SERVICE MASTER AGREEMENT (Boot Barn Holdings, Inc.  (BOOT)  (CIK 0001610250), EX-10.14). <https://www.sec.gov/Archives/edgar/data/1610250/000104746914007948/a2221573zex-10_14.htm>
+3. **nda** — RESTRICTIVE COVENANT AGREEMENT (Dorman Products, Inc.  (DORM)  (CIK 0000868780), EX-10.16). <https://www.sec.gov/Archives/edgar/data/868780/000156459022005966/dorm-ex1016_838.htm>
+4. **software_license** _(domain unverified)_ — EX-10.1 ASSUMPTION AGREEMENT (SS&C TECHNOLOGIES INC  (CIK 0001011661), EX-10.1). <https://www.sec.gov/Archives/edgar/data/1011661/000095012309073000/b78577exv10w1.htm>
+5. **employment** — THIRD AMENDMENT TO EMPLOYMENT AGREEMENT (First Trinity Financial CORP  (CIK 0001395585), EX-10). <https://www.sec.gov/Archives/edgar/data/1395585/000143774913004313/ftfc20130409_8kex10-20.htm>
+6. **lease** — Delimobil Holding S.A.  (CIK 0001872309) (Delimobil Holding S.A.  (CIK 0001872309), EX-10.13). <https://www.sec.gov/Archives/edgar/data/1872309/000119312521295416/d181580dex1013.htm>
+7. **credit** — COLUMBUS MCKINNON CORP  (CMCO)  (CIK 0001005229) (COLUMBUS MCKINNON CORP  (CMCO)  (CIK 0001005229), EX-10.1). <https://www.sec.gov/Archives/edgar/data/1005229/000100522920000280/cm-2ndamendmentexecuted.htm>
+8. **loan** — OCCIDENTAL PETROLEUM CORP /DE/  (OXY, OXY-WT)  (CIK 0000797468) (OCCIDENTAL PETROLEUM CORP /DE/  (OXY, OXY-WT)  (CIK 0000797468), EX-10.2). <https://www.sec.gov/Archives/edgar/data/797468/000114036120006632/ex10_2.htm>
+9. **supply** _(domain unverified)_ — ALLIANCE RESOURCE PARTNERS LP  (ARLP)  (CIK 0001086600) (ALLIANCE RESOURCE PARTNERS LP  (ARLP)  (CIK 0001086600), EX-10.33). <https://www.sec.gov/Archives/edgar/data/1086600/000119312507043725/dex1033.htm>
+10. **distribution** — DISTRIBUTION AGREEMENT (TERAFORCE TECHNOLOGY CORP  (CIK 0000316672), EX-10.3). <https://www.sec.gov/Archives/edgar/data/316672/000095013404008755/d16122a1exv10w3.htm>
+11. **consulting** — CONSULTING AGREEMENT (MARLIN BUSINESS SERVICES CORP  (CIK 0001260968), EX-10.2). <https://www.sec.gov/Archives/edgar/data/1260968/000117184315005609/exh_102.htm>
+12. **manufacturing** — ASSIGNMENT AND TERMINATION OF MANUFACTURING AGREEMENT (Seres Therapeutics, Inc.  (MCRB)  (CIK 0001609809), EX-10.5). <https://www.sec.gov/Archives/edgar/data/1609809/000095017024095821/mcrb-ex10_5.htm>
+13. **patent_license** — PATENT LICENSE AGREEMENT (KV PHARMACEUTICAL CO /DE/  (CIK 0000057055), EX-10.2). <https://www.sec.gov/Archives/edgar/data/57055/000095012309012724/w74397exv10w2.htm>
+14. **trademark_license** — TRADEMARK LICENSE AGREEMENT (Costamare Partners LP  (CIK 0001615415), EX-10.28). <https://www.sec.gov/Archives/edgar/data/1615415/000093041315000317/c78320_ex10-28.htm>
+15. **severance** — CONFIDENTIAL SEVERANCE AGREEMENT (DMC Global Inc.  (BOOM)  (CIK 0000034067), EX-10.22). <https://www.sec.gov/Archives/edgar/data/34067/000003406725000028/dmc-chilcoffseveranceagree.htm>
+16. **indemnification** — GUARANTY AND INDEMNIFICATION AGREEMENT (SMITH & WOLLENSKY RESTAURANT GROUP INC  (CIK 0001137047), EX-10.82). <https://www.sec.gov/Archives/edgar/data/1137047/000104746904009532/a2131320zex-10_82.htm>
+17. **security_agreement** — THIRD SECURITY AGREEMENT (AXS ONE INC  (CIK 0000947427), EX-10.5). <https://www.sec.gov/Archives/edgar/data/947427/000095012308014229/y00461exv10w5.htm>
+18. **asset_purchase** — AMENDMENT NO. 1 TO ASSET PURCHASE AGREEMENT (Viatris Inc  (VTRS)  (CIK 0001792044), EX-10.34(B)). <https://www.sec.gov/Archives/edgar/data/1792044/000179204421000009/ex_1034b-vtrsx20201231x10xk.htm>
+19. **stock_purchase** — PROSPECT MEDICAL HOLDINGS INC  (CIK 0001063561) (PROSPECT MEDICAL HOLDINGS INC  (CIK 0001063561), EX-10.4). <https://www.sec.gov/Archives/edgar/data/1063561/000104746904018802/a2136564zex-10_4.htm>
+20. **partnership** — SECOND AMENDED AND RESTATED LIMITED PARTNERSHIP AGREEMENT (INDUSTRIAL PROPERTY TRUST INC.  (CIK 0001558441), EX-10.1). <https://www.sec.gov/Archives/edgar/data/1558441/000104746919004825/a2239522zex-10_1.htm>
+21. **joint_venture** — Majesco  (CIK 0001626853) (Majesco  (CIK 0001626853), EX-10.34). <https://www.sec.gov/Archives/edgar/data/1626853/000157104915007972/t1502234_ex10-34.htm>
+22. **franchise** — AMENDMENT TO COURTYARD BY MARRIOTT RELICENSING FRANCHISE AGREEMENT (Moody National REIT I, Inc.  (CIK 0001424879), EX-10.106). <https://www.sec.gov/Archives/edgar/data/1424879/000138713114003559/ex10-106.htm>
+23. **settlement** — THIRD AMENDED SETTLEMENT AGREEMENT (SHARPER IMAGE CORP  (CIK 0000811696), EX-10.1). <https://www.sec.gov/Archives/edgar/data/811696/000118143107049696/rrd167531_21130.htm>
+24. **underwriting** — Mudrick Capital Acquisition Corp  (HYMC, HYMCL, HYMCW)  (CIK 0001718405) (Mudrick Capital Acquisition Corp  (HYMC, HYMCL, HYMCW)  (CIK 0001718405), EX-10.1). <https://www.sec.gov/Archives/edgar/data/1718405/000110465920021682/tm208146d1_ex10-1.htm>
+25. **registration_rights** — THIRD AMENDED & RESTATED REGISTRATION RIGHTS AGREEMENT (ENANTA PHARMACEUTICALS INC  (ENTA)  (CIK 0001177648), EX-10.4). <https://www.sec.gov/Archives/edgar/data/1177648/000119312512454422/d401292dex104.htm>
+26. **escrow** — ESCROW AGREEMENT (ATI Physical Therapy, Inc.  (ATIP, ATIPW)  (CIK 0001815849), EX-10.3). <https://www.sec.gov/Archives/edgar/data/1815849/000114036124049683/ef20039918_ex10-3.htm>
+27. **guaranty** — FIRST AMENDMENT TO SECOND AMENDED AND RESTATED CREDIT AND GUARANTY AGREEMENT (CVR ENERGY INC  (CVI)  (CIK 0001376139), EX-10.1.1). <https://www.sec.gov/Archives/edgar/data/1376139/000095012307012356/t25337a8exv10w1w1.htm>
+28. **nda** — STANDSTILL AGREEMENT (Anchor Bancorp  (CIK 0001448301), EX-10). <https://www.sec.gov/Archives/edgar/data/1448301/000093905715000573/anchor8k113015exh101102.htm>
+29. **software_license** — END-USER SOFTWARE LICENSE AGREEMENT (DUO WORLD INC  (DUUO)  (CIK 0001635136), EX-10.12). <https://www.sec.gov/Archives/edgar/data/1635136/000149315216013250/ex10-12.htm>
+30. **lease** — INTERNATIONAL LEASE FINANCE CORP  (CIK 0000714311) (INTERNATIONAL LEASE FINANCE CORP  (CIK 0000714311), EX-10.13). <https://www.sec.gov/Archives/edgar/data/714311/000095012310019263/v53559exv10w13.htm>
+31. **credit** — SILGAN HOLDINGS INC  (SLGN)  (CIK 0000849869) (SILGAN HOLDINGS INC  (SLGN)  (CIK 0000849869), EX-10). <https://www.sec.gov/Archives/edgar/data/849869/000084986904000031/ex10sa.txt>
+32. **loan** — M & I LOAN AGREEMENT (FIRST MIDWEST BANCORP INC  (CIK 0000702325), EX-10). <https://www.sec.gov/Archives/edgar/data/702325/000070232503000180/exhibit10.htm>
+33. **supply** — SUPPLY AGREEMENT (NOVAVAX INC  (NVAX)  (CIK 0001000694), EX-10.37). <https://www.sec.gov/Archives/edgar/data/1000694/000100069422000004/nvax-20211231xex1037.htm>
+34. **distribution** — NEW DISTRIBUTION AGREEMENT (INTERPLAY ENTERTAINMENT CORP  (CIK 0001057232), EX-10). <https://www.sec.gov/Archives/edgar/data/1057232/000117091802000117/iec3q02ex10-2.txt>
+35. **consulting** — SECOND CONSULTING AGREEMENT (HOLLINGER INTERNATIONAL INC  (CIK 0000868512), EX-10.12). <https://www.sec.gov/Archives/edgar/data/868512/000095013706004053/c03310exv10w12.txt>
+36. **manufacturing** — MANUFACTURING AND SUPPLY AGREEMENT (ELITE PHARMACEUTICALS INC /DE/  (ELTP)  (CIK 0001053369), EX-10.71). <https://www.sec.gov/Archives/edgar/data/1053369/000114420411038267/v227306_ex10-71.htm>
+37. **patent_license** — PATENT LICENSE AGREEMENT (IMPAX LABORATORIES INC  (CIK 0001003642), EX-10.17). <https://www.sec.gov/Archives/edgar/data/1003642/000089322009000059/p67239a6exv10w17.htm>
+38. **trademark_license** — TRADEMARK LICENSE AGREEMENT (MYOMO, INC.  (MYO)  (CIK 0001369290), EX-10.29). <https://www.sec.gov/Archives/edgar/data/1369290/000156459022009827/myo-ex1029_193.htm>
+39. **severance** — EX-10.4.3 SEVERENCE AGREEMENT (MIDDLEFIELD BANC CORP  (MBCN)  (CIK 0000836147), EX-10.4.3). <https://www.sec.gov/Archives/edgar/data/836147/000095015206005793/l21240aexv10w4w3.htm>
+40. **security_agreement** — THIRD AMENDED AND RESTATED PLEDGE AND SECURITY AGREEMENT (World Omni Auto Leasing LLC  (CIK 0001439697), EX-10.13). <https://www.sec.gov/Archives/edgar/data/1439697/000114420419028133/tv522312_ex10-13.htm>

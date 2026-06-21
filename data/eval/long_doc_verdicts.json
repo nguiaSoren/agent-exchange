@@ -1,0 +1,2658 @@
+{
+  "openai:gpt-4.1-mini": {
+    "judge_only": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "partial",
+        "confidence": 0.9,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      }
+    ],
+    "gate_teeth_off": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "confirmed",
+        "confidence": 0.5,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      }
+    ],
+    "gate_teeth_on": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "supported",
+        "ablation_survived": true,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "confirmed",
+        "confidence": 0.5,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      }
+    ]
+  },
+  "featherless:Qwen/Qwen2.5-72B-Instruct": {
+    "judge_only": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      }
+    ],
+    "gate_teeth_off": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 1.0,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      }
+    ],
+    "gate_teeth_on": [
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Controller may conduct audits of Processor\u2019s Processing of Personal Data at any time without prior notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any additional safeguards.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches is unlimited.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor must notify Controller without undue delay and in any event within forty-eight (48) hours after becoming aware of a Data Breach affecting Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Controller may, upon at least fifteen (15) business days\u2019 prior written notice and no more than once per calendar year, conduct an audit of Processor\u2019s Processing of Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination or expiration of the Agreement, Processor shall, at Controller\u2019s choice, delete or return all Personal Data to Controller and delete existing copies, unless applicable law requires storage of the Personal Data.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor may engage Sub-Processors to Process Personal Data on behalf of Controller, provided that Processor gives Controller at least thirty (30) days\u2019 prior written notice of any intended addition or replacement of Sub-Processors.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor\u2019s aggregate liability for Data Breaches under this DPA shall not exceed EUR 1,000,000.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Processor shall not transfer Personal Data outside the EEA or the United Kingdom unless it has taken measures necessary to ensure the transfer is in compliance with Data Protection Laws.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Either party may terminate this Agreement upon thirty (30) days\u2019 written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations in the Confidentiality section survive for the entire duration of the Agreement after termination.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed $250,000, regardless of the amount of Fees paid.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service Provider is liable for all indirect, incidental, special, or consequential damages under this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider shall perform the Services and deliver the Deliverables in accordance with the applicable SOW and any SLA.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Client shall pay all Fees within thirty (30) days of receipt of a valid invoice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Service Provider may suspend Services upon ten (10) days\u2019 written notice if undisputed Fees remain unpaid after the due date.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "All Intellectual Property Rights in Deliverables (excluding Service Provider\u2019s pre-existing materials and third-party materials) shall be assigned to Client upon full payment of Fees, except as otherwise set forth in an SOW.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Each party\u2019s total liability under this Agreement shall not exceed the total Fees paid or payable by Client to Service Provider under the applicable SOW in the twelve (12) months preceding the claim, or $250,000, whichever is less.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any prior notice period.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Service credits for SLA failures can be requested at any time after the month in which the SLA was not met, with no deadline.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The limitation of liability applies to all claims, including those arising from gross negligence, willful misconduct, or breach of data ownership obligations.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon termination, Provider is not required to make Customer Data available for download after access to the Service ceases.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Subscription Term will automatically renew for successive three (3) year periods unless notice of non-renewal is provided.",
+        "verdict": "unsupported",
+        "confidence": 0.95,
+        "route": "escalate",
+        "ablation_survived": false,
+        "escalated": false
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Subscription Term, solely for Customer\u2019s internal business purposes and up to the number of Authorized Users specified in the Order Form.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Customer shall pay all Fees within thirty (30) days of invoice date, and late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Unless otherwise stated in the Order Form, the Subscription Term will automatically renew for successive one (1) year periods unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current Subscription Term.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Provider will use commercially reasonable efforts to make the Service available with a Monthly Uptime Percentage of at least 99.5%, excluding scheduled maintenance (with at least 48 hours\u2019 notice) and force majeure events.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Either party may terminate this Agreement for material breach by the other party if such breach is not cured within thirty (30) days after written notice.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon termination, Customer\u2019s access to the Service will cease, and Provider will make Customer Data available for download for thirty (30) days following termination.",
+        "verdict": "confirmed",
+        "confidence": 1.0,
+        "route": "judge",
+        "ablation_survived": false,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely following the expiration or termination of this Agreement.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information within five (5) business days.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "The Receiving Party is prohibited from disclosing Confidential Information to any third party under any circumstances.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "If the Receiving Party is required by law to disclose Confidential Information, it does not need to provide any prior written notice to the Disclosing Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "llm_gifted_span",
+        "label": "fabricated",
+        "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall use the Confidential Information solely for the Permitted Purpose.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The Receiving Party shall not disclose Confidential Information to any third party except its Representatives.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "If the Receiving Party is required by law, regulation, or court order to disclose any Confidential Information, it shall provide the Disclosing Party with at least ten (10) business days\u2019 prior written notice unless prohibited by law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Upon written request by the Disclosing Party, the Receiving Party shall promptly, and in any event within fifteen (15) business days, return or destroy all tangible materials containing Confidential Information and certify in writing that such return or destruction has been completed, except that one archival copy may be retained solely for legal or compliance purposes.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for a period of five (5) years following the expiration or termination of this Agreement, except for trade secrets, which shall be protected for so long as they remain trade secrets under applicable law.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      },
+      {
+        "source": "genuine",
+        "label": "genuine",
+        "claim": "Neither Party may assign this Agreement without the prior written consent of the other Party, except to a successor in interest in connection with a merger or sale of substantially all assets.",
+        "verdict": "unsupported",
+        "confidence": 0.0,
+        "route": null,
+        "ablation_survived": null,
+        "escalated": true
+      }
+    ]
+  }
+}

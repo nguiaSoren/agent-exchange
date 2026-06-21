@@ -1,0 +1,62 @@
+{
+  "adjudicator_B": "openai/gpt-5.1",
+  "n": 4,
+  "agreement": 2,
+  "agreement_rate": 0.5,
+  "fab_A": 2,
+  "fab_B": 0,
+  "rows": [
+    {
+      "id": "S01",
+      "strategy": "cross_clause_inference",
+      "oracles": [
+        "confirmed",
+        "partial"
+      ],
+      "passA": "GENUINE",
+      "passB": "GENUINE",
+      "agree": true,
+      "passB_reason": "GENUINE: SaaS 7.1 requires written notice 15 days before suspension for late fees",
+      "claim": "The Agreement explicitly states that if Customer's payment is more than fifteen days late, Provider must issue a written notice of late payment before any suspe"
+    },
+    {
+      "id": "S02",
+      "strategy": "plausible_unstated_implication",
+      "oracles": [
+        "partial",
+        "confirmed"
+      ],
+      "passA": "GENUINE",
+      "passB": "GENUINE",
+      "agree": true,
+      "passB_reason": "GENUINE: DPA 9.2 explicitly caps Processor\u2019s aggregate Data Breach liability at EUR 1,000,000",
+      "claim": "Under this DPA, in the event of a Data Breach, the Processor's liability is capped at EUR 1,000,000 for all breaches combined, regardless of the number of incid"
+    },
+    {
+      "id": "S03",
+      "strategy": "ambiguous_qualifier",
+      "oracles": [
+        "partial",
+        "partial"
+      ],
+      "passA": "FAB",
+      "passB": "GENUINE",
+      "agree": false,
+      "passB_reason": "GENUINE: NDA Section 7.1 grants injunctive relief without proving monetary inadequacy.",
+      "claim": "The Disclosing Party is entitled to injunctive relief without any requirement to demonstrate that monetary damages would be inadequate."
+    },
+    {
+      "id": "S04",
+      "strategy": "ambiguous_qualifier",
+      "oracles": [
+        "confirmed",
+        "partial"
+      ],
+      "passA": "FAB",
+      "passB": "GENUINE",
+      "agree": false,
+      "passB_reason": "GENUINE: MSA Section 2.2 expressly requires 99.5% minimum monthly uptime.",
+      "claim": "The Service Provider is required to meet a minimum uptime of 99.5% per calendar month for any hosted services, as specified in the Agreement."
+    }
+  ]
+}

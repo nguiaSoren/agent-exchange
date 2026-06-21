@@ -1,0 +1,15 @@
+{
+  "judge": "gpt-4.1-mini",
+  "gen_model": "gpt-4.1",
+  "n_gifted": 120,
+  "n_reached": 1,
+  "gifted_supported_lexical": 1.0,
+  "gifted_supported_llm": 0.0,
+  "lex_survived": 1,
+  "llm_survived": 0,
+  "baseline_F_I": {
+    "n_reached": 2,
+    "gifted_supported_llm": 0.0
+  },
+  "survived_claims_llm": []
+}

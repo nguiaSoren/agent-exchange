@@ -1,0 +1,1349 @@
+{
+  "n_workers": 20,
+  "rounds": 400,
+  "seeds": 8,
+  "bid_usdc": 0.05,
+  "liar_fractions": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "leak_rates": [
+    0.0,
+    0.1,
+    0.25
+  ],
+  "adversaries": [
+    "naive",
+    "strategic"
+  ],
+  "note": "leak_rate models the verifier: 0.0=frontier judge (Paper A), 0.25=weak gpt-4.1-mini (F-H 1/4)",
+  "cells": [
+    {
+      "adversary": "naive",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.9,
+        "stdev": 0.0
+      },
+      "honest_hire_share": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "avg_honest_earn": {
+        "mean": 1.105556,
+        "stdev": 0.0
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.898613,
+        "stdev": 0.031101
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.3333,
+        "stdev": 0.0
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.69375,
+        "stdev": 0.052663
+      },
+      "honest_hire_share": {
+        "mean": 0.99875,
+        "stdev": 0.002165
+      },
+      "avg_honest_earn": {
+        "mean": 1.406696,
+        "stdev": 0.003762
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.908438,
+        "stdev": 0.017694
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.336775,
+        "stdev": 0.023823
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.4375,
+        "stdev": 0.069597
+      },
+      "honest_hire_share": {
+        "mean": 0.9975,
+        "stdev": 0.003536
+      },
+      "avg_honest_earn": {
+        "mean": 1.94375,
+        "stdev": 0.00696
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.905175,
+        "stdev": 0.033267
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.323962,
+        "stdev": 0.013454
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.275,
+        "stdev": 0.066144
+      },
+      "honest_hire_share": {
+        "mean": 0.999375,
+        "stdev": 0.001654
+      },
+      "avg_honest_earn": {
+        "mean": 3.2125,
+        "stdev": 0.011024
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.948437,
+        "stdev": 0.032958
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.332562,
+        "stdev": 0.010489
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 18.88125,
+        "stdev": 0.065848
+      },
+      "honest_hire_share": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "avg_honest_earn": {
+        "mean": 9.440625,
+        "stdev": 0.032924
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.990788,
+        "stdev": 0.003513
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.313675,
+        "stdev": 0.006842
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.9,
+        "stdev": 0.0
+      },
+      "honest_hire_share": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "avg_honest_earn": {
+        "mean": 1.105556,
+        "stdev": 0.0
+      },
+      "avg_liar_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.898613,
+        "stdev": 0.031101
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.3333,
+        "stdev": 0.0
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.05,
+        "stdev": 0.05
+      },
+      "liar_total_earn": {
+        "mean": 0.05,
+        "stdev": 0.05
+      },
+      "liar_fab_earn": {
+        "mean": 0.05,
+        "stdev": 0.05
+      },
+      "honest_total_earn": {
+        "mean": 19.65625,
+        "stdev": 0.084548
+      },
+      "honest_hire_share": {
+        "mean": 0.99875,
+        "stdev": 0.002165
+      },
+      "avg_honest_earn": {
+        "mean": 1.404018,
+        "stdev": 0.006039
+      },
+      "avg_liar_earn": {
+        "mean": 0.008333,
+        "stdev": 0.008333
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9155,
+        "stdev": 0.017047
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.365275,
+        "stdev": 0.021176
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.05625,
+        "stdev": 0.058296
+      },
+      "liar_total_earn": {
+        "mean": 0.05625,
+        "stdev": 0.058296
+      },
+      "liar_fab_earn": {
+        "mean": 0.05625,
+        "stdev": 0.058296
+      },
+      "honest_total_earn": {
+        "mean": 19.41875,
+        "stdev": 0.074739
+      },
+      "honest_hire_share": {
+        "mean": 0.996875,
+        "stdev": 0.00348
+      },
+      "avg_honest_earn": {
+        "mean": 1.941875,
+        "stdev": 0.007474
+      },
+      "avg_liar_earn": {
+        "mean": 0.005625,
+        "stdev": 0.00583
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.916488,
+        "stdev": 0.029675
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.348112,
+        "stdev": 0.017392
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.13125,
+        "stdev": 0.093332
+      },
+      "liar_total_earn": {
+        "mean": 0.13125,
+        "stdev": 0.093332
+      },
+      "liar_fab_earn": {
+        "mean": 0.13125,
+        "stdev": 0.093332
+      },
+      "honest_total_earn": {
+        "mean": 19.1125,
+        "stdev": 0.129301
+      },
+      "honest_hire_share": {
+        "mean": 0.999375,
+        "stdev": 0.001654
+      },
+      "avg_honest_earn": {
+        "mean": 3.185417,
+        "stdev": 0.02155
+      },
+      "avg_liar_earn": {
+        "mean": 0.009375,
+        "stdev": 0.006667
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.956538,
+        "stdev": 0.012495
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.356725,
+        "stdev": 0.014451
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.1125,
+        "stdev": 0.048412
+      },
+      "liar_total_earn": {
+        "mean": 0.1125,
+        "stdev": 0.048412
+      },
+      "liar_fab_earn": {
+        "mean": 0.1125,
+        "stdev": 0.048412
+      },
+      "honest_total_earn": {
+        "mean": 18.70625,
+        "stdev": 0.130952
+      },
+      "honest_hire_share": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "avg_honest_earn": {
+        "mean": 9.353125,
+        "stdev": 0.065476
+      },
+      "avg_liar_earn": {
+        "mean": 0.00625,
+        "stdev": 0.002689
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.989912,
+        "stdev": 0.006764
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.3256,
+        "stdev": 0.011215
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.04375,
+        "stdev": 0.080768
+      },
+      "liar_total_earn": {
+        "mean": 0.04375,
+        "stdev": 0.080768
+      },
+      "liar_fab_earn": {
+        "mean": 0.04375,
+        "stdev": 0.080768
+      },
+      "honest_total_earn": {
+        "mean": 19.85625,
+        "stdev": 0.080768
+      },
+      "honest_hire_share": {
+        "mean": 1.0,
+        "stdev": 0.0
+      },
+      "avg_honest_earn": {
+        "mean": 1.103125,
+        "stdev": 0.004487
+      },
+      "avg_liar_earn": {
+        "mean": 0.021875,
+        "stdev": 0.040384
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.899475,
+        "stdev": 0.026784
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.39165,
+        "stdev": 0.097899
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.10625,
+        "stdev": 0.080768
+      },
+      "liar_total_earn": {
+        "mean": 0.10625,
+        "stdev": 0.080768
+      },
+      "liar_fab_earn": {
+        "mean": 0.10625,
+        "stdev": 0.080768
+      },
+      "honest_total_earn": {
+        "mean": 19.58125,
+        "stdev": 0.089922
+      },
+      "honest_hire_share": {
+        "mean": 0.99875,
+        "stdev": 0.002165
+      },
+      "avg_honest_earn": {
+        "mean": 1.398661,
+        "stdev": 0.006423
+      },
+      "avg_liar_earn": {
+        "mean": 0.017708,
+        "stdev": 0.013461
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.90385,
+        "stdev": 0.025325
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.385075,
+        "stdev": 0.042553
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.175,
+        "stdev": 0.111803
+      },
+      "liar_total_earn": {
+        "mean": 0.175,
+        "stdev": 0.111803
+      },
+      "liar_fab_earn": {
+        "mean": 0.175,
+        "stdev": 0.111803
+      },
+      "honest_total_earn": {
+        "mean": 19.3,
+        "stdev": 0.134629
+      },
+      "honest_hire_share": {
+        "mean": 0.998125,
+        "stdev": 0.00348
+      },
+      "avg_honest_earn": {
+        "mean": 1.93,
+        "stdev": 0.013463
+      },
+      "avg_liar_earn": {
+        "mean": 0.0175,
+        "stdev": 0.01118
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.926937,
+        "stdev": 0.02903
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.381512,
+        "stdev": 0.027705
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.225,
+        "stdev": 0.090139
+      },
+      "liar_total_earn": {
+        "mean": 0.225,
+        "stdev": 0.090139
+      },
+      "liar_fab_earn": {
+        "mean": 0.225,
+        "stdev": 0.090139
+      },
+      "honest_total_earn": {
+        "mean": 19.03125,
+        "stdev": 0.074739
+      },
+      "honest_hire_share": {
+        "mean": 0.99625,
+        "stdev": 0.003307
+      },
+      "avg_honest_earn": {
+        "mean": 3.171875,
+        "stdev": 0.012457
+      },
+      "avg_liar_earn": {
+        "mean": 0.016071,
+        "stdev": 0.006438
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.955562,
+        "stdev": 0.022104
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.3756,
+        "stdev": 0.020166
+      }
+    },
+    {
+      "adversary": "naive",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.29375,
+        "stdev": 0.11022
+      },
+      "liar_total_earn": {
+        "mean": 0.29375,
+        "stdev": 0.11022
+      },
+      "liar_fab_earn": {
+        "mean": 0.29375,
+        "stdev": 0.11022
+      },
+      "honest_total_earn": {
+        "mean": 18.6,
+        "stdev": 0.139194
+      },
+      "honest_hire_share": {
+        "mean": 0.99625,
+        "stdev": 0.003307
+      },
+      "avg_honest_earn": {
+        "mean": 9.3,
+        "stdev": 0.069597
+      },
+      "avg_liar_earn": {
+        "mean": 0.016319,
+        "stdev": 0.006123
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.991213,
+        "stdev": 0.0039
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.364362,
+        "stdev": 0.019028
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.19375,
+        "stdev": 0.084548
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.725,
+        "stdev": 0.090139
+      },
+      "honest_hire_share": {
+        "mean": 0.996875,
+        "stdev": 0.00348
+      },
+      "avg_honest_earn": {
+        "mean": 1.095833,
+        "stdev": 0.005008
+      },
+      "avg_liar_earn": {
+        "mean": 0.096875,
+        "stdev": 0.042274
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.899563,
+        "stdev": 0.018913
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.564237,
+        "stdev": 0.099486
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.51875,
+        "stdev": 0.13214
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.2,
+        "stdev": 0.198431
+      },
+      "honest_hire_share": {
+        "mean": 0.995625,
+        "stdev": 0.005266
+      },
+      "avg_honest_earn": {
+        "mean": 1.371429,
+        "stdev": 0.014174
+      },
+      "avg_liar_earn": {
+        "mean": 0.086458,
+        "stdev": 0.022023
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.909362,
+        "stdev": 0.023049
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.537225,
+        "stdev": 0.030139
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 1.3375,
+        "stdev": 0.556636
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 18.175,
+        "stdev": 0.559017
+      },
+      "honest_hire_share": {
+        "mean": 0.984375,
+        "stdev": 0.009823
+      },
+      "avg_honest_earn": {
+        "mean": 1.8175,
+        "stdev": 0.055902
+      },
+      "avg_liar_earn": {
+        "mean": 0.13375,
+        "stdev": 0.055664
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9259,
+        "stdev": 0.023805
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.573313,
+        "stdev": 0.060583
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 1.4625,
+        "stdev": 0.824905
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 17.81875,
+        "stdev": 0.848873
+      },
+      "honest_hire_share": {
+        "mean": 0.99,
+        "stdev": 0.009682
+      },
+      "avg_honest_earn": {
+        "mean": 2.969792,
+        "stdev": 0.141479
+      },
+      "avg_liar_earn": {
+        "mean": 0.104465,
+        "stdev": 0.058922
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.961725,
+        "stdev": 0.015299
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.53325,
+        "stdev": 0.052495
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.0,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 2.875,
+        "stdev": 1.255986
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 16.05625,
+        "stdev": 1.302986
+      },
+      "honest_hire_share": {
+        "mean": 0.985625,
+        "stdev": 0.01793
+      },
+      "avg_honest_earn": {
+        "mean": 8.028125,
+        "stdev": 0.651493
+      },
+      "avg_liar_earn": {
+        "mean": 0.159722,
+        "stdev": 0.069777
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9914,
+        "stdev": 0.003019
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.568525,
+        "stdev": 0.056402
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "liar_total_earn": {
+        "mean": 0.19375,
+        "stdev": 0.084548
+      },
+      "liar_fab_earn": {
+        "mean": 0.0,
+        "stdev": 0.0
+      },
+      "honest_total_earn": {
+        "mean": 19.725,
+        "stdev": 0.090139
+      },
+      "honest_hire_share": {
+        "mean": 0.996875,
+        "stdev": 0.00348
+      },
+      "avg_honest_earn": {
+        "mean": 1.095833,
+        "stdev": 0.005008
+      },
+      "avg_liar_earn": {
+        "mean": 0.096875,
+        "stdev": 0.042274
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.899563,
+        "stdev": 0.018913
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.564237,
+        "stdev": 0.099486
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.03125,
+        "stdev": 0.034799
+      },
+      "liar_total_earn": {
+        "mean": 0.60625,
+        "stdev": 0.158976
+      },
+      "liar_fab_earn": {
+        "mean": 0.03125,
+        "stdev": 0.034799
+      },
+      "honest_total_earn": {
+        "mean": 19.10625,
+        "stdev": 0.189469
+      },
+      "honest_hire_share": {
+        "mean": 0.99125,
+        "stdev": 0.013405
+      },
+      "avg_honest_earn": {
+        "mean": 1.364732,
+        "stdev": 0.013534
+      },
+      "avg_liar_earn": {
+        "mean": 0.101042,
+        "stdev": 0.026496
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.90905,
+        "stdev": 0.019857
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.54035,
+        "stdev": 0.051498
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.03125,
+        "stdev": 0.024206
+      },
+      "liar_total_earn": {
+        "mean": 1.125,
+        "stdev": 0.385681
+      },
+      "liar_fab_earn": {
+        "mean": 0.03125,
+        "stdev": 0.024206
+      },
+      "honest_total_earn": {
+        "mean": 18.3875,
+        "stdev": 0.389511
+      },
+      "honest_hire_share": {
+        "mean": 0.9875,
+        "stdev": 0.009014
+      },
+      "avg_honest_earn": {
+        "mean": 1.83875,
+        "stdev": 0.038951
+      },
+      "avg_liar_earn": {
+        "mean": 0.1125,
+        "stdev": 0.038568
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.930163,
+        "stdev": 0.026536
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.56185,
+        "stdev": 0.056394
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.08125,
+        "stdev": 0.07881
+      },
+      "liar_total_earn": {
+        "mean": 1.81875,
+        "stdev": 0.652848
+      },
+      "liar_fab_earn": {
+        "mean": 0.08125,
+        "stdev": 0.07881
+      },
+      "honest_total_earn": {
+        "mean": 17.5125,
+        "stdev": 0.660374
+      },
+      "honest_hire_share": {
+        "mean": 0.984375,
+        "stdev": 0.014882
+      },
+      "avg_honest_earn": {
+        "mean": 2.91875,
+        "stdev": 0.110062
+      },
+      "avg_liar_earn": {
+        "mean": 0.129911,
+        "stdev": 0.046632
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.956462,
+        "stdev": 0.024594
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.567588,
+        "stdev": 0.052996
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.1,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.1625,
+        "stdev": 0.059948
+      },
+      "liar_total_earn": {
+        "mean": 2.6375,
+        "stdev": 0.523659
+      },
+      "liar_fab_earn": {
+        "mean": 0.1625,
+        "stdev": 0.059948
+      },
+      "honest_total_earn": {
+        "mean": 16.2375,
+        "stdev": 0.627371
+      },
+      "honest_hire_share": {
+        "mean": 0.98875,
+        "stdev": 0.009922
+      },
+      "avg_honest_earn": {
+        "mean": 8.11875,
+        "stdev": 0.313685
+      },
+      "avg_liar_earn": {
+        "mean": 0.146528,
+        "stdev": 0.029092
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9899,
+        "stdev": 0.00454
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.557375,
+        "stdev": 0.029495
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.1,
+      "ill_gotten_total": {
+        "mean": 0.01875,
+        "stdev": 0.034799
+      },
+      "liar_total_earn": {
+        "mean": 0.2625,
+        "stdev": 0.186665
+      },
+      "liar_fab_earn": {
+        "mean": 0.01875,
+        "stdev": 0.034799
+      },
+      "honest_total_earn": {
+        "mean": 19.65,
+        "stdev": 0.209165
+      },
+      "honest_hire_share": {
+        "mean": 0.99625,
+        "stdev": 0.003307
+      },
+      "avg_honest_earn": {
+        "mean": 1.091667,
+        "stdev": 0.01162
+      },
+      "avg_liar_earn": {
+        "mean": 0.13125,
+        "stdev": 0.093332
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9048,
+        "stdev": 0.017357
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.6111,
+        "stdev": 0.122723
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.3,
+      "ill_gotten_total": {
+        "mean": 0.09375,
+        "stdev": 0.084548
+      },
+      "liar_total_earn": {
+        "mean": 0.8625,
+        "stdev": 0.210283
+      },
+      "liar_fab_earn": {
+        "mean": 0.09375,
+        "stdev": 0.084548
+      },
+      "honest_total_earn": {
+        "mean": 18.84375,
+        "stdev": 0.209818
+      },
+      "honest_hire_share": {
+        "mean": 0.9875,
+        "stdev": 0.013463
+      },
+      "avg_honest_earn": {
+        "mean": 1.345982,
+        "stdev": 0.014987
+      },
+      "avg_liar_earn": {
+        "mean": 0.14375,
+        "stdev": 0.035047
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.912713,
+        "stdev": 0.023352
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.586675,
+        "stdev": 0.057865
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.5,
+      "ill_gotten_total": {
+        "mean": 0.20625,
+        "stdev": 0.11022
+      },
+      "liar_total_earn": {
+        "mean": 1.6875,
+        "stdev": 0.628366
+      },
+      "liar_fab_earn": {
+        "mean": 0.20625,
+        "stdev": 0.11022
+      },
+      "honest_total_earn": {
+        "mean": 17.80625,
+        "stdev": 0.654522
+      },
+      "honest_hire_share": {
+        "mean": 0.985625,
+        "stdev": 0.008077
+      },
+      "avg_honest_earn": {
+        "mean": 1.780625,
+        "stdev": 0.065452
+      },
+      "avg_liar_earn": {
+        "mean": 0.16875,
+        "stdev": 0.062837
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.938987,
+        "stdev": 0.023067
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.589,
+        "stdev": 0.052534
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.7,
+      "ill_gotten_total": {
+        "mean": 0.2,
+        "stdev": 0.075
+      },
+      "liar_total_earn": {
+        "mean": 2.19375,
+        "stdev": 0.591839
+      },
+      "liar_fab_earn": {
+        "mean": 0.2,
+        "stdev": 0.075
+      },
+      "honest_total_earn": {
+        "mean": 17.1125,
+        "stdev": 0.565547
+      },
+      "honest_hire_share": {
+        "mean": 0.965625,
+        "stdev": 0.022422
+      },
+      "avg_honest_earn": {
+        "mean": 2.852083,
+        "stdev": 0.094258
+      },
+      "avg_liar_earn": {
+        "mean": 0.156696,
+        "stdev": 0.042274
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.95775,
+        "stdev": 0.025707
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.584287,
+        "stdev": 0.04328
+      }
+    },
+    {
+      "adversary": "strategic",
+      "leak_rate": 0.25,
+      "liar_fraction": 0.9,
+      "ill_gotten_total": {
+        "mean": 0.39375,
+        "stdev": 0.128544
+      },
+      "liar_total_earn": {
+        "mean": 3.5875,
+        "stdev": 0.990502
+      },
+      "liar_fab_earn": {
+        "mean": 0.39375,
+        "stdev": 0.128544
+      },
+      "honest_total_earn": {
+        "mean": 15.35,
+        "stdev": 1.06066
+      },
+      "honest_hire_share": {
+        "mean": 0.976875,
+        "stdev": 0.018017
+      },
+      "avg_honest_earn": {
+        "mean": 7.675,
+        "stdev": 0.53033
+      },
+      "avg_liar_earn": {
+        "mean": 0.199306,
+        "stdev": 0.055028
+      },
+      "final_avg_honest_rep": {
+        "mean": 0.9791,
+        "stdev": 0.021125
+      },
+      "final_avg_liar_rep": {
+        "mean": 0.596612,
+        "stdev": 0.048868
+      }
+    }
+  ],
+  "grounded_regimes": {
+    "frontier_judge": {
+      "naive": {
+        "ill_gotten_total": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "liar_total_earn": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "avg_liar_earn": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "avg_honest_earn": {
+          "mean": 1.94375,
+          "stdev": 0.00696
+        },
+        "honest_hire_share": {
+          "mean": 0.9975,
+          "stdev": 0.003536
+        }
+      },
+      "strategic": {
+        "ill_gotten_total": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "liar_total_earn": {
+          "mean": 1.3375,
+          "stdev": 0.556636
+        },
+        "avg_liar_earn": {
+          "mean": 0.13375,
+          "stdev": 0.055664
+        },
+        "avg_honest_earn": {
+          "mean": 1.8175,
+          "stdev": 0.055902
+        },
+        "honest_hire_share": {
+          "mean": 0.984375,
+          "stdev": 0.009823
+        }
+      }
+    },
+    "weak_judge": {
+      "naive": {
+        "ill_gotten_total": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "liar_total_earn": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "avg_liar_earn": {
+          "mean": 0.0,
+          "stdev": 0.0
+        },
+        "avg_honest_earn": {
+          "mean": 1.94375,
+          "stdev": 0.00696
+        },
+        "honest_hire_share": {
+          "mean": 0.9975,
+          "stdev": 0.003536
+        }
+      },
+      "strategic": {
+        "ill_gotten_total": {
+          "mean": 0.20625,
+          "stdev": 0.11022
+        },
+        "liar_total_earn": {
+          "mean": 1.6875,
+          "stdev": 0.628366
+        },
+        "avg_liar_earn": {
+          "mean": 0.16875,
+          "stdev": 0.062837
+        },
+        "avg_honest_earn": {
+          "mean": 1.780625,
+          "stdev": 0.065452
+        },
+        "honest_hire_share": {
+          "mean": 0.985625,
+          "stdev": 0.008077
+        }
+      }
+    }
+  }
+}

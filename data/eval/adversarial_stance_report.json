@@ -1,0 +1,1611 @@
+{
+  "judge": "gpt-4.1-mini",
+  "gen_model": "gpt-4.1",
+  "n_seeds": 3,
+  "n_cases": 40,
+  "n_by_type": {
+    "implied_not_stated": 10,
+    "partial_coverage": 10,
+    "paraphrase_contradiction": 10,
+    "superseded_by_later": 10
+  },
+  "collapse_5_to_3": {
+    "support": "support",
+    "implied": "support",
+    "partially_supports": "support",
+    "contradict": "contradict",
+    "silent": "silent"
+  },
+  "summary": {
+    "three_way": {
+      "implied_not_stated": {
+        "level": {
+          "mean": 0.5,
+          "min": 0.5,
+          "max": 0.5,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.8333333333333334,
+          "min": 0.8333333333333334,
+          "max": 0.8333333333333334,
+          "stdev": 0.0
+        }
+      },
+      "partial_coverage": {
+        "level": {
+          "mean": 0.5,
+          "min": 0.5,
+          "max": 0.5,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.6666666666666666,
+          "min": 0.6666666666666666,
+          "max": 0.6666666666666666,
+          "stdev": 0.0
+        }
+      },
+      "paraphrase_contradiction": {
+        "level": {
+          "mean": 0.9,
+          "min": 0.9,
+          "max": 0.9,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.9666666666666667,
+          "min": 0.9666666666666667,
+          "max": 0.9666666666666667,
+          "stdev": 0.0
+        }
+      },
+      "superseded_by_later": {
+        "level": {
+          "mean": 0.9,
+          "min": 0.9,
+          "max": 0.9,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.9666666666666667,
+          "min": 0.9666666666666667,
+          "max": 0.9666666666666667,
+          "stdev": 0.0
+        }
+      },
+      "overall": {
+        "level": {
+          "mean": 0.7,
+          "min": 0.5,
+          "max": 0.9,
+          "stdev": 0.2
+        },
+        "stance": {
+          "mean": 0.8583333333333334,
+          "min": 0.6666666666666666,
+          "max": 0.9666666666666667,
+          "stdev": 0.1233220715579062
+        }
+      }
+    },
+    "five_way": {
+      "implied_not_stated": {
+        "level": {
+          "mean": 0.43333333333333335,
+          "min": 0.4,
+          "max": 0.5,
+          "stdev": 0.04714045207910316
+        },
+        "stance": {
+          "mean": 0.711111111111111,
+          "min": 0.7,
+          "max": 0.7333333333333333,
+          "stdev": 0.01571348402636772
+        }
+      },
+      "partial_coverage": {
+        "level": {
+          "mean": 0.8333333333333334,
+          "min": 0.8,
+          "max": 0.9,
+          "stdev": 0.04714045207910316
+        },
+        "stance": {
+          "mean": 0.9444444444444444,
+          "min": 0.9333333333333333,
+          "max": 0.9666666666666667,
+          "stdev": 0.01571348402636772
+        }
+      },
+      "paraphrase_contradiction": {
+        "level": {
+          "mean": 0.9,
+          "min": 0.9,
+          "max": 0.9,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.9555555555555556,
+          "min": 0.9333333333333333,
+          "max": 0.9666666666666667,
+          "stdev": 0.01571348402636772
+        }
+      },
+      "superseded_by_later": {
+        "level": {
+          "mean": 0.9,
+          "min": 0.9,
+          "max": 0.9,
+          "stdev": 0.0
+        },
+        "stance": {
+          "mean": 0.9666666666666667,
+          "min": 0.9666666666666667,
+          "max": 0.9666666666666667,
+          "stdev": 0.0
+        }
+      },
+      "overall": {
+        "level": {
+          "mean": 0.7666666666666667,
+          "min": 0.4,
+          "max": 0.9,
+          "stdev": 0.19720265943665388
+        },
+        "stance": {
+          "mean": 0.8944444444444445,
+          "min": 0.7,
+          "max": 0.9666666666666667,
+          "stdev": 0.10700755713476792
+        }
+      }
+    }
+  },
+  "sample_rows": {
+    "three_way": [
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The software services contract requires quarterly security audits by an external"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The Xelan M700 router supports Power over Ethernet (PoE) on all four LAN ports."
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The data-processing agreement requires all subcontractors to undergo annual secu"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The WillowGuard Home Insurance policy covers damage caused by wild animals enter"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "single_source",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The lease agreement requires tenants to obtain renter's insurance covering at le"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "single_source",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The SilverTier plan guarantees a maximum database read latency of 30 millisecond"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "Employees at GreenField Analytics receive an additional two paid days off during"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "contradict"
+        ],
+        "stance_hits": 2,
+        "claim": "The warranty covers water damage caused by accidental spills on the laptop keybo"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The loan agreement requires the borrower to maintain flood insurance on the prop"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "contradict"
+        ],
+        "stance_hits": 2,
+        "claim": "Acme Finance's privacy policy allows users to request deletion of all their stor"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The software services contract includes 24/7 technical support AND a 6-month ser"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The Aurora tablet includes a built-in stylus AND features an OLED display."
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The data-processing agreement requires encryption of all stored data AND mandate"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The policy covers veterinary expenses for service animals AND includes worldwide"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The lease requires tenants to obtain renter's insurance AND prohibits keeping ex"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The cloud SLA guarantees 99.95% uptime AND includes free data migration assistan"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The employment contract grants 30 days of paid vacation AND allows flexible remo"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The warranty covers accidental screen damage AND is valid for three years."
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The loan agreement requires monthly payments AND includes a 5% early repayment p"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "silent",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The privacy policy allows users to request deletion of their data AND requires a"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The software services contract specifies that all bug fixes must be completed wi"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The Falcon X5 router supports up to 250 simultaneous wireless connections."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The data-processing agreement requires vendors to retain data backups for at lea"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The Extended Gadget Insurance policy covers accidental water damage to laptops u"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "corroborated",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "support"
+        ],
+        "stance_hits": 2,
+        "claim": "The tenant must provide a 90-day written notice before vacating the property."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The cloud storage SLA guarantees a maximum data retrieval time of 90 seconds for"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The employment contract stipulates that new hires are eligible for paid parental"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The warranty covers battery replacement for 24 months from the date of purchase."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The loan agreement requires the borrower to make the first payment within 15 day"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "User data is deleted from the system within 14 days after account closure."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The software maintenance fee is $10,000 per year as stated in the original contr"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The ZX-200 router includes four Ethernet ports."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "corroborated",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The original data-processing agreement set the data retention period for client "
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The insurance policy provides coverage for stolen bicycles up to $2,000."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The lease agreement allows tenants to keep up to two domestic cats in the apartm"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The cloud SLA guarantees a maximum monthly downtime of 30 minutes for the DataSy"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The employment contract provides for 20 days of paid vacation per year."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The warranty covers accidental liquid damage for a period of 24 months from the "
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The interest rate on the loan is fixed at 5% per annum."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The privacy policy states that user location data is stored for a maximum of 30 "
+      }
+    ],
+    "five_way": [
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The software services contract requires quarterly security audits by an external"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The Xelan M700 router supports Power over Ethernet (PoE) on all four LAN ports."
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The data-processing agreement requires all subcontractors to undergo annual secu"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The WillowGuard Home Insurance policy covers damage caused by wild animals enter"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "single_source",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The lease agreement requires tenants to obtain renter's insurance covering at le"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The SilverTier plan guarantees a maximum database read latency of 30 millisecond"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "Employees at GreenField Analytics receive an additional two paid days off during"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "contradict"
+        ],
+        "stance_hits": 1,
+        "claim": "The warranty covers water damage caused by accidental spills on the laptop keybo"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "corroborated",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The loan agreement requires the borrower to maintain flood insurance on the prop"
+      },
+      {
+        "type": "implied_not_stated",
+        "intended_level": "corroborated",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "implied",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "contradict"
+        ],
+        "stance_hits": 1,
+        "claim": "Acme Finance's privacy policy allows users to request deletion of all their stor"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The software services contract includes 24/7 technical support AND a 6-month ser"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The Aurora tablet includes a built-in stylus AND features an OLED display."
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The data-processing agreement requires encryption of all stored data AND mandate"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The policy covers veterinary expenses for service animals AND includes worldwide"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "divergent",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The lease requires tenants to obtain renter's insurance AND prohibits keeping ex"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "corroborated",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "partially_supports"
+        ],
+        "stance_hits": 2,
+        "claim": "The cloud SLA guarantees 99.95% uptime AND includes free data migration assistan"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The employment contract grants 30 days of paid vacation AND allows flexible remo"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The warranty covers accidental screen damage AND is valid for three years."
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The loan agreement requires monthly payments AND includes a 5% early repayment p"
+      },
+      {
+        "type": "partial_coverage",
+        "intended_level": "single_source",
+        "pred_level": "single_source",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "partially_supports",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The privacy policy allows users to request deletion of their data AND requires a"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The software services contract specifies that all bug fixes must be completed wi"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The Falcon X5 router supports up to 250 simultaneous wireless connections."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The data-processing agreement requires vendors to retain data backups for at lea"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The Extended Gadget Insurance policy covers accidental water damage to laptops u"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "corroborated",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "support"
+        ],
+        "stance_hits": 2,
+        "claim": "The tenant must provide a 90-day written notice before vacating the property."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The cloud storage SLA guarantees a maximum data retrieval time of 90 seconds for"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "implied",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 2,
+        "claim": "The employment contract stipulates that new hires are eligible for paid parental"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The warranty covers battery replacement for 24 months from the date of purchase."
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "The loan agreement requires the borrower to make the first payment within 15 day"
+      },
+      {
+        "type": "paraphrase_contradiction",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "support"
+        ],
+        "stance_hits": 3,
+        "claim": "User data is deleted from the system within 14 days after account closure."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The software maintenance fee is $10,000 per year as stated in the original contr"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The ZX-200 router includes four Ethernet ports."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "corroborated",
+        "level_ok": false,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "support",
+          "silent"
+        ],
+        "stance_hits": 2,
+        "claim": "The original data-processing agreement set the data retention period for client "
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The insurance policy provides coverage for stolen bicycles up to $2,000."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The lease agreement allows tenants to keep up to two domestic cats in the apartm"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The cloud SLA guarantees a maximum monthly downtime of 30 minutes for the DataSy"
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The employment contract provides for 20 days of paid vacation per year."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The warranty covers accidental liquid damage for a period of 24 months from the "
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The interest rate on the loan is fixed at 5% per annum."
+      },
+      {
+        "type": "superseded_by_later",
+        "intended_level": "divergent",
+        "pred_level": "divergent",
+        "level_ok": true,
+        "intended_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "pred_stances": [
+          "support",
+          "contradict",
+          "silent"
+        ],
+        "stance_hits": 3,
+        "claim": "The privacy policy states that user location data is stored for a maximum of 30 "
+      }
+    ]
+  }
+}

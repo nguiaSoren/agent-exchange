@@ -1,0 +1,247 @@
+{
+  "judge": "gpt-4.1-mini",
+  "mode": "stance",
+  "n_claims": 9,
+  "accuracy": 1.0,
+  "by_label": {
+    "corroborated": {
+      "n": 3,
+      "accuracy": 1.0
+    },
+    "divergent": {
+      "n": 3,
+      "accuracy": 1.0
+    },
+    "fabricated": {
+      "n": 3,
+      "accuracy": 1.0
+    }
+  },
+  "rows": [
+    {
+      "label": "corroborated",
+      "level": "corroborated",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 0,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "Controller may object to changes in Sub-Processors within ten (10) days of receipt of noti"
+    },
+    {
+      "label": "divergent",
+      "level": "divergent",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 1,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "contradict",
+          false
+        ]
+      ],
+      "claim": "Processor\u2019s aggregate liability for Data Breaches shall not exceed EUR 1,000,000."
+    },
+    {
+      "label": "fabricated",
+      "level": "uncorroborated",
+      "match": true,
+      "n_confirming": 0,
+      "n_rejecting": 2,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "contradict",
+          false
+        ],
+        [
+          "SUMMARY",
+          "contradict",
+          false
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after beco"
+    },
+    {
+      "label": "corroborated",
+      "level": "corroborated",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 0,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "The Agreement requires that late payments accrue interest at a rate of 1.5% per month or t"
+    },
+    {
+      "label": "divergent",
+      "level": "divergent",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 1,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "contradict",
+          false
+        ]
+      ],
+      "claim": "Either party may terminate the Agreement upon sixty (60) days\u2019 written notice."
+    },
+    {
+      "label": "fabricated",
+      "level": "uncorroborated",
+      "match": true,
+      "n_confirming": 0,
+      "n_rejecting": 0,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "silent",
+          false
+        ],
+        [
+          "SUMMARY",
+          "silent",
+          false
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "The Agreement specifies that the Service Provider must provide a 24/7 customer support hot"
+    },
+    {
+      "label": "corroborated",
+      "level": "corroborated",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 0,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "The Agreement requires Provider to notify Customer without undue delay upon becoming aware"
+    },
+    {
+      "label": "divergent",
+      "level": "divergent",
+      "match": true,
+      "n_confirming": 2,
+      "n_rejecting": 1,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "support",
+          true
+        ],
+        [
+          "SUMMARY",
+          "support",
+          true
+        ],
+        [
+          "AMENDMENT",
+          "contradict",
+          false
+        ]
+      ],
+      "claim": "Customer must pay all Fees within thirty (30) days of invoice date."
+    },
+    {
+      "label": "fabricated",
+      "level": "uncorroborated",
+      "match": true,
+      "n_confirming": 0,
+      "n_rejecting": 2,
+      "per_source": [
+        [
+          "AGREEMENT",
+          "contradict",
+          false
+        ],
+        [
+          "SUMMARY",
+          "contradict",
+          false
+        ],
+        [
+          "AMENDMENT",
+          "silent",
+          false
+        ]
+      ],
+      "claim": "The Agreement allows Provider to increase Fees for any renewal term without providing any "
+    }
+  ]
+}

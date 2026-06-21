@@ -1,0 +1,275 @@
+{
+  "targets": [
+    "openai:gpt-4.1",
+    "openai:gpt-4.1-mini"
+  ],
+  "batch_dilution": {
+    "openai:gpt-4.1": [
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 5,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 15,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          5,
+          9,
+          10,
+          13
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 30,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          7,
+          22,
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 45,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          14,
+          23,
+          32,
+          39,
+          40
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 5,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 15,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          5,
+          9,
+          10,
+          13
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 30,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          7,
+          22,
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 45,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          14,
+          23,
+          32,
+          39,
+          40
+        ]
+      }
+    ],
+    "openai:gpt-4.1-mini": [
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 5,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 15,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          5,
+          9,
+          10,
+          13
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 30,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          7,
+          22,
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "doc": "1. DEFINITIONS  \n1.1 \"Controller\" means the entity",
+        "batch_size": 45,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          14,
+          23,
+          32,
+          39,
+          40
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 5,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 15,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          0,
+          5,
+          9,
+          10,
+          13
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 30,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          7,
+          22,
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "doc": "MASTER SERVICES AGREEMENT\n\nThis Master Services Ag",
+        "batch_size": 45,
+        "n_fabricated": 5,
+        "n_leaked": 0,
+        "leak_rate": 0.0,
+        "leaked_positions": [],
+        "fabricated_positions": [
+          14,
+          23,
+          32,
+          39,
+          40
+        ]
+      }
+    ]
+  },
+  "long_context": {
+    "1_source": {
+      "words": 868,
+      "n_fabricated": 5,
+      "n_leaked": 0,
+      "leak_rate": 0.0,
+      "target": "openai:gpt-4.1"
+    },
+    "2_sources": {
+      "words": 1917,
+      "n_fabricated": 5,
+      "n_leaked": 0,
+      "leak_rate": 0.0,
+      "target": "openai:gpt-4.1"
+    },
+    "4_sources": {
+      "words": 3663,
+      "n_fabricated": 5,
+      "n_leaked": 0,
+      "leak_rate": 0.0,
+      "target": "openai:gpt-4.1"
+    }
+  }
+}

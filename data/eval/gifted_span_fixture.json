@@ -1,0 +1,482 @@
+[
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Each party shall protect the other's Confidential Information for 5 years after disclosure.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Vendor may use Client data to train models with prior consent.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Vendor shall notify Client of any security breach within 24 hours.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Each party must protect the other's Confidential Information indefinitely.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5. Confidentiality & Data. Each party shall protect the other's Confidential Information for 3 years after disclosure. Vendor may not use Client data to train models. Vendor shall notify Client of any security breach within 72 hours.",
+    "claim": "Vendor is required to notify Client of any security breach within 7 days.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "Fees are fully refundable under all circumstances.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "Fees are refundable within 30 days of payment.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "Fees are refundable except for administrative costs.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "4.2 Fees are non-refundable except as expressly set forth herein.",
+    "claim": "Fees are refundable only if requested in writing within 7 days.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for the entire term of the contract.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for thirty (30) days following delivery.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for one hundred eighty (180) days following delivery.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will fully conform to the Documentation for ninety (90) days following delivery.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days following delivery.",
+    "claim": "Vendor warrants that the Services will materially conform to the Documentation for ninety (90) days with no exceptions.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by and construed under the laws of the State of New York.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by and construed under the laws of the State of California.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by and construed under the laws of the United States federal law.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "10.1 This Agreement is governed by and construed under the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by and construed under the laws of the State of Texas.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "All work product, deliverables, and foreground IP created under this Agreement remain the property of Vendor and are only licensed to Client upon completion.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Vendor grants Client an exclusive license to use its pre-existing background IP.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Client is assigned all intellectual property, including Vendor's pre-existing background IP, upon creation.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Vendor retains all rights to the work product and deliverables created under this Agreement and only grants a limited license to Client.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "2. Intellectual Property. All work product, deliverables, and foreground IP created under this Agreement are assigned to Client upon creation. Vendor retains its pre-existing background IP and grants Client a non-exclusive license to use it.",
+    "claim": "Client receives an exclusive license to use Vendor's background IP created under this Agreement.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "Vendor's aggregate liability shall not exceed the total fees paid by Customer in the entire term of the contract.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "Vendor's aggregate liability shall not exceed the total fees paid by Customer in the six (6) months preceding the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "Vendor's aggregate liability shall not exceed the total fees paid by Customer in the thirty (30) days preceding the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.",
+    "claim": "Vendor's aggregate liability shall not exceed the total fees paid by Customer in the twenty-four (24) months preceding the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The initial term is six (6) months and renews automatically for successive six-month terms unless either party gives thirty (30) days' notice of non-renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The contract requires a minimum of ninety (90) days' notice of non-renewal to avoid automatic renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The initial term is one (1) year and does not renew automatically; renewal requires explicit consent from both parties.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The initial term is one (1) year and renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "Either party can terminate the contract at any time without notice, overriding the automatic renewal clause.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by the laws of the State of New York.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by federal law exclusively.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by the laws of the State of California.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by international law.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "8. Governing Law. This Agreement is governed by the laws of the State of Delaware.",
+    "claim": "This Agreement is governed by the laws of the State of Texas.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "Confidential Information includes information that becomes publicly available regardless of fault of the receiving party.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "Confidential Information excludes only information that is publicly available at the time of disclosure.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "Confidential Information excludes information that is publicly available even if the receiving party is at fault.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "12.2 'Confidential Information' excludes information that is or becomes publicly available through no fault of the receiving party.",
+    "claim": "Confidential Information includes all information disclosed, even if it is publicly available through no fault of the receiving party.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's liability is capped at the fees paid in the prior 6 months with no exceptions.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The limitation of liability applies to all types of breaches including confidentiality and indemnification.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's liability shall not exceed fees paid in the prior 24 months.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in 7.1 do not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "There is a complete cap on vendor's liability regardless of the type of breach.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments accrue interest at 2% per month.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments do not accrue any interest.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments accrue interest at 1.5% per week.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "3.4 Late payments accrue interest at 1.5% per month.",
+    "claim": "Late payments accrue interest at 1.5% per year.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "Vendor warrants the services will be performed in a professional and workmanlike manner for a minimum of 12 months.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "The services are provided with a full warranty and are not 'as is' under any circumstances.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "Vendor guarantees the services will be free from defects for the entire term of the contract.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "The services are provided 'as is' only if the client waives all warranties in writing.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7. Warranties. Vendor warrants the services will be performed in a professional and workmanlike manner. EXCEPT AS STATED, THE SERVICES ARE PROVIDED \"AS IS\".",
+    "claim": "Vendor warrants the services will be performed in a professional and workmanlike manner without any exceptions.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "This Agreement may be amended by an oral agreement between the parties.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "This Agreement can be amended unilaterally by either party without written consent.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "Amendments to this Agreement do not require signatures from both parties.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "13.1 This Agreement may be amended only by a written instrument signed by both parties.",
+    "claim": "This Agreement may be amended by a written instrument signed by only one party.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "Vendor warrants the Services for the entire term of the contract.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "Vendor warrants the Services for thirty (30) days.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The warranty provided by Vendor is in addition to all other express or implied warranties.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "Vendor warrants the Services for one hundred and eighty (180) days.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services for ninety (90) days. THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES, EXPRESS OR IMPLIED.",
+    "claim": "The warranty period for the Services is unlimited and does not expire.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the entire term of the Agreement.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the six (6) months preceding the event giving rise to the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twenty-four (24) months preceding the event giving rise to the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+    "claim": "Vendor's aggregate liability under this Agreement shall not exceed the total fees paid by Customer in the thirty (30) days preceding the event giving rise to the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "Vendor's liability is capped at fees paid in the prior 6 months with no exceptions.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "The limitations on Vendor's liability apply to all types of breaches including confidentiality and indemnification obligations.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "Vendor's liability shall not exceed fees paid in the prior 24 months.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "There are no exceptions to the liability cap stated in Section 7.1.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "7.1 Vendor's liability shall not exceed fees paid in the prior 12 months. 7.3 The limitations in Section 7.1 do not apply to breaches of confidentiality or a party's indemnification obligations.",
+    "claim": "Vendor's liability is unlimited regardless of fees paid in the prior 12 months.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the entire term of the Agreement.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the six (6) months preceding the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "The liability cap applies to all types of claims, including breaches of confidentiality and indemnification obligations.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "1. Liability. Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the twelve (12) months preceding the claim. This cap does not apply to breaches of confidentiality or indemnification obligations.",
+    "claim": "Vendor's aggregate liability under this Agreement is capped at the fees paid by Client in the thirty (30) days preceding the claim.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The term renews automatically for successive one-year terms unless either party gives thirty (30) days' notice of non-renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The term renews automatically for successive one-year terms unless either party gives ninety (90) days' notice of non-renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The term renews automatically for successive one-year terms unless either party gives sixty (60) hours' notice of non-renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "5.1 The term renews automatically for successive one-year terms unless either party gives sixty (60) days' notice of non-renewal.",
+    "claim": "The term renews automatically for successive one-year terms unless either party gives sixty (60) minutes' notice of non-renewal.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  },
+  {
+    "contract": "6.2 Vendor warrants the Services will materially conform to the Documentation for ninety (90) days.",
+    "claim": "Vendor warrants the Services will materially conform to the Documentation for the entire term of the contract.",
+    "label": "fabricated",
+    "source": "llm_gifted_span"
+  }
+]

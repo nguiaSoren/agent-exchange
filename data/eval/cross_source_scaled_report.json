@@ -1,0 +1,1030 @@
+{
+  "judge": "gpt-4.1-mini",
+  "generator": "gpt-4.1",
+  "mode": "stance",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "contracts": {
+    "overall": {
+      "mean": 0.8888888888888888,
+      "min": 0.8809523809523809,
+      "max": 0.9047619047619048
+    },
+    "by_label": {
+      "corroborated": {
+        "mean": 0.9523809523809524,
+        "min": 0.9285714285714286,
+        "max": 1.0
+      },
+      "divergent": {
+        "mean": 0.7142857142857143,
+        "min": 0.7142857142857143,
+        "max": 0.7142857142857143
+      },
+      "fabricated": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      }
+    },
+    "leaks_per_seed": [
+      0,
+      0,
+      0
+    ],
+    "n_claims": 42,
+    "label_n": {
+      "corroborated": 14,
+      "divergent": 14,
+      "fabricated": 14
+    },
+    "n_factsets": 14,
+    "per_seed": [
+      {
+        "seed": 0,
+        "overall": 0.8809523809523809,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 0.9285714285714286,
+          "divergent": 0.7142857142857143,
+          "fabricated": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "overall": 0.8809523809523809,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 0.9285714285714286,
+          "divergent": 0.7142857142857143,
+          "fabricated": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "overall": 0.9047619047619048,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 1.0,
+          "divergent": 0.7142857142857143,
+          "fabricated": 1.0
+        }
+      }
+    ],
+    "sample_rows": [
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Agreement allows Customer to terminate for convenience at any time with ten (10) days'"
+      },
+      {
+        "label": "divergent",
+        "level": "corroborated",
+        "match": false,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The original Agreement required Customer to pay all Fees within thirty (30) days of invoic"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Agreement requires Provider to notify Customer without undue delay in the event of con"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "Supplier may not increase the Price by more than 5% in any 12-month period."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The Supplier is required to provide a 36-month warranty on all Products."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Customer shall order no less than 1,000 units per Product per purchase order."
+      },
+      {
+        "label": "divergent",
+        "level": "corroborated",
+        "match": false,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The original Agreement required a minimum uptime of 99.5% per calendar month."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Agreement requires that each party protect the other party’s Confidential Information "
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The Agreement allows either party to terminate for convenience with five (5) days’ prior w"
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Agreement automatically renews for successive 6-month periods unless either party prov"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "Provider will use commercially reasonable efforts to ensure the API is available 99.5% of "
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Client may make up to 10,000 API calls per day and no more than 500 calls per minute."
+      },
+      {
+        "label": "divergent",
+        "level": "corroborated",
+        "match": false,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The original contract specifies a Base Salary of $120,000 per year."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Non-Compete Period in the original contract is 12 months following termination."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The original contract allows for unlimited carryover of unused vacation days."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The maximum aggregate Fees payable to Consultant for the Term is $16,000."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The non-solicitation obligation in Section 7 survives for twelve (12) months following ter"
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 0,
+        "claim": "Consultant is required to provide a performance bond prior to commencing Services."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "Processor is required to provide quarterly reports on all Processing activities to Control"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "Controller may object to a new Sub-Processor within 10 days of notice."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Processor must notify Controller of a Data Breach within 36 hours after becoming aware of "
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Agreement allows Reseller to market and sell Products in Mexico without Supplier’s con"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Agreement requires Reseller to purchase at least $50,000 USD in aggregate list price v"
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Supplier shall sell Products to Reseller at a discount of 30% off Supplier’s then-current "
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Tenant may exercise the Renewal Option by providing written notice to the Landlord at "
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 1,
+        "claim": "The Security Deposit is refundable with 5% interest at the end of the lease term."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The initial annual Base Rent is $60,000, payable in equal monthly installments of $5,000."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The JV is required to operate in both the United States and Canada."
+      },
+      {
+        "label": "divergent",
+        "level": "corroborated",
+        "match": false,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Alpha was originally required to contribute $1,000,000 in cash to the JV."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Board shall consist of four members, with two appointed by Alpha and two appointed by "
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Agreement requires Distributor to maintain Commercial General Liability insurance with"
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The initial Term of the Agreement is three (3) years from the Effective Date."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Agreement allows Supplier to terminate for convenience upon thirty (30) days’ prior wr"
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Agreement is governed by the laws of the State of New York."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The Receiving Party must give the Disclosing Party at least ten (10) business days’ prior "
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Agreement allows either Party to assign the Agreement freely without the other Party's"
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Total payments under this Agreement shall not exceed USD $1,000,000 without prior written "
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The confidentiality obligations under this Agreement survive for ten (10) years after expi"
+      },
+      {
+        "label": "corroborated",
+        "level": "divergent",
+        "match": false,
+        "n_confirming": 1,
+        "n_rejecting": 1,
+        "claim": "Sponsor shall have the right, upon ten (10) business days’ written notice, to audit CRO’s "
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 0,
+        "claim": "The Subcontractor is required to maintain Commercial General Liability insurance coverage "
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The Contract Sum for the Scope of Work is Two Hundred Fifty Thousand Dollars ($250,000.00)"
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 2,
+        "claim": "The Subcontractor must submit payment applications by the 1st day of each month."
+      }
+    ]
+  },
+  "heterogeneous": {
+    "overall": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "by_label": {
+      "corroborated": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "divergent": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "fabricated": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      }
+    },
+    "leaks_per_seed": [
+      0,
+      0,
+      0
+    ],
+    "n_claims": 68,
+    "label_n": {
+      "corroborated": 36,
+      "divergent": 17,
+      "fabricated": 15
+    },
+    "n_factsets": 12,
+    "per_seed": [
+      {
+        "seed": 0,
+        "overall": 1.0,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 1.0,
+          "divergent": 1.0,
+          "fabricated": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "overall": 1.0,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 1.0,
+          "divergent": 1.0,
+          "fabricated": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "overall": 1.0,
+        "leaks": 0,
+        "by_label": {
+          "corroborated": 1.0,
+          "divergent": 1.0,
+          "fabricated": 1.0
+        }
+      }
+    ],
+    "sample_rows": [
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The Nova X1 will ship on July 12, 2024."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The base price of the Nova X1 is $799."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The Nova X1 will begin shipping on July 5, 2024."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The Nova X1 features a 6.7-inch display."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Nova X1 is available in 128GB and 256GB storage tiers."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Nova X1 has a 4,800 mAh battery."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The outage impacted 2,500 customers."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The power outage at the Northside Data Center started at 2:15 PM on June 14, 2024."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "18 services were affected by the outage."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The outage lasted for 47 minutes."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The root cause of the outage was a cooling system malfunction."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The efficacy rate for XQ-17 in the trial was 67%."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The study included 500 participants."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The primary endpoint was improvement in overall survival."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The trial was conducted at 10 sites."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The trial lasted 18 months."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The clinical trial for XQ-17 enrolled 420 participants."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "Year-over-year revenue growth for Q1 2024 was 9%."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Q2 revenue guidance was set between $1.28 billion and $1.32 billion."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The company's net margin for Q1 2024 was 12%."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "Acme Corp's Q1 2024 headcount was 4,800."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Acme Corp reported $1.25 billion in revenue for Q1 2024."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "Acme Corp had 4,600 employees at the end of Q1 2024."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The mission deployed four satellites."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The mission cost was $70 million."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The satellites were placed into a 700 km orbit."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The total payload mass for the launch was 1,200 kg."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The launch window for the mission was from 14:00 to 16:00 UTC."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The total budget for the project is $500 million."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The expansion will add 8 new stations to the Metro Blue Line."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The extension is scheduled for completion in 2027."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The project will add 9 new stations to the Metro Blue Line."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The new segment will be 12.5 kilometers long."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Metro Blue Line extension is projected to serve 34,000 riders daily."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The Voltix E-Prime has a range of 320 miles."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The E-Prime's maximum charging speed is 180 kW."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Voltix E-Prime has a base price of $41,500."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The Voltix E-Prime's EPA-estimated range is 312 miles."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "Production of the Voltix E-Prime will begin in August 2024."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The E-Prime accelerates from 0 to 60 mph in 5.8 seconds."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The remediation cost for the breach is estimated at $350,000."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The attackers exploited a vulnerability in the company's web server."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The breach at TechNova was detected on March 10, 2024."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The breach went undetected for 18 days."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "TechNova's breach exposed 45,000 records."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Broadcast viewership for the game was 4.2 million."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 2,
+        "n_rejecting": 1,
+        "claim": "The Metro Arena has a seating capacity of 18,500."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "Ticket prices for the championship final ranged from $50 to $200."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Attendance at the final was 17,900."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The Riverside Titans won the championship final."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Central City Falcons scored 89 points in the final."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The plant utilizes 310,000 photovoltaic panels."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The Green Valley Solar Plant has an installed capacity of 120 megawatts."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "Annual energy output is projected at 210,000 megawatt-hours."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The facility covers 220 acres of land."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The total construction cost was $120 million."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The performance improvement in ApexCore 5.0 is 30% over the previous version."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "ApexCore 5.0 was released on March 12, 2024."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "ApexCore 5.0 requires Node.js 20.0 as the minimum runtime."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "ApexCore 5.0 introduces 8 breaking changes."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The minimum supported runtime for ApexCore 5.0 is Node.js 18.0."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "ApexCore 5.0 was released in February 2024."
+      },
+      {
+        "label": "fabricated",
+        "level": "uncorroborated",
+        "match": true,
+        "n_confirming": 0,
+        "n_rejecting": 3,
+        "claim": "The recall was due to contamination with a foreign substance."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The recall affects 18,000 units of PharmaGenix 50mg tablets."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The defect prompting the recall was a labeling error."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The recall was classified as Class II by the FDA."
+      },
+      {
+        "label": "corroborated",
+        "level": "corroborated",
+        "match": true,
+        "n_confirming": 3,
+        "n_rejecting": 0,
+        "claim": "The affected product was distributed in California, Texas, and Florida."
+      },
+      {
+        "label": "divergent",
+        "level": "divergent",
+        "match": true,
+        "n_confirming": 1,
+        "n_rejecting": 2,
+        "claim": "The recall involves 5 lots of the product."
+      }
+    ]
+  }
+}

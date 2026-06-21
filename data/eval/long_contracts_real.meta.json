@@ -1,0 +1,362 @@
+[
+  {
+    "domain": "master_services",
+    "title": "",
+    "company": "Sunrise Communications AG  (SNRS)  (CIK 0002021938)",
+    "cik": "2021938",
+    "file_type": "EX-10.4",
+    "url": "https://www.sec.gov/Archives/edgar/data/2021938/000119312524206325/d805815dex104.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "saas",
+    "title": "NSB SOFTWARE AS A SERVICE MASTER AGREEMENT",
+    "company": "Boot Barn Holdings, Inc.  (BOOT)  (CIK 0001610250)",
+    "cik": "1610250",
+    "file_type": "EX-10.14",
+    "url": "https://www.sec.gov/Archives/edgar/data/1610250/000104746914007948/a2221573zex-10_14.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "nda",
+    "title": "RESTRICTIVE COVENANT AGREEMENT",
+    "company": "Dorman Products, Inc.  (DORM)  (CIK 0000868780)",
+    "cik": "868780",
+    "file_type": "EX-10.16",
+    "url": "https://www.sec.gov/Archives/edgar/data/868780/000156459022005966/dorm-ex1016_838.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "software_license",
+    "title": "EX-10.1 ASSUMPTION AGREEMENT",
+    "company": "SS&C TECHNOLOGIES INC  (CIK 0001011661)",
+    "cik": "1011661",
+    "file_type": "EX-10.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/1011661/000095012309073000/b78577exv10w1.htm",
+    "verified_domain": false
+  },
+  {
+    "domain": "employment",
+    "title": "THIRD AMENDMENT TO EMPLOYMENT AGREEMENT",
+    "company": "First Trinity Financial CORP  (CIK 0001395585)",
+    "cik": "1395585",
+    "file_type": "EX-10",
+    "url": "https://www.sec.gov/Archives/edgar/data/1395585/000143774913004313/ftfc20130409_8kex10-20.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "lease",
+    "title": "",
+    "company": "Delimobil Holding S.A.  (CIK 0001872309)",
+    "cik": "1872309",
+    "file_type": "EX-10.13",
+    "url": "https://www.sec.gov/Archives/edgar/data/1872309/000119312521295416/d181580dex1013.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "credit",
+    "title": "",
+    "company": "COLUMBUS MCKINNON CORP  (CMCO)  (CIK 0001005229)",
+    "cik": "1005229",
+    "file_type": "EX-10.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/1005229/000100522920000280/cm-2ndamendmentexecuted.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "loan",
+    "title": "",
+    "company": "OCCIDENTAL PETROLEUM CORP /DE/  (OXY, OXY-WT)  (CIK 0000797468)",
+    "cik": "797468",
+    "file_type": "EX-10.2",
+    "url": "https://www.sec.gov/Archives/edgar/data/797468/000114036120006632/ex10_2.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "supply",
+    "title": "",
+    "company": "ALLIANCE RESOURCE PARTNERS LP  (ARLP)  (CIK 0001086600)",
+    "cik": "1086600",
+    "file_type": "EX-10.33",
+    "url": "https://www.sec.gov/Archives/edgar/data/1086600/000119312507043725/dex1033.htm",
+    "verified_domain": false
+  },
+  {
+    "domain": "distribution",
+    "title": "DISTRIBUTION AGREEMENT",
+    "company": "TERAFORCE TECHNOLOGY CORP  (CIK 0000316672)",
+    "cik": "316672",
+    "file_type": "EX-10.3",
+    "url": "https://www.sec.gov/Archives/edgar/data/316672/000095013404008755/d16122a1exv10w3.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "consulting",
+    "title": "CONSULTING AGREEMENT",
+    "company": "MARLIN BUSINESS SERVICES CORP  (CIK 0001260968)",
+    "cik": "1260968",
+    "file_type": "EX-10.2",
+    "url": "https://www.sec.gov/Archives/edgar/data/1260968/000117184315005609/exh_102.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "manufacturing",
+    "title": "ASSIGNMENT AND TERMINATION OF MANUFACTURING AGREEMENT",
+    "company": "Seres Therapeutics, Inc.  (MCRB)  (CIK 0001609809)",
+    "cik": "1609809",
+    "file_type": "EX-10.5",
+    "url": "https://www.sec.gov/Archives/edgar/data/1609809/000095017024095821/mcrb-ex10_5.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "patent_license",
+    "title": "PATENT LICENSE AGREEMENT",
+    "company": "KV PHARMACEUTICAL CO /DE/  (CIK 0000057055)",
+    "cik": "57055",
+    "file_type": "EX-10.2",
+    "url": "https://www.sec.gov/Archives/edgar/data/57055/000095012309012724/w74397exv10w2.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "trademark_license",
+    "title": "TRADEMARK LICENSE AGREEMENT",
+    "company": "Costamare Partners LP  (CIK 0001615415)",
+    "cik": "1615415",
+    "file_type": "EX-10.28",
+    "url": "https://www.sec.gov/Archives/edgar/data/1615415/000093041315000317/c78320_ex10-28.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "severance",
+    "title": "CONFIDENTIAL SEVERANCE AGREEMENT",
+    "company": "DMC Global Inc.  (BOOM)  (CIK 0000034067)",
+    "cik": "34067",
+    "file_type": "EX-10.22",
+    "url": "https://www.sec.gov/Archives/edgar/data/34067/000003406725000028/dmc-chilcoffseveranceagree.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "indemnification",
+    "title": "GUARANTY AND INDEMNIFICATION AGREEMENT",
+    "company": "SMITH & WOLLENSKY RESTAURANT GROUP INC  (CIK 0001137047)",
+    "cik": "1137047",
+    "file_type": "EX-10.82",
+    "url": "https://www.sec.gov/Archives/edgar/data/1137047/000104746904009532/a2131320zex-10_82.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "security_agreement",
+    "title": "THIRD SECURITY AGREEMENT",
+    "company": "AXS ONE INC  (CIK 0000947427)",
+    "cik": "947427",
+    "file_type": "EX-10.5",
+    "url": "https://www.sec.gov/Archives/edgar/data/947427/000095012308014229/y00461exv10w5.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "asset_purchase",
+    "title": "AMENDMENT NO. 1 TO ASSET PURCHASE AGREEMENT",
+    "company": "Viatris Inc  (VTRS)  (CIK 0001792044)",
+    "cik": "1792044",
+    "file_type": "EX-10.34(B)",
+    "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204421000009/ex_1034b-vtrsx20201231x10xk.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "stock_purchase",
+    "title": "",
+    "company": "PROSPECT MEDICAL HOLDINGS INC  (CIK 0001063561)",
+    "cik": "1063561",
+    "file_type": "EX-10.4",
+    "url": "https://www.sec.gov/Archives/edgar/data/1063561/000104746904018802/a2136564zex-10_4.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "partnership",
+    "title": "SECOND AMENDED AND RESTATED LIMITED PARTNERSHIP AGREEMENT",
+    "company": "INDUSTRIAL PROPERTY TRUST INC.  (CIK 0001558441)",
+    "cik": "1558441",
+    "file_type": "EX-10.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/1558441/000104746919004825/a2239522zex-10_1.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "joint_venture",
+    "title": "",
+    "company": "Majesco  (CIK 0001626853)",
+    "cik": "1626853",
+    "file_type": "EX-10.34",
+    "url": "https://www.sec.gov/Archives/edgar/data/1626853/000157104915007972/t1502234_ex10-34.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "franchise",
+    "title": "AMENDMENT TO COURTYARD BY MARRIOTT RELICENSING FRANCHISE AGREEMENT",
+    "company": "Moody National REIT I, Inc.  (CIK 0001424879)",
+    "cik": "1424879",
+    "file_type": "EX-10.106",
+    "url": "https://www.sec.gov/Archives/edgar/data/1424879/000138713114003559/ex10-106.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "settlement",
+    "title": "THIRD AMENDED SETTLEMENT AGREEMENT",
+    "company": "SHARPER IMAGE CORP  (CIK 0000811696)",
+    "cik": "811696",
+    "file_type": "EX-10.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/811696/000118143107049696/rrd167531_21130.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "underwriting",
+    "title": "",
+    "company": "Mudrick Capital Acquisition Corp  (HYMC, HYMCL, HYMCW)  (CIK 0001718405)",
+    "cik": "1718405",
+    "file_type": "EX-10.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/1718405/000110465920021682/tm208146d1_ex10-1.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "registration_rights",
+    "title": "THIRD AMENDED & RESTATED REGISTRATION RIGHTS AGREEMENT",
+    "company": "ENANTA PHARMACEUTICALS INC  (ENTA)  (CIK 0001177648)",
+    "cik": "1177648",
+    "file_type": "EX-10.4",
+    "url": "https://www.sec.gov/Archives/edgar/data/1177648/000119312512454422/d401292dex104.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "escrow",
+    "title": "ESCROW AGREEMENT",
+    "company": "ATI Physical Therapy, Inc.  (ATIP, ATIPW)  (CIK 0001815849)",
+    "cik": "1815849",
+    "file_type": "EX-10.3",
+    "url": "https://www.sec.gov/Archives/edgar/data/1815849/000114036124049683/ef20039918_ex10-3.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "guaranty",
+    "title": "FIRST AMENDMENT TO SECOND AMENDED AND RESTATED CREDIT AND GUARANTY AGREEMENT",
+    "company": "CVR ENERGY INC  (CVI)  (CIK 0001376139)",
+    "cik": "1376139",
+    "file_type": "EX-10.1.1",
+    "url": "https://www.sec.gov/Archives/edgar/data/1376139/000095012307012356/t25337a8exv10w1w1.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "nda",
+    "title": "STANDSTILL AGREEMENT",
+    "company": "Anchor Bancorp  (CIK 0001448301)",
+    "cik": "1448301",
+    "file_type": "EX-10",
+    "url": "https://www.sec.gov/Archives/edgar/data/1448301/000093905715000573/anchor8k113015exh101102.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "software_license",
+    "title": "END-USER SOFTWARE LICENSE AGREEMENT",
+    "company": "DUO WORLD INC  (DUUO)  (CIK 0001635136)",
+    "cik": "1635136",
+    "file_type": "EX-10.12",
+    "url": "https://www.sec.gov/Archives/edgar/data/1635136/000149315216013250/ex10-12.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "lease",
+    "title": "",
+    "company": "INTERNATIONAL LEASE FINANCE CORP  (CIK 0000714311)",
+    "cik": "714311",
+    "file_type": "EX-10.13",
+    "url": "https://www.sec.gov/Archives/edgar/data/714311/000095012310019263/v53559exv10w13.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "credit",
+    "title": "",
+    "company": "SILGAN HOLDINGS INC  (SLGN)  (CIK 0000849869)",
+    "cik": "849869",
+    "file_type": "EX-10",
+    "url": "https://www.sec.gov/Archives/edgar/data/849869/000084986904000031/ex10sa.txt",
+    "verified_domain": true
+  },
+  {
+    "domain": "loan",
+    "title": "M & I LOAN AGREEMENT",
+    "company": "FIRST MIDWEST BANCORP INC  (CIK 0000702325)",
+    "cik": "702325",
+    "file_type": "EX-10",
+    "url": "https://www.sec.gov/Archives/edgar/data/702325/000070232503000180/exhibit10.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "supply",
+    "title": "SUPPLY AGREEMENT",
+    "company": "NOVAVAX INC  (NVAX)  (CIK 0001000694)",
+    "cik": "1000694",
+    "file_type": "EX-10.37",
+    "url": "https://www.sec.gov/Archives/edgar/data/1000694/000100069422000004/nvax-20211231xex1037.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "distribution",
+    "title": "NEW DISTRIBUTION AGREEMENT",
+    "company": "INTERPLAY ENTERTAINMENT CORP  (CIK 0001057232)",
+    "cik": "1057232",
+    "file_type": "EX-10",
+    "url": "https://www.sec.gov/Archives/edgar/data/1057232/000117091802000117/iec3q02ex10-2.txt",
+    "verified_domain": true
+  },
+  {
+    "domain": "consulting",
+    "title": "SECOND CONSULTING AGREEMENT",
+    "company": "HOLLINGER INTERNATIONAL INC  (CIK 0000868512)",
+    "cik": "868512",
+    "file_type": "EX-10.12",
+    "url": "https://www.sec.gov/Archives/edgar/data/868512/000095013706004053/c03310exv10w12.txt",
+    "verified_domain": true
+  },
+  {
+    "domain": "manufacturing",
+    "title": "MANUFACTURING AND SUPPLY AGREEMENT",
+    "company": "ELITE PHARMACEUTICALS INC /DE/  (ELTP)  (CIK 0001053369)",
+    "cik": "1053369",
+    "file_type": "EX-10.71",
+    "url": "https://www.sec.gov/Archives/edgar/data/1053369/000114420411038267/v227306_ex10-71.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "patent_license",
+    "title": "PATENT LICENSE AGREEMENT",
+    "company": "IMPAX LABORATORIES INC  (CIK 0001003642)",
+    "cik": "1003642",
+    "file_type": "EX-10.17",
+    "url": "https://www.sec.gov/Archives/edgar/data/1003642/000089322009000059/p67239a6exv10w17.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "trademark_license",
+    "title": "TRADEMARK LICENSE AGREEMENT",
+    "company": "MYOMO, INC.  (MYO)  (CIK 0001369290)",
+    "cik": "1369290",
+    "file_type": "EX-10.29",
+    "url": "https://www.sec.gov/Archives/edgar/data/1369290/000156459022009827/myo-ex1029_193.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "severance",
+    "title": "EX-10.4.3 SEVERENCE AGREEMENT",
+    "company": "MIDDLEFIELD BANC CORP  (MBCN)  (CIK 0000836147)",
+    "cik": "836147",
+    "file_type": "EX-10.4.3",
+    "url": "https://www.sec.gov/Archives/edgar/data/836147/000095015206005793/l21240aexv10w4w3.htm",
+    "verified_domain": true
+  },
+  {
+    "domain": "security_agreement",
+    "title": "THIRD AMENDED AND RESTATED PLEDGE AND SECURITY AGREEMENT",
+    "company": "World Omni Auto Leasing LLC  (CIK 0001439697)",
+    "cik": "1439697",
+    "file_type": "EX-10.13",
+    "url": "https://www.sec.gov/Archives/edgar/data/1439697/000114420419028133/tv522312_ex10-13.htm",
+    "verified_domain": true
+  }
+]

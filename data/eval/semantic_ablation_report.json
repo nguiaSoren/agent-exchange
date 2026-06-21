@@ -1,0 +1,35 @@
+{
+  "judge": "gpt-4.1-mini",
+  "embed_model": "text-embedding-3-small",
+  "tau": 0.62,
+  "n_claims": 44,
+  "n_docs": 4,
+  "part_a_discrimination": {
+    "genuine": {
+      "n": 24,
+      "emb_mean_max_cosine": 0.899,
+      "emb_frac_ge_tau": 1.0,
+      "llm_frac_supported": 1.0
+    },
+    "gifted": {
+      "n": 20,
+      "emb_mean_max_cosine": 0.762,
+      "emb_frac_ge_tau": 0.95,
+      "llm_frac_supported": 0.0
+    }
+  },
+  "part_b_gate": {
+    "genuine": {
+      "n": 24,
+      "lexical": 3,
+      "embedding": 11,
+      "llm": 1
+    },
+    "gifted": {
+      "n": 0,
+      "lexical": 0,
+      "embedding": 0,
+      "llm": 0
+    }
+  }
+}

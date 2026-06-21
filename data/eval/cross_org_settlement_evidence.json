@@ -1,0 +1,30 @@
+{
+  "kind": "cross-org-settlement",
+  "network": "eip155:84532",
+  "distinct_owner_wallets": 2,
+  "workers": [
+    {
+      "owner": "agent-exchange",
+      "worker": "liability-auditor",
+      "pay_to": "0x39A41624Fb28783a361871F245dC7b773B75e4b5",
+      "cross_owner": false,
+      "settled_usdc": 0.02,
+      "status": "settled",
+      "tx": "0x2dd46b14c97000283638de83ce8480204d7d084c78fa4faf6c26db70512dfd67",
+      "leg_ms": 2208.0,
+      "explorer": "https://sepolia.basescan.org/tx/0x2dd46b14c97000283638de83ce8480204d7d084c78fa4faf6c26db70512dfd67"
+    },
+    {
+      "owner": "babidibuu19",
+      "worker": "tax-clause-bot",
+      "pay_to": "0xa68255d2e9054A2728c53d1D2b252bD784E950d2",
+      "cross_owner": true,
+      "settled_usdc": 0.01,
+      "status": "settled",
+      "tx": "0xa316216c2d29b2b3ce0c10a5d9ab9dfc74109741d93e51846a0fa10a79427d05",
+      "leg_ms": 1130.0,
+      "explorer": "https://sepolia.basescan.org/tx/0xa316216c2d29b2b3ce0c10a5d9ab9dfc74109741d93e51846a0fa10a79427d05"
+    }
+  ],
+  "total_settled_usdc": 0.03
+}

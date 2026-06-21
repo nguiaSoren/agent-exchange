@@ -1,0 +1,163 @@
+{
+  "n": 24,
+  "categories": [
+    "cs.LG",
+    "cs.CL",
+    "q-bio.NC",
+    "physics.optics",
+    "math.PR",
+    "econ.EM",
+    "stat.ME",
+    "astro-ph.GA",
+    "cond-mat.soft",
+    "eess.SP",
+    "q-fin.ST",
+    "nlin.AO"
+  ],
+  "items": [
+    {
+      "arxiv_id": "2606.20560v1",
+      "url": "http://arxiv.org/abs/2606.20560v1",
+      "category": "cs.LG",
+      "title": "How Transparent is DiffusionGemma?"
+    },
+    {
+      "arxiv_id": "2606.20559v1",
+      "url": "http://arxiv.org/abs/2606.20559v1",
+      "category": "cs.LG",
+      "title": "UNIEGO: Proxies as Mediators for Unified Egocentric Video Representation Learning"
+    },
+    {
+      "arxiv_id": "2606.20529v1",
+      "url": "http://arxiv.org/abs/2606.20529v1",
+      "category": "cs.CL",
+      "title": "LedgerAgent: Structured State for Policy-Adherent Tool-Calling Agents"
+    },
+    {
+      "arxiv_id": "2606.20527v1",
+      "url": "http://arxiv.org/abs/2606.20527v1",
+      "category": "cs.CL",
+      "title": "StylisticBias: A Few Human Visual Cues Drive Most Social Biases in MLLMs"
+    },
+    {
+      "arxiv_id": "2606.20345v1",
+      "url": "http://arxiv.org/abs/2606.20345v1",
+      "category": "q-bio.NC",
+      "title": "Synchronization modes in bipartite oscillator networks"
+    },
+    {
+      "arxiv_id": "2606.20096v1",
+      "url": "http://arxiv.org/abs/2606.20096v1",
+      "category": "q-bio.NC",
+      "title": "Quadratic Forms for Measuring Geometric Trees in 3-dimensional Space"
+    },
+    {
+      "arxiv_id": "2606.20412v1",
+      "url": "http://arxiv.org/abs/2606.20412v1",
+      "category": "physics.optics",
+      "title": "Plasma Etch Process Optimization for Photonic-Grade Diamond-on-Insulator Substrates and Thickness Evaluation using Colorimetry"
+    },
+    {
+      "arxiv_id": "2606.20372v1",
+      "url": "http://arxiv.org/abs/2606.20372v1",
+      "category": "physics.optics",
+      "title": "Attosecond Path Qubits in High-Harmonic Generation: Classical Dephasing and Trace-Out Decoherence"
+    },
+    {
+      "arxiv_id": "2606.20356v1",
+      "url": "http://arxiv.org/abs/2606.20356v1",
+      "category": "math.PR",
+      "title": "Robust $Q$-learning for mean-field control under Wasserstein uncertainty in common noise"
+    },
+    {
+      "arxiv_id": "2606.20289v1",
+      "url": "http://arxiv.org/abs/2606.20289v1",
+      "category": "math.PR",
+      "title": "Dimension-free bounds for {R}iesz transforms on the {H}amming cube via a {B}ellman function"
+    },
+    {
+      "arxiv_id": "2606.20435v1",
+      "url": "http://arxiv.org/abs/2606.20435v1",
+      "category": "econ.EM",
+      "title": "Choosing A Headline Estimand from Matching, DID, and Hybrid Designs: A Minimax-Regret Approach"
+    },
+    {
+      "arxiv_id": "2606.20286v1",
+      "url": "http://arxiv.org/abs/2606.20286v1",
+      "category": "econ.EM",
+      "title": "Institutions, Inputs, and Agricultural Growth in China:Revisiting Several Controversies, 1949--1986"
+    },
+    {
+      "arxiv_id": "2606.20514v1",
+      "url": "http://arxiv.org/abs/2606.20514v1",
+      "category": "stat.ME",
+      "title": "Hypergraph Variable Selection with False Discovery Rate Control"
+    },
+    {
+      "arxiv_id": "2606.20427v1",
+      "url": "http://arxiv.org/abs/2606.20427v1",
+      "category": "stat.ME",
+      "title": "Private Rate-Double-Robust Inference"
+    },
+    {
+      "arxiv_id": "2606.20370v1",
+      "url": "http://arxiv.org/abs/2606.20370v1",
+      "category": "astro-ph.GA",
+      "title": "ELMA: ELlipse-based bar MAjor axis estimator"
+    },
+    {
+      "arxiv_id": "2606.20335v1",
+      "url": "http://arxiv.org/abs/2606.20335v1",
+      "category": "astro-ph.GA",
+      "title": "A merger shock traced by radio arcs and ultra-long radio tails in galaxy cluster A2142"
+    },
+    {
+      "arxiv_id": "2606.20552v1",
+      "url": "http://arxiv.org/abs/2606.20552v1",
+      "category": "cond-mat.soft",
+      "title": "On the Renormalization Group Flow of Active Flocks"
+    },
+    {
+      "arxiv_id": "2606.20462v1",
+      "url": "http://arxiv.org/abs/2606.20462v1",
+      "category": "cond-mat.soft",
+      "title": "Polymer-polymer interdiffusion: effects of entanglements and a polymeric source"
+    },
+    {
+      "arxiv_id": "2606.20450v1",
+      "url": "http://arxiv.org/abs/2606.20450v1",
+      "category": "eess.SP",
+      "title": "Max-Min Rate Fairness Optimization for Multi-User Pinching-Antenna NOMA Systems"
+    },
+    {
+      "arxiv_id": "2606.20413v1",
+      "url": "http://arxiv.org/abs/2606.20413v1",
+      "category": "eess.SP",
+      "title": "Hybrid TRP-UE Sensing for Enhanced Target Localization"
+    },
+    {
+      "arxiv_id": "2606.20145v1",
+      "url": "http://arxiv.org/abs/2606.20145v1",
+      "category": "q-fin.ST",
+      "title": "Trends, Volatility, Correlations, and Critical Phenomena in Financial Markets"
+    },
+    {
+      "arxiv_id": "2606.19318v1",
+      "url": "http://arxiv.org/abs/2606.19318v1",
+      "category": "q-fin.ST",
+      "title": "Fitting Accumulated Stock Returns with Tempered Skew t-Distribution"
+    },
+    {
+      "arxiv_id": "2606.20485v1",
+      "url": "http://arxiv.org/abs/2606.20485v1",
+      "category": "nlin.AO",
+      "title": "Optimal Order of Multi-Agent and General Many-Body Systems"
+    },
+    {
+      "arxiv_id": "2606.20345v1",
+      "url": "http://arxiv.org/abs/2606.20345v1",
+      "category": "nlin.AO",
+      "title": "Synchronization modes in bipartite oscillator networks"
+    }
+  ]
+}

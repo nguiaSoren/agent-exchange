@@ -1,0 +1,30 @@
+{
+  "rounds": 3,
+  "thompson_seeds": 400,
+  "trace": [
+    {
+      "round": 0,
+      "clean_rep": 0.5,
+      "liar_rep": 0.5,
+      "p_hire_clean": 0.0
+    },
+    {
+      "round": 1,
+      "clean_rep": 0.6667,
+      "liar_rep": 0.3333,
+      "p_hire_clean": 0.875
+    },
+    {
+      "round": 2,
+      "clean_rep": 0.75,
+      "liar_rep": 0.25,
+      "p_hire_clean": 0.9575
+    },
+    {
+      "round": 3,
+      "clean_rep": 0.8,
+      "liar_rep": 0.2,
+      "p_hire_clean": 0.99
+    }
+  ]
+}

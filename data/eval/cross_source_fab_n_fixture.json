@@ -1,0 +1,484 @@
+{
+  "claims": [
+    {
+      "contract_idx": 0,
+      "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours of becoming aware of it."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Controller may conduct unlimited audits of Processor\u2019s Processing of Personal Data each year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, Processor is required to delete all Personal Data without exception."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor may transfer Personal Data outside the EEA or the United Kingdom without any safeguards or additional measures."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Controller may conduct unlimited audits of Processor\u2019s Processing of Personal Data at any time without prior notice."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is permitted to transfer Personal Data outside the EEA or UK without implementing any special safeguards."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, Processor must always delete all Personal Data without exception."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "The Controller may conduct an unlimited number of audits of the Processor\u2019s Processing of Personal Data each year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, Processor must delete all Personal Data, with no exceptions."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is permitted to transfer Personal Data outside the EEA or the UK without implementing additional safeguards."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is not required to provide notice to the Controller before appointing new Sub-Processors."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware of it."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "The Processor may engage Sub-Processors without providing any notice to the Controller."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Controller is permitted to conduct unlimited audits of Processor\u2019s Processing of Personal Data each year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, Processor will automatically delete all Personal Data without exception."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is not liable for any acts or omissions of its Sub-Processors under this DPA."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor must notify Controller of a Data Breach within 24 hours after becoming aware of it."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "The Processor must notify the Controller of a Data Breach within twenty-four (24) hours after becoming aware of it."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "The Controller may conduct an unlimited number of audits of the Processor\u2019s Processing of Personal Data each calendar year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, the Processor must delete all Personal Data without exception, regardless of any legal requirements to retain it."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "The Processor may transfer Personal Data outside the EEA or United Kingdom without implementing any additional safeguards as long as the Controller is informed."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Sections 4, 5, 6, and 7 of the DPA survive termination or expiration for a period of one year after the Processor stops Processing Personal Data on behalf of the Controller."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is permitted to transfer Personal Data outside the EEA or the UK without any additional safeguards."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Controller may conduct an unlimited number of audits of Processor\u2019s Processing activities each calendar year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination of the Agreement, Processor may retain copies of Personal Data regardless of legal requirements."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is not required to provide prior notice to Controller when engaging new Sub-Processors."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor must delete or return all Personal Data to Controller within seven (7) days of termination or expiration."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Controller may conduct unlimited audits of Processor\u2019s Processing of Personal Data each calendar year."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Upon termination or expiration of the Agreement, Processor must immediately delete all Personal Data without exception."
+    },
+    {
+      "contract_idx": 0,
+      "claim": "Processor is not required to impose any data protection obligations on Sub-Processors."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Liability for indirect, incidental, special, or consequential damages is fully excluded under all circumstances, with no exceptions."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Confidentiality obligations for all information survive indefinitely after termination of the Agreement."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Service Provider is required to deliver all Intellectual Property Rights in Deliverables to the Client immediately upon delivery, regardless of payment status."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party may terminate the Agreement for material breach by the other party with immediate effect and no cure period."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The Service Provider is required to achieve a minimum uptime of 100% per calendar month for any hosted services."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Confidentiality obligations continue for five years after termination of the Agreement, regardless of the type of information."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Upon termination, the Client is not obligated to pay for any Services performed or Deliverables delivered prior to the effective date of termination."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party can terminate the Agreement without providing any advance written notice."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Upon termination, the Client is not required to pay for any Services performed prior to the termination date."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The Service Provider warrants that Deliverables will conform to specifications for the entire duration of the Agreement."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Service Provider must protect all Confidential Information indefinitely, regardless of whether it remains a trade secret."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party may terminate this Agreement for any reason with thirty (30) days\u2019 written notice."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The Service Provider warrants that Deliverables will conform to the specifications in the applicable SOW for one year after delivery."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Upon termination, Client is not required to pay for any Services performed or Deliverables delivered up to the effective date of termination."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The obligations of confidentiality survive termination of the Agreement for the entire duration of the Agreement and do not expire."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party may terminate this Agreement or any SOW for material breach by the other party without providing an opportunity to cure the breach."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The Service Provider warrants that Deliverables will materially conform to the specifications in the applicable SOW for one year after delivery."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Upon termination, the Client is not required to pay for any Services performed or Deliverables delivered up to the effective date of termination."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party may terminate this Agreement for convenience with thirty (30) days\u2019 written notice."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The Service Provider must protect Confidential Information for five (5) years after termination of this Agreement, regardless of whether it is a trade secret."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "All Intellectual Property Rights in Deliverables, including Service Provider\u2019s pre-existing materials and third-party materials, are assigned to Client upon payment."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The confidentiality obligations stated in the Agreement will survive termination indefinitely, regardless of the type of information involved."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Service Provider warrants that the Deliverables will conform to specifications for a period of one year after delivery."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Either party may terminate the Agreement immediately for convenience without providing any advance written notice."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Service Provider is liable for all indirect, incidental, special, and consequential damages arising under the Agreement."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "All intellectual property rights in Deliverables, including Service Provider\u2019s pre-existing materials, are assigned to Client upon full payment."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Service Provider is required to achieve a minimum uptime of 100% per calendar month for any hosted services."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "All Intellectual Property Rights in Deliverables, including Service Provider\u2019s pre-existing materials, shall be assigned to Client upon full payment of Fees."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "Each party\u2019s total liability under this Agreement shall not exceed $500,000."
+    },
+    {
+      "contract_idx": 1,
+      "claim": "The obligations of confidentiality in Section 5 survive termination of this Agreement indefinitely."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The provider is liable for all damages, including indirect and consequential damages, arising from this agreement."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The provider may suspend the customer's access to the service immediately without any prior written notice for late payment."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, customer data will be deleted immediately and will not be available for download."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The limitation of liability applies to all types of liability, with no exceptions."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any advance written notice."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Service credits for failing to meet the SLA can be requested at any time after the month in which the SLA was not met."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Customer\u2019s access to the Service will continue for 90 days to allow data download."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider may increase Fees for any renewal term without providing advance written notice."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Either party may terminate this Agreement for any breach by the other party, with no cure period required."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The Provider is required to notify the Customer of scheduled maintenance at least 72 hours in advance."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Customer\u2019s access to the Service may be suspended immediately upon late payment, without any notice period."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Provider will make Customer Data available for download for ninety (90) days following termination."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Either party may terminate this Agreement for any reason with thirty (30) days\u2019 written notice."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, with no prior notice required."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Service credits for SLA shortfalls may be applied to any past or future invoices at Customer\u2019s discretion."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider is prohibited from accessing Customer Data under any circumstances, including for technical support or legal compliance."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Customer\u2019s access to the Service and ability to retrieve data ends immediately with no grace period."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider is allowed to access, use, or disclose Customer Data for any business purpose without restriction."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Service credits for SLA violations will be automatically applied without the need for a written request by Customer."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any notice period."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Either party may terminate the Agreement for any breach by the other party, without the need to allow a cure period."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Customer\u2019s access to download Customer Data will be available for ninety (90) days following termination."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Either party may terminate this Agreement immediately for any breach by the other party, without providing an opportunity to cure."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The Service Level Agreement requires Provider to achieve a 100% Monthly Uptime Percentage."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider is liable for all damages, including indirect and consequential damages, regardless of the cause."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Provider is not required to make Customer Data available for download."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Provider may suspend Customer\u2019s access to the Service immediately upon late payment, without any advance notice period."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Upon termination, Provider is not required to make Customer Data available for download after termination."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "The Provider is liable for all damages arising from the Agreement, regardless of the nature of the breach."
+    },
+    {
+      "contract_idx": 2,
+      "claim": "Service credits for SLA failures can be requested at any time following a service outage."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The confidentiality obligations survive for the entire duration of the Agreement without limitation."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Either party may assign this Agreement freely without needing the other party\u2019s consent."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The Receiving Party must return or destroy all Confidential Information immediately upon termination, with no right to retain any copies for any reason."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The Agreement grants each party a license to use the other party\u2019s Confidential Information for any business purpose."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "If the Receiving Party is required to disclose Confidential Information by law, they may do so without any requirement to notify the Disclosing Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality and non-use with respect to Confidential Information continue indefinitely after the expiration or termination of this Agreement."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request by the Disclosing Party, the Receiving Party must destroy all copies of Confidential Information and is not permitted to retain any copies for any reason."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Either Party may assign this Agreement to any third party without the prior written consent of the other Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The Agreement allows the Receiving Party to use Confidential Information for any business purpose beyond the Permitted Purpose."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The confidentiality and non-use obligations survive for the entire duration of the Agreement, with no additional survival period after expiration or termination."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all Confidential Information within thirty (30) business days."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "All Confidential Information must be returned or destroyed by the Receiving Party, with no exceptions permitted for archival copies."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Either Party may assign this Agreement freely without the consent of the other Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive for the entire duration of the Agreement only."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request by the Disclosing Party, the Receiving Party must return or destroy all tangible materials containing Confidential Information with no right to retain any copies."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "If the Receiving Party is required by law to disclose Confidential Information, it is not obligated to notify the Disclosing Party beforehand."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Either Party may assign this Agreement freely without the need for written consent from the other Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality and non-use with respect to Confidential Information shall survive for the entire duration of the Agreement only."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon termination or expiration of the Agreement, the Receiving Party must return or destroy all tangible materials containing Confidential Information, with no exception for retaining any copies."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "All disputes arising under this Agreement may be resolved in any court of competent jurisdiction, regardless of location."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The Agreement allows assignment by either Party without the need for prior written consent from the other Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality under this Agreement survive indefinitely after its expiration or termination."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request, the Receiving Party must return or destroy all Confidential Information within thirty (30) business days."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The Receiving Party may disclose Confidential Information to any third party as long as it is for the Permitted Purpose."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive for the entire duration of the agreement without exception."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request, the Receiving Party must return or destroy all tangible materials containing Confidential Information, including the archival copy."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "If the Receiving Party is required by law to disclose Confidential Information, they must provide at least thirty (30) business days\u2019 prior written notice to the Disclosing Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Neither Party may assign this Agreement under any circumstances without the prior written consent of the other Party."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "The obligations of confidentiality and non-use with respect to Confidential Information survive indefinitely after the expiration or termination of the Agreement."
+    },
+    {
+      "contract_idx": 3,
+      "claim": "Upon written request, the Receiving Party must return or destroy all copies of Confidential Information without exception."
+    }
+  ]
+}

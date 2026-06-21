@@ -1,0 +1,270 @@
+{
+  "gen_model": "gpt-4.1",
+  "n_docs": 4,
+  "n_gifted_span": 20,
+  "n_genuine": 24,
+  "threshold": 0.6,
+  "policy": "strict",
+  "judges": {
+    "openai:gpt-4.1-mini": {
+      "configs": {
+        "judge_only": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 24,
+              "escalated": 0,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 1.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 0,
+              "withheld": 19,
+              "partial_zero": 1,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        },
+        "gate_teeth_off": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 23,
+              "escalated": 1,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 0.9583333333333334,
+              "false_escalate_rate": 0.041666666666666664,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 0,
+              "withheld": 20,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        },
+        "gate_teeth_on": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 3,
+              "escalated": 21,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 0.125,
+              "false_escalate_rate": 0.875,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 0,
+              "withheld": 20,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        }
+      },
+      "route_distribution": {
+        "judge_only": {
+          "llm_gifted_span": {
+            "none": 20
+          },
+          "genuine": {
+            "none": 24
+          }
+        },
+        "gate_teeth_off": {
+          "llm_gifted_span": {
+            "escalate": 20
+          },
+          "genuine": {
+            "judge": 20,
+            "supported": 3,
+            "escalate": 1
+          }
+        },
+        "gate_teeth_on": {
+          "llm_gifted_span": {
+            "escalate": 20
+          },
+          "genuine": {
+            "judge": 20,
+            "supported": 3,
+            "escalate": 1
+          }
+        }
+      }
+    },
+    "featherless:Qwen/Qwen2.5-72B-Instruct": {
+      "configs": {
+        "judge_only": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 6,
+              "escalated": 18,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 0.25,
+              "false_escalate_rate": 0.75,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 15,
+              "withheld": 5,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        },
+        "gate_teeth_off": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 6,
+              "escalated": 18,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 0.25,
+              "false_escalate_rate": 0.75,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 15,
+              "withheld": 5,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        },
+        "gate_teeth_on": {
+          "classes": [
+            {
+              "source": "genuine",
+              "is_fabricated": false,
+              "n": 24,
+              "auto_paid": 0,
+              "escalated": 24,
+              "withheld": 0,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 0.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 1.0,
+              "false_withhold_rate": 0.0
+            },
+            {
+              "source": "llm_gifted_span",
+              "is_fabricated": true,
+              "n": 20,
+              "auto_paid": 0,
+              "escalated": 15,
+              "withheld": 5,
+              "partial_zero": 0,
+              "leak_rate": 0.0,
+              "contained_rate": 1.0,
+              "served_rate": 0.0,
+              "false_escalate_rate": 0.0,
+              "false_withhold_rate": 0.0
+            }
+          ]
+        }
+      },
+      "route_distribution": {
+        "judge_only": {
+          "llm_gifted_span": {
+            "none": 20
+          },
+          "genuine": {
+            "none": 24
+          }
+        },
+        "gate_teeth_off": {
+          "llm_gifted_span": {
+            "escalate": 5,
+            "none": 15
+          },
+          "genuine": {
+            "judge": 6,
+            "none": 18
+          }
+        },
+        "gate_teeth_on": {
+          "llm_gifted_span": {
+            "none": 15,
+            "escalate": 5
+          },
+          "genuine": {
+            "none": 18,
+            "judge": 6
+          }
+        }
+      }
+    }
+  }
+}

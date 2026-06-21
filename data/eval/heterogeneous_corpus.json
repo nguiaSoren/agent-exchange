@@ -1,0 +1,504 @@
+{
+  "factsets": [
+    {
+      "topic": "Smartphone Launch: Nova X1",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "TechNova unveiled its latest smartphone, the Nova X1, on June 10, 2024. The device will begin shipping on July 5, 2024, and is priced at $799 for the base model. The Nova X1 features a 6.5-inch OLED display and a 4,800 mAh battery. Storage options include 128GB and 256GB variants."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Product: Nova X1 Smartphone\nManufacturer: TechNova\nLaunch Date: June 10, 2024\nShipping Date: July 12, 2024\nBase Price: $799\nDisplay: 6.5-inch OLED\nBattery: 4,800 mAh\nStorage: 128GB / 256GB"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- Nova X1 smartphone announced by TechNova on June 10, 2024\n- Shipping commences July 5, 2024\n- Available storage: 128GB and 256GB\n- Battery capacity: 4,800 mAh\n- Screen size: 6.5 inches\n- Starting price: $799"
+        }
+      ],
+      "claims": [
+        {
+          "text": "The Nova X1 has a 4,800 mAh battery.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Nova X1 will begin shipping on July 5, 2024.",
+          "label": "divergent"
+        },
+        {
+          "text": "The Nova X1 is available in 128GB and 256GB storage tiers.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Nova X1 features a 6.7-inch display.",
+          "label": "fabricated"
+        },
+        {
+          "text": "The base price of the Nova X1 is $799.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Nova X1 will ship on July 12, 2024.",
+          "label": "divergent"
+        }
+      ]
+    },
+    {
+      "topic": "Data Center Power Outage Incident",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "A major power outage struck the Northside Data Center on June 14, 2024, beginning at 2:15 PM and lasting for 47 minutes. The incident disrupted 18 critical services and affected approximately 2,300 customers. According to initial reports, the root cause was a failure in the main power distribution unit."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Incident Report: Data Center Power Outage\n- Date: 2024-06-14\n- Outage Start Time: 14:15\n- Duration: 47 minutes\n- Number of Services Affected: 18\n- Customers Impacted: 2,300\n- Root Cause: Main power distribution unit failure"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- On June 14, 2024, a power outage began at 2:10 PM at the Northside Data Center.\n- The outage persisted for 47 minutes.\n- 18 services were disrupted.\n- Approximately 2,500 customers experienced service interruptions.\n- The main power distribution unit was identified as the root cause."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The power outage at the Northside Data Center started at 2:15 PM on June 14, 2024.",
+          "label": "divergent"
+        },
+        {
+          "text": "The outage lasted for 47 minutes.",
+          "label": "corroborated"
+        },
+        {
+          "text": "18 services were affected by the outage.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The outage impacted 2,500 customers.",
+          "label": "divergent"
+        },
+        {
+          "text": "The root cause of the outage was a cooling system malfunction.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "Clinical Trial Results for New Drug XQ-17",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "A recent clinical trial for the investigational drug XQ-17 enrolled 420 participants across 12 sites. The study, which lasted 18 months, reported an efficacy rate of 67% in achieving the primary endpoint of symptom reduction. Researchers highlighted the robust sample size and multi-site approach as strengths of the trial."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Trial Name: XQ-17 Efficacy Study\nSample Size: 420\nNumber of Sites: 12\nTrial Duration: 18 months\nEfficacy Percentage: 67%\nPrimary Endpoint: Reduction in symptom severity"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- The XQ-17 trial included 420 patients at 10 different sites.\n- Duration of the study was 18 months.\n- Efficacy in meeting the primary endpoint (symptom reduction) was 67%.\n- The primary endpoint focused on measurable reduction in symptom severity."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The clinical trial for XQ-17 enrolled 420 participants.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The efficacy rate for XQ-17 in the trial was 67%.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The trial was conducted at 10 sites.",
+          "label": "divergent"
+        },
+        {
+          "text": "The primary endpoint was improvement in overall survival.",
+          "label": "fabricated"
+        },
+        {
+          "text": "The trial lasted 18 months.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The study included 500 participants.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "Q1 2024 Earnings Report for Acme Corp",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "Acme Corp reported first quarter 2024 revenue of $1.25 billion, reflecting a 7% increase compared to the same period last year. The company's net margin stood at 12%. Acme ended the quarter with 4,800 employees. Looking ahead, the company issued Q2 revenue guidance in the range of $1.28 to $1.32 billion."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Company: Acme Corp\nQuarter: Q1 2024\nRevenue: $1.25B\nYear-over-Year Growth: 7%\nNet Margin: 12%\nHeadcount: 4,600\nQ2 Revenue Guidance: $1.28B - $1.32B"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- Q1 2024 revenue reached $1.25 billion, up 7% YoY\n- Net margin for the quarter was 12%\n- Total employees at quarter end: 4,800\n- Q2 revenue guidance: $1.28–$1.32 billion"
+        }
+      ],
+      "claims": [
+        {
+          "text": "Acme Corp reported $1.25 billion in revenue for Q1 2024.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The company's net margin for Q1 2024 was 12%.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Acme Corp's Q1 2024 headcount was 4,800.",
+          "label": "divergent"
+        },
+        {
+          "text": "Year-over-year revenue growth for Q1 2024 was 9%.",
+          "label": "fabricated"
+        },
+        {
+          "text": "Q2 revenue guidance was set between $1.28 billion and $1.32 billion.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Acme Corp had 4,600 employees at the end of Q1 2024.",
+          "label": "divergent"
+        }
+      ]
+    },
+    {
+      "topic": "Satellite Launch Mission Details",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "On June 12, 2024, the Vega-X rocket successfully launched from Kourou, deploying four satellites into a 650 km sun-synchronous orbit. The mission, with a total payload mass of 1,200 kg, was completed within a launch window from 14:00 to 16:00 UTC. The operation was executed at a reported cost of $65 million."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Mission: Vega-X Satellite Deployment\nDate: 2024-06-12\nPayload Mass: 1,200 kg\nOrbit Altitude: 650 km (Sun-synchronous)\nNumber of Satellites: 4\nLaunch Window: 14:00–16:00 UTC\nMission Cost: $70 million"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- Launch Date: June 12, 2024\n- Vehicle: Vega-X\n- Payload: 1,200 kg total\n- Orbit: Sun-synchronous, 650 km altitude\n- Satellites Deployed: 4\n- Launch Window: 14:00–16:00 UTC\n- Total Mission Cost: $65 million"
+        }
+      ],
+      "claims": [
+        {
+          "text": "The mission deployed four satellites.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The total payload mass for the launch was 1,200 kg.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The launch window for the mission was from 14:00 to 16:00 UTC.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The mission cost was $70 million.",
+          "label": "divergent"
+        },
+        {
+          "text": "The satellites were placed into a 700 km orbit.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "City Public-Transit Expansion",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "The city council has approved the expansion of the Metro Blue Line, adding 8 new stations over a 12.5 km stretch. The project, with a budget of $420 million, is expected to be completed by 2027. Officials project a daily ridership increase of 34,000 once the extension is operational."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Project: Metro Blue Line Extension\nNumber of New Stations: 8\nLine Length: 12.5 km\nProjected Daily Ridership: 34,000\nBudget: $420 million\nEstimated Completion Year: 2027"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- Metro Blue Line expansion will add 9 new stations\n- Total extension length: 12.5 kilometers\n- Anticipated daily ridership: 34,000 passengers\n- Allocated budget: $420 million\n- Target completion: 2027"
+        }
+      ],
+      "claims": [
+        {
+          "text": "The Metro Blue Line extension is projected to serve 34,000 riders daily.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The expansion will add 8 new stations to the Metro Blue Line.",
+          "label": "divergent"
+        },
+        {
+          "text": "The total budget for the project is $500 million.",
+          "label": "fabricated"
+        },
+        {
+          "text": "The extension is scheduled for completion in 2027.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The new segment will be 12.5 kilometers long.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The project will add 9 new stations to the Metro Blue Line.",
+          "label": "divergent"
+        }
+      ]
+    },
+    {
+      "topic": "Electric Vehicle Model Release",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "Automaker Voltix unveiled its new E-Prime sedan on Thursday. The vehicle boasts an EPA-estimated range of 312 miles on a single charge and accelerates from 0 to 60 mph in just 5.8 seconds. The base price is set at $41,500. Charging speeds reach up to 180 kW, allowing for rapid top-ups. Production is scheduled to commence in September 2024."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Model: Voltix E-Prime\nRange (EPA est.): 312 miles\n0-60 mph: 5.8 seconds\nBase Price: $41,500\nMax Charging Speed: 180 kW\nProduction Start: September 2024"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- Voltix E-Prime electric sedan details:\n  • Estimated range: 320 miles\n  • 0-60 mph acceleration: 5.8 seconds\n  • Starting price: $41,500\n  • Maximum charging rate: 180 kW\n  • Production begins: September 2024"
+        }
+      ],
+      "claims": [
+        {
+          "text": "The Voltix E-Prime has a base price of $41,500.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The E-Prime's maximum charging speed is 180 kW.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Voltix E-Prime's EPA-estimated range is 312 miles.",
+          "label": "divergent"
+        },
+        {
+          "text": "Production of the Voltix E-Prime will begin in August 2024.",
+          "label": "fabricated"
+        },
+        {
+          "text": "The E-Prime accelerates from 0 to 60 mph in 5.8 seconds.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Voltix E-Prime has a range of 320 miles.",
+          "label": "divergent"
+        }
+      ]
+    },
+    {
+      "topic": "Cybersecurity Breach Disclosure",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "On March 12, 2024, TechNova Inc. reported a cybersecurity breach that exposed 42,000 customer records. The breach, which was detected on March 10, 2024, had gone undetected for 18 days. According to company officials, attackers gained access via a compromised employee email account. The estimated remediation cost is $350,000."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Incident: TechNova Data Breach\nRecords Exposed: 42,000\nBreach Detection Date: March 10, 2024\nDwell Time: 18 days\nAttack Vector: Compromised employee email\nRemediation Cost: $350,000"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- TechNova experienced a data breach affecting 45,000 records.\n- The breach was discovered on March 10, 2024.\n- Attackers maintained access for 18 days before detection.\n- Entry point: Employee email account compromise.\n- Estimated remediation expenses: $350,000."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The breach at TechNova was detected on March 10, 2024.",
+          "label": "corroborated"
+        },
+        {
+          "text": "TechNova's breach exposed 45,000 records.",
+          "label": "divergent"
+        },
+        {
+          "text": "The attackers exploited a vulnerability in the company's web server.",
+          "label": "fabricated"
+        },
+        {
+          "text": "The remediation cost for the breach is estimated at $350,000.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The breach went undetected for 18 days.",
+          "label": "corroborated"
+        }
+      ]
+    },
+    {
+      "topic": "2024 National Basketball Championship Final",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "The 2024 National Basketball Championship Final concluded last night with the Central City Falcons defeating the Riverside Titans 89-82. The game was held at Metro Arena, which has a seating capacity of 18,500. Official attendance reached 17,900, nearly filling the venue. Ticket prices ranged from $60 to $250. The broadcast drew an estimated 4.2 million viewers nationwide."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Event: 2024 National Basketball Championship Final\nDate: June 15, 2024\nVenue: Metro Arena\nVenue Capacity: 18,500\nFinal Score: Central City Falcons 89, Riverside Titans 82\nAttendance: 17,900\nTicket Price Range: $60–$250\nBroadcast Viewership: 4.2 million"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- The National Basketball Championship Final was held at Metro Arena (capacity: 18,000).\n- Central City Falcons won over Riverside Titans, 89 to 82.\n- Attendance was reported at 17,900.\n- Ticket prices ranged from $60 to $250.\n- TV broadcast viewership reached 4.2 million."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The Central City Falcons scored 89 points in the final.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Metro Arena has a seating capacity of 18,500.",
+          "label": "divergent"
+        },
+        {
+          "text": "Attendance at the final was 17,900.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Ticket prices for the championship final ranged from $50 to $200.",
+          "label": "fabricated"
+        },
+        {
+          "text": "Broadcast viewership for the game was 4.2 million.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The Riverside Titans won the championship final.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "Green Valley Solar Plant Commissioning",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "Green Valley Solar Plant officially commenced operations on June 15, 2024. The facility boasts a total installed capacity of 120 megawatts, utilizing 300,000 photovoltaic panels spread across 220 acres. The plant is projected to generate 210,000 megawatt-hours of electricity annually, enough to power approximately 35,000 homes. The total construction cost was reported at $95 million."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Project: Green Valley Solar Plant\nCommissioned: June 2024\nInstalled Capacity: 120 MW\nPanel Count: 300,000 units\nLand Area: 220 acres\nEstimated Annual Output: 210,000 MWh\nTotal Cost: $95 million"
+        },
+        {
+          "label": "REGULATORY NOTICE",
+          "text": "Pursuant to the Renewable Energy Commission's guidelines, the Green Valley Solar Plant has been approved for operation as of June 15, 2024. The facility comprises 120 megawatts of installed capacity and 310,000 photovoltaic panels, occupying 220 acres. The anticipated annual energy output is 210,000 megawatt-hours. The reported capital expenditure for the project is $95 million."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The Green Valley Solar Plant has an installed capacity of 120 megawatts.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The plant utilizes 310,000 photovoltaic panels.",
+          "label": "divergent"
+        },
+        {
+          "text": "The facility covers 220 acres of land.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Annual energy output is projected at 210,000 megawatt-hours.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The total construction cost was $120 million.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "Software Framework Major Release v5.0",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "The widely-used ApexCore framework has launched its major 5.0 release on March 12, 2024. This update delivers a 30% performance boost over the previous version and introduces 7 breaking changes. Developers should note that ApexCore 5.0 now requires a minimum runtime environment of Node.js 18.0 or higher."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Product: ApexCore Framework\nVersion: 5.0\nRelease Date: March 12, 2024\nPerformance Improvement: 30% over v4.x\nBreaking Changes: 8\nMinimum Supported Runtime: Node.js 18.0"
+        },
+        {
+          "label": "SUMMARY MEMO",
+          "text": "- ApexCore 5.0 was released on March 12, 2024.\n- The new version offers a 30% increase in performance compared to the previous major release.\n- There are 7 breaking changes developers must address.\n- Node.js 18.0 is now the minimum required runtime."
+        }
+      ],
+      "claims": [
+        {
+          "text": "ApexCore 5.0 was released on March 12, 2024.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The minimum supported runtime for ApexCore 5.0 is Node.js 18.0.",
+          "label": "corroborated"
+        },
+        {
+          "text": "ApexCore 5.0 introduces 8 breaking changes.",
+          "label": "divergent"
+        },
+        {
+          "text": "The performance improvement in ApexCore 5.0 is 30% over the previous version.",
+          "label": "corroborated"
+        },
+        {
+          "text": "ApexCore 5.0 was released in February 2024.",
+          "label": "fabricated"
+        },
+        {
+          "text": "ApexCore 5.0 requires Node.js 20.0 as the minimum runtime.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "topic": "Pharmaceutical Recall Notice",
+      "documents": [
+        {
+          "label": "NEWS BRIEF",
+          "text": "PharmaGenix Inc. has issued a voluntary recall of its 50mg tablets after discovering a labeling error. The recall affects 4 lots, totaling approximately 18,000 units distributed across California, Texas, and Florida. The FDA has classified this as a Class II recall, indicating that the defect may cause temporary or medically reversible adverse health consequences."
+        },
+        {
+          "label": "SPEC SHEET",
+          "text": "Product: PharmaGenix 50mg Tablets\nRecall Initiated: June 2024\nNumber of Lots: 4\nUnits Affected: 18,000\nDefect Type: Labeling Error\nRecall Classification: Class II\nDistribution States: CA, TX, FL"
+        },
+        {
+          "label": "REGULATORY NOTICE",
+          "text": "The Food and Drug Administration announces the recall of PharmaGenix 50mg tablets due to a labeling error. This recall involves 5 lots, with a total of 18,000 units distributed in California, Texas, and Florida. The recall is classified as Class II, as the defect may result in temporary or medically reversible adverse health effects."
+        }
+      ],
+      "claims": [
+        {
+          "text": "The recall affects 18,000 units of PharmaGenix 50mg tablets.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The recall was classified as Class II by the FDA.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The recall involves 5 lots of the product.",
+          "label": "divergent"
+        },
+        {
+          "text": "The defect prompting the recall was a labeling error.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The affected product was distributed in California, Texas, and Florida.",
+          "label": "corroborated"
+        },
+        {
+          "text": "The recall was due to contamination with a foreign substance.",
+          "label": "fabricated"
+        }
+      ]
+    }
+  ]
+}

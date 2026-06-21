@@ -1,0 +1,23 @@
+{
+  "policy": "strict",
+  "rows": [
+    {
+      "scenario": "clean job (all confirmed)",
+      "gate_passed": true,
+      "n_unsupported": 0,
+      "settle_called": 1,
+      "pay_fraction": 1.0,
+      "total_settled_usdc": 0.05,
+      "total_authorized_usdc": 0.05
+    },
+    {
+      "scenario": "one fabricated claim",
+      "gate_passed": false,
+      "n_unsupported": 1,
+      "settle_called": 0,
+      "pay_fraction": 0.0,
+      "total_settled_usdc": 0.0,
+      "total_authorized_usdc": 0.05
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "sets": [
+    {
+      "amendment": "AMENDMENT TO DATA PROCESSING ADDENDUM\n\n1. Section 3.1(a) is hereby amended to replace 'at least thirty (30) days\u2019 prior written notice' with 'at least fourteen (14) days\u2019 prior written notice.'\n\n2. Section 9.2 is hereby amended to replace 'Processor\u2019s aggregate liability for Data Breaches shall not exceed EUR 1,000,000' with 'Processor\u2019s aggregate liability for Data Breaches shall not exceed EUR 2,000,000.'\n\nAll other terms and conditions of the Data Processing Addendum remain unchanged and in full force and effect.",
+      "claims": [
+        {
+          "text": "Controller may object to changes in Sub-Processors within ten (10) days of receipt of notice.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Processor\u2019s aggregate liability for Data Breaches shall not exceed EUR 1,000,000.",
+          "label": "divergent"
+        },
+        {
+          "text": "Processor must notify Controller of a Data Breach within twenty-four (24) hours after becoming aware.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "amendment": "AMENDMENT TO MASTER SERVICES AGREEMENT\n\nThis Amendment is made as of the date of last signature below and modifies the Master Services Agreement (\"Agreement\") as follows:\n\n1. Section 2.2 is hereby amended to change the minimum uptime for any hosted services from 99.5% per calendar month to 98.0% per calendar month.\n\n2. Section 8.1 is hereby amended to change the written notice period required for termination by either party from sixty (60) days to thirty (30) days.\n\nAll other terms and conditions of the Agreement remain unchanged and in full force and effect.",
+      "claims": [
+        {
+          "text": "The Agreement requires that late payments accrue interest at a rate of 1.5% per month or the maximum rate permitted by law, whichever is less.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Either party may terminate the Agreement upon sixty (60) days\u2019 written notice.",
+          "label": "divergent"
+        },
+        {
+          "text": "The Agreement specifies that the Service Provider must provide a 24/7 customer support hotline.",
+          "label": "fabricated"
+        }
+      ]
+    },
+    {
+      "amendment": "AMENDMENT TO SAAS SUBSCRIPTION AGREEMENT\n\nThis Amendment is made to the SaaS Subscription Agreement (the \"Agreement\") as follows:\n\n1. Section 3.1 is hereby amended to replace \"thirty (30) days of invoice date\" with \"forty-five (45) days of invoice date.\" The revised Section 3.1 shall read:\n\"Customer shall pay all Fees within forty-five (45) days of invoice date. Late payments accrue interest at 1.5% per month or the maximum allowed by law, whichever is less.\"\n\n2. Section 4.2 is hereby amended to replace \"up to a maximum of 20% of the monthly Fees\" with \"up to a maximum of 10% of the monthly Fees.\" The revised Section 4.2 shall read:\n\"If Provider fails to meet the SLA in any calendar month, Customer may request a service credit equal to 5% of the monthly Fees for each 1% by which the Monthly Uptime Percentage falls below 99.5%, up to a maximum of 10% of the monthly Fees.\"\n\nAll other terms and conditions of the Agreement remain unchanged and in full force and effect.",
+      "claims": [
+        {
+          "text": "The Agreement requires Provider to notify Customer without undue delay upon becoming aware of any unauthorized access to Customer Data.",
+          "label": "corroborated"
+        },
+        {
+          "text": "Customer must pay all Fees within thirty (30) days of invoice date.",
+          "label": "divergent"
+        },
+        {
+          "text": "The Agreement allows Provider to increase Fees for any renewal term without providing any advance notice.",
+          "label": "fabricated"
+        }
+      ]
+    }
+  ]
+}

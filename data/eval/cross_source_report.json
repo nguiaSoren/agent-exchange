@@ -1,0 +1,23 @@
+{
+  "judge": "gpt-4.1-mini",
+  "n_genuine": 24,
+  "n_gifted": 20,
+  "judge_sufficiency": {
+    "gifted_leak": 0,
+    "gifted_leak_rate": 0.0,
+    "genuine_served": 23,
+    "genuine_served_rate": 0.9583333333333334
+  },
+  "ablation_cross_source": {
+    "genuine_reached": 24,
+    "gifted_reached": 2,
+    "genuine_supported_lexical": 0.6666666666666666,
+    "genuine_supported_llm": 0.6666666666666666,
+    "gifted_supported_lexical": 0.5,
+    "gifted_supported_llm": 0.0
+  },
+  "single_source_baseline": {
+    "genuine_supported_lexical": 0.125,
+    "genuine_supported_llm": 0.04
+  }
+}
