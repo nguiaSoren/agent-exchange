@@ -55,7 +55,7 @@ Every payment decision is one verifier verdict, so the verifier is validated, wi
 
 | Metric | Result | Against |
 |---|---|---|
-| **Catch-rate** (fabrications caught) | **100% (81/81)** | LLM-invented absent-clause fabrications, gpt-4.1 verifier (`spikes/catch_rate_run.py`, fixture in `data/eval/`) |
+| **Catch-rate** (fabrications caught) | **100% (81/81)** | 81 fabricated in a 162-item set (the 138-claim seeded-liar fixture + the 24-case calibration gold), LLM-invented absent-clause fabrications, gpt-4.1 verifier; frozen in [`data/eval/catch_rate_report.gpt41.json`](data/eval/catch_rate_report.gpt41.json) (`tp=81, fn=0`), reproducible via `spikes/catch_rate_run.py` (reuses the cached fixture) |
 | **False-withhold** (genuine wrongly rejected) | **2.5% (2/81)** | same run |
 | **Calibration (ECE)** | **0.015** | gpt-4.1, mixed n=162 (set-dependent, see caveats) |
 | **Time-to-paid (end-to-end)** | **≈16s** | one real timed run: 13.0s work on live models + 3.2s on-chain settle |
@@ -66,7 +66,7 @@ A layer of **deterministic graders** sits in front of the LLM judge (verbatim-qu
 
 ### Honest caveats (the caveats are the moat, not the fine print)
 
-- **The 100% is against *this* adversary**, an LLM inventing plausible-but-absent clauses (n=81). Claim-against-document grounding makes absent-clause fabrications reliably catchable. State it as "caught 81/81 LLM-generated fabrications," never "unbeatable."
+- **The 100% is against *this* adversary**, an LLM inventing plausible-but-absent clauses (81 fabricated of a 162-item labelled set). Claim-against-document grounding makes absent-clause fabrications reliably catchable. State it as "caught 81/81 LLM-generated fabrications," never "unbeatable."
 - **Calibration is set-dependent:** ECE 0.015 (gpt-4.1, mixed n=162) but 0.114 (gpt-5.1, gold n=24). Don't cite one number as "the" calibration.
 - **It needs a frontier-class judge.** A deterministic gate cannot beat a frontier entailment judge on single-document contracts; it costs honest throughput. (The ablation gate is validated for *cross-source* verification, not contracts.)
 - **The money is testnet.** Base Sepolia test USDC. The verify-to-settle mechanism is real and live; the amounts are test funds.
@@ -88,7 +88,7 @@ To exercise the live seams (a real Band room, a real x402 settlement, live model
 ```bash
 cp .env.example .env     # Band key, a throwaway testnet EVM private key, a model API key
 uv venv && uv sync
-uv run python spikes/catch_rate_run.py      # reproduce the catch-rate on the seeded-liar fixture
+uv run python spikes/catch_rate_run.py      # reproduce the catch-rate: reuses the cached 138-claim fixture + folds in the 24-case gold (=162); CATCH_RATE_N only governs first-time fixture generation
 uv run python spikes/time_to_paid_smoke.py  # one real job, posted → USDC in a wallet, on Base Sepolia
 ```
 
