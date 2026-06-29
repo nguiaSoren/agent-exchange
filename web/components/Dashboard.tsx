@@ -299,13 +299,16 @@ export function Dashboard() {
           const handle = runJob(req);
           abortRef.current = handle.abort;
           // Safety net: if the backend never streams a FIRST event (a stuck cold
-          // start or a dead dyno), don't spin forever — abort after the stated
-          // cold-start window so the catch below falls back to the recorded run.
-          // Pre-warming usually lands the first event in ~1s, so this rarely fires.
+          // start or a dead dyno), don't spin forever — abort and let the catch
+          // below fall back to the recorded run. We keep this SHORT (~12s): the
+          // recorded real run is the canonical "Run it live" experience, so a
+          // visitor on an asleep free-tier dyno drops to it quickly instead of
+          // waiting out a full ~60-90s cold start. A WARM dyno lands the first
+          // event in ~1s, so a fresh live run is unaffected by this window.
           let gotFirst = false;
           const firstEventTimer = setTimeout(() => {
             if (!gotFirst) handle.abort();
-          }, 90_000);
+          }, 12_000);
           try {
             for await (const ev of handle.events) {
               if (runIdRef.current !== myRun) return;
@@ -603,7 +606,17 @@ export function Dashboard() {
         <div className="ax-court px-3 py-6 sm:px-6 sm:py-8">
           <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)]">
             <Arena state={state} demoMode={demoMode} />
-            <WorkRoom room={state.room} workActive={workActive} />
+            {/* The transcript is a fixed-height scrollview (phone-like): its
+                height is set by the Arena, NOT by its own content. On lg the
+                room is absolutely positioned inside its grid cell so it never
+                stretches the row — the transcript scrolls INSIDE the panel and
+                the page stays put while messages stream and older lines slide
+                up. On mobile (stacked) it falls back to normal flow. */}
+            <div className="relative min-h-0">
+              <div className="lg:absolute lg:inset-0">
+                <WorkRoom room={state.room} workActive={workActive} />
+              </div>
+            </div>
           </div>
         </div>
       </section>

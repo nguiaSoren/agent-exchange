@@ -67,17 +67,21 @@ export function WorkRoom({
   /** True while the Work/collaborate stage is active — emphasise the panel. */
   workActive?: boolean;
 }) {
-  const endRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Follow the newest line as the transcript grows. Guarded on a non-empty room
-  // so an IDLE WorkRoom never scrolls on mount: three of these mount on the
-  // landing (two hero shots + the live Dashboard's), and an empty one calling
-  // scrollIntoView would yank the whole page down to the bottom-most panel on
-  // first load. With the guard the page stays at the top until a real run (or a
-  // hero shot scrolled into view) actually puts lines in the room.
+  // Follow the newest line as the transcript grows — scroll ONLY the inner
+  // transcript container (set its scrollTop), never the page. This is the phone
+  // scrollview behavior: messages stream in, older ones slide up inside the
+  // fixed-height panel, and the rest of the page stays put. Using
+  // `scrollIntoView` here was wrong — it walks every scrollable ancestor up to
+  // the window, so a new line yanked the whole page down to keep the bottom in
+  // view. Guarded on a non-empty room so an IDLE WorkRoom never scrolls on mount
+  // (three mount on the landing: two hero shots + the live Dashboard's).
   useEffect(() => {
     if (room.length === 0) return;
-    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [room.length]);
 
   const live = room.length > 0;
@@ -104,7 +108,10 @@ export function WorkRoom({
         </span>
       }
     >
-      <div className="ax-scroll min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5">
+      <div
+        ref={scrollRef}
+        className="ax-scroll min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5"
+      >
         {room.length === 0 && (
           <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 px-6 text-center">
             <BandMark size={30} />
@@ -202,7 +209,6 @@ export function WorkRoom({
             </div>
           );
         })}
-        <div ref={endRef} />
       </div>
     </HudPanel>
   );

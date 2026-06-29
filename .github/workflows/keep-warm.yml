@@ -1,17 +1,36 @@
-# Keeps the free-tier Render backend (agent-exchange-api) awake so a judge's
-# first "audit my contract" call doesn't hit a ~40s cold start. Pings /health
-# every ~10 min (Render free sleeps after ~15min idle). Best-effort: GitHub's
-# scheduler can lag a few minutes under load — for guaranteed warmth during a
-# live judging window, also add a free UptimeRobot/cron-job.org monitor on the
-# same URL. `workflow_dispatch` lets you trigger a wake manually.
+# Manual warm-up for the free-tier Render backend (agent-exchange-api).
+#
+# Render free web services sleep after ~15 min idle, so the first "Run it live"
+# click cold-starts (~60-90s). The frontend already handles that gracefully —
+# it shows the disclosed recorded real run while the dyno wakes — so we do NOT
+# keep the dyno warm 24/7. A scheduled ping every ~10 min kept it awake around
+# the clock and burned the entire free monthly instance-hour allowance, which
+# is what got the service suspended.
+#
+# Instead: warm it ON DEMAND. ~2 min before a live demo / judging window, run
+# this workflow manually (Actions tab -> keep-warm -> "Run workflow"). It pings
+# /health until the dyno responds 200, leaving it warm for the ~15 min idle
+# window. The rest of the time the dyno sleeps and consumes ~zero free hours.
 name: keep-warm
 on:
-  schedule:
-    - cron: "*/10 * * * *"
   workflow_dispatch:
 jobs:
-  ping:
+  warm:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Render /health
-        run: curl -fsS -m 30 https://agent-exchange-api.onrender.com/health || true
+      - name: Wake the dyno and confirm it is warm
+        run: |
+          url="https://agent-exchange-api.onrender.com/health"
+          # A cold start takes ~60-90s; a single short curl would time out before
+          # the dyno is up. Retry until it answers 200 (or give up after ~3 min).
+          for i in $(seq 1 18); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -m 20 "$url" || echo "000")
+            echo "attempt $i -> HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "dyno is warm"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "dyno did not warm within ~3 min" >&2
+          exit 1
